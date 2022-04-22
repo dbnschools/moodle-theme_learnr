@@ -24,27 +24,11 @@
 
 namespace theme_learnr\output;
 
-use coding_exception;
 use html_writer;
-use tabobject;
-use tabtree;
-use custom_menu_item;
 use custom_menu;
-use block_contents;
-use navigation_node;
-use action_link;
 use stdClass;
 use moodle_url;
-use preferences_groups;
-use action_menu;
-use help_icon;
-use single_button;
-use single_select;
-use paging_bar;
-use url_select;
 use context_course;
-use pix_icon;
-use theme_config;
 
 require_once ($CFG->dirroot . "/course/renderer.php");
 
@@ -58,7 +42,7 @@ require_once ($CFG->dirroot . "/course/renderer.php");
 class core_renderer extends \theme_boost\output\core_renderer {
 
     public function headerimage() {
-        global $CFG, $COURSE, $PAGE, $OUTPUT;
+        global $CFG;
         // Get course overview files.
         if (empty($CFG->courseoverviewfileslimit)) {
             return '';
@@ -67,10 +51,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
         require_once ($CFG->dirroot . '/course/lib.php');
 
         $fs = get_file_storage();
-        $context = context_course::instance($COURSE->id);
+        $context = context_course::instance($this->page->course->id);
         $files = $fs->get_area_files($context->id, 'course', 'overviewfiles', false, 'filename', false);
         if (count($files)) {
-            $overviewfilesoptions = course_overviewfiles_options($COURSE->id);
+            $overviewfilesoptions = course_overviewfiles_options($this->page->course->id);
             $acceptedtypes = $overviewfilesoptions['accepted_types'];
             if ($acceptedtypes !== '*') {
                 // Filter only files with allowed extensions.
@@ -96,23 +80,23 @@ class core_renderer extends \theme_boost\output\core_renderer {
             }
         }
         $html = '';
-        $headerbg = $PAGE->theme->setting_file_url('pagebackgroundimage', 'pagebackgroundimage');
-        $defaultimgurl = $OUTPUT->image_url('headerbg', 'theme');
-        $headerbgimgurl = $PAGE->theme->setting_file_url('pagebackgroundimage', 'pagebackgroundimage', true);
+        $headerbg = $this->page->theme->setting_file_url('pagebackgroundimage', 'pagebackgroundimage');
+        $defaultimgurl = $this->image_url('headerbg', 'theme');
+        $headerbgimgurl = $this->page->theme->setting_file_url('pagebackgroundimage', 'pagebackgroundimage', true);
 
         // Create html for header.
         //sitewideimage
-        if ($PAGE->theme->settings->showcoursedashboard){
+        if ($this->page->theme->settings->showcoursedashboard){
             $html = html_writer::start_div('headerbkg');
             // If course image display it in separate div to allow css styling of inline style.
-            if ($PAGE->theme->settings->showpageimage == 1 && $courseimage && !$PAGE->theme->settings->sitewideimage == 1) {
+            if ($this->page->theme->settings->showpageimage == 1 && $courseimage && !$this->page->theme->settings->sitewideimage == 1) {
                 $html .= html_writer::start_div('courseimage', array(
                     'style' => 'background-image: url("' . $courseimage . '"); background-size: cover; background-position:center;
                     width: 100%; height: 100%;'
                 ));
                 $html .= html_writer::end_div(); // End withimage inline style div.
             }
-            else if ($PAGE->theme->settings->showpageimage == 1 && isset($headerbg)) {
+            else if ($this->page->theme->settings->showpageimage == 1 && isset($headerbg)) {
                 $html .= html_writer::start_div('customimage', array(
                     'style' => 'background-image: url("' . $headerbgimgurl . '"); background-size: cover; background-position:center;
                     width: 100%; height: 100%;'
@@ -363,29 +347,29 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function fp_marketingtiles() {
         global $PAGE;
         
-        $hasmarketing1 = (empty($PAGE->theme->settings->marketing1)) ? false : format_string($PAGE->theme->settings->marketing1);
-        $marketing1content = (empty($PAGE->theme->settings->marketing1content)) ? false : format_text($PAGE->theme->settings->marketing1content);
-        $marketing1buttontext = (empty($PAGE->theme->settings->marketing1buttontext)) ? false : format_string($PAGE->theme->settings->marketing1buttontext);
-        $marketing1buttonurl = (empty($PAGE->theme->settings->marketing1buttonurl)) ? false : $PAGE->theme->settings->marketing1buttonurl;
-        $marketing1target = (empty($PAGE->theme->settings->marketing1target)) ? false : $PAGE->theme->settings->marketing1target;
-        $marketing1image = (empty($PAGE->theme->settings->marketing1image)) ? false : $PAGE->theme->setting_file_url('marketing1image', 'marketing1image', true);
-        $marketing1icon = (empty($PAGE->theme->settings->marketing1icon)) ? false : format_string($PAGE->theme->settings->marketing1icon);
+        $hasmarketing1 = (empty($this->page->theme->settings->marketing1)) ? false : format_string($this->page->theme->settings->marketing1);
+        $marketing1content = (empty($this->page->theme->settings->marketing1content)) ? false : format_text($this->page->theme->settings->marketing1content);
+        $marketing1buttontext = (empty($this->page->theme->settings->marketing1buttontext)) ? false : format_string($this->page->theme->settings->marketing1buttontext);
+        $marketing1buttonurl = (empty($this->page->theme->settings->marketing1buttonurl)) ? false : $this->page->theme->settings->marketing1buttonurl;
+        $marketing1target = (empty($this->page->theme->settings->marketing1target)) ? false : $this->page->theme->settings->marketing1target;
+        $marketing1image = (empty($this->page->theme->settings->marketing1image)) ? false : $this->page->theme->setting_file_url('marketing1image', 'marketing1image', true);
+        $marketing1icon = (empty($this->page->theme->settings->marketing1icon)) ? false : format_string($this->page->theme->settings->marketing1icon);
         
-        $hasmarketing2 = (empty($PAGE->theme->settings->marketing2)) ? false : format_string($PAGE->theme->settings->marketing2);
-        $marketing2content = (empty($PAGE->theme->settings->marketing2content)) ? false : format_text($PAGE->theme->settings->marketing2content);
-        $marketing2buttontext = (empty($PAGE->theme->settings->marketing2buttontext)) ? false : format_string($PAGE->theme->settings->marketing2buttontext);
-        $marketing2buttonurl = (empty($PAGE->theme->settings->marketing2buttonurl)) ? false : $PAGE->theme->settings->marketing2buttonurl;
-        $marketing2target = (empty($PAGE->theme->settings->marketing2target)) ? false : $PAGE->theme->settings->marketing2target;
-        $marketing2image = (empty($PAGE->theme->settings->marketing2image)) ? false : $PAGE->theme->setting_file_url('marketing2image', 'marketing2image', true);
-        $marketing2icon = (empty($PAGE->theme->settings->marketing2icon)) ? false : format_string($PAGE->theme->settings->marketing2icon);
+        $hasmarketing2 = (empty($this->page->theme->settings->marketing2)) ? false : format_string($this->page->theme->settings->marketing2);
+        $marketing2content = (empty($this->page->theme->settings->marketing2content)) ? false : format_text($this->page->theme->settings->marketing2content);
+        $marketing2buttontext = (empty($this->page->theme->settings->marketing2buttontext)) ? false : format_string($this->page->theme->settings->marketing2buttontext);
+        $marketing2buttonurl = (empty($this->page->theme->settings->marketing2buttonurl)) ? false : $this->page->theme->settings->marketing2buttonurl;
+        $marketing2target = (empty($this->page->theme->settings->marketing2target)) ? false : $this->page->theme->settings->marketing2target;
+        $marketing2image = (empty($this->page->theme->settings->marketing2image)) ? false : $this->page->theme->setting_file_url('marketing2image', 'marketing2image', true);
+        $marketing2icon = (empty($this->page->theme->settings->marketing2icon)) ? false : format_string($this->page->theme->settings->marketing2icon);
         
-        $hasmarketing3 = (empty($PAGE->theme->settings->marketing3)) ? false : format_string($PAGE->theme->settings->marketing3);
-        $marketing3content = (empty($PAGE->theme->settings->marketing3content)) ? false : format_text($PAGE->theme->settings->marketing3content);
-        $marketing3buttontext = (empty($PAGE->theme->settings->marketing3buttontext)) ? false : format_string($PAGE->theme->settings->marketing3buttontext);
-        $marketing3buttonurl = (empty($PAGE->theme->settings->marketing3buttonurl)) ? false : $PAGE->theme->settings->marketing3buttonurl;
-        $marketing3target = (empty($PAGE->theme->settings->marketing3target)) ? false : $PAGE->theme->settings->marketing3target;
-        $marketing3image = (empty($PAGE->theme->settings->marketing3image)) ? false : $PAGE->theme->setting_file_url('marketing3image', 'marketing3image', true);
-        $marketing3icon = (empty($PAGE->theme->settings->marketing3icon)) ? false : format_string($PAGE->theme->settings->marketing3icon);
+        $hasmarketing3 = (empty($this->page->theme->settings->marketing3)) ? false : format_string($this->page->theme->settings->marketing3);
+        $marketing3content = (empty($this->page->theme->settings->marketing3content)) ? false : format_text($this->page->theme->settings->marketing3content);
+        $marketing3buttontext = (empty($this->page->theme->settings->marketing3buttontext)) ? false : format_string($this->page->theme->settings->marketing3buttontext);
+        $marketing3buttonurl = (empty($this->page->theme->settings->marketing3buttonurl)) ? false : $this->page->theme->settings->marketing3buttonurl;
+        $marketing3target = (empty($this->page->theme->settings->marketing3target)) ? false : $this->page->theme->settings->marketing3target;
+        $marketing3image = (empty($this->page->theme->settings->marketing3image)) ? false : $this->page->theme->setting_file_url('marketing3image', 'marketing3image', true);
+        $marketing3icon = (empty($this->page->theme->settings->marketing3icon)) ? false : format_string($this->page->theme->settings->marketing3icon);
         
         $fp_marketingtiles = ['hasmarkettiles' => ($hasmarketing1 || $hasmarketing2 || $hasmarketing3) ? true : false, 'markettiles' => array(
             array(
@@ -449,7 +433,6 @@ protected static function timeaccesscompare($a, $b) {
         }
 
     public function learnr_mycourses() {
-        global $CFG, $COURSE, $PAGE, $OUTPUT;
         $context = $this->page->context;
         $menu = new custom_menu();
         

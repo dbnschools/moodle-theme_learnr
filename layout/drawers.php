@@ -47,7 +47,7 @@ $checkblocka = (strpos($blockscolumna, 'data-block=') !== false || !empty($addbl
 $checkblockb = (strpos($blockscolumnb, 'data-block=') !== false || !empty($addblockbutton));
 $checkblockc = (strpos($blockscolumnc, 'data-block=') !== false || !empty($addblockbutton));
 
-$displaycoursedashboard = $PAGE->pagelayout == 'course' && isset($COURSE->id) && $COURSE->id > 1;
+$displaycoursedashboard = $this->page->pagelayout == 'course' && isset($COURSE->id) && $COURSE->id > 1;
 
 $hascoursedashblocks = false ;
 if ($checkblocka || $checkblockb || $checkblockc) {
@@ -79,7 +79,7 @@ $blockshtml = $OUTPUT->blocks('side-pre');
 
 $hasblocks = (strpos($blockshtml, 'data-block=') !== false || !empty($addblockbutton));
 
-if ($PAGE->theme->settings->showblockdrawer == 0) {
+if ($this->page->theme->settings->showblockdrawer == 0) {
 $hasblocks = (strpos($blockshtml, 'data-block=') !== false);
 }
 
@@ -93,48 +93,48 @@ if (!$courseindex) {
 }
 
 $alertbox = '';
-if ($PAGE->pagelayout == 'mydashboard' || $PAGE->pagelayout == 'frontpage' || $PAGE->pagelayout == 'mycourses' ) {
-    $alertbox = (empty($PAGE->theme->settings->alertbox)) ? false : format_text($PAGE->theme->settings->alertbox);
+if ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage' || $this->page->pagelayout == 'mycourses' ) {
+    $alertbox = (empty($this->page->theme->settings->alertbox)) ? false : format_text($this->page->theme->settings->alertbox);
 }
 
 $fptextbox =false;
-if ($PAGE->pagelayout == 'mydashboard' || $PAGE->pagelayout == 'frontpage') {
-$fptextbox = (empty($PAGE->theme->settings->fptextbox)) ? false : format_text($PAGE->theme->settings->fptextbox);
+if ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage') {
+$fptextbox = (empty($this->page->theme->settings->fptextbox)) ? false : format_text($this->page->theme->settings->fptextbox);
 
 }
 $hasmarketingtiles = false;
-if ($PAGE->pagelayout == 'mydashboard' || $PAGE->pagelayout == 'frontpage') {
+if ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage') {
     $hasmarketingtiles = true;
 }
 
-$showcourseindexnav = (empty($PAGE->theme->settings->showcourseindexnav)) ? false : $PAGE->theme->settings->showcourseindexnav;
-$showblockdrawer = (empty($PAGE->theme->settings->showblockdrawer)) ? false : $PAGE->theme->settings->showblockdrawer;
-$showcoursedashboard = (empty($PAGE->theme->settings->showcoursedashboard)) ? false : $PAGE->theme->settings->showcoursedashboard;
-$showpageimage = (empty($PAGE->theme->settings->showpageimage)) ? false : $PAGE->theme->settings->showpageimage;
+$showcourseindexnav = (empty($this->page->theme->settings->showcourseindexnav)) ? false : $this->page->theme->settings->showcourseindexnav;
+$showblockdrawer = (empty($this->page->theme->settings->showblockdrawer)) ? false : $this->page->theme->settings->showblockdrawer;
+$showcoursedashboard = (empty($this->page->theme->settings->showcoursedashboard)) ? false : $this->page->theme->settings->showcoursedashboard;
+$showpageimage = (empty($this->page->theme->settings->showpageimage)) ? false : $this->page->theme->settings->showpageimage;
 
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
 
 $secondarynavigation = false;
 $overflow = '';
-if ($PAGE->has_secondary_navigation()) {
-    $tablistnav = $PAGE->has_tablist_secondary_navigation();
-    $moremenu = new \core\navigation\output\more_menu($PAGE->secondarynav, 'nav-tabs', true, $tablistnav);
+if ($this->page->has_secondary_navigation()) {
+    $tablistnav = $this->page->has_tablist_secondary_navigation();
+    $moremenu = new \core\navigation\output\more_menu($this->page->secondarynav, 'nav-tabs', true, $tablistnav);
     $secondarynavigation = $moremenu->export_for_template($OUTPUT);
-    $overflowdata = $PAGE->secondarynav->get_overflow_menu_data();
+    $overflowdata = $this->page->secondarynav->get_overflow_menu_data();
     if (!is_null($overflowdata)) {
         $overflow = $overflowdata->export_for_template($OUTPUT);
     }
 }
 
 $primary = new core\navigation\output\primary($PAGE);
-$renderer = $PAGE->get_renderer('core');
+$renderer = $this->page->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
-$buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
+$buildregionmainsettings = !$this->page->include_region_main_settings_in_header_actions() && !$this->page->has_secondary_navigation();
 // If the settings menu will be included in the header then don't add it here.
 $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
 
-$header = $PAGE->activityheader;
+$header = $this->page->activityheader;
 $headercontent = $header->export_for_template($renderer);
 
 $templatecontext = [
@@ -174,7 +174,7 @@ $templatecontext = [
     'showcoursedashboard' => $showcoursedashboard,
 ];
 
-$PAGE->requires->jquery();
-$PAGE->requires->js('/theme/learnr/javascript/blockslider.js');
+$this->page->requires->jquery();
+$this->page->requires->js('/theme/learnr/javascript/blockslider.js');
 
 echo $OUTPUT->render_from_template('theme_learnr/drawers', $templatecontext);
