@@ -135,7 +135,7 @@ if ($ADMIN->fulltree) {
     $description = get_string('showcoursedashboard_desc', 'theme_learnr');
     $default = '1';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
-    $setting->set_updatedcallback('theme_reset_all_caches');
+    
     $page->add($setting);
 
     // Show/hide page image.
@@ -144,7 +144,7 @@ if ($ADMIN->fulltree) {
     $description = get_string('showpageimage_desc', 'theme_learnr');
     $default = '';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
-    $setting->set_updatedcallback('theme_reset_all_caches');
+    
     $page->add($setting);
 
     // Show sitewide image.
@@ -153,7 +153,7 @@ if ($ADMIN->fulltree) {
     $description = get_string('sitewideimage_desc', 'theme_learnr');
     $default = '';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
-    $setting->set_updatedcallback('theme_reset_all_caches');
+    
     $page->add($setting);
 
     // Background image setting.
@@ -328,7 +328,7 @@ if ($ADMIN->fulltree) {
     $description = get_string('alert_desc', 'theme_learnr');
     $default = '';
     $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
-    $setting->set_updatedcallback('theme_reset_all_caches');
+    
     $page->add($setting);
 
     // Frontpage Textbox.
@@ -337,7 +337,7 @@ if ($ADMIN->fulltree) {
     $description = get_string('fptextbox_desc', 'theme_learnr');
     $default = '';
     $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
-    $setting->set_updatedcallback('theme_reset_all_caches');
+    
     $page->add($setting);
 
     $settings->add($page);
