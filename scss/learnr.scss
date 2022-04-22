@@ -1,0 +1,301 @@
+// Universal LearnR theme styling
+
+// Navbar Styling
+.navbar-nav .coursecontrols .nav-item + .nav-item {
+    margin-left: .25rem;
+}
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
+    background-color: $navbar-bg;
+}
+@mixin hover-navbar {
+    border-color: transparent;
+    background-color: rgba($white, 15%);
+}
+.moremenu .nav-tabs {
+    margin-left: 0;
+    background-color: $white;
+}
+.moremenu .nav-link.active {
+    background-color: #f8f9fa;
+    border-color: transparent;
+    border-bottom-color: lighten($navbar-bg, 20%);
+}
+.navbar-dark .navbar-nav .show>.nav-link, .navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .nav-link.active {
+    background-color: rgb(255 255 255 / 20%);
+}
+.primary-navigation .moremenu .nav-link:hover, .moremenu .nav-link:focus {
+    background-color: rgb(255 255 255 / 20%);
+}
+.primary-navigation {
+    .navigation {
+        height: $navbar-height;
+        .nav-link {
+            height: $navbar-height;
+            color: $navbar-dark-color;
+            border-top: 3px solid transparent;
+        }
+    }
+}
+
+
+// Edit button
+form.editmode-switch-form {
+    color: $navbar-dark-color;
+}
+.editmode-switch-form .text-primary {
+    color: $navbar-dark-color!important;
+}
+.custom-control-input:checked~.custom-control-label::before {
+    background-color: #2edd5c;
+}
+
+
+// Reset the default styling back to the bootstrap defaults for
+// the secondary outline button because gray-200 is much too light
+// for an outline button.
+.btn-outline-secondary {
+    @include button-outline-variant($gray-600);
+    border-color: $gray-600;
+}
+
+.btn-outline-info {
+    @include button-outline-variant($info-outline);
+}
+
+.btn-outline-warning {
+    @include button-outline-variant($warning-outline);
+}
+
+//@include bg-variant(".bg-gray", $gray-200, true);
+
+
+// Page Background Image
+.headerimagecontainer {
+    width: 100%;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    position: relative;
+}
+@media (min-width: 992px) {
+    .headerbkg {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+    }
+}
+
+
+// Layouts
+@media (min-width: 768px) {
+    #page.drawers .main-inner {
+        padding: 1rem;
+    }
+}
+
+#region-main {
+    overflow-x: unset;
+    border-radius: $border-radius;
+    background-color: $white;
+}
+
+.pagelayout-course .activityiconcontainer {
+    width: $courseiconsize;
+    height: $courseiconsize;
+}
+/*#page.drawers .main-inner {
+    box-shadow: 0px 2px 8px rgb(0 0 0 / 40%);
+}*/
+
+//New full screen
+#page.drawers {
+    padding: 0;
+}
+#page.drawers .main-inner {
+    margin: 0;
+    padding: 2rem 3rem;
+}
+
+#page.drawers.show-drawer-right {
+    padding-right: 0 !important;
+}
+#page.drawers.show-drawer-left {
+    padding-left: 0 !important;
+}
+
+//Admin pages
+
+
+
+//Grading Area
+.path-mod-assign [data-region="grading-navigation"] {
+    background-color: $white;
+}
+.path-mod-assign [data-region="grade-actions"] {
+    padding: 10px;
+    background-color: $white;
+}
+
+
+//Dashboard 
+.pagelayout-mydashboard .block_timeline.block.card, .pagelayout-mydashboard .block_calendar_month.block.card {
+    border: 0;
+}
+
+
+//Course index
+.section .activity {
+    margin-left: 1rem;
+}
+.course-section {
+    border-bottom: 0;
+}
+.activity-item:not(.activityinline) {
+    border: 0;
+    border-bottom: 1px solid $gray-300;
+    padding: .5rem;
+    border-radius: 0;
+}
+
+
+//News Slider
+.slider-col {
+    background-color: transparent; 
+}
+.news-slider .slick-prev, .news-slider .slick-next {
+    top: unset!important;
+    bottom: 0;
+}
+.slider-col .userpicture-container {
+    padding: 0;
+    min-height: 90px;
+}
+.slick-initialized .slick-slide {
+    margin: 0 1rem;
+}
+@media only screen and (min-width: 1024px){
+.slider-col {
+    padding: 0;
+}
+}
+
+
+//Activity navigation
+.top-activity-navigation.container-fluid {
+    display: flex;
+    justify-content: flex-end;
+}
+.activitynavitems {
+    background-color: $gray-100;
+    padding: 0.25rem 1rem;
+    border-radius: $border-radius;
+}
+.bottom-activity-navigation .row {
+    background-color: $gray-100;
+    padding: 1rem;
+    border-radius: $border-radius;
+}
+
+
+// Marketing Spots
+.marekting.card {
+    box-shadow: 2px 2px 3px rgb(0 0 0 / 10%);
+}
+.marketing .feature {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 4rem;
+    padding: 0 1rem;
+    /* width: 4rem; */
+    font-size: 2rem;
+}
+.marketingimg {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: bottom;
+}
+.marketing.card {
+    border: 0;
+    background-color: transparent;
+}
+.card-body.market-tile {
+    border: 1px solid $gray-400;
+    margin: 1rem;
+    padding: 0rem;
+    background-color: $body-bg;
+    box-shadow: 0 2px 2px 0px rgb(0 0 0 / 20%);
+}
+.marketcontent.card-text {
+    padding: 0 1rem;
+}
+.marketbtn {
+    margin-bottom: 1rem;
+}
+
+
+// Login page
+.login-container {
+    background-color: rgb(255 255 255 / 80%);
+    border-radius: 2rem;
+}
+
+// My courses drop down
+
+a.mycourseicon.mycourses {
+    color: $white;
+}
+.dropdown.mycoursesmenu {
+    background-color: $navbar-bg;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+}
+.dropdown-menu.dropdown-menu-right.iconsidebar.show {
+    padding: 1rem;
+    min-width: 235px;
+    border: 0;
+    box-shadow: 0px 2px 8px rgb(0 0 0 / 40%);
+}
+.dropdown.mycoursesmenu i::after {
+    content: "";
+    margin-right: 0;
+    margin-left: 4px;
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 9px;
+    width: 9px;
+    border: 0;
+}
+
+.iconsidebar .list-group-item {
+    border: 0;
+    border-bottom: 1px solid $gray-300;
+}
+
+.fp-blocks {
+    position: relative;
+    padding: 1rem;
+    background-color: $gray-100;
+}
+
+.generaltable {
+    background-color: $white;
+}
+
+.course-content ul.topics li.section .content.course-content-item-content, .course-content ul.weeks li.section .content.course-content-item-content {
+    margin: 0 3rem;
+    padding: 0;
+}
+
+#quiz-timer-wrapper {
+    top: 10px;
+}

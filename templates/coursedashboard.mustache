@@ -1,0 +1,49 @@
+{{ #displaycoursedashboard }}
+{{#hascoursedashblocks}}
+
+<div class="container-fluid">
+
+<div class="collapse" id="blockslider" class="slidingblockpanel">
+
+        <div class="fp-blocks">
+        {{#showpageimage}}
+        {{{ output.headerimage }}}
+    {{/showpageimage}}
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                            <section data-region="blocks-columna" class="hidden-print">
+                                {{{ columnabtn }}}
+                                {{{ columnaregion }}}
+                            </section>
+                    </div>
+                    <div class="col-md-4">
+                            <section data-region="blocks-columnb" class="hidden-print">
+                                {{{ columnbbtn }}}
+                                {{{ columnbregion }}}
+                            </section>
+                    </div>
+                    <div class="col-md-4">
+                            <section data-region="blocks-columnc" class="hidden-print">
+                                {{{ columncbtn }}}
+                                {{{ columncregion }}}
+                            </section>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+</div>
+
+
+<div class="text-left blockpanelbtn">
+<button id="blocksliderbutton" class="btn btn-primary blockpanelbutton" type="button" data-toggle="collapse" data-target="#blockslider" aria-expanded="false" aria-controls="blockslider">
+    <i class="fa fa-arrows-v" aria-hidden="true"> </i> <span class="blockbtntext">{{# str }} coursedashbutton, theme_learnr {{/ str }}</span>
+  </button>
+</div>
+
+</div>
+
+{{/hascoursedashblocks}}
+{{ /displaycoursedashboard }}

@@ -1,0 +1,34 @@
+{{#hasmarkettiles}}
+<div class="markettiles">
+    <div class="container-fluid">
+    <div class="row">
+
+        {{#markettiles}}
+        {{#hastile}}
+        <div class="col-md-4 text-center">
+        <div class="marketing card">
+        
+            <div class="card-body market-tile">
+            {{#tileimage}}
+            <img class="marketingimg" src="{{{tileimage}}}" width="100%">
+            {{/tileimage}}
+            <div class="feature bg-primary bg-gradient text-white mb-4 mt-n4"><i class="fa fa-{{marketingicon}}"></i></div>
+                <div class="marketcontent card-text text-left">
+                <h3>{{{title}}}</H3>
+                <p>{{{content}}}<p>
+                </div>
+                {{#hasbutton}}
+                <div class="marketbtn">
+                    {{{button}}}
+                </div>
+                {{/hasbutton}}
+            </div>
+        </div>
+        </div>
+        {{/hastile}}
+        {{/markettiles}}
+
+    </div>
+    </div>
+</div>
+{{/hasmarkettiles}}
