@@ -30,8 +30,6 @@ use stdClass;
 use moodle_url;
 use context_course;
 
-require_once ($CFG->dirroot . "/course/renderer.php");
-
 /**
  * Extending the core_renderer interface.
  *
@@ -47,9 +45,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if (empty($CFG->courseoverviewfileslimit)) {
             return '';
         }
-        require_once ($CFG->libdir . '/filestorage/file_storage.php');
-        require_once ($CFG->dirroot . '/course/lib.php');
-
         $fs = get_file_storage();
         $context = context_course::instance($this->page->course->id);
         $files = $fs->get_area_files($context->id, 'course', 'overviewfiles', false, 'filename', false);
@@ -57,8 +52,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $overviewfilesoptions = course_overviewfiles_options($this->page->course->id);
             $acceptedtypes = $overviewfilesoptions['accepted_types'];
             if ($acceptedtypes !== '*') {
-                // Filter only files with allowed extensions.
-                require_once ($CFG->libdir . '/filelib.php');
                 foreach ($files as $key => $file) {
                     if (!file_extension_in_typegroup($file->get_filename() , $acceptedtypes)) {
                         unset($files[$key]);
@@ -83,9 +76,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $headerbg = $this->page->theme->setting_file_url('pagebackgroundimage', 'pagebackgroundimage');
         $defaultimgurl = $this->image_url('headerbg', 'theme');
         $headerbgimgurl = $this->page->theme->setting_file_url('pagebackgroundimage', 'pagebackgroundimage', true);
-
         // Create html for header.
-        //sitewideimage
         if ($this->page->theme->settings->showcoursedashboard){
             $html = html_writer::start_div('headerbkg');
             // If course image display it in separate div to allow css styling of inline style.
@@ -110,7 +101,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     width: 100%; height: 100%;'
                 ));
                 $html .= html_writer::end_div(); // End default inline style div.
-                
             }
             $html .= html_writer::end_div();
         }
@@ -148,8 +138,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ['id' => 'region-main-settings-menu']
             ));
         }
-
-
         $header = new stdClass();
         $header->settingsmenu = $this->context_header_settings_menu();
         $header->contextheader = $this->context_header();
@@ -167,8 +155,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return $this->render_from_template('theme_learnr/core/full_header', $header);
     }
 
-
-
     /**
      * Returns standard navigation between activities in a course.
      *
@@ -181,24 +167,19 @@ class core_renderer extends \theme_boost\output\core_renderer {
             || $context->contextlevel != CONTEXT_MODULE) {
             return '';
         }
-
         // If the activity is in stealth mode, show no links.
         if ($this->page->cm->is_stealth()) {
             return '';
         }
-
         $course = $this->page->cm->get_course();
         $courseformat = course_get_format($course);
-
         // If the theme implements course index and the current course format uses course index and the current
         // page layout is not 'frametop' (this layout does not support course index), show no links.
         if ($this->page->theme->settings->activitynavdisplay ==2 || $this->page->theme->settings->activitynavdisplay ==4 ) {
                 return '';
         }
-
         // Get a list of all the activities in the course.
         $modules = get_fast_modinfo($course->id)->get_cms();
-
         // Put the modules into an array in order by the position they are shown in the course.
         $mods = [];
         $activitylist = [];
@@ -224,33 +205,25 @@ class core_renderer extends \theme_boost\output\core_renderer {
             // Add module URL (as key) and name (as value) to the activity list array.
             $activitylist[$linkurl->out(false)] = $modname;
         }
-
         $nummods = count($mods);
-
         // If there is only one mod then do nothing.
         if ($nummods == 1) {
             return '';
         }
-
         // Get an array of just the course module ids used to get the cmid value based on their position in the course.
         $modids = array_keys($mods);
-
         // Get the position in the array of the course module we are viewing.
         $position = array_search($this->page->cm->id, $modids);
-
         $prevmod = null;
         $nextmod = null;
-
         // Check if we have a previous mod to show.
         if ($position > 0) {
             $prevmod = $mods[$modids[$position - 1]];
         }
-
         // Check if we have a next mod to show.
         if ($position < ($nummods - 1)) {
             $nextmod = $mods[$modids[$position + 1]];
         }
-
         $activitynav = new \core_course\output\activity_navigation($prevmod, $nextmod);
         $renderer = $this->page->get_renderer('core', 'course');
         return $renderer->render_from_template('theme_learnr/core_course/top_activity_navigation', $activitynav);
@@ -268,24 +241,19 @@ class core_renderer extends \theme_boost\output\core_renderer {
             || $context->contextlevel != CONTEXT_MODULE) {
             return '';
         }
-
         // If the activity is in stealth mode, show no links.
         if ($this->page->cm->is_stealth()) {
             return '';
         }
-
         $course = $this->page->cm->get_course();
         $courseformat = course_get_format($course);
-
         // If the theme implements course index and the current course format uses course index and the current
         // page layout is not 'frametop' (this layout does not support course index), show no links.
         if ($this->page->theme->settings->activitynavdisplay ==1 || $this->page->theme->settings->activitynavdisplay ==4 ) {
                 return '';
         }
-
         // Get a list of all the activities in the course.
         $modules = get_fast_modinfo($course->id)->get_cms();
-
         // Put the modules into an array in order by the position they are shown in the course.
         $mods = [];
         $activitylist = [];
@@ -295,7 +263,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 continue;
             }
             $mods[$module->id] = $module;
-
             // No need to add the current module to the list for the activity dropdown menu.
             if ($module->id == $this->page->cm->id) {
                 continue;
@@ -311,33 +278,25 @@ class core_renderer extends \theme_boost\output\core_renderer {
             // Add module URL (as key) and name (as value) to the activity list array.
             $activitylist[$linkurl->out(false)] = $modname;
         }
-
         $nummods = count($mods);
-
         // If there is only one mod then do nothing.
         if ($nummods == 1) {
             return '';
         }
-
         // Get an array of just the course module ids used to get the cmid value based on their position in the course.
         $modids = array_keys($mods);
-
         // Get the position in the array of the course module we are viewing.
         $position = array_search($this->page->cm->id, $modids);
-
         $prevmod = null;
         $nextmod = null;
-
         // Check if we have a previous mod to show.
         if ($position > 0) {
             $prevmod = $mods[$modids[$position - 1]];
         }
-
         // Check if we have a next mod to show.
         if ($position < ($nummods - 1)) {
             $nextmod = $mods[$modids[$position + 1]];
         }
-
         $activitynav = new \core_course\output\activity_navigation($prevmod, $nextmod, $activitylist);
         $renderer = $this->page->get_renderer('core', 'course');
         return $renderer->render($activitynav);
@@ -345,8 +304,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
 
     public function fp_marketingtiles() {
-        global $PAGE;
-        
+
         $hasmarketing1 = (empty($this->page->theme->settings->marketing1)) ? false : format_string($this->page->theme->settings->marketing1);
         $marketing1content = (empty($this->page->theme->settings->marketing1content)) ? false : format_text($this->page->theme->settings->marketing1content);
         $marketing1buttontext = (empty($this->page->theme->settings->marketing1buttontext)) ? false : format_string($this->page->theme->settings->marketing1buttontext);
@@ -399,12 +357,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 'button' => "<a href = '$marketing3buttonurl' title = '$marketing3buttontext' alt='$marketing3buttontext' class='btn btn-primary' target='$marketing3target'> $marketing3buttontext </a>",
                 'marketingicon' => $marketing3icon,
             ) ,
-        ) , ];
+        ) , 
+    ];
         return $this->render_from_template('theme_learnr/fpmarkettiles', $fp_marketingtiles);
     }
-
-
-
 
 protected static function timeaccesscompare($a, $b) {
             // Timeaccess is lastaccess entry and timestart an enrol entry.
