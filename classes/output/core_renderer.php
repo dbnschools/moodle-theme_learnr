@@ -30,22 +30,6 @@ use stdClass;
 use moodle_url;
 use context_course;
 
-/**
- * Extending the core_renderer interface.
- *
- * @package    theme_learnr
- * @copyright  2022 Dearborn Public Schools, Chris Kenniburg
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-/**
- * Essential is a clean and customizable theme.
- *
- * @package     theme_essential
- * @copyright   2018 Gareth J Barnard
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 class core_renderer extends \theme_boost\output\core_renderer {
 
     public function headerimage() {
@@ -397,9 +381,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // 'b' must be the enrol entry.
         return 1;
     }
-
     // End copied code
-    // The following code is a derivative work of the code from theme Essential https://moodle.org/plugins/theme_essential, @copyright Gareth J Barnard
+    
+    // The following code is a derivative work of the code from theme Essential https://moodle.org/plugins/theme_essential, by Gareth J Barnard
     public function learnr_mycourses() {
         $context = $this->page->context;
         $menu = new custom_menu();
