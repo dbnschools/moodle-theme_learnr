@@ -2,6 +2,9 @@ moodle-theme_learnr
 ========================
 # LearnR
 
+## Ver 1.3
+* Code derivitive notice and version update
+
 ## Ver 1.2
 * Code clean up and other various fixes
 

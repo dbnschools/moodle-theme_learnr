@@ -25,8 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'theme_learnr';
-$plugin->version = 2022042200;
-$plugin->release = 'v1.2';
-$plugin->requires = 2022031500;
+$plugin->version = 2022042500;
+$plugin->release = 'v1.3';
+$plugin->requires = 2022041200;
 $plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = array('theme_boost' => 2022011000);
+$plugin->dependencies = array('theme_boost' => 2022041900);
