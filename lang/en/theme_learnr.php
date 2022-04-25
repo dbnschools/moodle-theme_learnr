@@ -62,7 +62,8 @@ $string['coursedashbutton'] = 'Course Dashboard';
 $string['closecoursedashboard'] = 'Close';
 $string['showcoursedashboard'] = 'Show Course Course Dashboard';
 $string['showcoursedashboard_desc'] = 'The Course Dashboard is a three column collapsible panel that displays course blocks at the top of the page.  It is highly recommended that you use this when hiding the block drawer.';
-
+$string['backgroundimage'] = 'Course Dashboard Sitewide Image';
+$string['backgroundimage_desc'] = 'This image will be used as the default Course Dashboard image throughout the side.  It can be set as the only image using the checkbox on this page.';
 
 // Color Settings
 $string['successcolor'] = 'Success color';

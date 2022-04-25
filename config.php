@@ -198,7 +198,7 @@ if ($THEME->settings->showcoursedashboard == 1 && $THEME->settings->showblockdra
     $THEME->layouts['incourse'] = [
         'file' => 'drawers.php',
         'regions' => ['side-pre','columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
-        'defaultregion' => 'columna',
+        'defaultregion' => 'side-pre',
     ];
 }
 

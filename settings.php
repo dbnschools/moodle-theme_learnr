@@ -158,8 +158,8 @@ if ($ADMIN->fulltree) {
 
     // Background image setting.
     $name = 'theme_learnr/pagebackgroundimage';
-    $title = get_string('backgroundimage', 'theme_boost');
-    $description = get_string('backgroundimage_desc', 'theme_boost');
+    $title = get_string('backgroundimage', 'theme_learnr');
+    $description = get_string('backgroundimage_desc', 'theme_learnr');
     $setting = new admin_setting_configstoredfile($name, $title, $description, 'pagebackgroundimage');
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);

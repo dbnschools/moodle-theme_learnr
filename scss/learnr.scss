@@ -91,45 +91,21 @@ form.editmode-switch-form {
 
 
 // Layouts
-@media (min-width: 768px) {
-    #page.drawers .main-inner {
-        padding: 1rem;
-    }
-}
-
 #region-main {
     overflow-x: unset;
     border-radius: $border-radius;
     background-color: $white;
 }
-
 .pagelayout-course .activityiconcontainer {
     width: $courseiconsize;
     height: $courseiconsize;
 }
-/*#page.drawers .main-inner {
-    box-shadow: 0px 2px 8px rgb(0 0 0 / 40%);
-}*/
-
-//New full screen
-#page.drawers {
-    padding: 0;
-}
-#page.drawers .main-inner {
-    margin: 0;
-    padding: 2rem 3rem;
-}
-
 #page.drawers.show-drawer-right {
     padding-right: 0 !important;
 }
 #page.drawers.show-drawer-left {
     padding-left: 0 !important;
 }
-
-//Admin pages
-
-
 
 //Grading Area
 .path-mod-assign [data-region="grading-navigation"] {
@@ -139,7 +115,12 @@ form.editmode-switch-form {
     padding: 10px;
     background-color: $white;
 }
-
+.generaltable {
+    background-color: $white;
+}
+#quiz-timer-wrapper {
+    top: 10px;
+}
 
 //Dashboard 
 .pagelayout-mydashboard .block_timeline.block.card, .pagelayout-mydashboard .block_calendar_month.block.card {
@@ -147,7 +128,8 @@ form.editmode-switch-form {
 }
 
 
-//Course index
+//Section Style  District Color #005c56
+/* Style one LearnR */
 .section .activity {
     margin-left: 1rem;
 }
@@ -160,6 +142,48 @@ form.editmode-switch-form {
     padding: .5rem;
     border-radius: 0;
 }
+.activity-item:hover {
+    background-color: rgba($primary,10%);
+}
+@media (min-width: 768px) {
+    .course-content ul.topics li.section .content.course-content-item-content, .course-content ul.weeks li.section .content.course-content-item-content {
+        margin: 0 3rem;
+        padding: 0;
+    }
+}
+
+
+/* Style 2 Boxes 
+.course-content ul.topics li.section, .course-content ul.weeks li.section {
+    padding: 1rem;
+    box-shadow: 0px 0px 3px $gray-700;
+    margin: 1rem 0;
+}
+.activity-item:not(.activityinline) {
+    border: 0;
+    padding: .75rem;
+}
+.activity-item:hover {
+    background-color: rgba($primary,10%);
+}
+*/
+
+/* Style 3 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //News Slider
@@ -285,17 +309,4 @@ a.mycourseicon.mycourses {
     position: relative;
     padding: 1rem;
     background-color: $gray-100;
-}
-
-.generaltable {
-    background-color: $white;
-}
-
-.course-content ul.topics li.section .content.course-content-item-content, .course-content ul.weeks li.section .content.course-content-item-content {
-    margin: 0 3rem;
-    padding: 0;
-}
-
-#quiz-timer-wrapper {
-    top: 10px;
 }

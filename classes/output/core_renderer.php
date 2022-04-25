@@ -362,31 +362,32 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return $this->render_from_template('theme_learnr/fpmarkettiles', $fp_marketingtiles);
     }
 
-protected static function timeaccesscompare($a, $b) {
-            // Timeaccess is lastaccess entry and timestart an enrol entry.
-            if ((!empty($a->timeaccess)) && (!empty($b->timeaccess))) {
-                // Both last access.
-                if ($a->timeaccess == $b->timeaccess) {
-                    return 0;
-                }
-                return ($a->timeaccess > $b->timeaccess) ? -1 : 1;
+    // The following code is a derivative work of the code from theme Essential https://moodle.org/plugins/theme_essential, Gareth J Barnard
+    protected static function timeaccesscompare($a, $b) {
+        // Timeaccess is lastaccess entry and timestart an enrol entry.
+        if ((!empty($a->timeaccess)) && (!empty($b->timeaccess))) {
+            // Both last access.
+            if ($a->timeaccess == $b->timeaccess) {
+                return 0;
             }
-            else if ((!empty($a->timestart)) && (!empty($b->timestart))) {
-                // Both enrol.
-                if ($a->timestart == $b->timestart) {
-                    return 0;
-                }
-                return ($a->timestart > $b->timestart) ? -1 : 1;
-            }
-            // Must be comparing an enrol with a last access.
-            // -1 is to say that 'a' comes before 'b'.
-            if (!empty($a->timestart)) {
-                // 'a' is the enrol entry.
-                return -1;
-            }
-            // 'b' must be the enrol entry.
-            return 1;
+            return ($a->timeaccess > $b->timeaccess) ? -1 : 1;
         }
+        else if ((!empty($a->timestart)) && (!empty($b->timestart))) {
+            // Both enrol.
+            if ($a->timestart == $b->timestart) {
+                return 0;
+            }
+            return ($a->timestart > $b->timestart) ? -1 : 1;
+        }
+        // Must be comparing an enrol with a last access.
+        // -1 is to say that 'a' comes before 'b'.
+        if (!empty($a->timestart)) {
+            // 'a' is the enrol entry.
+            return -1;
+        }
+        // 'b' must be the enrol entry.
+        return 1;
+    }
 
     public function learnr_mycourses() {
         $context = $this->page->context;
@@ -402,7 +403,7 @@ protected static function timeaccesscompare($a, $b) {
             $dashtitle = $dashlabel;
             $nomycourses = get_string('nomycourses', 'theme_learnr');
             $courses = enrol_get_my_courses(null, 'sortorder ASC');
-                
+             
                 if ($courses) {
                     // We have something to work with.  Get the last accessed information for the user and populate.
                     global $DB, $USER;
@@ -475,6 +476,6 @@ protected static function timeaccesscompare($a, $b) {
                 }
         return $content;
     }
-
+    // End derivative work
 
 }
