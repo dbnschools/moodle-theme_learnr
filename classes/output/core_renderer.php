@@ -37,6 +37,15 @@ use context_course;
  * @copyright  2022 Dearborn Public Schools, Chris Kenniburg
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+/**
+ * Essential is a clean and customizable theme.
+ *
+ * @package     theme_essential
+ * @copyright   2018 Gareth J Barnard
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 class core_renderer extends \theme_boost\output\core_renderer {
 
     public function headerimage() {
@@ -362,7 +371,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return $this->render_from_template('theme_learnr/fpmarkettiles', $fp_marketingtiles);
     }
 
-    // The following code is a derivative work of the code from theme Essential https://moodle.org/plugins/theme_essential, Gareth J Barnard
+    // The following code is a copied work of the code from theme Essential https://moodle.org/plugins/theme_essential, @copyright Gareth J Barnard
     protected static function timeaccesscompare($a, $b) {
         // Timeaccess is lastaccess entry and timestart an enrol entry.
         if ((!empty($a->timeaccess)) && (!empty($b->timeaccess))) {
@@ -389,6 +398,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return 1;
     }
 
+    // End copied code
+    // The following code is a derivative work of the code from theme Essential https://moodle.org/plugins/theme_essential, @copyright Gareth J Barnard
     public function learnr_mycourses() {
         $context = $this->page->context;
         $menu = new custom_menu();
