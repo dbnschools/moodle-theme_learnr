@@ -356,6 +356,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     // The following code is a copied work of the code from theme Essential https://moodle.org/plugins/theme_essential, @copyright Gareth J Barnard
+    /***************************************************************************************
+    *    Title: Theme Essential
+    *    Author: Gareth J Barnard
+    *    Date: 2016
+    *    Code version: https://github.com/gjb2048/moodle-theme_essential/commit/8650738efca29c3ce2a4f997dfbe19e2d76dd89a
+    *    Availability: https://moodle.org/plugins/theme_essential
+    *
+    ***************************************************************************************/
     protected static function timeaccesscompare($a, $b) {
         // Timeaccess is lastaccess entry and timestart an enrol entry.
         if ((!empty($a->timeaccess)) && (!empty($b->timeaccess))) {
@@ -382,7 +390,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return 1;
     }
     // End copied code
-    
+
     // The following code is a derivative work of the code from theme Essential https://moodle.org/plugins/theme_essential, by Gareth J Barnard
     public function learnr_mycourses() {
         $context = $this->page->context;
