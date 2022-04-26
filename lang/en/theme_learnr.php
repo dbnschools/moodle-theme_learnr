@@ -70,6 +70,9 @@ $string['sections-boost'] = 'Boost Default';
 $string['sections-learnr'] = 'LearnR Default Style';
 $string['sections-boxed'] = 'Boxed Style';
 $string['sections-bars'] = 'Solid Section Bars Style';
+$string['fullwidthpage'] = 'Full Width Page Display';
+$string['fullwidthpage_desc'] = 'Make the pages full width for consistency throughout the course.  Turning this off reverts back to standard Boost narrow page widths.';
+
 
 // Color Settings
 $string['successcolor'] = 'Success color';

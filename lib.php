@@ -96,6 +96,7 @@ function theme_learnr_get_pre_scss($theme) {
             'secondarynavbarlink' => ['navbar-light-color'],
             'drawerbg' => ['drawer-bg-color'],
             'bodybg' => ['body-bg'],
+            'fullwidthpage' => ['fullwidthpage'],
     ];
 
     // Prepend variables first.

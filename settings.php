@@ -81,6 +81,14 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
+    $name = 'theme_learnr/fullwidthpage';
+    $title = get_string('fullwidthpage', 'theme_learnr');
+    $description = get_string('fullwidthpage_desc', 'theme_learnr');
+    $default = '1';
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
     // Show/hide course index navigation.
     $name = 'theme_learnr/showcourseindexnav';
     $title = get_string('showcourseindexnav', 'theme_learnr');
