@@ -64,6 +64,12 @@ $string['showcoursedashboard'] = 'Show Course Course Dashboard';
 $string['showcoursedashboard_desc'] = 'The Course Dashboard is a three column collapsible panel that displays course blocks at the top of the page.  It is highly recommended that you use this when hiding the block drawer.';
 $string['backgroundimage'] = 'Course Dashboard Sitewide Image';
 $string['backgroundimage_desc'] = 'This image will be used as the default Course Dashboard image throughout the side.  It can be set as the only image using the checkbox on this page.';
+$string['sectionstyle'] = 'Course Section Style Chooser';
+$string['sectionstyle_desc'] = 'Choose a style for course sections.';
+$string['sections-boost'] = 'Boost Default';
+$string['sections-learnr'] = 'LearnR Default Style';
+$string['sections-boxed'] = 'Boxed Style';
+$string['sections-bars'] = 'Solid Section Bars Style';
 
 // Color Settings
 $string['successcolor'] = 'Success color';

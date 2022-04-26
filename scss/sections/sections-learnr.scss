@@ -1,0 +1,22 @@
+/* Style one LearnR */
+.section .activity {
+    margin-left: 1rem;
+}
+.course-section {
+    border-bottom: 0;
+}
+.activity-item:not(.activityinline) {
+    border: 0;
+    border-bottom: 1px solid $gray-300;
+    padding: .5rem;
+    border-radius: 0;
+}
+.activity-item:hover {
+    background-color: rgba($primary,10%);
+}
+@media (min-width: 768px) {
+    .course-content ul.topics li.section .content.course-content-item-content, .course-content ul.weeks li.section .content.course-content-item-content {
+        margin: 0 3rem;
+        padding: 0;
+    }
+}

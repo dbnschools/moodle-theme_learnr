@@ -1,0 +1,21 @@
+/* Sections Bars */
+.course-section-header {
+    background-color: rgba($primary, 20%);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+.section .activity {
+    margin-left: 1rem;
+}
+.course-section {
+    border-bottom: 0;
+}
+.activity-item:not(.activityinline) {
+    border-radius: .25rem;
+}
+@media (min-width: 768px) {
+    .course-content ul.topics li.section .content.course-content-item-content, .course-content ul.weeks li.section .content.course-content-item-content {
+        margin: 0 3rem;
+        padding: 0;
+    }
+}

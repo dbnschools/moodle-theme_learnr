@@ -1,0 +1,13 @@
+/* Style 2 Boxes */
+.course-content ul.topics li.section, .course-content ul.weeks li.section {
+    padding: 1rem;
+    box-shadow: 0px 0px 3px rgba($primary, 30%);
+    margin: 1rem 0;
+}
+.activity-item:not(.activityinline) {
+    border: 0;
+    padding: .75rem;
+}
+.activity-item:hover {
+    background-color: rgba($primary,10%);
+}

@@ -67,11 +67,25 @@ if ($ADMIN->fulltree) {
             array('maxfiles' => 20, 'accepted_types' => array('.scss')));
     $page->add($setting);
 
+    // Sections Display Options.
+    $name = 'theme_learnr/sectionstyle';
+    $title = get_string('sectionstyle' , 'theme_learnr');
+    $description = get_string('sectionstyle_desc', 'theme_learnr');
+    $option1 = get_string('sections-learnr', 'theme_learnr');
+    $option2 = get_string('sections-boxed', 'theme_learnr');
+    $option3 = get_string('sections-boost', 'theme_learnr');
+    $option4 = get_string('sections-bars', 'theme_learnr');
+    $default = '1';
+    $choices = array('1'=>$option1, '2'=>$option2, '3'=>$option3, '4'=>$option4);
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
     // Show/hide course index navigation.
     $name = 'theme_learnr/showcourseindexnav';
     $title = get_string('showcourseindexnav', 'theme_learnr');
     $description = get_string('showcourseindexnav_desc', 'theme_learnr');
-    $default = '';
+    $default = '1';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
@@ -80,7 +94,7 @@ if ($ADMIN->fulltree) {
     $name = 'theme_learnr/showblockdrawer';
     $title = get_string('showblockdrawer', 'theme_learnr');
     $description = get_string('showblockdrawer_desc', 'theme_learnr');
-    $default = '';
+    $default = '1';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
@@ -133,7 +147,7 @@ if ($ADMIN->fulltree) {
     $name = 'theme_learnr/showcoursedashboard';
     $title = get_string('showcoursedashboard', 'theme_learnr');
     $description = get_string('showcoursedashboard_desc', 'theme_learnr');
-    $default = '1';
+    $default = '';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
     
     $page->add($setting);

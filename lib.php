@@ -44,6 +44,23 @@ function theme_learnr_get_main_scss_content($theme) {
         $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/preset/default.scss');
     }
     $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/learnr.scss');
+
+    if ($theme->settings->sectionstyle == 1) {
+        $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/sections/sections-learnr.scss');
+    }
+
+    if ($theme->settings->sectionstyle == 2) {
+        $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/sections/sections-boxed.scss');
+    }
+
+    if ($theme->settings->sectionstyle == 3) {
+        $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/sections/sections-boost.scss');
+    }
+
+    if ($theme->settings->sectionstyle == 4) {
+        $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/sections/sections-bars.scss');
+    }
+
     $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/learnr/post.scss');
 
     return $scss;
