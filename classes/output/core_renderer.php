@@ -70,7 +70,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $defaultimgurl = $this->image_url('headerbg', 'theme');
         $headerbgimgurl = $this->page->theme->setting_file_url('pagebackgroundimage', 'pagebackgroundimage', true);
         // Create html for header.
-        if ($this->page->theme->settings->showcoursedashboard){
+        if ($this->page->theme->settings->showheaderblockpanel){
             $html = html_writer::start_div('headerbkg');
             // If course image display it in separate div to allow css styling of inline style.
             if ($this->page->theme->settings->showpageimage == 1 && $courseimage && !$this->page->theme->settings->sitewideimage == 1) {
@@ -356,14 +356,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     // The following code is a copied work of the code from theme Essential https://moodle.org/plugins/theme_essential, @copyright Gareth J Barnard
-    /***************************************************************************************
-    *    Title: Theme Essential
-    *    Author: Gareth J Barnard
-    *    Date: 2016
-    *    Code version: https://github.com/gjb2048/moodle-theme_essential/commit/8650738efca29c3ce2a4f997dfbe19e2d76dd89a
-    *    Availability: https://moodle.org/plugins/theme_essential
-    *
-    ***************************************************************************************/
     protected static function timeaccesscompare($a, $b) {
         // Timeaccess is lastaccess entry and timestart an enrol entry.
         if ((!empty($a->timeaccess)) && (!empty($b->timeaccess))) {

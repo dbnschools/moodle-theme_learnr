@@ -43,15 +43,28 @@ $columnbregion = $OUTPUT->custom_block_region('columnb');
 $columncbtn = $OUTPUT->addblockbutton('columnc');
 $columncregion = $OUTPUT->custom_block_region('columnc');
 
-$checkblocka = (strpos($blockscolumna, 'data-block=') !== false || !empty($addblockbutton));
-$checkblockb = (strpos($blockscolumnb, 'data-block=') !== false || !empty($addblockbutton));
-$checkblockc = (strpos($blockscolumnc, 'data-block=') !== false || !empty($addblockbutton));
+$displayheaderblocks = ($this->page->pagelayout == 'course' && isset($COURSE->id) && $COURSE->id > 1)&&  $this->page->theme->settings->showheaderblockpanel;
+$showheaderblockpanel = (empty($this->page->theme->settings->showheaderblockpanel)) ? false : $this->page->theme->settings->showheaderblockpanel;
+$showpageimage = (empty($this->page->theme->settings->showpageimage)) ? false : $this->page->theme->settings->showpageimage;
 
-$displaycoursedashboard = $this->page->pagelayout == 'course' && isset($COURSE->id) && $COURSE->id > 1;
+/*if (isset($this->page->theme->settings->showheaderblocks) && $this->page->theme->settings->showheaderblocks == 1 &&  $this->page->theme->settings->showheaderblockpanel) {
+    $blockscolumna = $OUTPUT->blocks('columna');
+    $blockscolumnb = $OUTPUT->blocks('columnb');
+    $blockscolumnc = $OUTPUT->blocks('columnc');
 
-$hascoursedashblocks = false ;
-if ($checkblocka || $checkblockb || $checkblockc) {
-    $hascoursedashblocks = true;
+    $columnabtn = $OUTPUT->addblockbutton('columna');
+    $columnaregion = $OUTPUT->custom_block_region('columna');
+
+    $columnbbtn = $OUTPUT->addblockbutton('columnb');
+    $columnbregion = $OUTPUT->custom_block_region('columnb');
+
+    $columncbtn = $OUTPUT->addblockbutton('columnc');
+    $columncregion = $OUTPUT->custom_block_region('columnc');
+}*/
+
+$hasheaderblocks = false;
+if (isset($this->page->theme->settings->showheaderblocks) && $this->page->theme->settings->showheaderblocks == 1) {
+    $hasheaderblocks = true;
 }
 
 $blocksfootera = $OUTPUT->blocks('footera');
@@ -129,8 +142,6 @@ if ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'fron
 
 $showcourseindexnav = (empty($this->page->theme->settings->showcourseindexnav)) ? false : $this->page->theme->settings->showcourseindexnav;
 $showblockdrawer = (empty($this->page->theme->settings->showblockdrawer)) ? false : $this->page->theme->settings->showblockdrawer;
-$showcoursedashboard = (empty($this->page->theme->settings->showcoursedashboard)) ? false : $this->page->theme->settings->showcoursedashboard;
-$showpageimage = (empty($this->page->theme->settings->showpageimage)) ? false : $this->page->theme->settings->showpageimage;
 
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
@@ -177,28 +188,27 @@ $templatecontext = [
     'overflow' => $overflow,
     'headercontent' => $headercontent,
     'showcourseindexnav' => $showcourseindexnav,
-    'showpageimage' => $showpageimage,
+    'showblockdrawer' => $showblockdrawer,
     'alertbox' => $alertbox,
     'fptextbox' => $fptextbox,
     'hasmarketingtiles' => $hasmarketingtiles,
     'addblockbutton' => $addblockbutton,
-    'columnabtn' => $columnabtn,
-    'columnaregion' => $columnaregion,
-    'columnbbtn' => $columnbbtn,
-    'columnbregion' => $columnbregion,
-    'columncbtn' => $columncbtn,
-    'columncregion' => $columncregion,
     'footerabtn' => $footerabtn,
     'footeraregion' => $footeraregion,
     'footerbbtn' => $footerbbtn,
     'footerbregion' => $footerbregion,
     'footercbtn' => $footercbtn,
     'footercregion' => $footercregion,
-    'displaycoursedashboard' => $displaycoursedashboard,
-    'hascoursedashblocks' => $hascoursedashblocks,
     'hasfooterblocks' => $hasfooterblocks,
-    'showblockdrawer' => $showblockdrawer,
-    'showcoursedashboard' => $showcoursedashboard,
+    'columnabtn' => $columnabtn,
+    'columnaregion' => $columnaregion,
+    'columnbbtn' => $columnbbtn,
+    'columnbregion' => $columnbregion,
+    'columncbtn' => $columncbtn,
+    'columncregion' => $columncregion,
+    'displayheaderblocks' => $displayheaderblocks,
+    'hasheaderblocks' => $hasheaderblocks,
+    'showpageimage' => $showpageimage,
 ];
 
 $this->page->requires->jquery();

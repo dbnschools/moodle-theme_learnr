@@ -181,9 +181,39 @@
                                 </div>
                             </div>
                         {{/overflow}}
-                        {{#showcoursedashboard}}
-                            {{>theme_learnr/coursedashboard}}
-                        {{/showcoursedashboard}}
+                        {{#displayheaderblocks}}
+                            <div class="container-fluid">
+                                <div class="fp-blocks">
+                                {{#showpageimage}}
+                                    {{{ output.headerimage }}}
+                                {{/showpageimage}}
+                                    <div class="container-fluid">
+                                    {{#hasheaderblocks}}
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                    <section data-region="blocks-columna" class="hidden-print">
+                                                        {{{ columnabtn }}}
+                                                        {{{ columnaregion }}}
+                                                    </section>
+                                            </div>
+                                            <div class="col-md-4">
+                                                    <section data-region="blocks-columnb" class="hidden-print">
+                                                        {{{ columnbbtn }}}
+                                                        {{{ columnbregion }}}
+                                                    </section>
+                                            </div>
+                                            <div class="col-md-4">
+                                                    <section data-region="blocks-columnc" class="hidden-print">
+                                                        {{{ columncbtn }}}
+                                                        {{{ columncregion }}}
+                                                    </section>
+                                            </div>
+                                        </div>
+                                    {{/hasheaderblocks}}
+                                    </div>
+                                </div>
+                            </div>
+                        {{/displayheaderblocks}}
                         {{{ output.main_content }}}
                         {{{ output.course_content_footer }}}
                     </section>

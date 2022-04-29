@@ -30,29 +30,7 @@ require_once($CFG->dirroot . '/course/lib.php');
 // Add block button in editing mode.
 $addblockbutton = $OUTPUT->addblockbutton();
 
-$blockscolumna = $OUTPUT->blocks('columna');
-$blockscolumnb = $OUTPUT->blocks('columnb');
-$blockscolumnc = $OUTPUT->blocks('columnc');
-
-$columnabtn = $OUTPUT->addblockbutton('columna');
-$columnaregion = $OUTPUT->custom_block_region('columna');
-
-$columnbbtn = $OUTPUT->addblockbutton('columnb');
-$columnbregion = $OUTPUT->custom_block_region('columnb');
-
-$columncbtn = $OUTPUT->addblockbutton('columnc');
-$columncregion = $OUTPUT->custom_block_region('columnc');
-
-$checkblocka = (strpos($blockscolumna, 'data-block=') !== false || !empty($addblockbutton));
-$checkblockb = (strpos($blockscolumnb, 'data-block=') !== false || !empty($addblockbutton));
-$checkblockc = (strpos($blockscolumnc, 'data-block=') !== false || !empty($addblockbutton));
-
-$displaycoursedashboard = $this->page->pagelayout == 'course' && isset($COURSE->id) && $COURSE->id > 1;
-
-$hascoursedashblocks = false ;
-if ($checkblocka || $checkblockb || $checkblockc) {
-    $hascoursedashblocks = true;
-}
+$displayheaderblocks = $this->page->pagelayout == 'course' && isset($COURSE->id) && $COURSE->id > 1;
 
 user_preference_allow_ajax_update('drawer-open-nav', PARAM_ALPHA);
 user_preference_allow_ajax_update('drawer-open-index', PARAM_BOOL);
@@ -109,8 +87,7 @@ if ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'fron
 
 $showcourseindexnav = (empty($this->page->theme->settings->showcourseindexnav)) ? false : $this->page->theme->settings->showcourseindexnav;
 $showblockdrawer = (empty($this->page->theme->settings->showblockdrawer)) ? false : $this->page->theme->settings->showblockdrawer;
-$showcoursedashboard = (empty($this->page->theme->settings->showcoursedashboard)) ? false : $this->page->theme->settings->showcoursedashboard;
-$showpageimage = (empty($this->page->theme->settings->showpageimage)) ? false : $this->page->theme->settings->showpageimage;
+
 
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
@@ -157,21 +134,12 @@ $templatecontext = [
     'overflow' => $overflow,
     'headercontent' => $headercontent,
     'showcourseindexnav' => $showcourseindexnav,
-    'showpageimage' => $showpageimage,
     'alertbox' => $alertbox,
     'fptextbox' => $fptextbox,
     'hasmarketingtiles' => $hasmarketingtiles,
     'addblockbutton' => $addblockbutton,
-    'columnabtn' => $columnabtn,
-    'columnaregion' => $columnaregion,
-    'columnbbtn' => $columnbbtn,
-    'columnbregion' => $columnbregion,
-    'columncbtn' => $columncbtn,
-    'columncregion' => $columncregion,
-    'displaycoursedashboard' => $displaycoursedashboard,
-    'hascoursedashblocks' => $hascoursedashblocks,
     'showblockdrawer' => $showblockdrawer,
-    'showcoursedashboard' => $showcoursedashboard,
+
 ];
 
 $this->page->requires->jquery();

@@ -33,8 +33,8 @@ $string['contentsettings'] = 'Content Areas';
 $string['marketing'] = 'Marketing Tiles';
 $string['showcourseindexnav'] = 'Show Course Index Navigation';
 $string['showcourseindexnav_desc'] = 'Show or hide the Course Index drawer navigation.';
-$string['showpageimage'] = 'Show Course Dashboard Images';
-$string['showpageimage_desc'] = 'Use custom images as a background for the Course Dashboard panel.  There is a theme default image and each course can use a custom image that the teacher can upload in course settings. You may also upload a site default image in the setting provided on this page.';
+$string['showpageimage'] = 'Show Course Header Image in Block Panel';
+$string['showpageimage_desc'] = 'Use custom images as a background for the Course Header Block Panel.  There is a theme default image and each course can use a custom image that the teacher can upload in course settings. You may also upload a site default image in the Course Header Sitewide Image setting provided on this page.';
 $string['sitewideimage'] = 'Sitewide Course Dashboard Image';
 $string['sitewideimage_desc'] = 'This setting forces the theme default page image or the page background image to be used for all course dashboards. Images uploaded into course settings are not used.';
 $string['courseiconsize'] = 'Course Icon Size';
@@ -60,10 +60,10 @@ $string['showblockdrawer'] = 'Show Block Drawer';
 $string['showblockdrawer_desc'] = 'Show or hide the block drawer on the left side of the page. Hiding this activates the Learn Course Dashboard which is a 3 column ';
 $string['coursedashbutton'] = 'Course Dashboard';
 $string['closecoursedashboard'] = 'Close';
-$string['showcoursedashboard'] = 'Show Course Course Dashboard';
-$string['showcoursedashboard_desc'] = 'The Course Dashboard is a three column collapsible panel that displays course blocks at the top of the page.  It is highly recommended that you use this when hiding the block drawer.';
-$string['backgroundimage'] = 'Course Dashboard Sitewide Image';
-$string['backgroundimage_desc'] = 'This image will be used as the default Course Dashboard image throughout the side.  It can be set as the only image using the checkbox on this page.';
+$string['showheaderblockpanel'] = 'Show Course Header Block Panel';
+$string['showheaderblockpanel_desc'] = 'The Header Block Panel is a three column panel that displays course blocks at the top of the page.  It is highly recommended that you use this when hiding the block drawer. This area can be set to display the course image.';
+$string['backgroundimage'] = 'Course Header Sitewide Image';
+$string['backgroundimage_desc'] = 'This image will be used as the default Course Header Block Panel image throughout the side.  It can be set as the only image using the checkbox on this page.';
 $string['sectionstyle'] = 'Course Section Style Chooser';
 $string['sectionstyle_desc'] = 'Choose a style for course sections.';
 $string['sections-boost'] = 'Boost Default';
@@ -72,6 +72,8 @@ $string['sections-boxed'] = 'Boxed Style';
 $string['sections-bars'] = 'Solid Section Bars Style';
 $string['fullwidthpage'] = 'Full Width Page Display';
 $string['fullwidthpage_desc'] = 'Make the pages full width for consistency throughout the course.  Turning this off reverts back to standard Boost narrow page widths.';
+$string['showheaderblocks'] = 'Show Block Regions in Course Header Area';
+$string['showheaderblocks_desc'] = 'Show or hide the block regions in the content header area.  You might want to display a custom header image without allowing a teacher to place blocks in this area. Turn this off to eliminate the blocks for this area.';
 
 
 // Color Settings

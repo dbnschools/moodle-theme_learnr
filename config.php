@@ -166,7 +166,7 @@ $THEME->layouts = [
     ]
 ];
 
-if ($THEME->settings->showcoursedashboard == 1 && $THEME->settings->showblockdrawer == 1) {
+if ($THEME->settings->showheaderblockpanel == 1 && $THEME->settings->showblockdrawer == 1) {
     $THEME->layouts['course'] = [
         'file' => 'course.php',
         'regions' => ['side-pre', 'columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
@@ -174,7 +174,7 @@ if ($THEME->settings->showcoursedashboard == 1 && $THEME->settings->showblockdra
         'options' => ['langmenu' => true],
     ];
 } 
-if ($THEME->settings->showcoursedashboard == 0 && $THEME->settings->showblockdrawer == 1){
+if ($THEME->settings->showheaderblockpanel == 0 && $THEME->settings->showblockdrawer == 1){
     $THEME->layouts['course'] = [
         'file' => 'course.php',
         'regions' => ['side-pre','footera', 'footerb', 'footerc'],
@@ -182,7 +182,7 @@ if ($THEME->settings->showcoursedashboard == 0 && $THEME->settings->showblockdra
         'options' => ['langmenu' => true],
     ];
 }
-if ($THEME->settings->showcoursedashboard == 1 && $THEME->settings->showblockdrawer == 0){
+if ($THEME->settings->showheaderblockpanel == 1 && $THEME->settings->showblockdrawer == 0){
      $THEME->layouts['mydashboard'] = [
         'file' => 'drawers.php',
         'regions' => [ ],

@@ -152,10 +152,10 @@ if ($ADMIN->fulltree) {
     $page->add($setting);
 
     // Show/hide course index navigation.
-    $name = 'theme_learnr/showcoursedashboard';
-    $title = get_string('showcoursedashboard', 'theme_learnr');
-    $description = get_string('showcoursedashboard_desc', 'theme_learnr');
-    $default = '';
+    $name = 'theme_learnr/showheaderblockpanel';
+    $title = get_string('showheaderblockpanel', 'theme_learnr');
+    $description = get_string('showheaderblockpanel_desc', 'theme_learnr');
+    $default = '1';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
     
     $page->add($setting);
@@ -164,7 +164,16 @@ if ($ADMIN->fulltree) {
     $name = 'theme_learnr/showpageimage';
     $title = get_string('showpageimage', 'theme_learnr');
     $description = get_string('showpageimage_desc', 'theme_learnr');
-    $default = '';
+    $default = '1';
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+    
+    $page->add($setting);
+
+    // Show/hide page image.
+    $name = 'theme_learnr/showheaderblocks';
+    $title = get_string('showheaderblocks', 'theme_learnr');
+    $description = get_string('showheaderblocks_desc', 'theme_learnr');
+    $default = '1';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
     
     $page->add($setting);

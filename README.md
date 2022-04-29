@@ -6,6 +6,10 @@ A new Moodle 4 theme focused on the learner.
 ## Ver 1.4
 * New Section Style chooser for course sections allows for quick customization of the course section area.  Initially, 4 styles are provided.
 * Added full width page toggle to force full width or default Boost narrow width page layouts.
+* Styling adjustments and improvements
+* Language string additions and corrections
+* Course Dashboard is now Header Block Panel and can display custom header images as a background
+* Header block panel is not collapsible anymore
 
 ## Ver 1.3
 * Code derivitive notice and version update
