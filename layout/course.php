@@ -70,9 +70,10 @@ $checkfooterblockb = (strpos($blocksfooterb, 'data-block=') !== false || !empty(
 $checkfooterblockc = (strpos($blocksfooterc, 'data-block=') !== false || !empty($addblockbutton));
 
 $hasfooterblocks = false ;
-if (($checkfooterblocka || $checkfooterblockb || $checkfooterblockc) && (empty($this->page->theme->settings->showfooterblocks)) ? false : true) {
+if (($checkfooterblocka || $checkfooterblockb || $checkfooterblockc)) {
     $hasfooterblocks = true;
 }
+$displayfooterblocks = (empty($this->page->theme->settings->showfooterblocks)) ? false : true;
 
 user_preference_allow_ajax_update('drawer-open-nav', PARAM_ALPHA);
 user_preference_allow_ajax_update('drawer-open-index', PARAM_BOOL);
@@ -185,6 +186,7 @@ $templatecontext = [
     'footercbtn' => $footercbtn,
     'footercregion' => $footercregion,
     'hasfooterblocks' => $hasfooterblocks,
+    'displayfooterblocks' => $displayfooterblocks,
     'columnabtn' => $columnabtn,
     'columnaregion' => $columnaregion,
     'columnbbtn' => $columnbbtn,
