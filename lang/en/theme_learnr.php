@@ -74,7 +74,8 @@ $string['fullwidthpage'] = 'Full Width Page Display';
 $string['fullwidthpage_desc'] = 'Make the pages full width for consistency throughout the course.  Turning this off reverts back to standard Boost narrow page widths.';
 $string['showheaderblocks'] = 'Show Block Regions in Course Header Area';
 $string['showheaderblocks_desc'] = 'Show or hide the block regions in the content header area.  You might want to display a custom header image without allowing a teacher to place blocks in this area. Turn this off to eliminate the blocks for this area.';
-
+$string['showfooterblocks'] = 'Show Footer Block Area';
+$string['showfooterblocks_desc'] = 'Show or hide the 3 column block area below the course sections at the bottom of the page.';
 
 // Color Settings
 $string['successcolor'] = 'Success color';

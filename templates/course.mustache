@@ -217,13 +217,37 @@
                         {{{ output.main_content }}}
                         {{{ output.course_content_footer }}}
                     </section>
-                    {{#hasmarketingtiles}}
-                        {{{ output.fp_marketingtiles }}}
-                    {{/hasmarketingtiles}}
                 </div>
             </div>
             {{{ output.activity_navigation }}}
-            {{>theme_learnr/footerblocks}}
+            {{#hasfooterblocks}}
+            <div class="container-fluid footerblocks">
+                    <div class="fp-blocks">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-4">
+                                        <section data-region="blocks-footera" class="hidden-print">
+                                            {{{ footerabtn }}}
+                                            {{{ footeraregion }}}
+                                        </section>
+                                </div>
+                                <div class="col-md-4">
+                                        <section data-region="blocks-footerb" class="hidden-print">
+                                            {{{ footerbbtn }}}
+                                            {{{ footerbregion }}}
+                                        </section>
+                                </div>
+                                <div class="col-md-4">
+                                        <section data-region="blocks-footerc" class="hidden-print">
+                                            {{{ footercbtn }}}
+                                            {{{ footercregion }}}
+                                        </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            {{/hasfooterblocks}}
         </div>
 
         {{> theme_boost/footer }}

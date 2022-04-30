@@ -47,23 +47,8 @@ $displayheaderblocks = ($this->page->pagelayout == 'course' && isset($COURSE->id
 $showheaderblockpanel = (empty($this->page->theme->settings->showheaderblockpanel)) ? false : $this->page->theme->settings->showheaderblockpanel;
 $showpageimage = (empty($this->page->theme->settings->showpageimage)) ? false : $this->page->theme->settings->showpageimage;
 
-/*if (isset($this->page->theme->settings->showheaderblocks) && $this->page->theme->settings->showheaderblocks == 1 &&  $this->page->theme->settings->showheaderblockpanel) {
-    $blockscolumna = $OUTPUT->blocks('columna');
-    $blockscolumnb = $OUTPUT->blocks('columnb');
-    $blockscolumnc = $OUTPUT->blocks('columnc');
-
-    $columnabtn = $OUTPUT->addblockbutton('columna');
-    $columnaregion = $OUTPUT->custom_block_region('columna');
-
-    $columnbbtn = $OUTPUT->addblockbutton('columnb');
-    $columnbregion = $OUTPUT->custom_block_region('columnb');
-
-    $columncbtn = $OUTPUT->addblockbutton('columnc');
-    $columncregion = $OUTPUT->custom_block_region('columnc');
-}*/
-
 $hasheaderblocks = false;
-if (isset($this->page->theme->settings->showheaderblocks) && $this->page->theme->settings->showheaderblocks == 1) {
+if (empty($this->page->theme->settings->showheaderblocks) ? false : true) {
     $hasheaderblocks = true;
 }
 
@@ -85,7 +70,7 @@ $checkfooterblockb = (strpos($blocksfooterb, 'data-block=') !== false || !empty(
 $checkfooterblockc = (strpos($blocksfooterc, 'data-block=') !== false || !empty($addblockbutton));
 
 $hasfooterblocks = false ;
-if ($checkfooterblocka || $checkfooterblockb || $checkfooterblockc) {
+if (($checkfooterblocka || $checkfooterblockb || $checkfooterblockc) && (empty($this->page->theme->settings->showfooterblocks)) ? false : true) {
     $hasfooterblocks = true;
 }
 

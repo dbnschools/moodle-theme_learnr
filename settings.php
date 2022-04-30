@@ -169,7 +169,6 @@ if ($ADMIN->fulltree) {
     
     $page->add($setting);
 
-    // Show/hide page image.
     $name = 'theme_learnr/showheaderblocks';
     $title = get_string('showheaderblocks', 'theme_learnr');
     $description = get_string('showheaderblocks_desc', 'theme_learnr');
@@ -183,6 +182,14 @@ if ($ADMIN->fulltree) {
     $title = get_string('sitewideimage', 'theme_learnr');
     $description = get_string('sitewideimage_desc', 'theme_learnr');
     $default = '';
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+    
+    $page->add($setting);
+
+    $name = 'theme_learnr/showfooterblocks';
+    $title = get_string('showfooterblocks', 'theme_learnr');
+    $description = get_string('showfooterblocks_desc', 'theme_learnr');
+    $default = '1';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
     
     $page->add($setting);
