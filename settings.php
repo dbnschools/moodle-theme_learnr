@@ -684,4 +684,429 @@ if ($ADMIN->fulltree) {
     $settings->add($page);
 
 
+    // Icon Navigation);
+    $page = new admin_settingpage('theme_learnr_iconnavheading', get_string('iconnavheading', 'theme_learnr'));
+
+    // This is the descriptor for the page.
+    $name = 'theme_learnr/iconnavinfo';
+    $heading = get_string('iconnavinfo', 'theme_learnr');
+    $information = get_string('iconnavinfo_desc', 'theme_learnr');
+    $setting = new admin_setting_heading($name, $heading, $information);
+    $page->add($setting);
+
+    // This is the descriptor for icon One
+    $name = 'theme_learnr/iconwidthinfo';
+    $heading = get_string('iconwidthinfo', 'theme_learnr');
+    $information = get_string('iconwidthinfodesc', 'theme_learnr');
+    $setting = new admin_setting_heading($name, $heading, $information);
+    $page->add($setting);
+
+    // Icon width setting.
+    $name = 'theme_learnr/iconwidth';
+    $title = get_string('iconwidth', 'theme_learnr');
+    $description = get_string('iconwidth_desc', 'theme_learnr');;
+    $default = '100px';
+    $choices = array(
+        '75px' => '75px',
+        '85px' => '85px',
+        '95px' => '95px',
+        '100px' => '100px',
+        '105px' => '105px',
+        '110px' => '110px',
+        '115px' => '115px',
+        '120px' => '120px',
+        '125px' => '125px',
+        '130px' => '130px',
+        '135px' => '135px',
+        '140px' => '140px',
+        '145px' => '145px',
+        '150px' => '150px',
+    );
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+
+    // This is the descriptor for teacher create a course
+    $name = 'theme_learnr/sliderinfo';
+    $heading = get_string('sliderinfo', 'theme_learnr');
+    $information = get_string('sliderinfodesc', 'theme_learnr');
+    $setting = new admin_setting_heading($name, $heading, $information);
+    $page->add($setting);
+
+    // Creator Icon
+    $name = 'theme_learnr/slideicon';
+    $title = get_string('navicon', 'theme_learnr');
+    $description = get_string('naviconslidedesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/slideiconbuttontext';
+    $title = get_string('naviconbuttontext', 'theme_learnr');
+    $description = get_string('naviconbuttontextdesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Slide Textbox.
+    $name = 'theme_learnr/slidetextbox';
+    $title = get_string('slidetextbox', 'theme_learnr');
+    $description = get_string('slidetextbox_desc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // This is the descriptor for icon One
+    $name = 'theme_learnr/navicon1info';
+    $heading = get_string('navicon1', 'theme_learnr');
+    $information = get_string('navicondesc', 'theme_learnr');
+    $setting = new admin_setting_heading($name, $heading, $information);
+    $page->add($setting);
+
+    // icon One
+    $name = 'theme_learnr/nav1icon';
+    $title = get_string('navicon', 'theme_learnr');
+    $description = get_string('navicondesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav1buttontext';
+    $title = get_string('naviconbuttontext', 'theme_learnr');
+    $description = get_string('naviconbuttontextdesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav1buttonurl';
+    $title = get_string('naviconbuttonurl', 'theme_learnr');
+    $description = get_string('naviconbuttonurldesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_URL);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav1target';
+    $title = get_string('marketingurltarget' , 'theme_learnr');
+    $description = get_string('marketingurltargetdesc', 'theme_learnr');
+    $target1 = get_string('marketingurltargetself', 'theme_learnr');
+    $target2 = get_string('marketingurltargetnew', 'theme_learnr');
+    $target3 = get_string('marketingurltargetparent', 'theme_learnr');
+    $default = 'target1';
+    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // This is the descriptor for icon One
+    $name = 'theme_learnr/navicon2info';
+    $heading = get_string('navicon2', 'theme_learnr');
+    $information = get_string('navicondesc', 'theme_learnr');
+    $setting = new admin_setting_heading($name, $heading, $information);
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav2icon';
+    $title = get_string('navicon', 'theme_learnr');
+    $description = get_string('navicondesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav2buttontext';
+    $title = get_string('naviconbuttontext', 'theme_learnr');
+    $description = get_string('naviconbuttontextdesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav2buttonurl';
+    $title = get_string('naviconbuttonurl', 'theme_learnr');
+    $description = get_string('naviconbuttonurldesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_URL);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav2target';
+    $title = get_string('marketingurltarget' , 'theme_learnr');
+    $description = get_string('marketingurltargetdesc', 'theme_learnr');
+    $target1 = get_string('marketingurltargetself', 'theme_learnr');
+    $target2 = get_string('marketingurltargetnew', 'theme_learnr');
+    $target3 = get_string('marketingurltargetparent', 'theme_learnr');
+    $default = 'target1';
+    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // This is the descriptor for icon three
+    $name = 'theme_learnr/navicon3info';
+    $heading = get_string('navicon3', 'theme_learnr');
+    $information = get_string('navicondesc', 'theme_learnr');
+    $setting = new admin_setting_heading($name, $heading, $information);
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav3icon';
+    $title = get_string('navicon', 'theme_learnr');
+    $description = get_string('navicondesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav3buttontext';
+    $title = get_string('naviconbuttontext', 'theme_learnr');
+    $description = get_string('naviconbuttontextdesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav3buttonurl';
+    $title = get_string('naviconbuttonurl', 'theme_learnr');
+    $description = get_string('naviconbuttonurldesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_URL);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav3target';
+    $title = get_string('marketingurltarget' , 'theme_learnr');
+    $description = get_string('marketingurltargetdesc', 'theme_learnr');
+    $target1 = get_string('marketingurltargetself', 'theme_learnr');
+    $target2 = get_string('marketingurltargetnew', 'theme_learnr');
+    $target3 = get_string('marketingurltargetparent', 'theme_learnr');
+    $default = 'target1';
+    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // This is the descriptor for icon four
+    $name = 'theme_learnr/navicon4info';
+    $heading = get_string('navicon4', 'theme_learnr');
+    $information = get_string('navicondesc', 'theme_learnr');
+    $setting = new admin_setting_heading($name, $heading, $information);
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav4icon';
+    $title = get_string('navicon', 'theme_learnr');
+    $description = get_string('navicondesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav4buttontext';
+    $title = get_string('naviconbuttontext', 'theme_learnr');
+    $description = get_string('naviconbuttontextdesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav4buttonurl';
+    $title = get_string('naviconbuttonurl', 'theme_learnr');
+    $description = get_string('naviconbuttonurldesc', 'theme_learnr');
+    $default =  $CFG->wwwroot.'/course/';
+    $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_URL);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav4target';
+    $title = get_string('marketingurltarget' , 'theme_learnr');
+    $description = get_string('marketingurltargetdesc', 'theme_learnr');
+    $target1 = get_string('marketingurltargetself', 'theme_learnr');
+    $target2 = get_string('marketingurltargetnew', 'theme_learnr');
+    $target3 = get_string('marketingurltargetparent', 'theme_learnr');
+    $default = 'target1';
+    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // This is the descriptor for icon four
+    $name = 'theme_learnr/navicon5info';
+    $heading = get_string('navicon5', 'theme_learnr');
+    $information = get_string('navicondesc', 'theme_learnr');
+    $setting = new admin_setting_heading($name, $heading, $information);
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav5icon';
+    $title = get_string('navicon', 'theme_learnr');
+    $description = get_string('navicondesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav5buttontext';
+    $title = get_string('naviconbuttontext', 'theme_learnr');
+    $description = get_string('naviconbuttontextdesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav5buttonurl';
+    $title = get_string('naviconbuttonurl', 'theme_learnr');
+    $description = get_string('naviconbuttonurldesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav5target';
+    $title = get_string('marketingurltarget' , 'theme_learnr');
+    $description = get_string('marketingurltargetdesc', 'theme_learnr');
+    $target1 = get_string('marketingurltargetself', 'theme_learnr');
+    $target2 = get_string('marketingurltargetnew', 'theme_learnr');
+    $target3 = get_string('marketingurltargetparent', 'theme_learnr');
+    $default = 'target1';
+    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // This is the descriptor for icon six
+    $name = 'theme_learnr/navicon6info';
+    $heading = get_string('navicon6', 'theme_learnr');
+    $information = get_string('navicondesc', 'theme_learnr');
+    $setting = new admin_setting_heading($name, $heading, $information);
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav6icon';
+    $title = get_string('navicon', 'theme_learnr');
+    $description = get_string('navicondesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav6buttontext';
+    $title = get_string('naviconbuttontext', 'theme_learnr');
+    $description = get_string('naviconbuttontextdesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav6buttonurl';
+    $title = get_string('naviconbuttonurl', 'theme_learnr');
+    $description = get_string('naviconbuttonurldesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav6target';
+    $title = get_string('marketingurltarget' , 'theme_learnr');
+    $description = get_string('marketingurltargetdesc', 'theme_learnr');
+    $target1 = get_string('marketingurltargetself', 'theme_learnr');
+    $target2 = get_string('marketingurltargetnew', 'theme_learnr');
+    $target3 = get_string('marketingurltargetparent', 'theme_learnr');
+    $default = 'target1';
+    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // This is the descriptor for icon seven
+    $name = 'theme_learnr/navicon7info';
+    $heading = get_string('navicon7', 'theme_learnr');
+    $information = get_string('navicondesc', 'theme_learnr');
+    $setting = new admin_setting_heading($name, $heading, $information);
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav7icon';
+    $title = get_string('navicon', 'theme_learnr');
+    $description = get_string('navicondesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav7buttontext';
+    $title = get_string('naviconbuttontext', 'theme_learnr');
+    $description = get_string('naviconbuttontextdesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav7buttonurl';
+    $title = get_string('naviconbuttonurl', 'theme_learnr');
+    $description = get_string('naviconbuttonurldesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav7target';
+    $title = get_string('marketingurltarget' , 'theme_learnr');
+    $description = get_string('marketingurltargetdesc', 'theme_learnr');
+    $target1 = get_string('marketingurltargetself', 'theme_learnr');
+    $target2 = get_string('marketingurltargetnew', 'theme_learnr');
+    $target3 = get_string('marketingurltargetparent', 'theme_learnr');
+    $default = 'target1';
+    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // This is the descriptor for icon eight
+    $name = 'theme_learnr/navicon8info';
+    $heading = get_string('navicon8', 'theme_learnr');
+    $information = get_string('navicondesc', 'theme_learnr');
+    $setting = new admin_setting_heading($name, $heading, $information);
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav8icon';
+    $title = get_string('navicon', 'theme_learnr');
+    $description = get_string('navicondesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav8buttontext';
+    $title = get_string('naviconbuttontext', 'theme_learnr');
+    $description = get_string('naviconbuttontextdesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav8buttonurl';
+    $title = get_string('naviconbuttonurl', 'theme_learnr');
+    $description = get_string('naviconbuttonurldesc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_learnr/nav8target';
+    $title = get_string('marketingurltarget' , 'theme_learnr');
+    $description = get_string('marketingurltargetdesc', 'theme_learnr');
+    $target1 = get_string('marketingurltargetself', 'theme_learnr');
+    $target2 = get_string('marketingurltargetnew', 'theme_learnr');
+    $target3 = get_string('marketingurltargetparent', 'theme_learnr');
+    $default = 'target1';
+    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Must add the page after definiting all the settings!
+    $settings->add($page);
+
+
 }

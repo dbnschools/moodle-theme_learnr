@@ -272,3 +272,14 @@ $showpageimage: 0 !default;
     background-color: rgba($white, 40%);
     border: 2px dashed $gray-400;
 }
+
+@media (min-width: 768px) {
+    .fpstartwrap {
+        margin: 0 2rem;
+    }
+}
+
+.iconset .btn.btn-secondary {
+    min-width: $fpicon-width;
+    margin-bottom: .5rem;
+}

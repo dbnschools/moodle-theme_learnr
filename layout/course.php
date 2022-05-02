@@ -52,7 +52,7 @@ $showheaderblockpanel = (empty($this->page->theme->settings->showheaderblockpane
 $showpageimage = (empty($this->page->theme->settings->showpageimage)) ? false : $this->page->theme->settings->showpageimage;
 
 $hasheaderblocks = false;
-if (($checkblocka || $checkblockb || $checkblockc)) {
+if (($checkblocka || $checkblockb || $checkblockc) && $this->page->theme->settings->showheaderblocks == 1) {
     $hasheaderblocks = true;
 }
 

@@ -98,6 +98,7 @@ function theme_learnr_get_pre_scss($theme) {
             'bodybg' => ['body-bg'],
             'fullwidthpage' => ['fullwidthpage'],
             'showpageimage' => ['showpageimage'],
+            'iconwidth' => ['fpicon-width'],
     ];
 
     // Prepend variables first.
