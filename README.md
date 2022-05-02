@@ -9,7 +9,7 @@ A new Moodle 4 theme focused on the learner.
 * Styling adjustments and improvements
 * Language string additions and corrections
 * Course Dashboard is now Header Block Panel and can display custom header images as a background
-* Header block panel is not collapsible anymore
+* Header block panel operates within the header image for a unique layout where the blocks expand the header image.
 
 ## Ver 1.3
 * Code derivitive notice and version update
