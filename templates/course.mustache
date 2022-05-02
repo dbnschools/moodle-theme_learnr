@@ -182,37 +182,46 @@
                             </div>
                         {{/overflow}}
                         {{#displayheaderblocks}}
-                            <div class="container-fluid">
-                                <div class="fp-blocks">
-                                {{#showpageimage}}
-                                    {{{ output.headerimage }}}
-                                {{/showpageimage}}
-                                    <div class="container-fluid">
-                                    {{#hasheaderblocks}}
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                    <section data-region="blocks-columna" class="hidden-print">
-                                                        {{{ columnabtn }}}
-                                                        {{{ columnaregion }}}
-                                                    </section>
-                                            </div>
-                                            <div class="col-md-4">
-                                                    <section data-region="blocks-columnb" class="hidden-print">
-                                                        {{{ columnbbtn }}}
-                                                        {{{ columnbregion }}}
-                                                    </section>
-                                            </div>
-                                            <div class="col-md-4">
-                                                    <section data-region="blocks-columnc" class="hidden-print">
-                                                        {{{ columncbtn }}}
-                                                        {{{ columncregion }}}
-                                                    </section>
-                                            </div>
+                        <div class="coursedashboard-container">
+                            <div class="coursedashboard">
+                            {{#showpageimage}}
+                                {{{ output.headerimage }}}
+                            {{/showpageimage}}
+                            <div class="fp-blocks collapse slidingblockpanel" id="blockslider">
+                                <div class="container-fluid">
+                                {{#hasheaderblocks}}
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                                <section data-region="blocks-columna" class="hidden-print">
+                                                    {{{ columnabtn }}}
+                                                    {{{ columnaregion }}}
+                                                </section>
                                         </div>
-                                    {{/hasheaderblocks}}
+                                        <div class="col-md-4">
+                                                <section data-region="blocks-columnb" class="hidden-print">
+                                                    {{{ columnbbtn }}}
+                                                    {{{ columnbregion }}}
+                                                </section>
+                                        </div>
+                                        <div class="col-md-4">
+                                                <section data-region="blocks-columnc" class="hidden-print">
+                                                    {{{ columncbtn }}}
+                                                    {{{ columncregion }}}
+                                                </section>
+                                        </div>
                                     </div>
+                                {{/hasheaderblocks}}
                                 </div>
-                            </div>
+                                </div>
+                                </div>
+                                {{#hasheaderblocks}}
+                                <div class="text-left blockpanelbtn">
+                                    <button id="blocksliderbutton" class="btn btn-primary blockpanelbutton" type="button" data-toggle="collapse" data-target="#blockslider" aria-expanded="false" aria-controls="blockslider">
+                                        <i class="fa fa-arrows-v" aria-hidden="true"> </i> <span class="blockbtntext">{{# str }} coursedashbutton, theme_learnr {{/ str }}</span>
+                                    </button>
+                                </div>
+                                {{/hasheaderblocks}}
+                        </div>
                         {{/displayheaderblocks}}
                         {{{ output.main_content }}}
                         {{{ output.course_content_footer }}}

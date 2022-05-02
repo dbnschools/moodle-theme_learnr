@@ -97,6 +97,7 @@ function theme_learnr_get_pre_scss($theme) {
             'drawerbg' => ['drawer-bg-color'],
             'bodybg' => ['body-bg'],
             'fullwidthpage' => ['fullwidthpage'],
+            'showpageimage' => ['showpageimage'],
     ];
 
     // Prepend variables first.

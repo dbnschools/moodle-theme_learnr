@@ -252,8 +252,19 @@ a.mycourseicon.mycourses {
 .fp-blocks {
     position: relative;
     padding: 1rem;
-    background-color: $gray-100;
-    min-height: 120px;
+    background-color: $gray-200;
+}
+
+.coursedashboard-container {
+    margin: 0 15px;
+}
+
+$showpageimage: 0 !default;
+@if $showpageimage == 1 {
+    .coursedashboard {
+        position: relative;
+        min-height: 120px;
+    }
 }
 
 .editing aside.block-region {

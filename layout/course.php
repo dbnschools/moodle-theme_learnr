@@ -43,14 +43,19 @@ $columnbregion = $OUTPUT->custom_block_region('columnb');
 $columncbtn = $OUTPUT->addblockbutton('columnc');
 $columncregion = $OUTPUT->custom_block_region('columnc');
 
+$checkblocka = (strpos($blockscolumna, 'data-block=') !== false || !empty($addblockbutton));
+$checkblockb = (strpos($blockscolumnb, 'data-block=') !== false || !empty($addblockbutton));
+$checkblockc = (strpos($blockscolumnc, 'data-block=') !== false || !empty($addblockbutton));
+
 $displayheaderblocks = ($this->page->pagelayout == 'course' && isset($COURSE->id) && $COURSE->id > 1)&&  $this->page->theme->settings->showheaderblockpanel;
 $showheaderblockpanel = (empty($this->page->theme->settings->showheaderblockpanel)) ? false : $this->page->theme->settings->showheaderblockpanel;
 $showpageimage = (empty($this->page->theme->settings->showpageimage)) ? false : $this->page->theme->settings->showpageimage;
 
 $hasheaderblocks = false;
-if (empty($this->page->theme->settings->showheaderblocks) ? false : true) {
+if (($checkblocka || $checkblockb || $checkblockc)) {
     $hasheaderblocks = true;
 }
+
 
 $blocksfootera = $OUTPUT->blocks('footera');
 $blocksfooterb = $OUTPUT->blocks('footerb');

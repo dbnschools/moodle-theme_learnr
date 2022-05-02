@@ -157,7 +157,7 @@ if ($ADMIN->fulltree) {
     $description = get_string('showheaderblockpanel_desc', 'theme_learnr');
     $default = '1';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
-    
+    $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
     // Show/hide page image.
@@ -166,7 +166,7 @@ if ($ADMIN->fulltree) {
     $description = get_string('showpageimage_desc', 'theme_learnr');
     $default = '1';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
-    
+    $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
     $name = 'theme_learnr/showheaderblocks';
@@ -174,7 +174,7 @@ if ($ADMIN->fulltree) {
     $description = get_string('showheaderblocks_desc', 'theme_learnr');
     $default = '1';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
-    
+    $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
     // Show sitewide image.
@@ -183,7 +183,7 @@ if ($ADMIN->fulltree) {
     $description = get_string('sitewideimage_desc', 'theme_learnr');
     $default = '';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
-    
+    $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
     $name = 'theme_learnr/showfooterblocks';
@@ -191,7 +191,7 @@ if ($ADMIN->fulltree) {
     $description = get_string('showfooterblocks_desc', 'theme_learnr');
     $default = '1';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
-    
+    $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
     // Background image setting.
