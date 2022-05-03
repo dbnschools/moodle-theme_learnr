@@ -6,6 +6,7 @@ A new Moodle 4 theme focused on the learner.
 ## Ver 1.5
 * Added Icon Navigation bar to Dashboard, My Courses, and Home pages of the site
 * Initial feature set is implemented
+* Added show/hide for Latest Courses drop down menu.
 
 ## Ver 1.4
 * New Section Style chooser for course sections allows for quick customization of the course section area.  Initially, 4 styles are provided.

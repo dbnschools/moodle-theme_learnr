@@ -93,7 +93,7 @@ if ($ADMIN->fulltree) {
     $name = 'theme_learnr/showcourseindexnav';
     $title = get_string('showcourseindexnav', 'theme_learnr');
     $description = get_string('showcourseindexnav_desc', 'theme_learnr');
-    $default = '1';
+    $default = '';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
@@ -102,7 +102,16 @@ if ($ADMIN->fulltree) {
     $name = 'theme_learnr/showblockdrawer';
     $title = get_string('showblockdrawer', 'theme_learnr');
     $description = get_string('showblockdrawer_desc', 'theme_learnr');
-    $default = '1';
+    $default = '';
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Show/hide Latest Courses.
+    $name = 'theme_learnr/showlatestcourses';
+    $title = get_string('showlatestcourses', 'theme_learnr');
+    $description = get_string('showlatestcourses_desc', 'theme_learnr');
+    $default = '';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
@@ -116,7 +125,7 @@ if ($ADMIN->fulltree) {
     $option2 = get_string('actnav_bottom_on', 'theme_learnr');
     $option3 = get_string('actnav_all_on', 'theme_learnr');
     $option4 = get_string('actnav_all_off', 'theme_learnr');
-    $default = '1';
+    $default = '2';
     $choices = array('1'=>$option1, '2'=>$option2, '3'=>$option3, '4'=>$option4);
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
@@ -189,7 +198,7 @@ if ($ADMIN->fulltree) {
     $name = 'theme_learnr/showfooterblocks';
     $title = get_string('showfooterblocks', 'theme_learnr');
     $description = get_string('showfooterblocks_desc', 'theme_learnr');
-    $default = '1';
+    $default = '';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);

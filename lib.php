@@ -147,7 +147,7 @@ function theme_learnr_get_pre_scss($theme) {
  */
 function theme_learnr_get_precompiled_css() {
     global $CFG;
-    return file_get_contents($CFG->dirroot . '/theme/boost/style/moodle.css');
+    return file_get_contents($CFG->dirroot . '/theme/learnr/style/moodle.css');
 }
 
 /**

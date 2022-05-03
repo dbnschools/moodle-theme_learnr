@@ -112,7 +112,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $mycourses = get_string('latestcourses', 'theme_learnr');
         $mycoursesurl = new moodle_url('/my/');
         $mycoursesmenu = $this->learnr_mycourses();
-        $hasmycourses = $this->page->pagelayout == 'course';
+        $hasmycourses = $this->page->pagelayout == 'course' && (isset($this->page->theme->settings->showlatestcourses) && $this->page->theme->settings->showlatestcourses == 1);
 
         // Add a special case since /my/courses is a part of the /my subsystem.
         if ($homepage == HOMEPAGE_MY || $homepage == HOMEPAGE_MYCOURSES) {
@@ -464,7 +464,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 }
                 $branch->add($dashlabel, $dashurl, $dashtitle);
                 $content = '';
-                
                 foreach ($menu->get_children() as $item) {
                     $context = $item->export_for_template($this);
                     $content .= $this->render_from_template('theme_learnr/mycourses', $context);
@@ -474,7 +473,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
     // End derivative work
 
     public function fpicons() {
-
         $context = $this->page->context;
         $hasslideicon = (empty($this->page->theme->settings->slideicon && isloggedin() && !isguestuser())) ? false : $this->page->theme->settings->slideicon;
         $slideiconbuttonurl = 'data-toggle="collapse" data-target="#collapseExample';

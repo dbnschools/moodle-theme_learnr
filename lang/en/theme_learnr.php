@@ -76,6 +76,8 @@ $string['showheaderblocks'] = 'Show Block Regions in Course Header Area';
 $string['showheaderblocks_desc'] = 'Show or hide the block regions in the content header area.  You might want to display a custom header image without allowing a teacher to place blocks in this area. Turn this off to eliminate the blocks for this area.';
 $string['showfooterblocks'] = 'Show Footer Block Area';
 $string['showfooterblocks_desc'] = 'Show or hide the 3 column block area below the course sections at the bottom of the page.';
+$string['showlatestcourses'] = 'Show Latest Courses Drop Down';
+$string['showlatestcourses_desc'] = 'This will display the last 7 courses a user has visited in a drop down menu to the right of the course title.  At this time, it is not part of the main navigation but rather a navigation element in course pages.';
 
 // Icon Navigation
 $string['iconnavheading'] = 'Icon Navigation';
