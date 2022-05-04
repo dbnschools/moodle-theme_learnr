@@ -27,6 +27,9 @@
 .primary-navigation .moremenu .nav-link:hover, .moremenu .nav-link:focus {
     background-color: rgb(255 255 255 / 20%);
 }
+#usernavigation .usermenu .dropdown-toggle::after {
+    color: $navbar-dark-color;
+}
 .primary-navigation {
     .navigation {
         height: $navbar-height;
@@ -37,7 +40,6 @@
         }
     }
 }
-
 
 // Edit button
 form.editmode-switch-form {
