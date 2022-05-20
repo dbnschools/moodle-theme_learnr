@@ -136,14 +136,13 @@
                 {{/hasblocks}}
             {{/showblockdrawer}}
             </div>
-
             {{{ output.full_header }}}
             {{#secondarymoremenu}}
                 <div class="secondary-navigation d-print-none">
                     {{> core/moremenu}}
                 </div>
             {{/secondarymoremenu}}
-            
+            {{{ output.courseprogressbar }}}
             <div id="page-content" class="pb-3 d-print-block">
                 <div id="region-main-box">
                     {{#hasregionmainsettingsmenu}}
@@ -166,11 +165,11 @@
                                 </div>
                             </div>
                         {{/fptextbox}}
-
                         {{#hasregionmainsettingsmenu}}
                             <div class="region_main_settings_menu_proxy"></div>
                         {{/hasregionmainsettingsmenu}}
                         {{{ output.course_content_header }}}
+
                         {{#headercontent}}
                             {{> core/activity_header }}
                         {{/headercontent}}
@@ -181,6 +180,7 @@
                                 </div>
                             </div>
                         {{/overflow}}
+
                         {{#displayheaderblocks}}
                         <div class="coursedashboard-container">
                             <div class="coursedashboard">
@@ -223,6 +223,7 @@
                                 {{/hasheaderblocks}}
                         </div>
                         {{/displayheaderblocks}}
+
                         {{{ output.main_content }}}
                         {{{ output.course_content_footer }}}
                     </section>

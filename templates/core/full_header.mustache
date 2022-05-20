@@ -31,16 +31,17 @@
 }}
 <header id="page-header" class="header-maxwidth d-print-none">
     <div class="w-100">
-    {{#hasmycourses}}
-                        <div class="dropdown mycoursesmenu" style="float:right; margin-right: 1rem;">
-                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{mycourses}}}" class="mycourseicon mycourses"><i class="fa-2x fa fa-book mycourses"></i></a>
+        {{#hasmycourses}}
+            <div class="dropdownmycourses">
+              <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{mycourses}}}" class="btn btn-secondary mycourseicon mycourses" style="float:right;"><i class="fa-2x fa fa-book mycourses"></i></a>
 
-                            <div class="dropdown-menu dropdown-menu-right iconsidebar">
-                              <h5>{{{mycourses}}}</h5>
-                                {{{mycoursesmenu}}}
-                            </div>
-                        </div>
-                    {{/hasmycourses}}
+                <div class="dropdown-menu dropdown-menu-right iconsidebar">
+                  <h5>{{{mycourses}}}</h5>
+                    {{{mycoursesmenu}}}
+                </div>
+            </div>
+        {{/hasmycourses}}
+        <div class="enrollbtn"> {{{easyenrolbtn}}} </div>
         <div class="d-flex flex-wrap">
             {{#hasnavbar}}
             <div id="page-navbar">

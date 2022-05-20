@@ -78,12 +78,37 @@ $string['showfooterblocks'] = 'Show Footer Block Area';
 $string['showfooterblocks_desc'] = 'Show or hide the 3 column block area below the course sections at the bottom of the page.';
 $string['showlatestcourses'] = 'Show Latest Courses Drop Down';
 $string['showlatestcourses_desc'] = 'This will display the last 7 courses a user has visited in a drop down menu to the right of the course title.  At this time, it is not part of the main navigation but rather a navigation element in course pages.';
+$string['enrollcoursecard'] = 'Go to course';
+$string['myprogresspercentage'] = '% Complete';
+$string['showprogressbar'] = 'Show Course Progress Bar';
+$string['showprogressbar_desc'] = 'Display a progress bar for students at the top of each main course page.';
+$string['easyenrollbtn'] = "Easy Enrollment Course Codes";
+
+// Course Styles
+$string['coursestyle1'] = 'Tile Style One';
+$string['coursestyle2'] = 'Tile Style Two';
+$string['coursestyle3'] = 'Tile Style Three';
+$string['coursestyle4'] = 'Tile Style Four w/course summary';
+$string['coursestyle5'] = 'Horizontal Style One';
+$string['coursestyle6'] = 'Horizontal Image Background Full Details';
+$string['coursestyle7'] = 'Horizontal Image Background Title & Teacher Only';
+$string['coursestyle8'] = 'Horizontal Two Column';
+$string['coursestyle9'] = 'Corporate Training - minimal with completion progressbar';
+$string['coursestyle10'] = 'Default Moodle Course Display';
+$string['coursetilestyle'] = 'Course Tile Display';
+$string['coursetilestyle_desc'] = 'When viewing course categories you can choose from the following styles to display courses on the home page and course category areas.';
+$string['trimtitle'] = 'Trim Course Title';
+$string['trimtitle_desc'] = 'Enter a number to trim the title length.  This number represents characters that will be displayed.';
+$string['trimsummary'] = 'Trim Course Summary';
+$string['trimsummary_desc'] = 'Enter a number to trim the summary length.  This number represents characters that will be displayed.';
+$string['courseboxheight'] = 'Course Tile Height';
+$string['courseboxheight_desc'] = 'Control the height of the Course tile on the frontpage and course categories.';
 
 // Icon Navigation
 $string['iconnavheading'] = 'Icon Navigation';
 $string['iconnavinfo'] = 'Dashboard Icon Navigation';
 $string['iconnavinfo_desc'] = 'Create buttons with icons for use on the homepage. These appear at the top of the page on the Dashboard.';
-//FP Icon Nav
+// FP Icon Nav
 $string['navicon1'] = 'Homepage Icon One';
 $string['navicon2'] = 'Homepage Icon Two';
 $string['navicon3'] = 'Homepage Icon Three';

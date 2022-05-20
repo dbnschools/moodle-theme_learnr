@@ -30,7 +30,32 @@ use stdClass;
 use moodle_url;
 use context_course;
 
+
+require_once ($CFG->dirroot . '/completion/classes/progress.php');
+
+
 class core_renderer extends \theme_boost\output\core_renderer {
+
+    public function courseprogressbar() {
+        global $PAGE;
+        $course = $this->page->course;
+        $context = context_course::instance($course->id);
+        $hasprogressbar = (empty($this->page->theme->settings->showprogressbar)) ? false : true;
+
+        // Student Dash
+        if (\core_completion\progress::get_course_progress_percentage($PAGE->course)) {
+            $comppc = \core_completion\progress::get_course_progress_percentage($PAGE->course);
+            $comppercent = number_format($comppc, 0);
+        }
+        else {
+            $comppercent = 0;
+        }
+
+        $progresschartcontext = ['progress' => $comppercent, 'hasprogressbar' => $hasprogressbar];
+        $progress = $this->render_from_template('theme_learnr/progress-bar', $progresschartcontext);
+
+        return $progress;
+    }
 
     public function headerimage() {
         global $CFG;
@@ -106,6 +131,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string HTML to display the main header.
      */
     public function full_header() {
+        global $DB;
+
         $pagetype = $this->page->pagetype;
         $homepage = get_home_page();
         $homepagetype = null;
@@ -113,6 +140,33 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $mycoursesurl = new moodle_url('/my/');
         $mycoursesmenu = $this->learnr_mycourses();
         $hasmycourses = $this->page->pagelayout == 'course' && (isset($this->page->theme->settings->showlatestcourses) && $this->page->theme->settings->showlatestcourses == 1);
+        
+        //$plugin = enrol_get_plugin('easy');
+        $globalhaseasyenrollment = enrol_get_plugin('easy');
+        $coursehaseasyenrollment = '';
+        if ($globalhaseasyenrollment) {
+            $coursehaseasyenrollment = $DB->record_exists('enrol', array(
+                'courseid' => $this->page->course->id,
+                'enrol' => 'easy'
+            ));
+            $easyenrollinstance = $DB->get_record('enrol', array(
+                'courseid' => $this->page->course->id,
+                'enrol' => 'easy'
+            ));
+        }
+        if ($coursehaseasyenrollment && isset($this->page->course->id) && $this->page->course->id > 1) {
+            $easycodetitle = get_string('header_coursecodes', 'enrol_easy');
+            $easycodelink = new moodle_url('/enrol/editinstance.php', array(
+                'courseid' => $this->page->course->id,
+                'id' => $easyenrollinstance->id,
+                'type' => 'easy'
+            ));
+        }
+        $easyenrolbtn = '';
+        $easyenrolbtntext = get_string('easyenrollbtn', 'theme_learnr');
+        if ($globalhaseasyenrollment && $this->page->pagelayout == 'course' && $coursehaseasyenrollment) {
+            $easyenrolbtn = '<a href="' .$easycodelink. '" title="' .$easyenrolbtntext. '" class="btn btn-secondary easyenrolbtn" style="float:right;"><i class="fa fa-2x fa-key" aria-hidden="true"></i><span class="sr-only">' .$easyenrolbtntext. '</span></a>';
+        }
 
         // Add a special case since /my/courses is a part of the /my subsystem.
         if ($homepage == HOMEPAGE_MY || $homepage == HOMEPAGE_MYCOURSES) {
@@ -138,6 +192,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $header->navbar = $this->navbar();
         $header->hasmycourses = $hasmycourses;
         $header->mycourses = $mycourses;
+        $header->easyenrolbtn = $easyenrolbtn;
         $header->mycoursesmenu = $mycoursesmenu;
         $header->pageheadingbutton = $this->page_heading_button();
         $header->courseheader = $this->course_header();
@@ -588,5 +643,20 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return $this->render_from_template('theme_learnr/fpicons', $fp_icons);
 
     }
+
+    public function enrolform() {
+        $enrolform = '';
+        $plugin = enrol_get_plugin('easy');
+
+        if ($plugin && !isguestuser() && ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage' || $this->page->pagelayout == 'mycourses')) {
+
+            $enrolform = '<div class="easyenrolform">';
+            $enrolform .= $plugin->get_form();
+            $enrolform .= '</div>';
+        }
+        return $enrolform;
+    }
+
+
 
 }

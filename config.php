@@ -93,7 +93,7 @@ $THEME->layouts = [
     // My public page.
     'mypublic' => [
         'file' => 'drawers.php',
-        'regions' => ['side-pre'],
+        'regions' => ['side-pre','columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
         'defaultregion' => 'side-pre',
     ],
     'login' => [

@@ -67,6 +67,101 @@ if ($ADMIN->fulltree) {
             array('maxfiles' => 20, 'accepted_types' => array('.scss')));
     $page->add($setting);
 
+    // Course Tile Display Styles
+    $name = 'theme_learnr/coursetilestyle';
+    $title = get_string('coursetilestyle' , 'theme_learnr');
+    $description = get_string('coursetilestyle_desc', 'theme_learnr');
+    $coursestyle1 = get_string('coursestyle1', 'theme_learnr');
+    $coursestyle2 = get_string('coursestyle2', 'theme_learnr');
+    $coursestyle3 = get_string('coursestyle3', 'theme_learnr');
+    $coursestyle4 = get_string('coursestyle4', 'theme_learnr');
+    $coursestyle5 = get_string('coursestyle5', 'theme_learnr');
+    $coursestyle6 = get_string('coursestyle6', 'theme_learnr');
+    $coursestyle7 = get_string('coursestyle7', 'theme_learnr');
+    $coursestyle8 = get_string('coursestyle8', 'theme_learnr');
+    $coursestyle9 = get_string('coursestyle9', 'theme_learnr');
+    $coursestyle10 = get_string('coursestyle10', 'theme_learnr');
+    $default = '10';
+    $choices = array('1'=>$coursestyle1, '2'=>$coursestyle2, '3'=>$coursestyle3, '4'=>$coursestyle4, '5'=>$coursestyle5, '6'=>$coursestyle6, '7'=>$coursestyle7, '8'=>$coursestyle8, '9'=>$coursestyle9, '10'=>$coursestyle10);
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // trim title setting.
+    $name = 'theme_learnr/trimtitle';
+    $title = get_string('trimtitle', 'theme_learnr');
+    $description = get_string('trimtitle_desc', 'theme_learnr');
+    $default = '256';
+    $choices = array(
+            '15' => '15',
+            '20' => '20',
+            '30' => '30',
+            '40' => '40',
+            '50' => '50',
+            '60' => '60',
+            '70' => '70',
+            '80' => '80',
+            '90' => '90',
+            '100' => '100',
+            '110' => '110',
+            '120' => '120',
+            '130' => '130',
+            '140' => '140',
+            '150' => '150',
+            '175' => '175',
+            '200' => '200',
+            '256' => '256',
+        );
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // trim title setting.
+    $name = 'theme_learnr/trimsummary';
+    $title = get_string('trimsummary', 'theme_learnr');
+    $description = get_string('trimsummary_desc', 'theme_learnr');
+    $default = '300';
+    $choices = array(
+            '30' => '30',
+            '60' => '60',
+            '90' => '90',
+            '100' => '100',
+            '150' => '150',
+            '200' => '200',
+            '250' => '250',
+            '300' => '300',
+            '350' => '350',
+            '400' => '400',
+            '450' => '450',
+            '500' => '500',
+            '600' => '600',
+            '800' => '800',
+        );
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Courses height
+    $name = 'theme_learnr/courseboxheight';
+    $title = get_string('courseboxheight', 'theme_learnr');
+    $description = get_string('courseboxheight_desc', 'theme_learnr');;
+    $default = '250px';
+    $choices = array(
+            '200px' => '200px',
+            '225px' => '225px',
+            '250px' => '250px',
+            '275px' => '275px',
+            '300px' => '300px',
+            '325px' => '325px',
+            '350px' => '350px',
+            '375px' => '375px',
+            '400px' => '400px',
+        );
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+
     // Sections Display Options.
     $name = 'theme_learnr/sectionstyle';
     $title = get_string('sectionstyle' , 'theme_learnr');
@@ -111,6 +206,15 @@ if ($ADMIN->fulltree) {
     $name = 'theme_learnr/showlatestcourses';
     $title = get_string('showlatestcourses', 'theme_learnr');
     $description = get_string('showlatestcourses_desc', 'theme_learnr');
+    $default = '';
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Show/hide course progressbar.
+    $name = 'theme_learnr/showprogressbar';
+    $title = get_string('showprogressbar', 'theme_learnr');
+    $description = get_string('showprogressbar_desc', 'theme_learnr');
     $default = '';
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');

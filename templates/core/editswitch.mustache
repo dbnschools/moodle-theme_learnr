@@ -36,7 +36,7 @@
         <label class="mr-2 mb-0 {{#checked}}text-primary{{/checked}}" for="{{uniqid}}-editingswitch">
             {{#str}} editmode {{/str}}
         </label>
-        <div class="custom-control custom-switch edit-btn">
+        <div class="edit-btn custom-control custom-switch">
             <input type="checkbox"{{!
                 }} name="setmode"{{!
                 }}{{#checked}}{{!
@@ -45,7 +45,7 @@
                 }}{{^checked}}{{!
                     }} aria-checked="false"{{!
                 }}{{/checked}}{{!
-                }} class="custom-control-input edit-btn"{{!
+                }} class="custom-control-input"{{!
                 }} id="{{uniqid}}-editingswitch"{{!
                 }} data-context="{{{pagecontextid}}}"{{!
                 }} data-pageurl="{{{pageurl}}}"{{!
