@@ -282,14 +282,6 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    $name = 'theme_learnr/showheaderblocks';
-    $title = get_string('showheaderblocks', 'theme_learnr');
-    $description = get_string('showheaderblocks_desc', 'theme_learnr');
-    $default = '1';
-    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
-    $setting->set_updatedcallback('theme_reset_all_caches');
-    $page->add($setting);
-
     // Show sitewide image.
     $name = 'theme_learnr/sitewideimage';
     $title = get_string('sitewideimage', 'theme_learnr');

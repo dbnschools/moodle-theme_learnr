@@ -3,6 +3,12 @@ moodle-theme_learnr
 # LearnR
 A Moodle 4.0 Boost child theme made for learners. The LearnR theme builds on the new layouts and user experiences introduced in Moodle 4.0. LearnR provides a variety of layouts and options that allow you to provide incredibly structured navigation and pathways to course materials. Continuing the line of evolve-D, Pioneer, and Fordson, the LearnR theme is focused on a student going from “login to learning” quickly and easily.
 
+## Ver 1.7
+* Layout changes: Moved course header image out of main content area and into actual header area behind the main content area.  Moved the header block panel button to the upper right of the screen next to the Latest Courses drop down.  
+* Easy Enrollment course code button and enrollment form has been integrated to work with the Easy Enrollment Button https://moodle.org/plugins/enrol_easy
+* Many styling fixes.
+
+
 ## Ver 1.6.1
 * Fixed conflict with Fordson theme
 

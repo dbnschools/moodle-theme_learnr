@@ -88,8 +88,15 @@ form.editmode-switch-form {
     right: 0;
     bottom: 0;
     position: absolute;
+    z-index: -1;
 }
 
+// Possible layout change in 1.7
+.withimage, .defaultheaderimage, .courseimage {
+    -webkit-mask-image: linear-gradient(to top,transparent 0%,rgba(255,255,255,.9) 70%);
+    mask-image: linear-gradient(to top,transparent 0%,rgba(255,255,255,.9) 70%);
+    max-height: 600px;
+}
 
 
 // Layouts
@@ -102,13 +109,20 @@ form.editmode-switch-form {
     width: $courseiconsize;
     height: $courseiconsize;
 }
-#page.drawers.show-drawer-right {
+/*#page.drawers.show-drawer-right {
     padding-right: 0 !important;
 }
 #page.drawers.show-drawer-left {
     padding-left: 0 !important;
+}*/
+#page.drawers .main-inner {
+    margin-top: 0;
 }
-
+@media (min-width: 768px){
+    #page.drawers .main-inner {
+        margin-top: 2rem;
+    }
+}
 //Grading Area
 .path-mod-assign [data-region="grading-navigation"] {
     background-color: $white;
@@ -128,31 +142,6 @@ form.editmode-switch-form {
 .pagelayout-mydashboard .block_timeline.block.card, .pagelayout-mydashboard .block_calendar_month.block.card {
     border: 0;
 }
-
-
-
-
-//News Slider
-.slider-col {
-    background-color: transparent; 
-}
-.news-slider .slick-prev, .news-slider .slick-next {
-    top: unset!important;
-    bottom: 0;
-}
-.slider-col .userpicture-container {
-    padding: 0;
-    min-height: 90px;
-}
-.slick-initialized .slick-slide {
-    margin: 0 1rem;
-}
-@media only screen and (min-width: 1024px){
-.slider-col {
-    padding: 0;
-}
-}
-
 
 //Activity navigation
 .top-activity-navigation.container-fluid {
@@ -254,14 +243,18 @@ form.editmode-switch-form {
 }
 
 .coursedashboard-container {
-    margin: 0 15px;
+    margin: 0;
+    position: relative;
+}
+.slidingblockpanel {
+    position: relative;
+    clear: both;
 }
 
 $showpageimage: 0 !default;
 @if $showpageimage == 1 {
     .coursedashboard {
         position: relative;
-        min-height: 120px;
     }
 }
 
@@ -298,27 +291,17 @@ $showpageimage: 0 !default;
     margin: 0 15px;
 }
 
+.drawer {
+    z-index: 1050;
+}
 
+.headerbutton {
+    border-radius: 0;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.langmenu .dropdown-toggle::after, span.langbutton {
+    color: $navbar-dark-color;
+}
 
 /**
 * Available Courses

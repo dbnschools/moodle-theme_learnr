@@ -53,8 +53,9 @@
 
 <body {{{ bodyattributes }}}>
 {{> core/local/toast/wrapper}}
-<div id="page-wrapper" class="d-print-block">
 
+<div id="page-wrapper" class="d-print-block">
+{{{ output.headerimage }}}    
     {{{ output.standard_top_of_body_html }}}
     
     {{#showcourseindexnav}}
@@ -92,8 +93,13 @@
         {{/ theme_boost/drawer}}
     {{/hasblocks}}
     {{/showblockdrawer}}
+
+    
+
     <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#showcourseindexnav}}{{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{/showcourseindexnav}}{{#showblockdrawer}}{{#blockdraweropen}}show-drawer-right{{/blockdraweropen}}{{/showblockdrawer}} drag-container">
+
         <div id="topofscroll" class="main-inner">
+
         {{{output.top_activity_navigation}}}
         {{> theme_learnr/navbar }}
         
@@ -136,6 +142,9 @@
                 {{/hasblocks}}
             {{/showblockdrawer}}
             </div>
+
+
+
             {{{ output.full_header }}}
             {{#secondarymoremenu}}
                 <div class="secondary-navigation d-print-none">
@@ -181,48 +190,7 @@
                             </div>
                         {{/overflow}}
 
-                        {{#displayheaderblocks}}
-                        <div class="coursedashboard-container">
-                            <div class="coursedashboard">
-                            {{#showpageimage}}
-                                {{{ output.headerimage }}}
-                            {{/showpageimage}}
-                            {{#hasheaderblocks}}
-                            <div class="fp-blocks collapse slidingblockpanel" id="blockslider">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                                <section data-region="blocks-columna" class="hidden-print">
-                                                    {{{ columnabtn }}}
-                                                    {{{ columnaregion }}}
-                                                </section>
-                                        </div>
-                                        <div class="col-md-4">
-                                                <section data-region="blocks-columnb" class="hidden-print">
-                                                    {{{ columnbbtn }}}
-                                                    {{{ columnbregion }}}
-                                                </section>
-                                        </div>
-                                        <div class="col-md-4">
-                                                <section data-region="blocks-columnc" class="hidden-print">
-                                                    {{{ columncbtn }}}
-                                                    {{{ columncregion }}}
-                                                </section>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-                                {{/hasheaderblocks}}
-                                </div>
-                                {{#hasheaderblocks}}
-                                <div class="text-left blockpanelbtn">
-                                    <button id="blocksliderbutton" class="btn btn-primary blockpanelbutton" type="button" data-toggle="collapse" data-target="#blockslider" aria-expanded="false" aria-controls="blockslider">
-                                        <i class="fa fa-arrows-v" aria-hidden="true"> </i> <span class="blockbtntext">{{# str }} coursedashbutton, theme_learnr {{/ str }}</span>
-                                    </button>
-                                </div>
-                                {{/hasheaderblocks}}
-                        </div>
-                        {{/displayheaderblocks}}
+                        
 
                         {{{ output.main_content }}}
                         {{{ output.course_content_footer }}}

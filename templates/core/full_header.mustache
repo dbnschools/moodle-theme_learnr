@@ -31,17 +31,65 @@
 }}
 <header id="page-header" class="header-maxwidth d-print-none">
     <div class="w-100">
-        {{#hasmycourses}}
-            <div class="dropdownmycourses">
-              <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{mycourses}}}" class="btn btn-secondary mycourseicon mycourses" style="float:right;"><i class="fa-2x fa fa-book mycourses"></i></a>
 
-                <div class="dropdown-menu dropdown-menu-right iconsidebar">
-                  <h5>{{{mycourses}}}</h5>
-                    {{{mycoursesmenu}}}
-                </div>
-            </div>
+        <div class="headerbuttons">
+        {{#hasmycourses}}
+            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{mycourses}}}" class="btn btn-secondary headerbutton mycourses" style="float:right;"><i class="fa-2x fa fa-history mycourses"></i></a>
+        <div class="dropdown-menu dropdown-menu-right iconsidebar">
+            <h5>{{{mycourses}}}</h5>
+            {{{mycoursesmenu}}}
+        </div>
         {{/hasmycourses}}
-        <div class="enrollbtn"> {{{easyenrolbtn}}} </div>
+
+        {{#hasheaderblocks}}
+        <div class="blockpanelbtn">
+            <button id="blocksliderbutton" class="btn btn-secondary headerbutton" style="float:right;" type="button" data-toggle="collapse" data-target="#blockslider" aria-expanded="false" aria-controls="blockslider" title="{{# str }} coursedashbutton, theme_learnr {{/ str }}">
+                <i class="fa-2x fa fa-arrows-v" aria-hidden="true"> </i>
+            </button>
+        </div>
+        {{/hasheaderblocks}}
+
+        {{#showenrollinktoteacher}}
+        <div class="enrollbtn"> 
+            <a href="{{{easycodelink}}}" title="{{{easyenrolbtntext}}}" class="btn btn-secondary headerbutton easyenrolbtn" style="float:right;"><i class="fa fa-2x fa-key" aria-hidden="true"></i><span class="sr-only">{{{easyenrolbtntext}}}</span></a>
+        </div>
+        {{/showenrollinktoteacher}}
+        </div>
+
+        {{#displayheaderblocks}}
+            {{#hasheaderblocks}}
+            <div class="fp-blocks collapse slidingblockpanel" id="blockslider">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4">
+                                <section data-region="blocks-columna" class="hidden-print">
+                                    {{{ columnabtn }}}
+                                    {{{ columnaregion }}}
+                                </section>
+                        </div>
+                        <div class="col-md-4">
+                                <section data-region="blocks-columnb" class="hidden-print">
+                                    {{{ columnbbtn }}}
+                                    {{{ columnbregion }}}
+                                </section>
+                        </div>
+                        <div class="col-md-4">
+                                <section data-region="blocks-columnc" class="hidden-print">
+                                    {{{ columncbtn }}}
+                                    {{{ columncregion }}}
+                                </section>
+                        </div>
+                    </div>
+                </div>
+                 <div class="text-center blockpanelbtn">
+                <button id="blocksliderbutton" class="btn btn-secondary blockpanelbutton" type="button" data-toggle="collapse" data-target="#blockslider" aria-expanded="false" aria-controls="blockslider" title="{{# str }} closecoursedashboard, theme_learnr {{/ str }}">
+                    <i class="fa-2x fa fa-arrows-v" aria-hidden="true">{{# str }} closecoursedashboard, theme_learnr {{/ str }} </i>
+                </button>
+            </div>
+            </div>
+            {{/hasheaderblocks}}
+        {{/displayheaderblocks}}
+
         <div class="d-flex flex-wrap">
             {{#hasnavbar}}
             <div id="page-navbar">

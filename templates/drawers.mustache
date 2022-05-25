@@ -54,7 +54,7 @@
 <body {{{ bodyattributes }}}>
 {{> core/local/toast/wrapper}}
 <div id="page-wrapper" class="d-print-block">
-
+{{{ output.headerimage }}}
     {{{ output.standard_top_of_body_html }}}
 
     {{#showcourseindexnav}}
@@ -92,6 +92,9 @@
         {{/ theme_boost/drawer}}
     {{/hasblocks}}
     {{/showblockdrawer}}
+
+
+
     <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#showcourseindexnav}}{{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{/showcourseindexnav}}{{#showblockdrawer}}{{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} {{/showblockdrawer}}drag-container">
         <div id="topofscroll" class="main-inner">
         {{{output.top_activity_navigation}}}

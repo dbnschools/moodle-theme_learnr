@@ -94,18 +94,21 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $headerbg = $this->page->theme->setting_file_url('pagebackgroundimage', 'pagebackgroundimage');
         $defaultimgurl = $this->image_url('headerbg', 'theme');
         $headerbgimgurl = $this->page->theme->setting_file_url('pagebackgroundimage', 'pagebackgroundimage', true);
+
+        $showpageimage = (empty($this->page->theme->settings->showpageimage)) ? false : ($this->page->theme->settings->showpageimage && $this->page->course->id > 1) && $this->page->pagetype == 'course-edit' || $this->page->pagetype == 'enrol-instances'|| $this->page->pagetype == 'enrol-editinstance' || $this->page->pagelayout != 'mydashboard' && $this->page->pagelayout != 'frontpage' && $this->page->pagelayout != 'mycourses';
+
         // Create html for header.
-        if ($this->page->theme->settings->showheaderblockpanel){
+        if ($showpageimage){
             $html = html_writer::start_div('headerbkg');
             // If course image display it in separate div to allow css styling of inline style.
-            if ($this->page->theme->settings->showpageimage == 1 && $courseimage && !$this->page->theme->settings->sitewideimage == 1) {
+            if ($courseimage && !$this->page->theme->settings->sitewideimage == 1 && $showpageimage) {
                 $html .= html_writer::start_div('courseimage', array(
                     'style' => 'background-image: url("' . $courseimage . '"); background-size: cover; background-position:center;
                     width: 100%; height: 100%;'
                 ));
                 $html .= html_writer::end_div(); // End withimage inline style div.
             }
-            else if ($this->page->theme->settings->showpageimage == 1 && isset($headerbg)) {
+            else if (isset($headerbg) && $showpageimage) {
                 $html .= html_writer::start_div('customimage', array(
                     'style' => 'background-image: url("' . $headerbgimgurl . '"); background-size: cover; background-position:center;
                     width: 100%; height: 100%;'
@@ -131,7 +134,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string HTML to display the main header.
      */
     public function full_header() {
-        global $DB;
+        global $DB, $OUTPUT, $COURSE;
 
         $pagetype = $this->page->pagetype;
         $homepage = get_home_page();
@@ -154,18 +157,49 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 'enrol' => 'easy'
             ));
         }
-        if ($coursehaseasyenrollment && isset($this->page->course->id) && $this->page->course->id > 1) {
-            $easycodetitle = get_string('header_coursecodes', 'enrol_easy');
-            $easycodelink = new moodle_url('/enrol/editinstance.php', array(
+        $easycodetitle = '';
+        $easycodelink = '';
+        if ($globalhaseasyenrollment && $this->page->pagelayout == 'course' && $coursehaseasyenrollment){
+        $easycodetitle = get_string('header_coursecodes', 'enrol_easy');
+        $easycodelink = new moodle_url('/enrol/editinstance.php', array(
                 'courseid' => $this->page->course->id,
                 'id' => $easyenrollinstance->id,
                 'type' => 'easy'
             ));
         }
-        $easyenrolbtn = '';
         $easyenrolbtntext = get_string('easyenrollbtn', 'theme_learnr');
-        if ($globalhaseasyenrollment && $this->page->pagelayout == 'course' && $coursehaseasyenrollment) {
-            $easyenrolbtn = '<a href="' .$easycodelink. '" title="' .$easyenrolbtntext. '" class="btn btn-secondary easyenrolbtn" style="float:right;"><i class="fa fa-2x fa-key" aria-hidden="true"></i><span class="sr-only">' .$easyenrolbtntext. '</span></a>';
+        
+        $course = $this->page->course;
+        $context = context_course::instance($course->id);
+        $showenrollinktoteacher = has_capability('moodle/course:viewhiddenactivities', $context) && $globalhaseasyenrollment && $coursehaseasyenrollment && $this->page->pagelayout == 'course';
+        $showblockdrawer = (empty($this->page->theme->settings->showblockdrawer)) ? false : $this->page->theme->settings->showblockdrawer;
+
+        // Add block button in editing mode.
+        $addblockbutton = $OUTPUT->addblockbutton();
+
+        $blockscolumna = $OUTPUT->blocks('columna');
+        $blockscolumnb = $OUTPUT->blocks('columnb');
+        $blockscolumnc = $OUTPUT->blocks('columnc');
+
+        $columnabtn = $OUTPUT->addblockbutton('columna');
+        $columnaregion = $OUTPUT->custom_block_region('columna');
+
+        $columnbbtn = $OUTPUT->addblockbutton('columnb');
+        $columnbregion = $OUTPUT->custom_block_region('columnb');
+
+        $columncbtn = $OUTPUT->addblockbutton('columnc');
+        $columncregion = $OUTPUT->custom_block_region('columnc');
+
+        $checkblocka = (strpos($blockscolumna, 'data-block=') !== false || !empty($addblockbutton));
+        $checkblockb = (strpos($blockscolumnb, 'data-block=') !== false || !empty($addblockbutton));
+        $checkblockc = (strpos($blockscolumnc, 'data-block=') !== false || !empty($addblockbutton));
+
+        $displayheaderblocks = ($this->page->pagelayout == 'course' && isset($COURSE->id) && $COURSE->id > 1) &&  $this->page->theme->settings->showheaderblockpanel;
+        $showheaderblockpanel = (empty($this->page->theme->settings->showheaderblockpanel)) ? false : $this->page->theme->settings->showheaderblockpanel;
+
+        $hasheaderblocks = false;
+        if (($checkblocka || $checkblockb || $checkblockc) && $this->page->theme->settings->showheaderblockpanel == 1 && $this->page->pagelayout == 'course') {
+            $hasheaderblocks = true;
         }
 
         // Add a special case since /my/courses is a part of the /my subsystem.
@@ -185,6 +219,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ['id' => 'region-main-settings-menu']
             ));
         }
+
         $header = new stdClass();
         $header->settingsmenu = $this->context_header_settings_menu();
         $header->contextheader = $this->context_header();
@@ -192,8 +227,20 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $header->navbar = $this->navbar();
         $header->hasmycourses = $hasmycourses;
         $header->mycourses = $mycourses;
-        $header->easyenrolbtn = $easyenrolbtn;
+        $header->showenrollinktoteacher = $showenrollinktoteacher;
+        $header->showblockdrawer = $showblockdrawer;
+        $header->hasheaderblocks = $hasheaderblocks;
+        $header->displayheaderblocks = $displayheaderblocks;
+        $header->showheaderblockpanel = $showheaderblockpanel;
+        $header->columnabtn = $columnabtn;
+        $header->columnbbtn = $columnbbtn;
+        $header->columncbtn = $columncbtn;
+        $header->columnaregion = $columnaregion;
+        $header->columnbregion = $columnbregion;
+        $header->columncregion = $columncregion;
         $header->mycoursesmenu = $mycoursesmenu;
+        $header->easycodetitle = $easycodetitle;
+        $header->easycodelink = $easycodelink;
         $header->pageheadingbutton = $this->page_heading_button();
         $header->courseheader = $this->course_header();
         $header->headeractions = $this->page->get_header_actions();

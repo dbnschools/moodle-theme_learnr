@@ -30,33 +30,6 @@ require_once($CFG->dirroot . '/course/lib.php');
 // Add block button in editing mode.
 $addblockbutton = $OUTPUT->addblockbutton();
 
-$blockscolumna = $OUTPUT->blocks('columna');
-$blockscolumnb = $OUTPUT->blocks('columnb');
-$blockscolumnc = $OUTPUT->blocks('columnc');
-
-$columnabtn = $OUTPUT->addblockbutton('columna');
-$columnaregion = $OUTPUT->custom_block_region('columna');
-
-$columnbbtn = $OUTPUT->addblockbutton('columnb');
-$columnbregion = $OUTPUT->custom_block_region('columnb');
-
-$columncbtn = $OUTPUT->addblockbutton('columnc');
-$columncregion = $OUTPUT->custom_block_region('columnc');
-
-$checkblocka = (strpos($blockscolumna, 'data-block=') !== false || !empty($addblockbutton));
-$checkblockb = (strpos($blockscolumnb, 'data-block=') !== false || !empty($addblockbutton));
-$checkblockc = (strpos($blockscolumnc, 'data-block=') !== false || !empty($addblockbutton));
-
-$displayheaderblocks = ($this->page->pagelayout == 'course' && isset($COURSE->id) && $COURSE->id > 1)&&  $this->page->theme->settings->showheaderblockpanel;
-$showheaderblockpanel = (empty($this->page->theme->settings->showheaderblockpanel)) ? false : $this->page->theme->settings->showheaderblockpanel;
-$showpageimage = (empty($this->page->theme->settings->showpageimage)) ? false : $this->page->theme->settings->showpageimage;
-
-$hasheaderblocks = false;
-if (($checkblocka || $checkblockb || $checkblockc) && $this->page->theme->settings->showheaderblocks == 1) {
-    $hasheaderblocks = true;
-}
-
-
 $blocksfootera = $OUTPUT->blocks('footera');
 $blocksfooterb = $OUTPUT->blocks('footerb');
 $blocksfooterc = $OUTPUT->blocks('footerc');
@@ -192,15 +165,6 @@ $templatecontext = [
     'footercregion' => $footercregion,
     'hasfooterblocks' => $hasfooterblocks,
     'displayfooterblocks' => $displayfooterblocks,
-    'columnabtn' => $columnabtn,
-    'columnaregion' => $columnaregion,
-    'columnbbtn' => $columnbbtn,
-    'columnbregion' => $columnbregion,
-    'columncbtn' => $columncbtn,
-    'columncregion' => $columncregion,
-    'displayheaderblocks' => $displayheaderblocks,
-    'hasheaderblocks' => $hasheaderblocks,
-    'showpageimage' => $showpageimage,
 ];
 
 $this->page->requires->jquery();

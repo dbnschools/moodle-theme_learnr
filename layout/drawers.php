@@ -30,8 +30,6 @@ require_once($CFG->dirroot . '/course/lib.php');
 // Add block button in editing mode.
 $addblockbutton = $OUTPUT->addblockbutton();
 
-$displayheaderblocks = $this->page->pagelayout == 'course' && isset($COURSE->id) && $COURSE->id > 1;
-
 user_preference_allow_ajax_update('drawer-open-nav', PARAM_ALPHA);
 user_preference_allow_ajax_update('drawer-open-index', PARAM_BOOL);
 user_preference_allow_ajax_update('drawer-open-block', PARAM_BOOL);
@@ -88,7 +86,6 @@ if ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'fron
 $showcourseindexnav = (empty($this->page->theme->settings->showcourseindexnav)) ? false : $this->page->theme->settings->showcourseindexnav;
 $showblockdrawer = (empty($this->page->theme->settings->showblockdrawer)) ? false : $this->page->theme->settings->showblockdrawer;
 
-
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
 
@@ -139,7 +136,6 @@ $templatecontext = [
     'hasmarketingtiles' => $hasmarketingtiles,
     'addblockbutton' => $addblockbutton,
     'showblockdrawer' => $showblockdrawer,
-
 ];
 
 $this->page->requires->jquery();
