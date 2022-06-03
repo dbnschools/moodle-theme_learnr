@@ -167,7 +167,4 @@ $templatecontext = [
     'displayfooterblocks' => $displayfooterblocks,
 ];
 
-$this->page->requires->jquery();
-$this->page->requires->js('/theme/learnr/javascript/blockslider.js');
-
 echo $OUTPUT->render_from_template('theme_learnr/course', $templatecontext);

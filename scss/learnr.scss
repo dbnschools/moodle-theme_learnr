@@ -92,7 +92,7 @@ form.editmode-switch-form {
 }
 
 // Possible layout change in 1.7
-.withimage, .defaultheaderimage, .courseimage {
+.withimage, .defaultheaderimage, .courseimage, .customimage {
     -webkit-mask-image: linear-gradient(to top,transparent 0%,rgba(255,255,255,.9) 70%);
     mask-image: linear-gradient(to top,transparent 0%,rgba(255,255,255,.9) 70%);
     max-height: 600px;
@@ -683,4 +683,14 @@ ul.teacherscourseview {
 .easyenrolform {
     display: flex;
     justify-content: center;
+}
+.secondary-navigation {
+    clear: both;
+}
+
+@media screen and (max-width: 576px) {
+    .headerbuttons .fa-2x {
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+    }
 }

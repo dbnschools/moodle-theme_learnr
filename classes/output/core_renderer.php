@@ -95,7 +95,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $defaultimgurl = $this->image_url('headerbg', 'theme');
         $headerbgimgurl = $this->page->theme->setting_file_url('pagebackgroundimage', 'pagebackgroundimage', true);
 
-        $showpageimage = (empty($this->page->theme->settings->showpageimage)) ? false : ($this->page->theme->settings->showpageimage && $this->page->course->id > 1) && $this->page->pagetype == 'course-edit' || $this->page->pagetype == 'enrol-instances'|| $this->page->pagetype == 'enrol-editinstance' || $this->page->pagelayout != 'mydashboard' && $this->page->pagelayout != 'frontpage' && $this->page->pagelayout != 'mycourses';
+        $showpageimage = (empty($this->page->theme->settings->showpageimage)) ? false : ($this->page->theme->settings->showpageimage);
 
         // Create html for header.
         if ($showpageimage){

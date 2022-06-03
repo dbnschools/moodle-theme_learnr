@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'LearnR';
-$string['choosereadme'] = 'Theme LearnR is an enhanced child theme of Boost provided by Moodle an Hochschulen e.V.';
+$string['choosereadme'] = 'Theme LearnR is an enhanced child theme of Boost provided by Moodle.';
 $string['configtitle'] = 'LearnR';
 $string['privacy:metadata'] = 'The LearnR theme does not store any personal data about any user.';
 $string['colorsettings'] = 'Color Settings';
