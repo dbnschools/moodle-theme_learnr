@@ -48,7 +48,7 @@ $THEME->layouts = [
     // Main course page.
     'course' => [
         'file' => 'course.php',
-        'regions' => ['side-pre','columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
+        'regions' => ['side-pre', 'columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
         'defaultregion' => 'columna',
         'options' => ['langmenu' => true],
     ],
@@ -60,7 +60,7 @@ $THEME->layouts = [
     // Part of course, typical for modules - default page layout if $cm specified in require_login().
     'incourse' => [
         'file' => 'drawers.php',
-        'regions' => ['side-pre','columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
+        'regions' => ['side-pre', 'columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
         'defaultregion' => 'side-pre',
     ],
     // The site home page.
@@ -93,7 +93,7 @@ $THEME->layouts = [
     // My public page.
     'mypublic' => [
         'file' => 'drawers.php',
-        'regions' => ['side-pre','columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
+        'regions' => ['side-pre', 'columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
         'defaultregion' => 'side-pre',
     ],
     'login' => [
@@ -173,17 +173,17 @@ if ($THEME->settings->showheaderblockpanel == 1 && $THEME->settings->showblockdr
         'defaultregion' => 'side-pre',
         'options' => ['langmenu' => true],
     ];
-} 
-if ($THEME->settings->showheaderblockpanel == 0 && $THEME->settings->showblockdrawer == 1){
+}
+if ($THEME->settings->showheaderblockpanel == 0 && $THEME->settings->showblockdrawer == 1) {
     $THEME->layouts['course'] = [
         'file' => 'course.php',
-        'regions' => ['side-pre','footera', 'footerb', 'footerc'],
+        'regions' => ['side-pre', 'footera', 'footerb', 'footerc'],
         'defaultregion' => 'side-pre',
         'options' => ['langmenu' => true],
     ];
 }
-if ($THEME->settings->showheaderblockpanel == 1 && $THEME->settings->showblockdrawer == 0){
-     $THEME->layouts['mydashboard'] = [
+if ($THEME->settings->showheaderblockpanel == 1 && $THEME->settings->showblockdrawer == 0) {
+    $THEME->layouts['mydashboard'] = [
         'file' => 'drawers.php',
         'regions' => [ ],
         'options' => ['nonavbar' => true, 'langmenu' => true],
@@ -197,7 +197,7 @@ if ($THEME->settings->showheaderblockpanel == 1 && $THEME->settings->showblockdr
     // Part of course, typical for modules - default page layout if $cm specified in require_login().
     $THEME->layouts['incourse'] = [
         'file' => 'drawers.php',
-        'regions' => ['side-pre','columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
+        'regions' => ['side-pre', 'columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
         'defaultregion' => 'side-pre',
     ];
 }
