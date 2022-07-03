@@ -23,7 +23,7 @@
  */
 
 namespace theme_learnr\output;
-
+defined('MOODLE_INTERNAL') || die();
 use html_writer;
 use custom_menu;
 use stdClass;
@@ -31,23 +31,21 @@ use moodle_url;
 use context_course;
 
 
-require_once ($CFG->dirroot . '/completion/classes/progress.php');
+require_once($CFG->dirroot . '/completion/classes/progress.php');
 
 
 class core_renderer extends \theme_boost\output\core_renderer {
 
     public function courseprogressbar() {
-        global $PAGE;
         $course = $this->page->course;
         $context = context_course::instance($course->id);
         $hasprogressbar = (empty($this->page->theme->settings->showprogressbar)) ? false : true;
 
-        // Student Dash
-        if (\core_completion\progress::get_course_progress_percentage($PAGE->course)) {
-            $comppc = \core_completion\progress::get_course_progress_percentage($PAGE->course);
+        // Student Dash.
+        if (\core_completion\progress::get_course_progress_percentage($this->page->course)) {
+            $comppc = \core_completion\progress::get_course_progress_percentage($this->page->course);
             $comppercent = number_format($comppc, 0);
-        }
-        else {
+        } else {
             $comppercent = 0;
         }
 
@@ -87,7 +85,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
         foreach ($files as $file) {
             $isimage = $file->is_valid_image();
             if ($isimage) {
-                $courseimage = file_encode_url("$CFG->wwwroot/pluginfile.php", '/' . $file->get_contextid() . '/' . $file->get_component() . '/' . $file->get_filearea() . $file->get_filepath() . $file->get_filename() , !$isimage);
+                $courseimage = file_encode_url("$CFG->wwwroot/pluginfile.php", '/' .
+                    $file->get_contextid() . '/' . $file->get_component() . '/' . $file->get_filearea() .
+                    $file->get_filepath() . $file->get_filename() , !$isimage);
             }
         }
         $html = '';
@@ -98,7 +98,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $showpageimage = (empty($this->page->theme->settings->showpageimage)) ? false : ($this->page->theme->settings->showpageimage);
 
         // Create html for header.
-        if ($showpageimage){
+        if ($showpageimage) {
             $html = html_writer::start_div('headerbkg');
             // If course image display it in separate div to allow css styling of inline style.
             if ($courseimage && !$this->page->theme->settings->sitewideimage == 1 && $showpageimage) {
@@ -107,16 +107,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     width: 100%; height: 100%;'
                 ));
                 $html .= html_writer::end_div(); // End withimage inline style div.
-            }
-            else if (isset($headerbg) && $showpageimage) {
+            } else if (isset($headerbg) && $showpageimage) {
                 $html .= html_writer::start_div('customimage', array(
-                    'style' => 'background-image: url("' . $headerbgimgurl . '"); background-size: cover; background-position:center;
-                    width: 100%; height: 100%;'
+                    'style' => 'background-image: url("' . $headerbgimgurl . '"); background-size: cover;
+                    background-position:center; width: 100%; height: 100%;'
                 ));
                 $html .= html_writer::end_div(); // End withoutimage inline style div.
-                
-            }
-            else {
+
+            } else {
                 $html .= html_writer::start_div('defaultheaderimage', array(
                     'style' => 'background-image: url("' . $defaultimgurl . '"); background-size: cover; background-position:center;
                     width: 100%; height: 100%;'
@@ -143,8 +141,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $mycoursesurl = new moodle_url('/my/');
         $mycoursesmenu = $this->learnr_mycourses();
         $hasmycourses = $this->page->pagelayout == 'course' && (isset($this->page->theme->settings->showlatestcourses) && $this->page->theme->settings->showlatestcourses == 1);
-        
-        //$plugin = enrol_get_plugin('easy');
+
         $globalhaseasyenrollment = enrol_get_plugin('easy');
         $coursehaseasyenrollment = '';
         if ($globalhaseasyenrollment) {
@@ -159,19 +156,20 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
         $easycodetitle = '';
         $easycodelink = '';
-        if ($globalhaseasyenrollment && $this->page->pagelayout == 'course' && $coursehaseasyenrollment){
-        $easycodetitle = get_string('header_coursecodes', 'enrol_easy');
-        $easycodelink = new moodle_url('/enrol/editinstance.php', array(
+        if ($globalhaseasyenrollment && $this->page->pagelayout == 'course' && $coursehaseasyenrollment) {
+            $easycodetitle = get_string('header_coursecodes', 'enrol_easy');
+            $easycodelink = new moodle_url('/enrol/editinstance.php', array(
                 'courseid' => $this->page->course->id,
                 'id' => $easyenrollinstance->id,
                 'type' => 'easy'
             ));
         }
         $easyenrolbtntext = get_string('easyenrollbtn', 'theme_learnr');
-        
+
         $course = $this->page->course;
         $context = context_course::instance($course->id);
-        $showenrollinktoteacher = has_capability('moodle/course:viewhiddenactivities', $context) && $globalhaseasyenrollment && $coursehaseasyenrollment && $this->page->pagelayout == 'course';
+        $showenrollinktoteacher = has_capability('moodle/course:viewhiddenactivities', $context)
+                                  && $globalhaseasyenrollment && $coursehaseasyenrollment && $this->page->pagelayout == 'course';
         $showblockdrawer = (empty($this->page->theme->settings->showblockdrawer)) ? false : $this->page->theme->settings->showblockdrawer;
 
         // Add block button in editing mode.
@@ -270,7 +268,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $courseformat = course_get_format($course);
         // If the theme implements course index and the current course format uses course index and the current
         // page layout is not 'frametop' (this layout does not support course index), show no links.
-        if ($this->page->theme->settings->activitynavdisplay ==2 || $this->page->theme->settings->activitynavdisplay ==4 ) {
+        if ($this->page->theme->settings->activitynavdisplay == 2 || $this->page->theme->settings->activitynavdisplay == 4) {
                 return '';
         }
         // Get a list of all the activities in the course.
@@ -344,7 +342,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $courseformat = course_get_format($course);
         // If the theme implements course index and the current course format uses course index and the current
         // page layout is not 'frametop' (this layout does not support course index), show no links.
-        if ($this->page->theme->settings->activitynavdisplay ==1 || $this->page->theme->settings->activitynavdisplay ==4 ) {
+        if ($this->page->theme->settings->activitynavdisplay == 1 || $this->page->theme->settings->activitynavdisplay == 4 ) {
                 return '';
         }
         // Get a list of all the activities in the course.
@@ -407,7 +405,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $marketing1target = (empty($this->page->theme->settings->marketing1target)) ? false : $this->page->theme->settings->marketing1target;
         $marketing1image = (empty($this->page->theme->settings->marketing1image)) ? false : $this->page->theme->setting_file_url('marketing1image', 'marketing1image', true);
         $marketing1icon = (empty($this->page->theme->settings->marketing1icon)) ? false : format_string($this->page->theme->settings->marketing1icon);
-        
+
         $hasmarketing2 = (empty($this->page->theme->settings->marketing2)) ? false : format_string($this->page->theme->settings->marketing2);
         $marketing2content = (empty($this->page->theme->settings->marketing2content)) ? false : format_text($this->page->theme->settings->marketing2content);
         $marketing2buttontext = (empty($this->page->theme->settings->marketing2buttontext)) ? false : format_string($this->page->theme->settings->marketing2buttontext);
@@ -415,7 +413,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $marketing2target = (empty($this->page->theme->settings->marketing2target)) ? false : $this->page->theme->settings->marketing2target;
         $marketing2image = (empty($this->page->theme->settings->marketing2image)) ? false : $this->page->theme->setting_file_url('marketing2image', 'marketing2image', true);
         $marketing2icon = (empty($this->page->theme->settings->marketing2icon)) ? false : format_string($this->page->theme->settings->marketing2icon);
-        
+
         $hasmarketing3 = (empty($this->page->theme->settings->marketing3)) ? false : format_string($this->page->theme->settings->marketing3);
         $marketing3content = (empty($this->page->theme->settings->marketing3content)) ? false : format_text($this->page->theme->settings->marketing3content);
         $marketing3buttontext = (empty($this->page->theme->settings->marketing3buttontext)) ? false : format_string($this->page->theme->settings->marketing3buttontext);
@@ -423,15 +421,16 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $marketing3target = (empty($this->page->theme->settings->marketing3target)) ? false : $this->page->theme->settings->marketing3target;
         $marketing3image = (empty($this->page->theme->settings->marketing3image)) ? false : $this->page->theme->setting_file_url('marketing3image', 'marketing3image', true);
         $marketing3icon = (empty($this->page->theme->settings->marketing3icon)) ? false : format_string($this->page->theme->settings->marketing3icon);
-        
-        $fp_marketingtiles = ['hasmarkettiles' => ($hasmarketing1 || $hasmarketing2 || $hasmarketing3) ? true : false, 'markettiles' => array(
+
+        $fpmarketingtiles = ['hasmarkettiles' => ($hasmarketing1 || $hasmarketing2 || $hasmarketing3) ? true : false, 'markettiles' => array(
             array(
                 'hastile' => $hasmarketing1,
                 'tileimage' => $marketing1image,
                 'content' => $marketing1content,
                 'title' => $hasmarketing1,
                 'hasbutton' => $marketing1buttonurl,
-                'button' => "<a href = '$marketing1buttonurl' title = '$marketing1buttontext' alt='$marketing1buttontext' class='btn btn-primary' target='$marketing1target'> $marketing1buttontext </a>",
+                'button' => "<a href = '$marketing1buttonurl' title = '$marketing1buttontext' alt='$marketing1buttontext'
+                             class='btn btn-primary' target='$marketing1target'> $marketing1buttontext </a>",
                 'marketingicon' => $marketing1icon,
             ) ,
             array(
@@ -440,7 +439,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 'content' => $marketing2content,
                 'title' => $hasmarketing2,
                 'hasbutton' => $marketing2buttonurl,
-                'button' => "<a href = '$marketing2buttonurl' title = '$marketing2buttontext' alt='$marketing2buttontext' class='btn btn-primary' target='$marketing2target'> $marketing2buttontext </a>",
+                'button' => "<a href = '$marketing2buttonurl' title = '$marketing2buttontext' alt='$marketing2buttontext'
+                             class='btn btn-primary' target='$marketing2target'> $marketing2buttontext </a>",
                 'marketingicon' => $marketing2icon,
             ) ,
             array(
@@ -449,15 +449,16 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 'content' => $marketing3content,
                 'title' => $hasmarketing3,
                 'hasbutton' => $marketing3buttonurl,
-                'button' => "<a href = '$marketing3buttonurl' title = '$marketing3buttontext' alt='$marketing3buttontext' class='btn btn-primary' target='$marketing3target'> $marketing3buttontext </a>",
+                'button' => "<a href = '$marketing3buttonurl' title = '$marketing3buttontext'
+                             class='btn btn-primary' target='$marketing3target'> $marketing3buttontext </a>",
                 'marketingicon' => $marketing3icon,
             ) ,
-        ) , 
-    ];
-        return $this->render_from_template('theme_learnr/fpmarkettiles', $fp_marketingtiles);
+        ) ,
+        ];
+        return $this->render_from_template('theme_learnr/fpmarkettiles', $fpmarketingtiles);
     }
 
-    // The following code is a copied work of the code from theme Essential https://moodle.org/plugins/theme_essential, @copyright Gareth J Barnard
+    // The following code is a copied work of the code from theme Essential https://moodle.org/plugins/theme_essential, @copyright Gareth J Barnard.
     protected static function timeaccesscompare($a, $b) {
         // Timeaccess is lastaccess entry and timestart an enrol entry.
         if ((!empty($a->timeaccess)) && (!empty($b->timeaccess))) {
@@ -466,8 +467,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 return 0;
             }
             return ($a->timeaccess > $b->timeaccess) ? -1 : 1;
-        }
-        else if ((!empty($a->timestart)) && (!empty($b->timestart))) {
+        } else if ((!empty($a->timestart)) && (!empty($b->timestart))) {
             // Both enrol.
             if ($a->timestart == $b->timestart) {
                 return 0;
@@ -483,96 +483,94 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // 'b' must be the enrol entry.
         return 1;
     }
-    // End copied code
+    // End copied code.
 
-    // The following code is a derivative work of the code from theme Essential https://moodle.org/plugins/theme_essential, by Gareth J Barnard
+    // The following code is a derivative work of the code from theme Essential https://moodle.org/plugins/theme_essential, by Gareth J Barnard.
     public function learnr_mycourses() {
         $context = $this->page->context;
         $menu = new custom_menu();
-        
-            $branchtitle = get_string('latestcourses', 'theme_learnr');
-            $branchlabel = $branchtitle;
-            $branchurl = new moodle_url('/my/courses.php');
-            $branchsort = 10000;
-            $branch = $menu->add($branchlabel, $branchurl, $branchtitle, $branchsort);
-            $dashlabel = get_string('viewallcourses', 'theme_learnr');
-            $dashurl = new moodle_url("/my/courses.php");
-            $dashtitle = $dashlabel;
-            $nomycourses = get_string('nomycourses', 'theme_learnr');
-            $courses = enrol_get_my_courses(null, 'sortorder ASC');
-             
-                if ($courses) {
-                    // We have something to work with.  Get the last accessed information for the user and populate.
-                    global $DB, $USER;
-                    $lastaccess = $DB->get_records('user_lastaccess', array('userid' => $USER->id) , '', 'courseid, timeaccess');
-                    if ($lastaccess) {
-                        foreach ($courses as $course) {
-                            if (!empty($lastaccess[$course->id])) {
-                                $course->timeaccess = $lastaccess[$course->id]->timeaccess;
+
+        $branchtitle = get_string('latestcourses', 'theme_learnr');
+        $branchlabel = $branchtitle;
+        $branchurl = new moodle_url('/my/courses.php');
+        $branchsort = 10000;
+        $branch = $menu->add($branchlabel, $branchurl, $branchtitle, $branchsort);
+        $dashlabel = get_string('viewallcourses', 'theme_learnr');
+        $dashurl = new moodle_url("/my/courses.php");
+        $dashtitle = $dashlabel;
+        $nomycourses = get_string('nomycourses', 'theme_learnr');
+        $courses = enrol_get_my_courses(null, 'sortorder ASC');
+
+        if ($courses) {
+            // We have something to work with.  Get the last accessed information for the user and populate.
+            global $DB, $USER;
+            $lastaccess = $DB->get_records('user_lastaccess', array('userid' => $USER->id) , '', 'courseid, timeaccess');
+            if ($lastaccess) {
+                foreach ($courses as $course) {
+                    if (!empty($lastaccess[$course->id])) {
+                        $course->timeaccess = $lastaccess[$course->id]->timeaccess;
+                    }
+                }
+            }
+            // Determine if we need to query the enrolment and user enrolment tables.
+            $enrolquery = false;
+            foreach ($courses as $course) {
+                if (empty($course->timeaccess)) {
+                    $enrolquery = true;
+                    break;
+                }
+            }
+            if ($enrolquery) {
+                // We do.
+                $params = array(
+                    'userid' => $USER->id
+                );
+                $sql = "SELECT ue.id, e.courseid, ue.timestart
+                    FROM {enrol} e
+                    JOIN {user_enrolments} ue ON (ue.enrolid = e.id AND ue.userid = :userid)";
+                $enrolments = $DB->get_records_sql($sql, $params, 0, 0);
+                if ($enrolments) {
+                    // Sort out any multiple enrolments on the same course.
+                    $userenrolments = array();
+                    foreach ($enrolments as $enrolment) {
+                        if (!empty($userenrolments[$enrolment->courseid])) {
+                            if ($userenrolments[$enrolment->courseid] < $enrolment->timestart) {
+                                // Replace.
+                                $userenrolments[$enrolment->courseid] = $enrolment->timestart;
                             }
+                        } else {
+                            $userenrolments[$enrolment->courseid] = $enrolment->timestart;
                         }
                     }
-                    // Determine if we need to query the enrolment and user enrolment tables.
-                    $enrolquery = false;
+                    // We don't need to worry about timeend etc. as our course list will be valid for the user from above.
                     foreach ($courses as $course) {
                         if (empty($course->timeaccess)) {
-                            $enrolquery = true;
-                            break;
+                            $course->timestart = $userenrolments[$course->id];
                         }
                     }
-                    if ($enrolquery) {
-                        // We do.
-                        $params = array(
-                            'userid' => $USER->id
-                        );
-                        $sql = "SELECT ue.id, e.courseid, ue.timestart
-                            FROM {enrol} e
-                            JOIN {user_enrolments} ue ON (ue.enrolid = e.id AND ue.userid = :userid)";
-                        $enrolments = $DB->get_records_sql($sql, $params, 0, 0);
-                        if ($enrolments) {
-                            // Sort out any multiple enrolments on the same course.
-                            $userenrolments = array();
-                            foreach ($enrolments as $enrolment) {
-                                if (!empty($userenrolments[$enrolment->courseid])) {
-                                    if ($userenrolments[$enrolment->courseid] < $enrolment->timestart) {
-                                        // Replace.
-                                        $userenrolments[$enrolment->courseid] = $enrolment->timestart;
-                                    }
-                                }
-                                else {
-                                    $userenrolments[$enrolment->courseid] = $enrolment->timestart;
-                                }
-                            }
-                            // We don't need to worry about timeend etc. as our course list will be valid for the user from above.
-                            foreach ($courses as $course) {
-                                if (empty($course->timeaccess)) {
-                                    $course->timestart = $userenrolments[$course->id];
-                                }
-                            }
-                        }
-                    }
-                    uasort($courses, array($this,'timeaccesscompare'));
                 }
-                else {
-                    return $nomycourses;
-                }
-                $sortorder = $lastaccess;
-                $i = 0;
-                foreach ($courses as $course) {
-                    if ($course->visible && $i < 7) {
-                        $branch->add(format_string($course->fullname) , new moodle_url('/course/view.php?id=' . $course->id) , format_string($course->shortname));
-                    }
-                    $i += 1;
-                }
-                $branch->add($dashlabel, $dashurl, $dashtitle);
-                $content = '';
-                foreach ($menu->get_children() as $item) {
-                    $context = $item->export_for_template($this);
-                    $content .= $this->render_from_template('theme_learnr/mycourses', $context);
-                }
+            }
+            uasort($courses, array($this, 'timeaccesscompare'));
+        } else {
+            return $nomycourses;
+        }
+        $sortorder = $lastaccess;
+        $i = 0;
+        foreach ($courses as $course) {
+            if ($course->visible && $i < 7) {
+                $branch->add(format_string($course->fullname) , new moodle_url('/course/view.php?id=' . $course->id) , format_string($course->shortname));
+            }
+            $i += 1;
+        }
+        $branch->add($dashlabel, $dashurl, $dashtitle);
+        $content = '';
+        foreach ($menu->get_children() as $item) {
+            $context = $item->export_for_template($this);
+            $content .= $this->render_from_template('theme_learnr/mycourses', $context);
+        }
         return $content;
     }
-    // End derivative work
+    // End derivative work.
 
     public function fpicons() {
         $context = $this->page->context;
@@ -615,10 +613,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'noclean' => true
         ));
 
-        $fp_icons = [
-            'hasslidetextbox' => (!empty($this->page->theme->settings->slidetextbox && isloggedin())) , 
+        $fpicons = [
+            'hasslidetextbox' => (!empty($this->page->theme->settings->slidetextbox && isloggedin())) ,
             'slidetextbox' => $slidetextbox, 'hasfptextboxlogout' => !isloggedin() ,
-            'hasfpiconnav' => ($hasnav1icon || $hasnav2icon || $hasnav3icon || $hasnav4icon || $hasnav5icon || $hasnav6icon || $hasnav7icon || $hasnav8icon || $hasslideicon ? true : false) && ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage' || $this->page->pagelayout == 'mycourses'), 
+            'hasfpiconnav' => ($hasnav1icon || $hasnav2icon || $hasnav3icon || $hasnav4icon || $hasnav5icon
+                           || $hasnav6icon || $hasnav7icon || $hasnav8icon || $hasslideicon)
+                           && ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage'
+                           || $this->page->pagelayout == 'mycourses'),
             'fpiconnav' => array(
                 array(
                     'hasicon' => $hasnav1icon,
@@ -684,10 +685,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     'link' => $slideiconbuttonurl,
                     'linktext' => $slideiconbuttontext
                 ) ,
-            ) , 
+            ) ,
         ];
 
-        return $this->render_from_template('theme_learnr/fpicons', $fp_icons);
+        return $this->render_from_template('theme_learnr/fpicons', $fpicons);
 
     }
 
