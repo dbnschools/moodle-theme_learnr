@@ -47,7 +47,7 @@ $checkfooterblocka = (strpos($blocksfootera, 'data-block=') !== false || !empty(
 $checkfooterblockb = (strpos($blocksfooterb, 'data-block=') !== false || !empty($addblockbutton));
 $checkfooterblockc = (strpos($blocksfooterc, 'data-block=') !== false || !empty($addblockbutton));
 
-$hasfooterblocks = false ;
+$hasfooterblocks = false;
 if (($checkfooterblocka || $checkfooterblockb || $checkfooterblockc)) {
     $hasfooterblocks = true;
 }
@@ -94,17 +94,19 @@ if ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'fron
     $alertbox = (empty($this->page->theme->settings->alertbox)) ? false : format_text($this->page->theme->settings->alertbox);
 }
 
-$fptextbox =false;
+$fptextbox = false;
 if ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage') {
-$fptextbox = (empty($this->page->theme->settings->fptextbox)) ? false : format_text($this->page->theme->settings->fptextbox);
-
+    $fptextbox = (empty($this->page->theme->settings->fptextbox)) ? false : format_text($this->page->theme->settings->fptextbox);
 }
+
 $hasmarketingtiles = false;
 if ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage') {
     $hasmarketingtiles = true;
 }
 
-$showcourseindexnav = (empty($this->page->theme->settings->showcourseindexnav)) ? false : $this->page->theme->settings->showcourseindexnav;
+$showcourseindexnav = (empty($this->page->theme->settings->showcourseindexnav))
+                    ? false
+                    : $this->page->theme->settings->showcourseindexnav;
 $showblockdrawer = (empty($this->page->theme->settings->showblockdrawer)) ? false : $this->page->theme->settings->showblockdrawer;
 
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
@@ -125,7 +127,8 @@ if ($this->page->has_secondary_navigation()) {
 $primary = new core\navigation\output\primary($PAGE);
 $renderer = $this->page->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
-$buildregionmainsettings = !$this->page->include_region_main_settings_in_header_actions() && !$this->page->has_secondary_navigation();
+$buildregionmainsettings = !$this->page->include_region_main_settings_in_header_actions()
+                           && !$this->page->has_secondary_navigation();
 // If the settings menu will be included in the header then don't add it here.
 $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
 
