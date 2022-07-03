@@ -167,7 +167,7 @@ function theme_learnr_get_extra_scss($theme) {
         $content .= "background-image: url('$loginbackgroundimageurl'); background-size: cover;";
         $content .= ' }';
     }
-    
+
     return $content;
 }
 
@@ -184,7 +184,8 @@ function theme_learnr_get_extra_scss($theme) {
  * @return bool
  */
 function theme_learnr_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
-    if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'pagebackgroundimage' || $filearea === 'loginbackgroundimage' || $filearea === 'marketing1image' || $filearea === 'marketing2image' || $filearea === 'marketing3image')) {
+    if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'pagebackgroundimage' || $filearea === 'loginbackgroundimage'
+                                  || $filearea === 'marketing1image' || $filearea === 'marketing2image' || $filearea === 'marketing3image')) {
         $theme = theme_config::load('learnr');
         // By default, theme files must be cache-able by both browsers and proxies.
         if (!array_key_exists('cacheability', $options)) {
@@ -225,8 +226,8 @@ function theme_learnr_strip_html_tags( $text ) {
             "\n\$0", "\n\$0",
             ),
         $text
-        );
-return strip_tags( $text );
+    );
+    return strip_tags( $text );
 }
 
 /**
