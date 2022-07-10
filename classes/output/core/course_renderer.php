@@ -95,6 +95,12 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                         $courseurl = new moodle_url('/course/view.php', array(
                             'id' => $courseid
                         ));
+                        if ($titletooltip) {
+                            $tooltiptext = 'data-tooltip="tooltip" data-placement="top"
+                                            title="'. format_string($course->fullname) . '"';
+                        } else {
+                            $tooltiptext = '';
+                        }
 
                         $systemcontext = $this->page->bodyid;
                         // Course completion Progress bar.
@@ -113,8 +119,9 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                         if ($course->enablecompletion == 1 && isloggedin() && $systemcontext == 'page-site-index') {
                             $completiontext = get_string('coursecompletion', 'completion');
                             $compbar = "<div class='progress'>";
-                            $compbar .= "<div class='progress-bar progress-bar-info barfill' role='progressbar' aria-valuenow='{$comppercent}' ";
-                            $compbar .= " aria-valuemin='0' aria-valuemax='100' style='width: {$comppercent}%;'>";
+                            $compbar .= "<div class='progress-bar progress-bar-info barfill' role='progressbar'";
+                            $compbar .= " aria-valuenow='{$comppercent}' aria-valuemin='0' aria-valuemax='100'";
+                            $compbar .= " style='width: {$comppercent}%;'>";
                             $compbar .= "{$comppercent}%";
                             $compbar .= "</div>";
                             $compbar .= "</div>";
@@ -146,7 +153,8 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
 
                         }
 
-                        // Load from config if usea a img from course summary file if not exist a img then a default one ore use a fa-icon.
+                        // Load from config if usea a img from course summary file
+                        // if not exist a img then a default one ore use a fa-icon.
                         $imgurl = '';
                         $context = context_course::instance($course->id);
                         foreach ($course->get_course_overviewfiles() as $file) {
@@ -184,11 +192,6 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                             $rowcontent .= '
                             <div class="class-box">
                                 ';
-                            if ($titletooltip) {
-                                $tooltiptext = 'data-tooltip="tooltip" data-placement= "top" title="' . format_string($course->fullname) . '"';
-                            } else {
-                                $tooltiptext = '';
-                            }
 
                             $rowcontent .= '
                                     <a ' . $tooltiptext . ' href="' . $courseurl . '">
@@ -239,11 +242,6 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                                     background-repeat: no-repeat;background-size:cover; background-position:center;">
 
                                 ';
-                            if ($titletooltip) {
-                                $tooltiptext = 'data-toggle="tooltip" data-placement= "top" title="' . format_string($course->fullname) . '"';
-                            } else {
-                                $tooltiptext = '';
-                            }
                             $rowcontent .= html_writer::start_tag('div', array(
                                 'class' => $course->visible ? 'coursevisible' : 'coursedimmed2'
                             ));
@@ -277,11 +275,6 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                         ';
                         }
                         if ($coursetilestyle == 3) {
-                            if ($titletooltip) {
-                                $tooltiptext = 'data-toggle="tooltip" data-placement= "top" title="' . format_string($course->fullname) . '"';
-                            } else {
-                                $tooltiptext = '';
-                            }
                             $rowcontent .= '
                             <div class="col-md-4">
                             <div class="tilecontainer">
@@ -315,11 +308,6 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                             $rowcontent .= '
                             <div class="class-box4">
                                 ';
-                            if ($titletooltip) {
-                                $tooltiptext = 'data-toggle="tooltip" data-placement= "top" title="' . format_string($course->fullname) . '"';
-                            } else {
-                                $tooltiptext = '';
-                            }
                             $rowcontent .= '
                                     <a ' . $tooltiptext . ' href="' . $courseurl . '">
                                     <div class="courseimagecontainer">
@@ -362,11 +350,6 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                                         ? 'col-12 d-flex flex-sm-row flex-column class-fullbox hoverhighlight coursevisible'
                                         : 'col-12 d-flex flex-sm-row flex-column class-fullbox hoverhighlight coursedimmed1'
                             ));
-                            if ($titletooltip) {
-                                $tooltiptext = 'data-toggle="tooltip" data-placement= "top" title="' . format_string($course->fullname) . '"';
-                            } else {
-                                $tooltiptext = '';
-                            }
                             $rowcontent .= '
                             <div class="col-md-2">
                                 <a ' . $tooltiptext . ' href="' . $courseurl . '">
@@ -403,11 +386,6 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                             $rowcontent .= html_writer::end_tag('div');
                         }
                         if ($coursetilestyle == 6) {
-                            if ($titletooltip) {
-                                $tooltiptext = 'data-toggle="tooltip" data-placement= "top" title="' . format_string($course->fullname) . '"';
-                            } else {
-                                $tooltiptext = '';
-                            }
                             $rowcontent .= '
                         <div class="col-md-12">
                             <div class="class-fullbox" style="background-image: url(' . $imgurl . ');
@@ -451,11 +429,6 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                         </div>';
                         }
                         if ($coursetilestyle == 7) {
-                            if ($titletooltip) {
-                                $tooltiptext = 'data-toggle="tooltip" data-placement= "top" title="' . format_string($course->fullname) . '"';
-                            } else {
-                                $tooltiptext = '';
-                            }
                             $rowcontent .= '
                         <div class="col-md-12">
                             <div class="class-fullbox7" style="background-image: url(' . $imgurl . ');
@@ -495,11 +468,6 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                         }
                         if ($coursetilestyle == 8) {
 
-                            if ($titletooltip) {
-                                $tooltiptext = 'data-toggle="tooltip" data-placement= "top" title="' . format_string($course->fullname) . '"';
-                            } else {
-                                $tooltiptext = '';
-                            }
                             $rowcontent .= '
                                 <div class="col-lg-6">
                                 <div class="tilecontainer">';
@@ -526,11 +494,6 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                         </div>';
                         }
                         if ($coursetilestyle == 9) {
-                            if ($titletooltip) {
-                                $tooltiptext = 'data-toggle="tooltip" data-placement= "top" title="' . format_string($course->fullname) . '"';
-                            } else {
-                                $tooltiptext = '';
-                            }
 
                             $rowcontent .= html_writer::start_tag('div', array(
                                 'class' => $course->visible
@@ -683,10 +646,10 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
             // Must be comparing an enrol with a last access.
             // -1 is to say that 'a' comes before 'b'.
             if (!empty($a->timestart)) {
-                // 'a' is the enrol entry.
+                // Variable 'a' is the enrol entry.
                 return -1;
             }
-            // 'b' must be the enrol entry.
+            // Variable 'b' must be the enrol entry.
             return 1;
         }
 
@@ -809,7 +772,7 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                     foreach ($rcourses as $course) {
                         $output .= $this->frontpage_remote_course($course);
                     }
-                    $output .= html_writer::end_tag('div'); // .courses
+                    $output .= html_writer::end_tag('div');
 
                 } else if (!empty($rhosts)) {
                     // Non-IDP, we know of all the remote servers, but not courses.
@@ -819,7 +782,7 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                     foreach ($rhosts as $host) {
                         $output .= $this->frontpage_remote_host($host);
                     }
-                    $output .= html_writer::end_tag('div'); // .courses
+                    $output .= html_writer::end_tag('div');
 
                 }
             }

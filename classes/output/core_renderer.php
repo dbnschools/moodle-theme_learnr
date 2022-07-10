@@ -26,6 +26,7 @@ namespace theme_learnr\output;
 defined('MOODLE_INTERNAL') || die();
 use html_writer;
 use custom_menu;
+use moodle_page;
 use stdClass;
 use moodle_url;
 use context_course;
@@ -36,10 +37,24 @@ require_once($CFG->dirroot . '/completion/classes/progress.php');
 
 class core_renderer extends \theme_boost\output\core_renderer {
 
+    /** @var stdClass|null shortcut */
+    private $settings = "";
+
+    /**
+     * Constructor
+     *
+     * @param moodle_page $page the page we are doing output for.
+     * @param string $target one of rendering target constants
+     */
+    public function __construct(moodle_page $page, $target) {
+        parent::__construct($page, $target);
+        $this->settings = get_config('theme_learnr');
+    }
+
     public function courseprogressbar() {
         $course = $this->page->course;
         $context = context_course::instance($course->id);
-        $hasprogressbar = (empty($this->page->theme->settings->showprogressbar)) ? false : true;
+        $hasprogressbar = (empty($this->settings->showprogressbar)) ? false : true;
 
         // Student Dash.
         if (\core_completion\progress::get_course_progress_percentage($this->page->course)) {
@@ -95,13 +110,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $defaultimgurl = $this->image_url('headerbg', 'theme');
         $headerbgimgurl = $this->page->theme->setting_file_url('pagebackgroundimage', 'pagebackgroundimage', true);
 
-        $showpageimage = (empty($this->page->theme->settings->showpageimage)) ? false : ($this->page->theme->settings->showpageimage);
+        $showpageimage = (empty($this->settings->showpageimage)) ? false : ($this->settings->showpageimage);
 
         // Create html for header.
         if ($showpageimage) {
             $html = html_writer::start_div('headerbkg');
             // If course image display it in separate div to allow css styling of inline style.
-            if ($courseimage && !$this->page->theme->settings->sitewideimage == 1 && $showpageimage) {
+            if ($courseimage && !$this->settings->sitewideimage == 1 && $showpageimage) {
                 $html .= html_writer::start_div('courseimage', array(
                     'style' => 'background-image: url("' . $courseimage . '"); background-size: cover; background-position:center;
                     width: 100%; height: 100%;'
@@ -132,7 +147,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string HTML to display the main header.
      */
     public function full_header() {
-        global $DB, $OUTPUT, $COURSE;
+        global $DB, $COURSE;
 
         $pagetype = $this->page->pagetype;
         $homepage = get_home_page();
@@ -140,7 +155,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $mycourses = get_string('latestcourses', 'theme_learnr');
         $mycoursesurl = new moodle_url('/my/');
         $mycoursesmenu = $this->learnr_mycourses();
-        $hasmycourses = $this->page->pagelayout == 'course' && (isset($this->page->theme->settings->showlatestcourses) && $this->page->theme->settings->showlatestcourses == 1);
+        $hasmycourses = $this->page->pagelayout == 'course'
+                      && (isset($this->settings->showlatestcourses)
+                      && $this->settings->showlatestcourses == 1);
 
         $globalhaseasyenrollment = enrol_get_plugin('easy');
         $coursehaseasyenrollment = '';
@@ -170,33 +187,35 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $context = context_course::instance($course->id);
         $showenrollinktoteacher = has_capability('moodle/course:viewhiddenactivities', $context)
                                   && $globalhaseasyenrollment && $coursehaseasyenrollment && $this->page->pagelayout == 'course';
-        $showblockdrawer = (empty($this->page->theme->settings->showblockdrawer)) ? false : $this->page->theme->settings->showblockdrawer;
+        $showblockdrawer = (empty($this->settings->showblockdrawer)) ? false : $this->settings->showblockdrawer;
 
         // Add block button in editing mode.
-        $addblockbutton = $OUTPUT->addblockbutton();
+        $addblockbutton = $this->addblockbutton();
 
-        $blockscolumna = $OUTPUT->blocks('columna');
-        $blockscolumnb = $OUTPUT->blocks('columnb');
-        $blockscolumnc = $OUTPUT->blocks('columnc');
+        $blockscolumna = $this->blocks('columna');
+        $blockscolumnb = $this->blocks('columnb');
+        $blockscolumnc = $this->blocks('columnc');
 
-        $columnabtn = $OUTPUT->addblockbutton('columna');
-        $columnaregion = $OUTPUT->custom_block_region('columna');
+        $columnabtn = $this->addblockbutton('columna');
+        $columnaregion = $this->custom_block_region('columna');
 
-        $columnbbtn = $OUTPUT->addblockbutton('columnb');
-        $columnbregion = $OUTPUT->custom_block_region('columnb');
+        $columnbbtn = $this->addblockbutton('columnb');
+        $columnbregion = $this->custom_block_region('columnb');
 
-        $columncbtn = $OUTPUT->addblockbutton('columnc');
-        $columncregion = $OUTPUT->custom_block_region('columnc');
+        $columncbtn = $this->addblockbutton('columnc');
+        $columncregion = $this->custom_block_region('columnc');
 
         $checkblocka = (strpos($blockscolumna, 'data-block=') !== false || !empty($addblockbutton));
         $checkblockb = (strpos($blockscolumnb, 'data-block=') !== false || !empty($addblockbutton));
         $checkblockc = (strpos($blockscolumnc, 'data-block=') !== false || !empty($addblockbutton));
 
-        $displayheaderblocks = ($this->page->pagelayout == 'course' && isset($COURSE->id) && $COURSE->id > 1) &&  $this->page->theme->settings->showheaderblockpanel;
-        $showheaderblockpanel = (empty($this->page->theme->settings->showheaderblockpanel)) ? false : $this->page->theme->settings->showheaderblockpanel;
+        $displayheaderblocks = ($this->page->pagelayout == 'course' && isset($COURSE->id) && $COURSE->id > 1)
+                               && $this->settings->showheaderblockpanel;
+        $showheaderblockpanel = (empty($this->settings->showheaderblockpanel)) ? false : $this->settings->showheaderblockpanel;
 
         $hasheaderblocks = false;
-        if (($checkblocka || $checkblockb || $checkblockc) && $this->page->theme->settings->showheaderblockpanel == 1 && $this->page->pagelayout == 'course') {
+        if (($checkblocka || $checkblockb || $checkblockc)
+            && $this->settings->showheaderblockpanel == 1 && $this->page->pagelayout == 'course') {
             $hasheaderblocks = true;
         }
 
@@ -268,7 +287,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $courseformat = course_get_format($course);
         // If the theme implements course index and the current course format uses course index and the current
         // page layout is not 'frametop' (this layout does not support course index), show no links.
-        if ($this->page->theme->settings->activitynavdisplay == 2 || $this->page->theme->settings->activitynavdisplay == 4) {
+        if ($this->settings->activitynavdisplay == 2 || $this->settings->activitynavdisplay == 4) {
                 return '';
         }
         // Get a list of all the activities in the course.
@@ -342,7 +361,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $courseformat = course_get_format($course);
         // If the theme implements course index and the current course format uses course index and the current
         // page layout is not 'frametop' (this layout does not support course index), show no links.
-        if ($this->page->theme->settings->activitynavdisplay == 1 || $this->page->theme->settings->activitynavdisplay == 4 ) {
+        if ($this->settings->activitynavdisplay == 1 || $this->settings->activitynavdisplay == 4 ) {
                 return '';
         }
         // Get a list of all the activities in the course.
@@ -398,29 +417,29 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
     public function fp_marketingtiles() {
 
-        $hasmarketing1 = (empty($this->page->theme->settings->marketing1)) ? false : format_string($this->page->theme->settings->marketing1);
-        $marketing1content = (empty($this->page->theme->settings->marketing1content)) ? false : format_text($this->page->theme->settings->marketing1content);
-        $marketing1buttontext = (empty($this->page->theme->settings->marketing1buttontext)) ? false : format_string($this->page->theme->settings->marketing1buttontext);
-        $marketing1buttonurl = (empty($this->page->theme->settings->marketing1buttonurl)) ? false : $this->page->theme->settings->marketing1buttonurl;
-        $marketing1target = (empty($this->page->theme->settings->marketing1target)) ? false : $this->page->theme->settings->marketing1target;
-        $marketing1image = (empty($this->page->theme->settings->marketing1image)) ? false : $this->page->theme->setting_file_url('marketing1image', 'marketing1image', true);
-        $marketing1icon = (empty($this->page->theme->settings->marketing1icon)) ? false : format_string($this->page->theme->settings->marketing1icon);
+        $hasmarketing1 = (empty($this->settings->marketing1)) ? false : format_string($this->settings->marketing1);
+        $marketing1content = (empty($this->settings->marketing1content)) ? false : format_text($this->settings->marketing1content);
+        $marketing1buttontext = (empty($this->settings->marketing1buttontext)) ? false : format_string($this->settings->marketing1buttontext);
+        $marketing1buttonurl = (empty($this->settings->marketing1buttonurl)) ? false : $this->settings->marketing1buttonurl;
+        $marketing1target = (empty($this->settings->marketing1target)) ? false : $this->settings->marketing1target;
+        $marketing1image = (empty($this->settings->marketing1image)) ? false : $this->page->theme->setting_file_url('marketing1image', 'marketing1image', true);
+        $marketing1icon = (empty($this->settings->marketing1icon)) ? false : format_string($this->settings->marketing1icon);
 
-        $hasmarketing2 = (empty($this->page->theme->settings->marketing2)) ? false : format_string($this->page->theme->settings->marketing2);
-        $marketing2content = (empty($this->page->theme->settings->marketing2content)) ? false : format_text($this->page->theme->settings->marketing2content);
-        $marketing2buttontext = (empty($this->page->theme->settings->marketing2buttontext)) ? false : format_string($this->page->theme->settings->marketing2buttontext);
-        $marketing2buttonurl = (empty($this->page->theme->settings->marketing2buttonurl)) ? false : $this->page->theme->settings->marketing2buttonurl;
-        $marketing2target = (empty($this->page->theme->settings->marketing2target)) ? false : $this->page->theme->settings->marketing2target;
-        $marketing2image = (empty($this->page->theme->settings->marketing2image)) ? false : $this->page->theme->setting_file_url('marketing2image', 'marketing2image', true);
-        $marketing2icon = (empty($this->page->theme->settings->marketing2icon)) ? false : format_string($this->page->theme->settings->marketing2icon);
+        $hasmarketing2 = (empty($this->settings->marketing2)) ? false : format_string($this->settings->marketing2);
+        $marketing2content = (empty($this->settings->marketing2content)) ? false : format_text($this->settings->marketing2content);
+        $marketing2buttontext = (empty($this->settings->marketing2buttontext)) ? false : format_string($this->settings->marketing2buttontext);
+        $marketing2buttonurl = (empty($this->settings->marketing2buttonurl)) ? false : $this->settings->marketing2buttonurl;
+        $marketing2target = (empty($this->settings->marketing2target)) ? false : $this->settings->marketing2target;
+        $marketing2image = (empty($this->settings->marketing2image)) ? false : $this->page->theme->setting_file_url('marketing2image', 'marketing2image', true);
+        $marketing2icon = (empty($this->settings->marketing2icon)) ? false : format_string($this->settings->marketing2icon);
 
-        $hasmarketing3 = (empty($this->page->theme->settings->marketing3)) ? false : format_string($this->page->theme->settings->marketing3);
-        $marketing3content = (empty($this->page->theme->settings->marketing3content)) ? false : format_text($this->page->theme->settings->marketing3content);
-        $marketing3buttontext = (empty($this->page->theme->settings->marketing3buttontext)) ? false : format_string($this->page->theme->settings->marketing3buttontext);
-        $marketing3buttonurl = (empty($this->page->theme->settings->marketing3buttonurl)) ? false : $this->page->theme->settings->marketing3buttonurl;
-        $marketing3target = (empty($this->page->theme->settings->marketing3target)) ? false : $this->page->theme->settings->marketing3target;
-        $marketing3image = (empty($this->page->theme->settings->marketing3image)) ? false : $this->page->theme->setting_file_url('marketing3image', 'marketing3image', true);
-        $marketing3icon = (empty($this->page->theme->settings->marketing3icon)) ? false : format_string($this->page->theme->settings->marketing3icon);
+        $hasmarketing3 = (empty($this->settings->marketing3)) ? false : format_string($this->settings->marketing3);
+        $marketing3content = (empty($this->settings->marketing3content)) ? false : format_text($this->settings->marketing3content);
+        $marketing3buttontext = (empty($this->settings->marketing3buttontext)) ? false : format_string($this->settings->marketing3buttontext);
+        $marketing3buttonurl = (empty($this->settings->marketing3buttonurl)) ? false : $this->settings->marketing3buttonurl;
+        $marketing3target = (empty($this->settings->marketing3target)) ? false : $this->settings->marketing3target;
+        $marketing3image = (empty($this->settings->marketing3image)) ? false : $this->page->theme->setting_file_url('marketing3image', 'marketing3image', true);
+        $marketing3icon = (empty($this->settings->marketing3icon)) ? false : format_string($this->settings->marketing3icon);
 
         $fpmarketingtiles = ['hasmarkettiles' => ($hasmarketing1 || $hasmarketing2 || $hasmarketing3) ? true : false, 'markettiles' => array(
             array(
@@ -458,7 +477,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return $this->render_from_template('theme_learnr/fpmarkettiles', $fpmarketingtiles);
     }
 
-    // The following code is a copied work of the code from theme Essential https://moodle.org/plugins/theme_essential, @copyright Gareth J Barnard.
+    // The following code is a copied work of the code from theme Essential
+    // https://moodle.org/plugins/theme_essential, @copyright Gareth J Barnard.
     protected static function timeaccesscompare($a, $b) {
         // Timeaccess is lastaccess entry and timestart an enrol entry.
         if ((!empty($a->timeaccess)) && (!empty($b->timeaccess))) {
@@ -477,15 +497,16 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // Must be comparing an enrol with a last access.
         // -1 is to say that 'a' comes before 'b'.
         if (!empty($a->timestart)) {
-            // 'a' is the enrol entry.
+            // Variable 'a' is the enrol entry.
             return -1;
         }
-        // 'b' must be the enrol entry.
+        // Variable 'b' must be the enrol entry.
         return 1;
     }
     // End copied code.
 
-    // The following code is a derivative work of the code from theme Essential https://moodle.org/plugins/theme_essential, by Gareth J Barnard.
+    // The following code is a derivative work of the code from theme Essential
+    // https://moodle.org/plugins/theme_essential, by Gareth J Barnard.
     public function learnr_mycourses() {
         $context = $this->page->context;
         $menu = new custom_menu();
@@ -574,47 +595,47 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
     public function fpicons() {
         $context = $this->page->context;
-        $hasslideicon = (empty($this->page->theme->settings->slideicon && isloggedin() && !isguestuser())) ? false : $this->page->theme->settings->slideicon;
+        $hasslideicon = (empty($this->settings->slideicon && isloggedin() && !isguestuser())) ? false : $this->settings->slideicon;
         $slideiconbuttonurl = 'data-toggle="collapse" data-target="#collapseExample';
-        $slideiconbuttontext = (empty($this->page->theme->settings->slideiconbuttontext)) ? false : format_string($this->page->theme->settings->slideiconbuttontext);
-        $hasnav1icon = (empty($this->page->theme->settings->nav1icon && isloggedin() && !isguestuser())) ? false : $this->page->theme->settings->nav1icon;
-        $hasnav2icon = (empty($this->page->theme->settings->nav2icon && isloggedin() && !isguestuser())) ? false : $this->page->theme->settings->nav2icon;
-        $hasnav3icon = (empty($this->page->theme->settings->nav3icon && isloggedin() && !isguestuser())) ? false : $this->page->theme->settings->nav3icon;
-        $hasnav4icon = (empty($this->page->theme->settings->nav4icon && isloggedin() && !isguestuser())) ? false : $this->page->theme->settings->nav4icon;
-        $hasnav5icon = (empty($this->page->theme->settings->nav5icon && isloggedin() && !isguestuser())) ? false : $this->page->theme->settings->nav5icon;
-        $hasnav6icon = (empty($this->page->theme->settings->nav6icon && isloggedin() && !isguestuser())) ? false : $this->page->theme->settings->nav6icon;
-        $hasnav7icon = (empty($this->page->theme->settings->nav7icon && isloggedin() && !isguestuser())) ? false : $this->page->theme->settings->nav7icon;
-        $hasnav8icon = (empty($this->page->theme->settings->nav8icon && isloggedin() && !isguestuser())) ? false : $this->page->theme->settings->nav8icon;
-        $nav1buttonurl = (empty($this->page->theme->settings->nav1buttonurl)) ? false : $this->page->theme->settings->nav1buttonurl;
-        $nav2buttonurl = (empty($this->page->theme->settings->nav2buttonurl)) ? false : $this->page->theme->settings->nav2buttonurl;
-        $nav3buttonurl = (empty($this->page->theme->settings->nav3buttonurl)) ? false : $this->page->theme->settings->nav3buttonurl;
-        $nav4buttonurl = (empty($this->page->theme->settings->nav4buttonurl)) ? false : $this->page->theme->settings->nav4buttonurl;
-        $nav5buttonurl = (empty($this->page->theme->settings->nav5buttonurl)) ? false : $this->page->theme->settings->nav5buttonurl;
-        $nav6buttonurl = (empty($this->page->theme->settings->nav6buttonurl)) ? false : $this->page->theme->settings->nav6buttonurl;
-        $nav7buttonurl = (empty($this->page->theme->settings->nav7buttonurl)) ? false : $this->page->theme->settings->nav7buttonurl;
-        $nav8buttonurl = (empty($this->page->theme->settings->nav8buttonurl)) ? false : $this->page->theme->settings->nav8buttonurl;
-        $nav1buttontext = (empty($this->page->theme->settings->nav1buttontext)) ? false : format_string($this->page->theme->settings->nav1buttontext);
-        $nav2buttontext = (empty($this->page->theme->settings->nav2buttontext)) ? false : format_string($this->page->theme->settings->nav2buttontext);
-        $nav3buttontext = (empty($this->page->theme->settings->nav3buttontext)) ? false : format_string($this->page->theme->settings->nav3buttontext);
-        $nav4buttontext = (empty($this->page->theme->settings->nav4buttontext)) ? false : format_string($this->page->theme->settings->nav4buttontext);
-        $nav5buttontext = (empty($this->page->theme->settings->nav5buttontext)) ? false : format_string($this->page->theme->settings->nav5buttontext);
-        $nav6buttontext = (empty($this->page->theme->settings->nav6buttontext)) ? false : format_string($this->page->theme->settings->nav6buttontext);
-        $nav7buttontext = (empty($this->page->theme->settings->nav7buttontext)) ? false : format_string($this->page->theme->settings->nav7buttontext);
-        $nav8buttontext = (empty($this->page->theme->settings->nav8buttontext)) ? false : format_string($this->page->theme->settings->nav8buttontext);
-        $nav1target = (empty($this->page->theme->settings->nav1target)) ? false : $this->page->theme->settings->nav1target;
-        $nav2target = (empty($this->page->theme->settings->nav2target)) ? false : $this->page->theme->settings->nav2target;
-        $nav3target = (empty($this->page->theme->settings->nav3target)) ? false : $this->page->theme->settings->nav3target;
-        $nav4target = (empty($this->page->theme->settings->nav4target)) ? false : $this->page->theme->settings->nav4target;
-        $nav5target = (empty($this->page->theme->settings->nav5target)) ? false : $this->page->theme->settings->nav5target;
-        $nav6target = (empty($this->page->theme->settings->nav6target)) ? false : $this->page->theme->settings->nav6target;
-        $nav7target = (empty($this->page->theme->settings->nav7target)) ? false : $this->page->theme->settings->nav7target;
-        $nav8target = (empty($this->page->theme->settings->nav8target)) ? false : $this->page->theme->settings->nav8target;
-        $slidetextbox = (empty($this->page->theme->settings->slidetextbox && isloggedin())) ? false : format_text($this->page->theme->settings->slidetextbox, FORMAT_HTML, array(
+        $slideiconbuttontext = (empty($this->settings->slideiconbuttontext)) ? false : format_string($this->settings->slideiconbuttontext);
+        $hasnav1icon = (empty($this->settings->nav1icon && isloggedin() && !isguestuser())) ? false : $this->settings->nav1icon;
+        $hasnav2icon = (empty($this->settings->nav2icon && isloggedin() && !isguestuser())) ? false : $this->settings->nav2icon;
+        $hasnav3icon = (empty($this->settings->nav3icon && isloggedin() && !isguestuser())) ? false : $this->settings->nav3icon;
+        $hasnav4icon = (empty($this->settings->nav4icon && isloggedin() && !isguestuser())) ? false : $this->settings->nav4icon;
+        $hasnav5icon = (empty($this->settings->nav5icon && isloggedin() && !isguestuser())) ? false : $this->settings->nav5icon;
+        $hasnav6icon = (empty($this->settings->nav6icon && isloggedin() && !isguestuser())) ? false : $this->settings->nav6icon;
+        $hasnav7icon = (empty($this->settings->nav7icon && isloggedin() && !isguestuser())) ? false : $this->settings->nav7icon;
+        $hasnav8icon = (empty($this->settings->nav8icon && isloggedin() && !isguestuser())) ? false : $this->settings->nav8icon;
+        $nav1buttonurl = (empty($this->settings->nav1buttonurl)) ? false : $this->settings->nav1buttonurl;
+        $nav2buttonurl = (empty($this->settings->nav2buttonurl)) ? false : $this->settings->nav2buttonurl;
+        $nav3buttonurl = (empty($this->settings->nav3buttonurl)) ? false : $this->settings->nav3buttonurl;
+        $nav4buttonurl = (empty($this->settings->nav4buttonurl)) ? false : $this->settings->nav4buttonurl;
+        $nav5buttonurl = (empty($this->settings->nav5buttonurl)) ? false : $this->settings->nav5buttonurl;
+        $nav6buttonurl = (empty($this->settings->nav6buttonurl)) ? false : $this->settings->nav6buttonurl;
+        $nav7buttonurl = (empty($this->settings->nav7buttonurl)) ? false : $this->settings->nav7buttonurl;
+        $nav8buttonurl = (empty($this->settings->nav8buttonurl)) ? false : $this->settings->nav8buttonurl;
+        $nav1buttontext = (empty($this->settings->nav1buttontext)) ? false : format_string($this->settings->nav1buttontext);
+        $nav2buttontext = (empty($this->settings->nav2buttontext)) ? false : format_string($this->settings->nav2buttontext);
+        $nav3buttontext = (empty($this->settings->nav3buttontext)) ? false : format_string($this->settings->nav3buttontext);
+        $nav4buttontext = (empty($this->settings->nav4buttontext)) ? false : format_string($this->settings->nav4buttontext);
+        $nav5buttontext = (empty($this->settings->nav5buttontext)) ? false : format_string($this->settings->nav5buttontext);
+        $nav6buttontext = (empty($this->settings->nav6buttontext)) ? false : format_string($this->settings->nav6buttontext);
+        $nav7buttontext = (empty($this->settings->nav7buttontext)) ? false : format_string($this->settings->nav7buttontext);
+        $nav8buttontext = (empty($this->settings->nav8buttontext)) ? false : format_string($this->settings->nav8buttontext);
+        $nav1target = (empty($this->settings->nav1target)) ? false : $this->settings->nav1target;
+        $nav2target = (empty($this->settings->nav2target)) ? false : $this->settings->nav2target;
+        $nav3target = (empty($this->settings->nav3target)) ? false : $this->settings->nav3target;
+        $nav4target = (empty($this->settings->nav4target)) ? false : $this->settings->nav4target;
+        $nav5target = (empty($this->settings->nav5target)) ? false : $this->settings->nav5target;
+        $nav6target = (empty($this->settings->nav6target)) ? false : $this->settings->nav6target;
+        $nav7target = (empty($this->settings->nav7target)) ? false : $this->settings->nav7target;
+        $nav8target = (empty($this->settings->nav8target)) ? false : $this->settings->nav8target;
+        $slidetextbox = (empty($this->settings->slidetextbox && isloggedin())) ? false : format_text($this->settings->slidetextbox, FORMAT_HTML, array(
             'noclean' => true
         ));
 
         $fpicons = [
-            'hasslidetextbox' => (!empty($this->page->theme->settings->slidetextbox && isloggedin())) ,
+            'hasslidetextbox' => (!empty($this->settings->slidetextbox && isloggedin())) ,
             'slidetextbox' => $slidetextbox, 'hasfptextboxlogout' => !isloggedin() ,
             'hasfpiconnav' => ($hasnav1icon || $hasnav2icon || $hasnav3icon || $hasnav4icon || $hasnav5icon
                            || $hasnav6icon || $hasnav7icon || $hasnav8icon || $hasslideicon)
