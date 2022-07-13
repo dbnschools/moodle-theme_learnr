@@ -122,21 +122,24 @@ function theme_learnr_get_pre_scss($theme) {
     $marketing1image = $theme->setting_file_url('marketing1image', 'marketing1image');
     if (isset($marketing1image)) {
         // Add a fade in transition to avoid the flicker on course headers ***.
-        $scss .= '.marketing1image {background-image: url("' . $marketing1image . '"); background-size:cover; background-position:center;}';
+        $scss .= '.marketing1image {background-image: url("' . $marketing1image . '");
+                  background-size:cover; background-position:center;}';
     }
 
     // Set the image.
     $marketing2image = $theme->setting_file_url('marketing2image', 'marketing2image');
     if (isset($marketing2image)) {
         // Add a fade in transition to avoid the flicker on course headers ***.
-        $scss .= '.marketing2image {background-image: url("' . $marketing2image . '"); background-size:cover; background-position:center;}';
+        $scss .= '.marketing2image {background-image: url("' . $marketing2image . '");
+                  background-size:cover; background-position:center;}';
     }
 
     // Set the image.
     $marketing3image = $theme->setting_file_url('marketing3image', 'marketing3image');
     if (isset($marketing3image)) {
         // Add a fade in transition to avoid the flicker on course headers ***.
-        $scss .= '.marketing3image {background-image: url("' . $marketing3image . '"); background-size:cover; background-position:center;}';
+        $scss .= '.marketing3image {background-image: url("' . $marketing3image . '");
+                  background-size:cover; background-position:center;}';
     }
 
     return $scss;
@@ -167,7 +170,7 @@ function theme_learnr_get_extra_scss($theme) {
         $content .= "background-image: url('$loginbackgroundimageurl'); background-size: cover;";
         $content .= ' }';
     }
-    
+
     return $content;
 }
 
@@ -184,7 +187,9 @@ function theme_learnr_get_extra_scss($theme) {
  * @return bool
  */
 function theme_learnr_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
-    if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'pagebackgroundimage' || $filearea === 'loginbackgroundimage' || $filearea === 'marketing1image' || $filearea === 'marketing2image' || $filearea === 'marketing3image')) {
+    if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'pagebackgroundimage' || $filearea === 'loginbackgroundimage'
+                                  || $filearea === 'marketing1image' || $filearea === 'marketing2image'
+                                  || $filearea === 'marketing3image')) {
         $theme = theme_config::load('learnr');
         // By default, theme files must be cache-able by both browsers and proxies.
         if (!array_key_exists('cacheability', $options)) {
@@ -225,8 +230,8 @@ function theme_learnr_strip_html_tags( $text ) {
             "\n\$0", "\n\$0",
             ),
         $text
-        );
-return strip_tags( $text );
+    );
+    return strip_tags( $text );
 }
 
 /**

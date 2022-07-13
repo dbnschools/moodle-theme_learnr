@@ -67,7 +67,7 @@ if ($ADMIN->fulltree) {
             array('maxfiles' => 20, 'accepted_types' => array('.scss')));
     $page->add($setting);
 
-    // Course Tile Display Styles
+    // Course Tile Display Styles.
     $name = 'theme_learnr/coursetilestyle';
     $title = get_string('coursetilestyle' , 'theme_learnr');
     $description = get_string('coursetilestyle_desc', 'theme_learnr');
@@ -82,12 +82,23 @@ if ($ADMIN->fulltree) {
     $coursestyle9 = get_string('coursestyle9', 'theme_learnr');
     $coursestyle10 = get_string('coursestyle10', 'theme_learnr');
     $default = '10';
-    $choices = array('1'=>$coursestyle1, '2'=>$coursestyle2, '3'=>$coursestyle3, '4'=>$coursestyle4, '5'=>$coursestyle5, '6'=>$coursestyle6, '7'=>$coursestyle7, '8'=>$coursestyle8, '9'=>$coursestyle9, '10'=>$coursestyle10);
+    $choices = array(
+        '1' => $coursestyle1,
+        '2' => $coursestyle2,
+        '3' => $coursestyle3,
+        '4' => $coursestyle4,
+        '5' => $coursestyle5,
+        '6' => $coursestyle6,
+        '7' => $coursestyle7,
+        '8' => $coursestyle8,
+        '9' => $coursestyle9,
+        '10' => $coursestyle10
+    );
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    // trim title setting.
+    // Trim title setting.
     $name = 'theme_learnr/trimtitle';
     $title = get_string('trimtitle', 'theme_learnr');
     $description = get_string('trimtitle_desc', 'theme_learnr');
@@ -116,7 +127,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    // trim title setting.
+    // Trim title setting.
     $name = 'theme_learnr/trimsummary';
     $title = get_string('trimsummary', 'theme_learnr');
     $description = get_string('trimsummary_desc', 'theme_learnr');
@@ -141,7 +152,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    // Courses height
+    // Courses height.
     $name = 'theme_learnr/courseboxheight';
     $title = get_string('courseboxheight', 'theme_learnr');
     $description = get_string('courseboxheight_desc', 'theme_learnr');;
@@ -171,7 +182,7 @@ if ($ADMIN->fulltree) {
     $option3 = get_string('sections-boost', 'theme_learnr');
     $option4 = get_string('sections-bars', 'theme_learnr');
     $default = '1';
-    $choices = array('1'=>$option1, '2'=>$option2, '3'=>$option3, '4'=>$option4);
+    $choices = array('1' => $option1, '2' => $option2, '3' => $option3, '4' => $option4);
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
@@ -224,18 +235,17 @@ if ($ADMIN->fulltree) {
     $name = 'theme_learnr/activitynavdisplay';
     $title = get_string('activitynavdisplay' , 'theme_learnr');
     $description = get_string('activitynavdisplay_desc', 'theme_learnr');
-    //$option1 = get_string('blockdisplay_on', 'theme_learnr');
     $option1 = get_string('actnav_top_on', 'theme_learnr');
     $option2 = get_string('actnav_bottom_on', 'theme_learnr');
     $option3 = get_string('actnav_all_on', 'theme_learnr');
     $option4 = get_string('actnav_all_off', 'theme_learnr');
     $default = '2';
-    $choices = array('1'=>$option1, '2'=>$option2, '3'=>$option3, '4'=>$option4);
+    $choices = array('1' => $option1, '2' => $option2, '3' => $option3, '4' => $option4);
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    //Activity icon size for course page.
+    // Activity icon size for course page.
     $name = 'theme_learnr/courseiconsize';
     $title = get_string('courseiconsize', 'theme_learnr');
     $description = get_string('courseiconsize_desc', 'theme_learnr');;
@@ -471,7 +481,7 @@ if ($ADMIN->fulltree) {
     $description = get_string('alert_desc', 'theme_learnr');
     $default = '';
     $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
-    
+
     $page->add($setting);
 
     // Frontpage Textbox.
@@ -480,7 +490,7 @@ if ($ADMIN->fulltree) {
     $description = get_string('fptextbox_desc', 'theme_learnr');
     $default = '';
     $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
-    
+
     $page->add($setting);
 
     $settings->add($page);
@@ -489,14 +499,14 @@ if ($ADMIN->fulltree) {
     // Advanced settings.
     $page = new admin_settingpage('theme_learnr_marketing', get_string('marketing', 'theme_learnr'));
 
-    // This is the descriptor for Marketing Spot One
+    // This is the descriptor for Marketing Spot One.
     $name = 'theme_learnr/marketing1info';
     $heading = get_string('marketing1', 'theme_learnr');
     $information = get_string('marketinginfodesc', 'theme_learnr');
     $setting = new admin_setting_heading($name, $heading, $information);
     $page->add($setting);
 
-    // Marketing Spot One
+    // Marketing Spot One.
     $name = 'theme_learnr/marketing1';
     $title = get_string('marketingtitle', 'theme_learnr');
     $description = get_string('marketingtitledesc', 'theme_learnr');
@@ -544,13 +554,13 @@ if ($ADMIN->fulltree) {
     $target2 = get_string('marketingurltargetnew', 'theme_learnr');
     $target3 = get_string('marketingurltargetparent', 'theme_learnr');
     $default = 'target1';
-    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $choices = array('_self' => $target1, '_blank' => $target2, '_parent' => $target3);
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
     $name = 'theme_learnr/marketing1icon';
-    $title = get_string('marketicon','theme_learnr');
+    $title = get_string('marketicon', 'theme_learnr');
     $description = get_string('marketicon_desc', 'theme_learnr');
     $default = 'folder';
     $choices = array(
@@ -588,7 +598,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    // This is the descriptor for Marketing Spot Two
+    // This is the descriptor for Marketing Spot Two.
     $name = 'theme_learnr/marketing2info';
     $heading = get_string('marketing2', 'theme_learnr');
     $information = get_string('marketinginfodesc', 'theme_learnr');
@@ -643,13 +653,13 @@ if ($ADMIN->fulltree) {
     $target2 = get_string('marketingurltargetnew', 'theme_learnr');
     $target3 = get_string('marketingurltargetparent', 'theme_learnr');
     $default = 'target1';
-    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $choices = array('_self' => $target1, '_blank' => $target2, '_parent' => $target3);
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
     $name = 'theme_learnr/marketing2icon';
-    $title = get_string('marketicon','theme_learnr');
+    $title = get_string('marketicon', 'theme_learnr');
     $description = get_string('marketicon_desc', 'theme_learnr');
     $default = 'folder';
     $choices = array(
@@ -687,7 +697,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    // This is the descriptor for Marketing Spot Three
+    // This is the descriptor for Marketing Spot Three.
     $name = 'theme_learnr/marketing3info';
     $heading = get_string('marketing3', 'theme_learnr');
     $information = get_string('marketinginfodesc', 'theme_learnr');
@@ -742,13 +752,13 @@ if ($ADMIN->fulltree) {
     $target2 = get_string('marketingurltargetnew', 'theme_learnr');
     $target3 = get_string('marketingurltargetparent', 'theme_learnr');
     $default = 'target1';
-    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $choices = array('_self' => $target1, '_blank' => $target2, '_parent' => $target3);
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
     $name = 'theme_learnr/marketing3icon';
-    $title = get_string('marketicon','theme_learnr');
+    $title = get_string('marketicon', 'theme_learnr');
     $description = get_string('marketicon_desc', 'theme_learnr');
     $default = 'folder';
     $choices = array(
@@ -789,7 +799,7 @@ if ($ADMIN->fulltree) {
     $settings->add($page);
 
 
-    // Icon Navigation);
+    // Icon Navigation.
     $page = new admin_settingpage('theme_learnr_iconnavheading', get_string('iconnavheading', 'theme_learnr'));
 
     // This is the descriptor for the page.
@@ -799,7 +809,7 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_heading($name, $heading, $information);
     $page->add($setting);
 
-    // This is the descriptor for icon One
+    // This is the descriptor for icon One.
     $name = 'theme_learnr/iconwidthinfo';
     $heading = get_string('iconwidthinfo', 'theme_learnr');
     $information = get_string('iconwidthinfodesc', 'theme_learnr');
@@ -832,14 +842,14 @@ if ($ADMIN->fulltree) {
     $page->add($setting);
 
 
-    // This is the descriptor for teacher create a course
+    // This is the descriptor for teacher create a course.
     $name = 'theme_learnr/sliderinfo';
     $heading = get_string('sliderinfo', 'theme_learnr');
     $information = get_string('sliderinfodesc', 'theme_learnr');
     $setting = new admin_setting_heading($name, $heading, $information);
     $page->add($setting);
 
-    // Creator Icon
+    // Creator Icon.
     $name = 'theme_learnr/slideicon';
     $title = get_string('navicon', 'theme_learnr');
     $description = get_string('naviconslidedesc', 'theme_learnr');
@@ -865,14 +875,14 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    // This is the descriptor for icon One
+    // This is the descriptor for icon One.
     $name = 'theme_learnr/navicon1info';
     $heading = get_string('navicon1', 'theme_learnr');
     $information = get_string('navicondesc', 'theme_learnr');
     $setting = new admin_setting_heading($name, $heading, $information);
     $page->add($setting);
 
-    // icon One
+    // Icon One.
     $name = 'theme_learnr/nav1icon';
     $title = get_string('navicon', 'theme_learnr');
     $description = get_string('navicondesc', 'theme_learnr');
@@ -904,12 +914,12 @@ if ($ADMIN->fulltree) {
     $target2 = get_string('marketingurltargetnew', 'theme_learnr');
     $target3 = get_string('marketingurltargetparent', 'theme_learnr');
     $default = 'target1';
-    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $choices = array('_self' => $target1, '_blank' => $target2, '_parent' => $target3);
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    // This is the descriptor for icon One
+    // This is the descriptor for icon One.
     $name = 'theme_learnr/navicon2info';
     $heading = get_string('navicon2', 'theme_learnr');
     $information = get_string('navicondesc', 'theme_learnr');
@@ -947,12 +957,12 @@ if ($ADMIN->fulltree) {
     $target2 = get_string('marketingurltargetnew', 'theme_learnr');
     $target3 = get_string('marketingurltargetparent', 'theme_learnr');
     $default = 'target1';
-    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $choices = array('_self' => $target1, '_blank' => $target2, '_parent' => $target3);
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    // This is the descriptor for icon three
+    // This is the descriptor for icon three.
     $name = 'theme_learnr/navicon3info';
     $heading = get_string('navicon3', 'theme_learnr');
     $information = get_string('navicondesc', 'theme_learnr');
@@ -990,12 +1000,12 @@ if ($ADMIN->fulltree) {
     $target2 = get_string('marketingurltargetnew', 'theme_learnr');
     $target3 = get_string('marketingurltargetparent', 'theme_learnr');
     $default = 'target1';
-    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $choices = array('_self' => $target1, '_blank' => $target2, '_parent' => $target3);
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    // This is the descriptor for icon four
+    // This is the descriptor for icon four.
     $name = 'theme_learnr/navicon4info';
     $heading = get_string('navicon4', 'theme_learnr');
     $information = get_string('navicondesc', 'theme_learnr');
@@ -1021,7 +1031,7 @@ if ($ADMIN->fulltree) {
     $name = 'theme_learnr/nav4buttonurl';
     $title = get_string('naviconbuttonurl', 'theme_learnr');
     $description = get_string('naviconbuttonurldesc', 'theme_learnr');
-    $default =  $CFG->wwwroot.'/course/';
+    $default = $CFG->wwwroot.'/course/';
     $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_URL);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
@@ -1033,12 +1043,12 @@ if ($ADMIN->fulltree) {
     $target2 = get_string('marketingurltargetnew', 'theme_learnr');
     $target3 = get_string('marketingurltargetparent', 'theme_learnr');
     $default = 'target1';
-    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $choices = array('_self' => $target1, '_blank' => $target2, '_parent' => $target3);
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    // This is the descriptor for icon four
+    // This is the descriptor for icon four.
     $name = 'theme_learnr/navicon5info';
     $heading = get_string('navicon5', 'theme_learnr');
     $information = get_string('navicondesc', 'theme_learnr');
@@ -1076,12 +1086,12 @@ if ($ADMIN->fulltree) {
     $target2 = get_string('marketingurltargetnew', 'theme_learnr');
     $target3 = get_string('marketingurltargetparent', 'theme_learnr');
     $default = 'target1';
-    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $choices = array('_self' => $target1, '_blank' => $target2, '_parent' => $target3);
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    // This is the descriptor for icon six
+    // This is the descriptor for icon six.
     $name = 'theme_learnr/navicon6info';
     $heading = get_string('navicon6', 'theme_learnr');
     $information = get_string('navicondesc', 'theme_learnr');
@@ -1119,12 +1129,12 @@ if ($ADMIN->fulltree) {
     $target2 = get_string('marketingurltargetnew', 'theme_learnr');
     $target3 = get_string('marketingurltargetparent', 'theme_learnr');
     $default = 'target1';
-    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $choices = array('_self' => $target1, '_blank' => $target2, '_parent' => $target3);
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    // This is the descriptor for icon seven
+    // This is the descriptor for icon seven.
     $name = 'theme_learnr/navicon7info';
     $heading = get_string('navicon7', 'theme_learnr');
     $information = get_string('navicondesc', 'theme_learnr');
@@ -1162,12 +1172,12 @@ if ($ADMIN->fulltree) {
     $target2 = get_string('marketingurltargetnew', 'theme_learnr');
     $target3 = get_string('marketingurltargetparent', 'theme_learnr');
     $default = 'target1';
-    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $choices = array('_self' => $target1, '_blank' => $target2, '_parent' => $target3);
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    // This is the descriptor for icon eight
+    // This is the descriptor for icon eight.
     $name = 'theme_learnr/navicon8info';
     $heading = get_string('navicon8', 'theme_learnr');
     $information = get_string('navicondesc', 'theme_learnr');
@@ -1205,7 +1215,7 @@ if ($ADMIN->fulltree) {
     $target2 = get_string('marketingurltargetnew', 'theme_learnr');
     $target3 = get_string('marketingurltargetparent', 'theme_learnr');
     $default = 'target1';
-    $choices = array('_self'=>$target1, '_blank'=>$target2, '_parent'=>$target3);
+    $choices = array('_self' => $target1, '_blank' => $target2, '_parent' => $target3);
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);

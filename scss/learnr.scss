@@ -8,6 +8,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
     background-color: $navbar-bg;
 }
+
 @mixin hover-navbar {
     border-color: transparent;
     background-color: rgba($white, 15%);
@@ -21,13 +22,18 @@
     border-color: transparent;
     border-bottom-color: lighten($navbar-bg, 20%);
 }
-.navbar-dark .navbar-nav .show>.nav-link, .navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .nav-link.active {
+.navbar-dark .navbar-nav .show > .nav-link,
+.navbar-dark .navbar-nav .active > .nav-link,
+.navbar-dark .navbar-nav .nav-link.show,
+.navbar-dark .navbar-nav .nav-link.active {
     background-color: rgb(255 255 255 / 20%);
 }
-.primary-navigation .moremenu .nav-link:hover, .moremenu .nav-link:focus {
+.primary-navigation .moremenu .nav-link:hover,
+.moremenu .nav-link:focus {
     background-color: rgb(255 255 255 / 20%);
 }
-#usernavigation .usermenu .dropdown-toggle::after, span.login a {
+#usernavigation .usermenu .dropdown-toggle::after,
+span.login a {
     color: $navbar-dark-color;
 }
 .primary-navigation {
@@ -46,9 +52,9 @@ form.editmode-switch-form {
     color: $navbar-dark-color;
 }
 .editmode-switch-form .text-primary {
-    color: $navbar-dark-color!important;
+    color: $navbar-dark-color !important;
 }
-.custom-control-input:checked~.custom-control-label::before {
+.custom-control-input:checked ~ .custom-control-label::before {
     background-color: #2edd5c;
 }
 
@@ -75,10 +81,10 @@ form.editmode-switch-form {
 // Page Background Image
 .headerimagecontainer {
     width: 100%;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     position: relative;
 }
 
@@ -92,9 +98,12 @@ form.editmode-switch-form {
 }
 
 // Possible layout change in 1.7
-.withimage, .defaultheaderimage, .courseimage, .customimage {
-    -webkit-mask-image: linear-gradient(to top,transparent 0%,rgba(255,255,255,.9) 70%);
-    mask-image: linear-gradient(to top,transparent 0%,rgba(255,255,255,.9) 70%);
+.withimage,
+.defaultheaderimage,
+.courseimage,
+.customimage {
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(255, 255, 255, .9) 70%);
+    mask-image: linear-gradient(to top, transparent 0%, rgba(255, 255, 255, .9) 70%);
     max-height: 600px;
 }
 
@@ -118,7 +127,8 @@ form.editmode-switch-form {
 #page.drawers .main-inner {
     margin-top: 0;
 }
-@media (min-width: 768px){
+
+@media (min-width: 768px) {
     #page.drawers .main-inner {
         margin-top: 2rem;
     }
@@ -138,8 +148,9 @@ form.editmode-switch-form {
     top: 10px;
 }
 
-//Dashboard 
-.pagelayout-mydashboard .block_timeline.block.card, .pagelayout-mydashboard .block_calendar_month.block.card {
+//Dashboard
+.pagelayout-mydashboard .block_timeline.block.card,
+.pagelayout-mydashboard .block_calendar_month.block.card {
     border: 0;
 }
 
@@ -174,10 +185,10 @@ form.editmode-switch-form {
     font-size: 2rem;
 }
 .marketingimg {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  object-position: bottom;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: bottom;
 }
 .marketing.card {
     border: 0;
@@ -186,9 +197,9 @@ form.editmode-switch-form {
 .card-body.market-tile {
     border: 1px solid $gray-400;
     margin: 1rem;
-    padding: 0rem;
+    padding: 0;
     background-color: $body-bg;
-    box-shadow: 0 2px 2px 0px rgb(0 0 0 / 20%);
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
 }
 .marketcontent.card-text {
     padding: 0 1rem;
@@ -214,7 +225,7 @@ form.editmode-switch-form {
     padding: 1rem;
     min-width: 235px;
     border: 0;
-    box-shadow: 0px 2px 8px rgb(0 0 0 / 40%);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 40%);
 }
 .dropdown.mycoursesmenu i::after {
     content: "";
@@ -252,6 +263,7 @@ form.editmode-switch-form {
 }
 
 $showpageimage: 0 !default;
+
 @if $showpageimage == 1 {
     .coursedashboard {
         position: relative;
@@ -299,7 +311,8 @@ $showpageimage: 0 !default;
     border-radius: 0;
 }
 
-.langmenu .dropdown-toggle::after, span.langbutton {
+.langmenu .dropdown-toggle::after,
+span.langbutton {
     color: $navbar-dark-color;
 }
 
@@ -336,7 +349,8 @@ $showpageimage: 0 !default;
     text-decoration: none;
 }
 
-.class-box-fp .course-title, .class-box-fp-style3 .course-title {
+.class-box-fp .course-title,
+.class-box-fp-style3 .course-title {
     background-color: $card-bg;
     padding: $spacer;
     padding-bottom: 0;
@@ -356,12 +370,13 @@ $showpageimage: 0 !default;
     margin: 0 2rem;
     padding: $spacer;
     color: $white;
-    background-color:rgba($black, 0.8);
+    background-color: rgba($black, 0.8);
     border-radius: 0 0 .25rem .25rem;
 }
+
 @media screen and (max-width: 576px) {
-    .course-summary-2col{
-        display:none;
+    .course-summary-2col {
+        display: none;
     }
 }
 
@@ -385,7 +400,7 @@ $showpageimage: 0 !default;
 .class-box4 {
     margin-bottom: 2rem;
     border: 1px solid $card-bg;
-    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.3);
     padding: 1rem;
     height: $courseboxheight;
     overflow: hidden;
@@ -402,13 +417,13 @@ $showpageimage: 0 !default;
 .class-fullbox {
     margin-bottom: 2rem;
     border: 1px solid $card-bg;
-    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.3);
     padding: 1rem;
 }
 .class-fullbox7 {
     margin-bottom: 2rem;
     border: 1px solid $card-bg;
-    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.3);
     padding: 4rem 2rem 0 2rem;
 }
 
@@ -418,7 +433,7 @@ $showpageimage: 0 !default;
 }
 
 .fullbox {
-    background-color: rgba(255,255,255,0.7);
+    background-color: rgba(255, 255, 255, 0.7);
     background-blend-mode: overlay;
 }
 
@@ -471,19 +486,22 @@ $showpageimage: 0 !default;
 }
 
 .class-box .course-summary {
-    margin:.5rem;
+    margin: .5rem;
 }
 
-.class-box .course-summary::-webkit-scrollbar, .class-box4 .course-summary4::-webkit-scrollbar {
+.class-box .course-summary::-webkit-scrollbar,
+.class-box4 .course-summary4::-webkit-scrollbar {
     width: 7px;
 }
 
-.class-box .course-summary::-webkit-scrollbar-track, .class-box4 .course-summary4::-webkit-scrollbar-track {
+.class-box .course-summary::-webkit-scrollbar-track,
+.class-box4 .course-summary4::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3);
     border-radius: 5%;
 }
 
-.class-box .course-summary::-webkit-scrollbar-thumb, .class-box4 .course-summary4::-webkit-scrollbar-thumb {
+.class-box .course-summary::-webkit-scrollbar-thumb,
+.class-box4 .course-summary4::-webkit-scrollbar-thumb {
     background-color: darken($primary, 15%);
     outline: 1px solid slategrey;
 }
@@ -586,9 +604,9 @@ $showpageimage: 0 !default;
 .coursestyle2 figcaption {
     position: absolute;
     height: 98px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
+    bottom: 0;
+    left: 0;
+    right: 0;
     overflow: hidden;
     padding: 15px;
     background-color: rgba(0, 0, 0, 0.75);
@@ -652,7 +670,7 @@ a.coursestyle3url {
 }
 
 .coursestyle2:hover .course-card {
-    margin-top: 0rem;
+    margin-top: 0;
 }
 
 ul.teacherscourseview {

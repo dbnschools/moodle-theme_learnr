@@ -126,14 +126,17 @@ $activityhover: rgba($primary, 30%) !default;
 
 // stylelint-disable
 $theme-colors: () !default;
-$theme-colors: map-merge((
-    primary: $primary,
-    secondary: $secondary,
-    success: $success,
-    info: $info,
-    warning: $warning,
-    danger: $danger,
-), $theme-colors);
+$theme-colors: map-merge(
+    (
+        primary: $primary,
+        secondary: $secondary,
+        success: $success,
+        info: $info,
+        warning: $warning,
+        danger: $danger,
+    ),
+    $theme-colors
+);
 // stylelint-enable
 
 $activity-icon-colors: () !default;

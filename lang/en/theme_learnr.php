@@ -82,7 +82,7 @@ $string['showprogressbar'] = 'Show Course Progress Bar';
 $string['showprogressbar_desc'] = 'Display a progress bar for students at the top of each main course page.';
 $string['easyenrollbtn'] = "Easy Enrollment Course Codes";
 
-// Course Styles
+// Course Styles.
 $string['coursestyle1'] = 'Tile Style One';
 $string['coursestyle2'] = 'Tile Style Two';
 $string['coursestyle3'] = 'Tile Style Three';
@@ -102,11 +102,11 @@ $string['trimsummary_desc'] = 'Enter a number to trim the summary length.  This 
 $string['courseboxheight'] = 'Course Tile Height';
 $string['courseboxheight_desc'] = 'Control the height of the Course tile on the frontpage and course categories.';
 
-// Icon Navigation
+// Icon Navigation.
 $string['iconnavheading'] = 'Icon Navigation';
 $string['iconnavinfo'] = 'Dashboard Icon Navigation';
 $string['iconnavinfo_desc'] = 'Create buttons with icons for use on the homepage. These appear at the top of the page on the Dashboard.';
-// FP Icon Nav
+// FP Icon Nav.
 $string['navicon1'] = 'Homepage Icon One';
 $string['navicon2'] = 'Homepage Icon Two';
 $string['navicon3'] = 'Homepage Icon Three';
@@ -143,7 +143,7 @@ $string['marketingurltargetnew'] = 'New Page';
 $string['marketingurltargetparent'] = 'Parent Frame';
 
 
-// Color Settings
+// Color Settings.
 $string['successcolor'] = 'Success color';
 $string['infocolor'] = 'Info Color';
 $string['warningcolor'] = 'Warning Color';
@@ -167,13 +167,13 @@ $string['primarynavbarlink'] = 'Primary Navbar link color';
 $string['secondarynavbarlink'] = 'Secondary Navbar link color';
 $string['navbarlink_desc'] = 'Change the color of the navbar links.';
 
-// Content
+// Content.
 $string['alert'] = 'Homepage Alert';
 $string['alert_desc'] = 'This is a special alert message that will appear on the homepage.';
 $string['fptextbox'] = 'Homepage Textbox Authenticated User';
 $string['fptextbox_desc'] = 'This textbox appears on the homepage once a user authenticates. It is ideal for putting a welcome message and providing instructions for the learner.';
 
-//Marketing Tiles
+// Marketing Tiles.
 $string['marketingheading'] = 'Marketing Tiles';
 $string['marketinginfodesc'] = 'Enter the settings for your marketing spot.  You must include a title in order for the Marketing Spot to appear.  The title will activate the individual Marketing Spots.';
 $string['marketingheadingsub'] = 'Three locations on the front page to add information and links';

@@ -12,10 +12,12 @@
     border-radius: 0;
 }
 .activity-item:hover {
-    background-color: rgba($primary,10%);
+    background-color: rgba($primary, 10%);
 }
+
 @media (min-width: 768px) {
-    .course-content ul.topics li.section .content.course-content-item-content, .course-content ul.weeks li.section .content.course-content-item-content {
+    .course-content ul.topics li.section .content.course-content-item-content,
+    .course-content ul.weeks li.section .content.course-content-item-content {
         margin: 0 3rem;
         padding: 0;
     }
