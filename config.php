@@ -173,7 +173,7 @@ if ($THEME->settings->showheaderblockpanel == 1 && $THEME->settings->showblockdr
         'defaultregion' => 'side-pre',
         'options' => ['langmenu' => true],
     ];
-} 
+}
 if ($THEME->settings->showheaderblockpanel == 0 && $THEME->settings->showblockdrawer == 1){
     $THEME->layouts['course'] = [
         'file' => 'course.php',
@@ -222,3 +222,5 @@ if ($THEME->settings->showcourseindexnav == 1) {
 } else {
     $THEME->usescourseindex = false;
 }
+// ADDED tinjohn 20221206.
+$THEME->removedprimarynavitems = explode(',', $THEME->settings->removedprimarynavitems);

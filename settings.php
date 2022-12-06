@@ -29,6 +29,16 @@ if ($ADMIN->fulltree) {
     $settings = new theme_boost_admin_settingspage_tabs('themesettinglearnr', get_string('configtitle', 'theme_learnr'));
     $page = new admin_settingpage('theme_learnr_general', get_string('generalsettings', 'theme_boost'));
 
+
+    // ADDED tinjohn 20221206.
+    // Removedprimarynavitems.
+    // Nav items to be excluded when this theme is enabled.
+    $default = '';
+    $setting = new admin_setting_configtext('theme_learnr/removedprimarynavitems',
+                get_string('removedprimarynavitems', 'theme_learnr'), get_string('removedprimarynavitems_desc', 'theme_learnr'), $default, PARAM_TEXT);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
     // Unaddable blocks.
     // Blocks to be excluded when this theme is enabled in the "Add a block" list: Administration, Navigation, Courses and
     // Section links.
@@ -42,6 +52,7 @@ if ($ADMIN->fulltree) {
     $title = get_string('preset', 'theme_boost');
     $description = get_string('preset_desc', 'theme_boost');
     $default = 'default.scss';
+
 
     $context = context_system::instance();
     $fs = get_file_storage();
@@ -471,7 +482,7 @@ if ($ADMIN->fulltree) {
     $description = get_string('alert_desc', 'theme_learnr');
     $default = '';
     $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
-    
+
     $page->add($setting);
 
     // Frontpage Textbox.
@@ -480,7 +491,7 @@ if ($ADMIN->fulltree) {
     $description = get_string('fptextbox_desc', 'theme_learnr');
     $default = '';
     $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
-    
+
     $page->add($setting);
 
     $settings->add($page);

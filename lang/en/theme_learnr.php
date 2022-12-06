@@ -213,3 +213,5 @@ $string['displaybottom'] = 'Display at Bottom of Page';
 $string['markettextbg'] = 'Marketing Tile Text Background';
 $string['markettextbg_desc'] = 'Background colour for the text area of the marketing tiles.';
 
+$string['removedprimarynavitems'] = 'Unneeded navigation items';
+$string['removedprimarynavitems_desc'] = 'The items specified are not shown in the navigation menu.';
