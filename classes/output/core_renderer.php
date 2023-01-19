@@ -29,9 +29,12 @@ use custom_menu;
 use stdClass;
 use moodle_url;
 use context_course;
+use local_nattylocal\progresscount;
 
 
 require_once ($CFG->dirroot . '/completion/classes/progress.php');
+// ADDED tinjohn 180123.
+require_once ($CFG->dirroot . '/local/nattylocal/classes/progresscount.php');
 
 
 class core_renderer extends \theme_boost\output\core_renderer {
@@ -46,12 +49,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if (\core_completion\progress::get_course_progress_percentage($PAGE->course)) {
             $comppc = \core_completion\progress::get_course_progress_percentage($PAGE->course);
             $comppercent = number_format($comppc, 0);
+            // ADDED tinjohn 180123.
+            $comppcnt = progresscount::get_course_progress_count($PAGE->course);
+            
         }
         else {
             $comppercent = 0;
         }
 
-        $progresschartcontext = ['progress' => $comppercent, 'hasprogressbar' => $hasprogressbar];
+        $progresschartcontext = ['progress' => $comppercent, 'progresscnt' => $comppcnt, 'hasprogressbar' => $hasprogressbar];
         $progress = $this->render_from_template('theme_learnr/progress-bar', $progresschartcontext);
 
         return $progress;

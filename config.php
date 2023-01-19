@@ -224,3 +224,5 @@ if ($THEME->settings->showcourseindexnav == 1) {
 }
 // ADDED tinjohn 20221206.
 $THEME->removedprimarynavitems = explode(',', $THEME->settings->removedprimarynavitems);
+// ADDED tinjohn 20231701.
+$THEME->javascripts_footer = array('dynprogressbar');
