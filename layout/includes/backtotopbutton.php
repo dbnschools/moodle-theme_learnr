@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - back to top button include.
+ * Theme LearnR - back to top button include.
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>

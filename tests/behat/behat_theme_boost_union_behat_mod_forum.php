@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Behat mod_forum-related step definition overrides for the Boost Union theme.
+ * Behat mod_forum-related step definition overrides for the LearnR theme.
  *
  * @package    theme_learnr
  * @category   test
@@ -28,7 +28,7 @@
 require_once(__DIR__ . '/../../../../mod/forum/tests/behat/behat_mod_forum.php');
 
 /**
- * Forum-related step definition overrides for the Boost Union theme.
+ * Forum-related step definition overrides for the LearnR theme.
  *
  * @package    theme_learnr
  * @category   test

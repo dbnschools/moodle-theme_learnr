@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin for the "SCSS" tab on the "Look" page
   In order to use the features
   As admin
-  I need to be able to configure the theme Boost Union plugin
+  I need to be able to configure the theme LearnR plugin
 
   Background:
     Given the following "courses" exist:
@@ -12,7 +12,7 @@ Feature: Configuring the theme_learnr plugin for the "SCSS" tab on the "Look" pa
   @javascript
   Scenario: Setting: Raw initial SCSS - Add custom SCSS to the theme
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
+    And I navigate to "Appearance > Themes > LearnR > Look" in site administration
     And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
     # We add a small CSS snippet to the page which hides the heading in the page header.
     # This is just to make it easy to detect the effect of this custom SCSS code.
@@ -27,7 +27,7 @@ Feature: Configuring the theme_learnr plugin for the "SCSS" tab on the "Look" pa
   @javascript
   Scenario: Setting: Raw SCSS - Add custom SCSS to the theme
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
+    And I navigate to "Appearance > Themes > LearnR > Look" in site administration
     And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
     # We add a small CSS snippet to the page which hides the heading in the page header.
     # This is just to make it easy to detect the effect of this custom SCSS code.

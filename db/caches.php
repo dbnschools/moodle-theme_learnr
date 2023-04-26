@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Cache definitions.
+ * Theme LearnR - Cache definitions.
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -60,7 +60,7 @@ $definitions = array(
                     'theme_learnr_cohort_deleted'
                 )
         ),
-        // This cache stores the FontAwesome files (which are uploaded in the Boost Union settings)
+        // This cache stores the FontAwesome files (which are uploaded in the LearnR settings)
         // to avoid that the files have to be read from the filearea on every page load.
         'fontawesome' => array(
                 'mode' => cache_store::MODE_APPLICATION,

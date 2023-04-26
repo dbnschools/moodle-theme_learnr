@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Boost Union renderer class. This file is currently only used to extend the mod_h5p and mod_hvp renderers.
+ * LearnR renderer class. This file is currently only used to extend the mod_h5p and mod_hvp renderers.
  *
  * @package   theme_learnr
  * @copyright 2022 Nina Herrmann <nina.herrmann@gmx.de>

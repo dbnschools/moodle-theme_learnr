@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - advertisement tiles layout include.
+ * Theme LearnR - advertisement tiles layout include.
  *
  * @package   theme_learnr
  * @copyright 2022 Nina Herrmann <nina.herrmann@gmx.de>

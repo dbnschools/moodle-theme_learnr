@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Language pack
+ * Theme LearnR - Language pack
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 // General.
 $string['pluginname'] = 'LearnR';
-$string['choosereadme'] = '<p>The LearnR theme is entirely inspired by Boost Union and the Fordson themes.  LearnR starts with the outstanding features, UX improvements, and functionality of Boost Union.  To take things to the next level we incorporated many of the features, styles, and most popular functionality of the Fordson theme.<p><p>Boost Union is maintained by<br />Moodle an Hochschulen e.V.,</p><p>in cooperation with<br />lern.link GmbH</p><p>together with<br />bdecent GmbH</p>';
+$string['choosereadme'] = '<p>The LearnR theme is entirely inspired by LearnR and the Fordson themes.  LearnR starts with the outstanding features, UX improvements, and functionality of LearnR.  To take things to the next level we incorporated many of the features, styles, and most popular functionality of the Fordson theme.<p><p>LearnR is maintained by<br />Moodle an Hochschulen e.V.,</p><p>in cooperation with<br />lern.link GmbH</p><p>together with<br />bdecent GmbH</p>';
 $string['configtitle'] = 'LearnR';
 
 // Settings: Look page.
@@ -56,7 +56,7 @@ $string['mediumcontentmaxwidthsetting_desc'] = 'With this setting, you can overr
 $string['brandingtab'] = 'Branding';
 // ... Section: Logos.
 $string['logosheading'] = 'Logos';
-$string['logosheading_desc'] = 'Please note: Boost Union has its own logo upload and does not use the logo from <a href="{$a}">Moodle core\'s logo setting</a>.<br />Boost Union especially allows you to upload more image formats that Moodle core allows and allows you to override the uploaded logos within its flavours.';
+$string['logosheading_desc'] = 'Please note: LearnR has its own logo upload and does not use the logo from <a href="{$a}">Moodle core\'s logo setting</a>.<br />LearnR especially allows you to upload more image formats that Moodle core allows and allows you to override the uploaded logos within its flavours.';
 // ... ... Setting: Logo.
 $string['logosetting'] = 'Logo';
 $string['logosetting_desc'] = 'Here, you can upload a full logo to be used as decoration. This image is especially used on the login page. This image can be quite high resolution because it will be scaled down for use.';
@@ -65,7 +65,7 @@ $string['logocompactsetting'] = 'Compact logo';
 $string['logocompactsetting_desc'] = 'Here, you can upload a compact version of the same logo as above, such as an emblem, shield or icon. This image is especially used in the navigation bar at the top of each Moodle page. The image should be clear even at small sizes.';
 // ... Section: Favicon.
 $string['faviconheading'] = 'Favicon';
-$string['faviconheading_desc'] = 'Please note: Boost Union has its own favicon upload and does not use the favicon from <a href="{$a}">Moodle core\'s favicon setting</a>.<br />Boost Union especially allows you to override the uploaded favicon within its flavours.';
+$string['faviconheading_desc'] = 'Please note: LearnR has its own favicon upload and does not use the favicon from <a href="{$a}">Moodle core\'s favicon setting</a>.<br />LearnR especially allows you to override the uploaded favicon within its flavours.';
 // ... ... Setting: Favicon
 $string['faviconsetting'] = 'Favicon';
 $string['faviconsetting_desc'] = 'Here, you can upload a custom image (.ico or .png format) that the browser will show as the favicon of your Moodle website. If no custom favicon is uploaded, a standard Moodle favicon will be used.';
@@ -176,7 +176,7 @@ $string['templateemailtextsuffix'] = '';
 $string['emailbrandingintroheading'] = 'Introduction';
 $string['emailbrandingintronote'] = 'Please note: This is an advanced functionality which uses some workarounds to provide E-Mail branding options. Please follow the instructions closely.';
 $string['emailbrandinginstruction'] = 'How-to';
-$string['emailbrandinginstruction0'] = 'With this Boost Union feature, you can apply branding to all E-Mails which Moodle is sending out.';
+$string['emailbrandinginstruction0'] = 'With this LearnR feature, you can apply branding to all E-Mails which Moodle is sending out.';
 $string['emailbrandinginstructionli1'] = 'Go to the <a href="{$a->url}" target="_blank">language customization settings page</a> to open the <em>{$a->lang}</em> language pack for editing.';
 $string['emailbrandinginstructionli2'] = 'Search for and modify these strings in the <code>theme_learnr language</code> pack:';
 $string['emailbrandinginstructionli2li1'] = '<code>templateemailhtmlprefix</code>: This snippet will be added <em>at the beginning / before the body</em> of all <em>HTML E-Mails</em> which Moodle is sending out.';
@@ -232,7 +232,7 @@ $string['customfontssetting'] = 'Custom fonts';
 $string['customfontssetting_desc'] = 'With this setting you can upload custom fonts to the theme. The advantage of uploading fonts to this file area is that those fonts can be delivered without a check if the user is logged in and can be used as locally installed fonts everywhere on the site. As soon as you have uploaded at least one font to this filearea and have stored the settings, a list will appear underneath which will give you CSS code snippets which you can use as a boilerplate to reference particular fonts in your custom SCSS.';
 // ... ... Information: Custom fonts list.
 $string['customfontslistsetting'] = 'Custom fonts list';
-$string['customfontslistsetting_desc'] = 'This is the list of fonts which you have uploaded to the custom fonts filearea. The given CSS snippets can be used to add these fonts to your custom SCSS. Please note that you will have to take care of the font format value as well as the font-family, font-style and font-weight CSS properties yourself for now as Boost Union is not able yet to parse the font files.';
+$string['customfontslistsetting_desc'] = 'This is the list of fonts which you have uploaded to the custom fonts filearea. The given CSS snippets can be used to add these fonts to your custom SCSS. Please note that you will have to take care of the font format value as well as the font-family, font-style and font-weight CSS properties yourself for now as LearnR is not able yet to parse the font files.';
 $string['customfontsfileurlpersistent'] = 'URL (persistent)';
 $string['customfontsfileurlrevisioned'] = 'URL (revisioned)';
 // ... Section: FontAwesome.
@@ -299,8 +299,8 @@ $string['mobileappearanceheading'] = 'Mobile appearance';
 // ... ... Setting: Additional CSS for Mobile app.
 $string['mobilecss'] = 'Additional CSS for Mobile app';
 $string['mobilecss_desc'] = 'With this setting, you can write custom CSS code to customise your mobile app interface. The CSS code will be only added to the Mobile app depiction of this Moodle instance and will not be shown in the webbrowser version. Read more about this feature in the <a href="https://moodledev.io/general/app/customisation/remote-themes#how-do-remote-themes-work">Moodle dev docs</a>.';
-$string['mobilecss_set'] = 'As soon as you add any CSS code to this setting and save the setting, the <a href="{$a->url}">Moodle core setting <em>mobilecssurl</em></a> will be automatically set to a URL of the Boost Union theme.';
-$string['mobilecss_overwrite'] = 'As soon as you add any CSS code to this setting and save the setting, the <a href="{$a->url}">Moodle core setting <em>mobilecssurl</em></a> will be automatically overwritten with a URL of the Boost Union theme. Currently this setting is set to <a href="{$a->value}">{$a->value}</a>.';
+$string['mobilecss_set'] = 'As soon as you add any CSS code to this setting and save the setting, the <a href="{$a->url}">Moodle core setting <em>mobilecssurl</em></a> will be automatically set to a URL of the LearnR theme.';
+$string['mobilecss_overwrite'] = 'As soon as you add any CSS code to this setting and save the setting, the <a href="{$a->url}">Moodle core setting <em>mobilecssurl</em></a> will be automatically overwritten with a URL of the LearnR theme. Currently this setting is set to <a href="{$a->value}">{$a->value}</a>.';
 $string['mobilecss_donotchange'] = 'This step is necessary to ship the CSS code to the Mobile app. Do not change the URL there unless you really want to remove the CSS code from the Mobile app again.';
 
 // Settings: Feel page.
@@ -318,7 +318,7 @@ $string['navigationheading'] = 'Navigation';
 // ... ... Setting: Back to top button.
 $string['backtotop'] = 'Back to top';
 $string['backtotopbuttonsetting'] = 'Back to top button';
-$string['backtotopbuttonsetting_desc'] = 'With this setting a back to top button will appear in the bottom right corner of the page as soon as the user scrolls down the page. A button like this existed already on Boost in Moodle Core until Moodle 3.11, but was removed in 4.0. With Boost Union, you can bring it back.';
+$string['backtotopbuttonsetting_desc'] = 'With this setting a back to top button will appear in the bottom right corner of the page as soon as the user scrolls down the page. A button like this existed already on Boost in Moodle Core until Moodle 3.11, but was removed in 4.0. With LearnR, you can bring it back.';
 // ... ... Setting: Scroll-spy
 $string['scrollspy'] = 'Scroll-spy';
 $string['scrollspysetting'] = 'Scroll-spy';
@@ -326,7 +326,7 @@ $string['scrollspysetting_desc'] = 'With this setting, upon toggling edit mode o
 // ... ... Setting: Activity navigation
 $string['activitynavigation'] = 'Activity navigation';
 $string['activitynavigationsetting'] = 'Activity navigation elements';
-$string['activitynavigationsetting_desc'] = 'With this setting the elements to jump to the previous and next activity/resource as well as the pull down menu to jump to a distinct activity/resource become displayed. UI elements like this existed already on Boost in Moodle Core until Moodle 3.11, but were removed in 4.0. With Boost Union, you can bring them back.';
+$string['activitynavigationsetting_desc'] = 'With this setting the elements to jump to the previous and next activity/resource as well as the pull down menu to jump to a distinct activity/resource become displayed. UI elements like this existed already on Boost in Moodle Core until Moodle 3.11, but were removed in 4.0. With LearnR, you can bring them back.';
 
 // Settings: Blocks tab.
 $string['blockstab'] = 'Blocks';
@@ -334,7 +334,7 @@ $string['blockstab'] = 'Blocks';
 $string['blocksgeneralheading'] = 'General blocks';
 // ... Section: Block regions.
 $string['blockregionsheading'] = 'Additional block regions';
-$string['blockregionsheading_desc'] = '<p>Boost Union provides a large number of additional block regions which can be used to add and show blocks over the whole Moodle page:</p>
+$string['blockregionsheading_desc'] = '<p>LearnR provides a large number of additional block regions which can be used to add and show blocks over the whole Moodle page:</p>
 <ul><li>The <em>Outside block regions</em> are placed on all four sides of the Moodle page. They can be used to show blocks which accompany the shown Moodle page but do not directly belong to the main content.</li>
 <li>The <em>Header block region</em> is placed between the Outside (top) area and the main content area. It can be used to show a block as course header information.</li>
 <li>The <em>Content block regions</em> are placed directly over and under the main content in the main content area. They can be used to add blocks to the course content flow.</li>
@@ -369,10 +369,10 @@ $string['outsideregionsheading'] = 'Outside regions';
 $string['outsideregionsheading_desc'] = 'Outside regions can not only be enabled with the layout settings above, their appearance can also be customized.';
 // ... ... Setting: Block region width for Outside (left) region.
 $string['blockregionoutsideleftwidth'] = 'Block region width for \'Outside (left)\' region';
-$string['blockregionoutsideleftwidth_desc'] = 'With this setting, you can set the width of the \'Outside (left)\' block region which is shown on the left hand side of the main content area. By default, Boost Union uses a width of 300px. You can enter other pixel-based values like 200px, but you can also enter a percentage-based value like 10% or a viewport-width value like 10vw.';
+$string['blockregionoutsideleftwidth_desc'] = 'With this setting, you can set the width of the \'Outside (left)\' block region which is shown on the left hand side of the main content area. By default, LearnR uses a width of 300px. You can enter other pixel-based values like 200px, but you can also enter a percentage-based value like 10% or a viewport-width value like 10vw.';
 // ... ... Setting: Block region width for Outside (right) region.
 $string['blockregionoutsiderightwidth'] = 'Block region width for \'Outside (right)\' region';
-$string['blockregionoutsiderightwidth_desc'] = 'With this setting, you can set the width of the \'Outside (right)\' block region which is shown on the right hand side of the main content area. By default, Boost Union uses a width of 300px. You can enter other pixel-based values like 200px, but you can also enter a percentage-based value like 10% or a viewport-width value like 10vw.';
+$string['blockregionoutsiderightwidth_desc'] = 'With this setting, you can set the width of the \'Outside (right)\' block region which is shown on the right hand side of the main content area. By default, LearnR uses a width of 300px. You can enter other pixel-based values like 200px, but you can also enter a percentage-based value like 10% or a viewport-width value like 10vw.';
 // ... ... Setting: Block region width for Outside (top) region.
 $string['blockregionoutsidetopwidth'] = 'Block region width for \'Outside (top)\' region';
 $string['blockregionoutsidetopwidth_desc'] = 'With this setting, you can set the width of the \'Outside (top)\' block region which is shown at the very top of the page. You can choose between full width, course content width and hero width.';
@@ -574,7 +574,7 @@ $string['flavoursapplytocohorts_help'] = 'Here, you define if this flavour shoul
 $string['flavoursapplytocohorts_ids'] = 'Cohorts';
 $string['flavoursapplytocohorts_ids_help'] = 'Here, you define one or more particular cohorts which this flavour should be applied to. As soon as the user is a member of one of the configured cohorts, the flavour is applied.<br /><br />Please note that, if you define more than one cohorts, there is no need for the user to be a member of all of them at the same time.<br /><br />Please also note that at the current state of implementation category cohorts are treated just as if they were system cohorts.';
 $string['flavoursbackgroundimage'] = 'Background image';
-$string['flavoursbackgroundimage_help'] = 'With this setting, the flavour will override the background image which is configured in Boost Union\'s look settings.';
+$string['flavoursbackgroundimage_help'] = 'With this setting, the flavour will override the background image which is configured in LearnR\'s look settings.';
 $string['flavoursbacktooverview'] = 'Back to flavour overview';
 $string['flavourscreateflavour'] = 'Create flavour';
 $string['flavourscustomcss'] = 'Custom CSS';
@@ -587,20 +587,20 @@ $string['flavoursdescription_help'] = 'The flavour\'s description is just used i
 $string['flavoursedit'] = 'Edit';
 $string['flavourseditflavour'] = 'Edit flavour';
 $string['flavoursfavicon'] = 'Favicon';
-$string['flavoursfavicon_help'] = 'With this setting, the flavour will override the favicon which is configured in Boost Union\'s look settings.';
+$string['flavoursfavicon_help'] = 'With this setting, the flavour will override the favicon which is configured in LearnR\'s look settings.';
 $string['flavoursflavours'] = 'Flavours';
 $string['flavoursgeneralsettings'] = 'General settings';
 $string['flavoursincludesubcategories'] = 'Include subcategories';
 $string['flavoursincludesubcategories_help'] = 'If checked, the flavour will also be applied to the subcategories of the chosen categories.';
 $string['flavourslogo'] = 'Logo';
-$string['flavourslogo_help'] = 'With this setting, the flavour will override the logo which is configured in Boost Union\'s look settings.';
+$string['flavourslogo_help'] = 'With this setting, the flavour will override the logo which is configured in LearnR\'s look settings.';
 $string['flavourslogocompact'] = 'Compact logo';
-$string['flavourslogocompact_help'] = 'With this setting, the flavour will override the logo which is configured in Boost Union\'s look settings.';
+$string['flavourslogocompact_help'] = 'With this setting, the flavour will override the logo which is configured in LearnR\'s look settings.';
 $string['flavoursnotificationcreated'] = 'The flavour was created successfully';
 $string['flavoursnotificationdeleted'] = 'The flavour was deleted successfully';
 $string['flavoursnotificationedited'] = 'The flavour was edited successfully';
 $string['flavoursnothingtodisplay'] = 'There aren\'t any flavours created yet. Please create your first flavour to get things going.';
-$string['flavoursoverview_desc'] = '<p>Boost Union\'s flavours offer a possibility to override particular Moodle look & feel settings in particular contexts. On this page, you can create and manage flavours.</p><p>Within each flavour, you define if it should be applied to particular course categories or particular cohorts. Afterwards, during each Moodle page rendering, Boost Union checks if any flavour applies. Please note that, for each Moodle page rendering, only the first matching flavour in the list is applied and the remaining flavours are ignored. Thus, the order of the flavours on this page is key.</p><p>Please note as well that after each change which you make to the set of flavours, the theme cache is purged. This is necessary to make sure that all assets are shipped properly and up-to-date to the browser.</p>';
+$string['flavoursoverview_desc'] = '<p>LearnR\'s flavours offer a possibility to override particular Moodle look & feel settings in particular contexts. On this page, you can create and manage flavours.</p><p>Within each flavour, you define if it should be applied to particular course categories or particular cohorts. Afterwards, during each Moodle page rendering, LearnR checks if any flavour applies. Please note that, for each Moodle page rendering, only the first matching flavour in the list is applied and the remaining flavours are ignored. Thus, the order of the flavours on this page is key.</p><p>Please note as well that after each change which you make to the set of flavours, the theme cache is purged. This is necessary to make sure that all assets are shipped properly and up-to-date to the browser.</p>';
 $string['flavourspreview'] = 'Preview';
 $string['flavourspreviewflavour'] = 'Preview flavour';
 $string['flavourspreviewblindtext'] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam eleifend mi in nulla. Felis imperdiet proin fermentum leo vel orci porta. Sed nisi lacus sed viverra tellus in hac habitasse. Vivamus arcu felis bibendum ut. Nisi porta lorem mollis aliquam ut porttitor. Odio euismod lacinia at quis risus sed vulputate odio. Sed felis eget velit aliquet sagittis id consectetur purus. Nec ullamcorper sit amet risus nullam eget. Pellentesque sit amet porttitor eget dolor. Cursus mattis molestie a iaculis at erat pellentesque.';
@@ -644,7 +644,7 @@ $string['tiletitlesetting'] = 'Advertisement tile {$a->no} title';
 $string['tiletitlesetting_desc'] = 'Here, you enter the title which should be displayed in the advertisement tile {$a->no}. This is an optional setting, the advertisement tile will be shown even if you do not set a title.';
 
 // Privacy API.
-$string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';
+$string['privacy:metadata'] = 'The LearnR theme does not store any personal data about any user.';
 
 // Capabilities.
 $string['learnr:configure'] = 'To be able to configure the theme as non-admin';
@@ -678,15 +678,15 @@ $string['learnr:viewregionoffcanvascenter'] = 'To be able to see the Off-canvas 
 $string['learnr:editregionoffcanvascenter'] = 'To be able to edit the Off-canvas (center) block region';
 
 // Caches.
-$string['cachedef_fontawesome'] = 'FontAwesome files (which are uploaded in the Boost Union settings)';
+$string['cachedef_fontawesome'] = 'FontAwesome files (which are uploaded in the LearnR settings)';
 $string['cachedef_flavours'] = 'Flavours which apply to a given page category ID for the current user';
 
 // Upgrade notices.
-$string['upgradenotice_2022080922'] = 'From this release on, Boost Union has its own logo and compact logo settings and does not use these files from the Moodle core settings anymore.';
+$string['upgradenotice_2022080922'] = 'From this release on, LearnR has its own logo and compact logo settings and does not use these files from the Moodle core settings anymore.';
 $string['upgradenotice_2022080922_logo'] = 'logo';
 $string['upgradenotice_2022080922_logocompact'] = 'compact logo';
-$string['upgradenotice_2022080922_copied'] = 'The existing <strong>{$a}</strong> from the Moodle core settings has been copied to the Boost Union {$a} setting during this upgrade. Please double-check the result.';
-$string['upgradenotice_2022080922_notcopied'] = 'The <strong>{$a}</strong> setting within Boost Union is empty now. If you want to use a {$a} within Boost Union from now on, just upload it into the Boost Union {$a} setting later.';
+$string['upgradenotice_2022080922_copied'] = 'The existing <strong>{$a}</strong> from the Moodle core settings has been copied to the LearnR {$a} setting during this upgrade. Please double-check the result.';
+$string['upgradenotice_2022080922_notcopied'] = 'The <strong>{$a}</strong> setting within LearnR is empty now. If you want to use a {$a} within LearnR from now on, just upload it into the LearnR {$a} setting later.';
 
 
 // Begin DBN Update.

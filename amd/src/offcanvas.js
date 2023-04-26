@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - JS code off-canvas
+ * Theme LearnR - JS code off-canvas
  *
  * @module     theme_learnr/offcanvas
  * @copyright  2022 bdecent gmbh <https://bdecent.de>

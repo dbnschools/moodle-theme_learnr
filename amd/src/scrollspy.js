@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - JS code scroll-spy
+ * Theme LearnR - JS code scroll-spy
  *
  * @module     theme_learnr/scrollspy
  * @copyright  2022 Josha Bartsch <bartsch@itc.rwth-aachen.de>

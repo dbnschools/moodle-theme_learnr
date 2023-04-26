@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Drawers page layout.
+ * Theme LearnR - Drawers page layout.
  *
  * This layoutfile is based on theme/boost/layout/drawers.php
  *

@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look" page
   In order to use the features
   As admin
-  I need to be able to configure the theme Boost Union plugin
+  I need to be able to configure the theme LearnR plugin
 
   Background:
     Given the following "users" exist:
@@ -20,7 +20,7 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
   @javascript @_file_upload
   Scenario: Setting: Logo - Upload a custom logo to the theme
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I navigate to "Appearance > LearnR > Look" in site administration
     And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/moodlelogo.png" file to "Logo" filemanager
     And I press "Save changes"
@@ -48,7 +48,7 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a PNG logo to the theme and check that it is resized
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I navigate to "Appearance > LearnR > Look" in site administration
     And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/moodlelogo.png" file to "Logo" filemanager
     And I press "Save changes"
@@ -59,7 +59,7 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a SVG logo to the theme and check that it is not resized
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I navigate to "Appearance > LearnR > Look" in site administration
     And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/moodlelogo.svg" file to "Logo" filemanager
     And I press "Save changes"
@@ -70,7 +70,7 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a custom compact logo to the theme
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I navigate to "Appearance > LearnR > Look" in site administration
     And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
     And I press "Save changes"
@@ -95,7 +95,7 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a PNG compact logo to the theme and check that it is resized
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I navigate to "Appearance > LearnR > Look" in site administration
     And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
     And I press "Save changes"
@@ -105,7 +105,7 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a SVG compact logo to the theme and check that it is not resized
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I navigate to "Appearance > LearnR > Look" in site administration
     And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/moodlelogo.svg" file to "Compact logo" filemanager
     And I press "Save changes"
@@ -115,7 +115,7 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
   @javascript @_file_upload
   Scenario: Setting: Favicon - Upload a custom favicon to the theme
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I navigate to "Appearance > LearnR > Look" in site administration
     And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/favicon.ico" file to "Favicon" filemanager
     And I press "Save changes"

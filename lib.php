@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Library
+ * Theme LearnR - Library
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -228,7 +228,7 @@ function theme_learnr_get_pre_scss($theme) {
         $scss .= $activityiconscss."\n";
     }
 
-    // Set custom Boost Union SCSS variables.
+    // Set custom LearnR SCSS variables.
     if (get_config('theme_learnr', 'blockregionoutsideleftwidth')) {
         $scss .= '$blockregionoutsideleftwidth: '.get_config('theme_learnr', 'blockregionoutsideleftwidth').";\n";
     }
@@ -257,16 +257,16 @@ function theme_learnr_get_extra_scss($theme) {
 
     // You might think that this extra SCSS function is only called for the activated theme.
     // However, due to the way how the theme_*_get_extra_scss callback functions are searched and called within Boost child theme
-    // hierarchy Boost Union not only gets the extra SCSS from this function here but only from theme_boost_get_extra_scss as well.
+    // hierarchy LearnR not only gets the extra SCSS from this function here but only from theme_boost_get_extra_scss as well.
     //
     // There, the CSS snippets for the background image and the login background images are added already to the SCSS codebase.
     // Additionally, the custom SCSS from $theme->settings->scss (which hits the SCSS settings from theme_learnr even though
     // the code is within theme_boost) is already added to the SCSS codebase as well.
     //
     // We have to accept this fact here and must not copy the code from theme_boost_get_extra_scss into this function.
-    // Instead, we must only add additionally CSS code which is based on any Boost Union-only functionality.
+    // Instead, we must only add additionally CSS code which is based on any LearnR-only functionality.
 
-    // In contrast to Boost core, Boost Union should add the login page background to the body element as well.
+    // In contrast to Boost core, LearnR should add the login page background to the body element as well.
     // Thus, check if a login background image is set.
     $loginbackgroundimagepresent = get_config('theme_learnr', 'loginbackgroundimage');
     if (!empty($loginbackgroundimagepresent)) {
@@ -303,7 +303,7 @@ function theme_learnr_get_extra_scss($theme) {
     $content .= "background-attachment: fixed;";
     $content .= '}';
 
-    // Note: Boost Union is also capable of overriding the background image in its flavours.
+    // Note: LearnR is also capable of overriding the background image in its flavours.
     // In contrast to the other flavour assets like the favicon overriding, this isn't done here in place as this function
     // is composing Moodle core CSS which has to remain flavour-independent.
     // Instead, the flavour is overriding the background image later in flavours/styles.php.
@@ -318,7 +318,7 @@ function theme_learnr_get_extra_scss($theme) {
  */
 function theme_learnr_get_precompiled_css() {
     global $CFG;
-    // Get the fallback CSS file from Boost Core as long as Boost Union does not use a fallback file of its own.
+    // Get the fallback CSS file from Boost Core as long as LearnR does not use a fallback file of its own.
     return file_get_contents($CFG->dirroot . '/theme/boost/style/moodle.css');
 }
 
@@ -464,7 +464,7 @@ function theme_learnr_before_standard_html_head() {
     // Initialize HTML (even though we do not add any HTML at this stage of the implementation).
     $html = '';
 
-    // If a theme other than Boost Union or a child theme of it is active, return directly.
+    // If a theme other than LearnR or a child theme of it is active, return directly.
     // This is necessary as the before_standard_html_head() callback is called regardless of the active theme.
     if ($PAGE->theme->name != 'learnr' && !in_array('learnr', $PAGE->theme->parents)) {
         return $html;

@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin for the "Login page" tab on the "Look" page
   In order to use the features
   As admin
-  I need to be able to configure the theme Boost Union plugin
+  I need to be able to configure the theme LearnR plugin
 
   Scenario: Setting: Login page background images - Do not upload any login background image
     When I am on site homepage
@@ -14,7 +14,7 @@ Feature: Configuring the theme_learnr plugin for the "Login page" tab on the "Lo
   @javascript @_file_upload
   Scenario: Setting: Login page background images - Upload one custom login background image
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I navigate to "Appearance > LearnR > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I press "Save changes"
@@ -27,7 +27,7 @@ Feature: Configuring the theme_learnr plugin for the "Login page" tab on the "Lo
   @javascript @_file_upload
   Scenario: Setting: Login page background images - Upload multiple custom login background image (and have one picked randomly)
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I navigate to "Appearance > LearnR > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I upload "theme/learnr/tests/fixtures/login_bg2.jpg" file to "Login page background images" filemanager
@@ -45,7 +45,7 @@ Feature: Configuring the theme_learnr plugin for the "Login page" tab on the "Lo
   @javascript @_file_upload
   Scenario: Setting: Display text for login background images - Add a text to the login background image
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I navigate to "Appearance > LearnR > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I set the field "Display text for login background images" to "login_bg1.jpg|Copyright by SplitShire on pexels.com|dark"
@@ -57,7 +57,7 @@ Feature: Configuring the theme_learnr plugin for the "Login page" tab on the "Lo
   @javascript @_file_upload
   Scenario Outline: Setting: Display text for login background images - Match the text to the filename
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I navigate to "Appearance > LearnR > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I set the field "Display text for login background images" to "<filename>.jpg|Copyright by SplitShire on pexels.com|dark"
@@ -74,7 +74,7 @@ Feature: Configuring the theme_learnr plugin for the "Login page" tab on the "Lo
   @javascript @_file_upload
   Scenario Outline: Setting: Display text for login background images - Set the color for the text of the login background image
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I navigate to "Appearance > LearnR > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I set the field "Display text for login background images" to "login_bg1.jpg|Copyright by SplitShire on pexels.com|<color>"

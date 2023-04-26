@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Mobile App styles serving.
+ * Theme LearnR - Mobile App styles serving.
  *
  * @package    theme_learnr
  * @copyright  2023 Nina Herrmann <nina.herrmann@gmx.de>

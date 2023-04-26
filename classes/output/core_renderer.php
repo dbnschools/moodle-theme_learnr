@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Core renderer
+ * Theme LearnR - Core renderer
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -323,7 +323,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         // If there is a flavour applied to this page, add the flavour ID as additional body class.
-        // Boost Union itself does not need this class for applying the flavour to the page (yet).
+        // LearnR itself does not need this class for applying the flavour to the page (yet).
         // However, theme designers might want to use it.
         $flavour = theme_learnr_get_flavour_which_applies();
         if ($flavour != null) {

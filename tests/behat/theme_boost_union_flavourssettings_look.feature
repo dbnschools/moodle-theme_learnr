@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying the look features
   In order to use the features
   As admin
-  I need to be able to configure the theme Boost Union plugin
+  I need to be able to configure the theme LearnR plugin
 
   # Unfortunately, this can't be tested with Behat yet as the full logo is not displayed anywhere outside the login page
   # Scenario: Flavours: Logo - Upload a logo (with a global logo not having been uploaded before)
@@ -16,7 +16,7 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying th
   @javascript @_file_upload
   Scenario: Flavours: Compact logo - Upload a compact logo (with a global compact logo not having been uploaded before)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
@@ -30,11 +30,11 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying th
   @javascript @_file_upload
   Scenario: Flavours: Compact logo - Upload a compact logo (with a global compact logo being overridden)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
+    And I navigate to "Appearance > Themes > LearnR > Look" in site administration
     And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
     And I click on "Save changes" "button"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
@@ -48,11 +48,11 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying th
   @javascript @_file_upload
   Scenario: Flavours: Compact logo - Do not upload a compact logo (with a global compact logo being served properly)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
+    And I navigate to "Appearance > Themes > LearnR > Look" in site administration
     And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
     And I click on "Save changes" "button"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
@@ -65,7 +65,7 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying th
   @javascript @_file_upload
   Scenario: Flavours: Favicon - Upload a favicon (with a global favicon not having been uploaded before)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
@@ -79,11 +79,11 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying th
   @javascript @_file_upload
   Scenario: Flavours: Favicon - Upload a favicon (with a global favicon being overridden)
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I navigate to "Appearance > LearnR > Look" in site administration
     And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/favicon.ico" file to "Favicon" filemanager
     And I press "Save changes"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
@@ -97,11 +97,11 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying th
   @javascript @_file_upload
   Scenario: Flavours: Favicon - Do not upload a favicon (with a global favicon being served properly)
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I navigate to "Appearance > LearnR > Look" in site administration
     And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/favicon.ico" file to "Favicon" filemanager
     And I click on "Save changes" "button"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
@@ -123,7 +123,7 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying th
   @javascript
   Scenario: Flavours: Custom SCSS - Add custom SCSS to the page
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"

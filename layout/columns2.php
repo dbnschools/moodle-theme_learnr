@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Columns2 page layout.
+ * Theme LearnR - Columns2 page layout.
  *
  * This layoutfile is based on theme/boost/layout/columns2.php
  *

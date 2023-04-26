@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - JS code back to top button
+ * Theme LearnR - JS code back to top button
  *
  * @module     theme_learnr/backtotopbutton
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>

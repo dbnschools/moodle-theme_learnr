@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Upgrade script.
+ * Theme LearnR - Upgrade script.
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -72,7 +72,7 @@ function xmldb_theme_learnr_upgrade($oldversion) {
         // Start composing the notification to inform the admin.
         $message = html_writer::tag('p', get_string('upgradenotice_2022080922', 'theme_learnr'));
 
-        // Handle the logo and compact logo (which have got now new settings in Boost Union).
+        // Handle the logo and compact logo (which have got now new settings in LearnR).
         foreach (['logo', 'logocompact'] as $setting) {
             // Initialize the logo copying status.
             $logocopied = false;
@@ -100,7 +100,7 @@ function xmldb_theme_learnr_upgrade($oldversion) {
                             'filearea' => $setting,
                     );
 
-                    // Copy the logo file to Boost Union.
+                    // Copy the logo file to LearnR.
                     $newfile = $fs->create_file_from_storedfile($filerecord, $file);
 
                     // Set the theme config to the file name.

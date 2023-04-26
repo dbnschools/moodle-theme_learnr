@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Behat administration-related step definition overrides for the Boost Union theme.
+ * Behat administration-related step definition overrides for the LearnR theme.
  *
  * @package    theme_learnr
  * @category   test
@@ -32,7 +32,7 @@ use Behat\Gherkin\Node\TableNode as TableNode,
     Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException;
 
 /**
- * Administration-related step definition overrides for the Boost Union theme.
+ * Administration-related step definition overrides for the LearnR theme.
  *
  * @package    theme_learnr
  * @category   test

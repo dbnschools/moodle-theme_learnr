@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - JS code infobanner
+ * Theme LearnR - JS code infobanner
  *
  * @module     theme_learnr/infobanner
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Settings file
+ * Theme LearnR - Settings file
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -38,7 +38,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
     // To achieve this goal, we create a custom admin settings category and fill it with several settings pages.
     // However, there is still the $settings variable which is expected by Moodle coreto be filled with the theme
     // settings and which is automatically added to the admin settings tree in one settings page.
-    // To avoid that there appears an empty "Boost Union" settings page near our own custom settings category,
+    // To avoid that there appears an empty "LearnR" settings page near our own custom settings category,
     // we set $settings to null.
 
     // Avoid that the theme settings page is auto-created.

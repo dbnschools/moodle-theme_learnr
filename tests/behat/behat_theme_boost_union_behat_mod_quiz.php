@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Behat mod_quiz-related step definition overrides for the Boost Union theme.
+ * Behat mod_quiz-related step definition overrides for the LearnR theme.
  *
  * @package    theme_learnr
  * @category   test
@@ -30,7 +30,7 @@ require_once(__DIR__ . '/../../../../mod/quiz/tests/behat/behat_mod_quiz.php');
 use Behat\Gherkin\Node\TableNode as TableNode;
 
 /**
- * Quiz-related step definition overrides for the Boost Union theme.
+ * Quiz-related step definition overrides for the LearnR theme.
  *
  * @package    theme_learnr
  * @category   test

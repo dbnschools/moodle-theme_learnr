@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin for the "Static pages" tab on the "Content" page
   In order to use the features
   As admin
-  I need to be able to configure the theme Boost Union plugin
+  I need to be able to configure the theme LearnR plugin
 
   @javascript
   Scenario Outline: Setting: Enable static page - Do not enable the static page page

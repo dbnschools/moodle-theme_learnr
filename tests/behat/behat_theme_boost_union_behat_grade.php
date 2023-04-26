@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Behat grade-related step definition overrides for the Boost Union theme.
+ * Behat grade-related step definition overrides for the LearnR theme.
  *
  * @package    theme_learnr
  * @category   test
@@ -30,7 +30,7 @@ require_once(__DIR__ . '/../../../../grade/tests/behat/behat_grade.php');
 use Behat\Gherkin\Node\TableNode as TableNode;
 
 /**
- * Grade-related step definition overrides for the Boost Union theme.
+ * Grade-related step definition overrides for the LearnR theme.
  *
  * @package    theme_learnr
  * @category   test

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Additional regions.
+ * Theme LearnR - Additional regions.
  *
  * @package   theme_learnr
  * @copyright 2022 bdecent gmbh <https://bdecent.de>

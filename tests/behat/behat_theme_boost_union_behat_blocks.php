@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Behat blocks-related step definition overrides for the Boost Union theme.
+ * Behat blocks-related step definition overrides for the LearnR theme.
  *
  * @package    theme_learnr
  * @category   test
@@ -30,7 +30,7 @@ require_once(__DIR__ . '/../../../../blocks/tests/behat/behat_blocks.php');
 use Behat\Mink\Exception\ExpectationException as ExpectationException;
 
 /**
- * Blocks-related step definition overrides for the Boost Union theme.
+ * Blocks-related step definition overrides for the LearnR theme.
  *
  * @package    theme_learnr
  * @category   test

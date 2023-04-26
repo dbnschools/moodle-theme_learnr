@@ -3,6 +3,9 @@ moodle-theme_learnr
 
 Changes
 -------
+### v4.2-r6
+* 2023-04-26 - Merged LearnR Theme Fork and Fordson Theme features into LearnR theme.
+* Added the following features: Course Section Style Chooser, Course Tile Display Styling, Additional Color Choosers, Hide Login Form(for sso logins), Hide Side Drawers, Course Management Dashboard, Course Progress bar, Latest Course dropdown, Easy Enrollment integration, Course Activity drop down, Icon Navigation Menu on Dashboard, Many styling improvements for a fresh and modern LMS.  
 
 ### v4.1-r6
 
@@ -43,9 +46,9 @@ Changes
 
 ### v4.1-r1
 
-* 2023-02-04 - Upgrade: Persist the dedicated favicon setting in Boost Union even though Moodle core has a favicon setting in 4.1 as well, solves #78.
+* 2023-02-04 - Upgrade: Persist the dedicated favicon setting in LearnR even though Moodle core has a favicon setting in 4.1 as well, solves #78.
 * 2023-02-04 - Upgrade: The back-top-top button must respect the presence of the new sticky footer, solves #186.
-* 2023-02-04 - Upgrade: Add .footer-support-link class to Boost Union's footer links to align them with Boost Core in 4.1 again
+* 2023-02-04 - Upgrade: Add .footer-support-link class to LearnR's footer links to align them with Boost Core in 4.1 again
 * 2023-02-04 - Upgrade: Allow the admin to change medium width pages which were introduced for the database activity in 4.1 as well.
 * 2023-02-04 - Upgrade: Adopt upstream changes in footer.mustache
 * 2023-02-04 - Upgrade: Fix Behat tests which broke with Moodle 4.1.
@@ -55,13 +58,13 @@ Changes
 
 * 2023-01-30 - Feature: Allow the admin to set CSS rules for the Moodle Mobile App, solves #195.
 * 2023-01-28 - Improvement: Do not resize SVG logo files during serving, helps to solve #160.
-* 2023-01-26 - Feature: Add dedicated logo settings to Boost Union, solves #211.
+* 2023-01-26 - Feature: Add dedicated logo settings to LearnR, solves #211.
 * 2023-01-22 - Feature: Allow the admin to change the H5P content bank width, solves #201.
 
 ### v4.0-r11
 
 * 2023-01-21 - Improvement: Add note about grandchild themes to the README file, solves #122.
-* 2023-01-16 - Improvement: Remove Boost Union's own fallback CSS file for now, relates to #89.
+* 2023-01-16 - Improvement: Remove LearnR's own fallback CSS file for now, relates to #89.
 
 ### v4.0-r10
 
@@ -141,7 +144,7 @@ Changes
 * 2022-07-05 - Adopt changes in Boost core for MDL-74634
 * 2022-06-21 - Add course related hints feature, solves #5
 * 2022-04-30 - Added footnote functionality, helps to resolve #6.
-* 2022-06-20 - Allow full Behat runs with Boost Union suite, fixes #14.
+* 2022-06-20 - Allow full Behat runs with LearnR suite, fixes #14.
 * 2022-06-20 - Prepare settings.php page, solves #2.
 * 2022-06-20 - Fill README.md, helps to resolve #3.
 * 2022-04-29 - Adopt all changes which have happened in Boost core for the Moodle 4.0 release

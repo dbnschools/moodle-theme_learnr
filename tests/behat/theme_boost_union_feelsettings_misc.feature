@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin for the "Miscellaneous" tab on the "Feel" page
   In order to use the features
   As admin
-  I need to be able to configure the theme Boost Union plugin
+  I need to be able to configure the theme LearnR plugin
 
   Scenario: Setting: JavaScript disabled hint - Enable the setting and make sure the hint is shown when JavaScript is disabled
     Given the following config values are set as admin:
