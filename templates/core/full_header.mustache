@@ -26,78 +26,41 @@
         "hasnavbar": false,
         "navbar": "navbar_if_available",
         "courseheader": "course_header_html",
-        "welcomemessage": "welcomemessage"
+        "welcomemessage": "welcomemessage",
+        "courseheaderimageurl": "http://localhost/boostunionmoodle/pluginfile.php/14/course/overviewfiles/ex.png"
     }
 }}
+{{!
+    This template overwrites the core/full_header template in the theme
+
+    Modifications compared to this template:
+    * Include a course header image
+      For the sake of readability and as the course header image feature has multiple layout options,
+      the HTML snippets for the course header have been duplicated in this template to cover each layout separately.
+      The selection algorithmn goes like this:
+      -> Do we have a welcome message?
+         -> Yes: Show the course header just like Moodle core does.
+         -> No: Do we have a course header image URL?
+            -> No: Show the course header just like Moodle core does.
+            -> Yes: Do we have to show the course heading above the course header image?
+               -> Yes: Show the course header like Moodle core does and add the #courseheaderimage element below it.
+               -> No: Wrap the course header of Moodle core in a #courseheaderimage element and add the configured
+                      stacked layout class to it.
+}}
+
+
+
 <header id="page-header" class="header-maxwidth d-print-none">
-<div class="headerbuttons">
-        {{#hasmycourses}}
-            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{mycourses}}}" class="btn btn-secondary headerbutton mycourses" style="float:right;"><i class="fa-2x fa fa-history mycourses"></i></a>
-        <div class="dropdown-menu dropdown-menu-right iconsidebar">
-            <h5>{{{mycourses}}}</h5>
-            {{{mycoursesmenu}}}
-        </div>
-        {{/hasmycourses}}
-
-        {{#hasheaderblocks}}
-        <div class="blockpanelbtn">
-            <button id="blocksliderbutton" class="btn btn-secondary headerbutton" style="float:right;" type="button" data-toggle="collapse" data-target="#blockslider" aria-expanded="false" aria-controls="blockslider" title="{{# str }} coursedashbutton, theme_learnr {{/ str }}">
-                <i class="fa-2x fa fa-arrows-v" aria-hidden="true"> </i>
-            </button>
-        </div>
-        {{/hasheaderblocks}}
-
-        {{#showenrollinktoteacher}}
-        <div class="enrollbtn"> 
-            <a href="{{{easycodelink}}}" title="{{{easyenrolbtntext}}}" class="btn btn-secondary headerbutton easyenrolbtn" style="float:right;"><i class="fa fa-2x fa-key" aria-hidden="true"></i><span class="sr-only">{{{easyenrolbtntext}}}</span></a>
-        </div>
-        {{/showenrollinktoteacher}}
-        </div>
+    {{! Begin DBN Update }}
+    {{{coursemanagementdash}}}
+    {{! End DBN Update }}
     <div class="w-100">
-
-        
-
-        {{#displayheaderblocks}}
-            {{#hasheaderblocks}}
-            <div class="fp-blocks collapse slidingblockpanel" id="blockslider">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-4">
-                                <section data-region="blocks-columna" class="hidden-print">
-                                    {{{ columnabtn }}}
-                                    {{{ columnaregion }}}
-                                </section>
-                        </div>
-                        <div class="col-md-4">
-                                <section data-region="blocks-columnb" class="hidden-print">
-                                    {{{ columnbbtn }}}
-                                    {{{ columnbregion }}}
-                                </section>
-                        </div>
-                        <div class="col-md-4">
-                                <section data-region="blocks-columnc" class="hidden-print">
-                                    {{{ columncbtn }}}
-                                    {{{ columncregion }}}
-                                </section>
-                        </div>
-                    </div>
-                </div>
-                 <div class="text-center blockpanelbtn">
-                <button id="blocksliderbutton" class="btn btn-secondary blockpanelbutton" type="button" data-toggle="collapse" data-target="#blockslider" aria-expanded="false" aria-controls="blockslider" title="{{# str }} closecoursedashboard, theme_learnr {{/ str }}">
-                    <i class="fa-2x fa fa-arrows-v" aria-hidden="true">{{# str }} closecoursedashboard, theme_learnr {{/ str }} </i>
-                </button>
-            </div>
-            </div>
-            {{/hasheaderblocks}}
-        {{/displayheaderblocks}}
-
         <div class="d-flex flex-wrap">
             {{#hasnavbar}}
             <div id="page-navbar">
                 {{{navbar}}}
             </div>
             {{/hasnavbar}}
-
             <div class="ml-auto d-flex">
                 {{{pageheadingbutton}}}
             </div>
@@ -105,20 +68,234 @@
                 {{{courseheader}}}
             </div>
         </div>
-        <div class="d-flex align-items-center">
-            {{^welcomemessage}}
-                {{#contextheader}}
-                    <div class="mr-auto">
-                        {{{contextheader}}}
+        {{#welcomemessage}}
+            <div class="d-flex align-items-center">
+                {{> core/welcome }}
+                <div class="header-actions-container ml-auto" data-region="header-actions-container">
+                    {{#headeractions}}
+                        <div class="header-action ml-2">{{{.}}}</div>
+                    {{/headeractions}}
+
+                    {{! Begin DBN Update }}
+                    <div class="headerbuttons">
+                        {{#showincourseonlymanagementbtn}}
+                            <div class="text-right blockpanelbtn">
+                                <button id="blocksliderbutton" class="btn btn-secondary headerbutton blockpanelbutton" type="button" data-toggle="collapse" data-target="#blockslider" aria-expanded="false" aria-controls="blockslider">
+                            <i class="fa fa-arrows-v" aria-hidden="true"> </i> <span class="blockbtntext d-none d-sm-inline-block">{{# str }} courseblockpanelbtn, theme_learnr {{/ str }}</span>
+                                </button>
+                            </div>
+                        {{/showincourseonlymanagementbtn}}
+                        {{#showenrollinktoteacher}}
+                        <div class="enrollbtn"> 
+                            <a href="{{{easycodelink}}}" title="{{{courseenrollmentcode}}}" class="btn btn-secondary headerbutton easyenrolbtn" style="float:right;"><i class="fa fa-1x fa-key" aria-hidden="true"></i><span class="sr-only">{{{courseenrollmentcode}}}</span></a>
+                        </div>
+                        {{/showenrollinktoteacher}}
+
+                        {{#hascourseactivities}}
+                        <div class="courseactivites">
+                            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{courseactivitiesbtntext}}}" class="btn btn-secondary headerbutton courseactivities" style="float:right;"><i class="fa-1x fa fa-list-alt courseactivities"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right iconsidebar">
+                                <h5>{{{courseactivitiesbtntext}}}</h5>
+                                {{{courseactivitiesmenu}}}
+                            </div>
+                        </div>
+                        {{/hascourseactivities}}
+
+                        {{#hasmycourses}}
+                        <div class="mycourses">
+                            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{mycourses}}}" class="btn btn-secondary headerbutton mycourses" style="float:right;"><i class="fa-1x fa fa-history mycourses"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right iconsidebar">
+                                <h5>{{{mycourses}}}</h5>
+                                {{{mycoursesmenu}}}
+                            </div>
+                        </div>
+                        {{/hasmycourses}}
+
                     </div>
-                {{/contextheader}}
-            {{/welcomemessage}}
-            {{> core/welcome }}
-            <div class="header-actions-container ml-auto" data-region="header-actions-container">
-                {{#headeractions}}
-                    <div class="header-action ml-2">{{{.}}}</div>
-                {{/headeractions}}
+                    {{! End DBN Update }}
+
+                </div>
             </div>
-        </div>
+        {{/welcomemessage}}
+        {{^welcomemessage}}
+            {{^courseheaderimageurl}}
+                <div class="d-flex align-items-center">
+                    {{#contextheader}}
+                        <div class="mr-auto">
+                            {{{contextheader}}}
+                        </div>
+                    {{/contextheader}}
+                    <div class="header-actions-container ml-auto" data-region="header-actions-container">
+                        {{#headeractions}}
+                            <div class="header-action ml-2">{{{.}}}</div>
+                        {{/headeractions}}
+
+                        {{! Begin DBN Update }}
+                        <div class="headerbuttons">
+                            {{#showincourseonlymanagementbtn}}
+                                <div class="text-right blockpanelbtn">
+                                    <button id="blocksliderbutton" class="btn btn-secondary headerbutton blockpanelbutton" type="button" data-toggle="collapse" data-target="#blockslider" aria-expanded="false" aria-controls="blockslider">
+                                <i class="fa fa-arrows-v" aria-hidden="true"> </i> <span class="blockbtntext d-none d-sm-inline-block">{{# str }} courseblockpanelbtn, theme_learnr {{/ str }}</span>
+                                    </button>
+                                </div>
+                            {{/showincourseonlymanagementbtn}}
+                            {{#showenrollinktoteacher}}
+                            <div class="enrollbtn"> 
+                                <a href="{{{easycodelink}}}" title="{{{courseenrollmentcode}}}" class="btn btn-secondary headerbutton easyenrolbtn" style="float:right;"><i class="fa fa-1x fa-key" aria-hidden="true"></i><span class="sr-only">{{{courseenrollmentcode}}}</span></a>
+                            </div>
+                            {{/showenrollinktoteacher}}
+
+                            {{#hascourseactivities}}
+                            <div class="courseactivites">
+                                <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{courseactivitiesbtntext}}}" class="btn btn-secondary headerbutton courseactivities" style="float:right;"><i class="fa-1x fa fa-list-alt courseactivities"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right iconsidebar">
+                                    <h5>{{{courseactivitiesbtntext}}}</h5>
+                                    {{{courseactivitiesmenu}}}
+                                </div>
+                            </div>
+                            {{/hascourseactivities}}
+
+                            {{#hasmycourses}}
+                            <div class="mycourses">
+                                <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{mycourses}}}" class="btn btn-secondary headerbutton mycourses" style="float:right;"><i class="fa-1x fa fa-history mycourses"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right iconsidebar">
+                                    <h5>{{{mycourses}}}</h5>
+                                    {{{mycoursesmenu}}}
+                                </div>
+                            </div>
+                            {{/hasmycourses}}
+
+                        </div>
+                        {{! End DBN Update }}
+
+                    </div>
+                </div>
+            {{/courseheaderimageurl}}
+            {{#courseheaderimageurl}}
+                {{#courseheaderimagelayoutheadingabove}}
+                    <div class="d-flex align-items-center">
+                        {{#contextheader}}
+                            <div class="mr-auto">
+                                {{{contextheader}}}
+                            </div>
+                        {{/contextheader}}
+                        <div class="header-actions-container ml-auto" data-region="header-actions-container">
+                            {{#headeractions}}
+                                <div class="header-action ml-2">{{{.}}}</div>
+                            {{/headeractions}}
+
+                             {{! Begin DBN Update }}
+                            <div class="headerbuttons">
+                                {{#showincourseonlymanagementbtn}}
+                                    <div class="text-right blockpanelbtn">
+                                        <button id="blocksliderbutton" class="btn btn-secondary headerbutton blockpanelbutton" type="button" data-toggle="collapse" data-target="#blockslider" aria-expanded="false" aria-controls="blockslider">
+                                    <i class="fa fa-arrows-v" aria-hidden="true"> </i> <span class="blockbtntext d-none d-sm-inline-block">{{# str }} courseblockpanelbtn, theme_learnr {{/ str }}</span>
+                                        </button>
+                                    </div>
+                                {{/showincourseonlymanagementbtn}}
+                                {{#showenrollinktoteacher}}
+                                <div class="enrollbtn"> 
+                                    <a href="{{{easycodelink}}}" title="{{{courseenrollmentcode}}}" class="btn btn-secondary headerbutton easyenrolbtn" style="float:right;"><i class="fa fa-1x fa-key" aria-hidden="true"></i><span class="sr-only">{{{courseenrollmentcode}}}</span></a>
+                                </div>
+                                {{/showenrollinktoteacher}}
+
+                                {{#hascourseactivities}}
+                                <div class="courseactivites">
+                                    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{courseactivitiesbtntext}}}" class="btn btn-secondary headerbutton courseactivities" style="float:right;"><i class="fa-1x fa fa-list-alt courseactivities"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right iconsidebar">
+                                        <h5>{{{courseactivitiesbtntext}}}</h5>
+                                        {{{courseactivitiesmenu}}}
+                                    </div>
+                                </div>
+                                {{/hascourseactivities}}
+
+                                {{#hasmycourses}}
+                                <div class="mycourses">
+                                    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{mycourses}}}" class="btn btn-secondary headerbutton mycourses" style="float:right;"><i class="fa-1x fa fa-history mycourses"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right iconsidebar">
+                                        <h5>{{{mycourses}}}</h5>
+                                        {{{mycoursesmenu}}}
+                                    </div>
+                                </div>
+                                {{/hasmycourses}}
+
+                            </div>
+                            {{! End DBN Update }}
+
+                        </div>
+                    </div>
+                    <div id="courseheaderimage" class="p-3 mb-3"
+                         style="background-image: url('{{{courseheaderimageurl}}}');
+                             {{#courseheaderimageheight}}min-height: {{{.}}};{{/courseheaderimageheight}}
+                             {{#courseheaderimageposition}}background-position: {{{.}}};{{/courseheaderimageposition}}">
+                    </div>
+                {{/courseheaderimagelayoutheadingabove}}
+                {{^courseheaderimagelayoutheadingabove}}
+                    <div id="courseheaderimage" class="p-3 mb-3 {{#courseheaderimagelayoutstackedclass}}courseheaderimage-{{{.}}}{{/courseheaderimagelayoutstackedclass}}"
+                            style="background-image: url('{{{courseheaderimageurl}}}');
+                                    {{#courseheaderimageheight}}min-height: {{{.}}};{{/courseheaderimageheight}}
+                                    {{#courseheaderimageposition}}background-position: {{{.}}};{{/courseheaderimageposition}}">
+                        <div class="d-flex align-items-center">
+                            {{#contextheader}}
+                                <div class="mr-auto">
+                                    {{{contextheader}}}
+                                </div>
+                            {{/contextheader}}
+                            <div class="header-actions-container ml-auto" data-region="header-actions-container">
+                                {{#headeractions}}
+                                    <div class="header-action ml-2">{{{.}}}</div>
+                                {{/headeractions}}
+
+                                 {{! Begin DBN Update }}
+                                <div class="headerbuttons">
+                                    {{#showincourseonlymanagementbtn}}
+                                        <div class="text-right blockpanelbtn">
+                                            <button id="blocksliderbutton" class="btn btn-secondary headerbutton blockpanelbutton" type="button" data-toggle="collapse" data-target="#blockslider" aria-expanded="false" aria-controls="blockslider">
+                                        <i class="fa fa-arrows-v" aria-hidden="true"> </i> <span class="blockbtntext d-none d-sm-inline-block">{{# str }} courseblockpanelbtn, theme_learnr {{/ str }}</span>
+                                            </button>
+                                        </div>
+                                    {{/showincourseonlymanagementbtn}}
+                                    {{#showenrollinktoteacher}}
+                                    <div class="enrollbtn"> 
+                                        <a href="{{{easycodelink}}}" title="{{{courseenrollmentcode}}}" class="btn btn-secondary headerbutton easyenrolbtn" style="float:right;"><i class="fa fa-1x fa-key" aria-hidden="true"></i><span class="sr-only">{{{courseenrollmentcode}}}</span></a>
+                                    </div>
+                                    {{/showenrollinktoteacher}}
+
+                                    {{#hascourseactivities}}
+                                    <div class="courseactivites">
+                                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{courseactivitiesbtntext}}}" class="btn btn-secondary headerbutton courseactivities" style="float:right;"><i class="fa-1x fa fa-list-alt courseactivities"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right iconsidebar">
+                                            <h5>{{{courseactivitiesbtntext}}}</h5>
+                                            {{{courseactivitiesmenu}}}
+                                        </div>
+                                    </div>
+                                    {{/hascourseactivities}}
+
+                                    {{#hasmycourses}}
+                                    <div class="mycourses">
+                                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{mycourses}}}" class="btn btn-secondary headerbutton mycourses" style="float:right;"><i class="fa-1x fa fa-history mycourses"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right iconsidebar">
+                                            <h5>{{{mycourses}}}</h5>
+                                            {{{mycoursesmenu}}}
+                                        </div>
+                                    </div>
+                                    {{/hasmycourses}}
+
+                                </div>
+                                {{! End DBN Update }}
+                                
+                            </div>
+                        </div>
+                    </div>
+                {{/courseheaderimagelayoutheadingabove}}
+            {{/courseheaderimageurl}}
+        {{/welcomemessage}}
     </div>
+    
+    {{! Begin DBN Update }}
+    {{{ courseprogressbar }}}
+    {{{ enrolform }}}
+    {{{ fpicons }}}
+    {{! End DBN Update }}
+
 </header>

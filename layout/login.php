@@ -14,26 +14,48 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
- * A login page layout for the boost theme.
+ * Theme Boost Union Login - Login page layout.
  *
- * @package   theme_boost
- * @copyright 2016 Damyon Wiese
+ * This layoutfile is based on theme/boost/layout/login.php
+ *
+ * Modifications compared to this layout file:
+ * * Render theme_learnr/login instead of theme_boost/login template
+ * * Include footnote
+ * * Include static pages
+ * * Include info banners
+ *
+ * @package   theme_learnr
+ * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
+ * @copyright based on code from theme_boost by Damyon Wiese
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$bodyattributes = $OUTPUT->body_attributes();
+defined('MOODLE_INTERNAL') || die();
 
-$hasmarketingtiles = true;
+$bodyattributes = $OUTPUT->body_attributes();
+list($loginbackgroundimagetext, $loginbackgroundimagetextcolor) = theme_learnr_get_loginbackgroundimage_text();
 
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
-    'hasmarketingtiles' => $hasmarketingtiles,
-    'bodyattributes' => $bodyattributes
+    'bodyattributes' => $bodyattributes,
+    'loginbackgroundimagetext' => $loginbackgroundimagetext,
+    'loginbackgroundimagetextcolor' => $loginbackgroundimagetextcolor,
+    'loginwrapperclass' => 'login-wrapper-'.get_config('theme_learnr', 'loginformposition'),
+    'logincontainerclass' =>
+            (get_config('theme_learnr', 'loginformtransparency') == THEME_LEARNR_SETTING_SELECT_YES) ?
+                    'login-container-80t' : ''
 ];
 
-echo $OUTPUT->render_from_template('theme_learnr/login', $templatecontext);
+// Include the template content for the footnote.
+require_once(__DIR__ . '/includes/footnote.php');
 
+// Include the template content for the static pages.
+require_once(__DIR__ . '/includes/staticpages.php');
+
+// Include the template content for the info banners.
+require_once(__DIR__ . '/includes/infobanners.php');
+
+// Render login.mustache from learnr.
+echo $OUTPUT->render_from_template('theme_learnr/login', $templatecontext);

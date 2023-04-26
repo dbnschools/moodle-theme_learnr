@@ -15,9 +15,9 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost/drawers
+    @template theme_learnr/drawers
 
-    Boost drawer template.
+    Boost Union drawer template.
 
     Context variables required for this template:
     * sitename - The name of the site
@@ -49,14 +49,28 @@
         "addblockbutton": ""
     }
 }}
+{{!
+    This template is based on theme_boost/drawers
+
+    Modifications compared to this template:
+    * Include theme_learnr/footnote template
+    * Include theme_learnr/footer template instead of theme_boost/footer
+    * Include theme_learnr/navbar template instead of theme_boost/navbar
+    * Added the possibility to show course related hints.
+    * Added the possibility to show info banners.
+    * Include theme_learnr/advertisementtiles template
+    * Added additional block regions (including JS for offcanvas region)
+}}
 {{> theme_boost/head }}
 
 <body {{{ bodyattributes }}}>
 {{> core/local/toast/wrapper}}
 <div id="page-wrapper" class="d-print-block">
-{{{ output.headerimage }}}
+
     {{{ output.standard_top_of_body_html }}}
 
+    {{> theme_learnr/navbar }}
+    {{! Begin DBN Update }}
     {{#showcourseindexnav}}
     {{#courseindex}}
         {{< theme_boost/drawer }}
@@ -71,8 +85,6 @@
             {{$closebuttontext}}{{#str}}closecourseindex, core{{/str}}{{/closebuttontext}}
         {{/ theme_boost/drawer}}
     {{/courseindex}}
-    {{/showcourseindexnav}}
-    {{#showblockdrawer}}
     {{#hasblocks}}
         {{< theme_boost/drawer }}
             {{$id}}theme_boost-drawers-blocks{{/id}}
@@ -91,17 +103,62 @@
             {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
         {{/ theme_boost/drawer}}
     {{/hasblocks}}
-    {{/showblockdrawer}}
+    {{/showcourseindexnav}}
+    {{! End DBN Update }}
 
+    {{^userisediting}}
+        {{#regions.offcanvas.hasblocks}}
+            {{< theme_boost/drawer }}
+                {{$id}}theme_learnr-drawers-offcanvas{{/id}}
+                {{$drawerclasses}}drawer drawer-top{{/drawerclasses}}
+                {{$drawercontent}}
+                    {{> theme_learnr/offcanvas}}
+                {{/drawercontent}}
+                {{$forceopen}}0{{/forceopen}}
+                {{$drawerstate}}show-drawer-offcanvas{{/drawerstate}}
+                {{$tooltipplacement}}top{{/tooltipplacement}}
+                {{$drawercloseonresize}}1{{/drawercloseonresize}}
+                {{$closebuttontext}}{{#str}}closeoffcanvas, theme_learnr{{/str}}{{/closebuttontext}}
+            {{/ theme_boost/drawer}}
+        {{/regions.offcanvas.hasblocks}}
+    {{/userisediting}}
 
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+        {{#userisediting}}
+            <div id="theme-block-region-offcanvas-editing" class="collapse">
+                <div id="theme-block-region-offcanvas-editing-inner">
+                    {{> theme_learnr/offcanvas}}
+                </div>
+            </div>
+        {{/userisediting}}
 
-    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#showcourseindexnav}}{{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{/showcourseindexnav}}{{#showblockdrawer}}{{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} {{/showblockdrawer}}drag-container">
+        {{#regions.outsidetop.hasblocks}}
+            <section id="theme-block-region-outside-top" class="theme-block-region {{{outsidetopwidth}}}" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.outsidetop.addblockbutton }}}
+                {{{ regions.outsidetop.regionhtml }}}
+            </section>
+        {{/regions.outsidetop.hasblocks}}
+
+        {{#regions.header.hasblocks}}
+            <section id="theme-block-region-header" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.header.addblockbutton }}}
+                {{{ regions.header.regionhtml }}}
+            </section>
+        {{/regions.header.hasblocks}}
+
+        <div class="main-inner-wrapper {{{maininnerwrapperclass}}} {{{outsideregionsplacement}}}">
+            {{#regions.outsideleft.hasblocks}}
+                <section id="theme-block-region-outside-left" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                    {{{ regions.outsideleft.addblockbutton }}}
+                    {{{ regions.outsideleft.regionhtml }}}
+                 </section>
+            {{/regions.outsideleft.hasblocks}}
+
         <div id="topofscroll" class="main-inner">
-        {{{output.top_activity_navigation}}}
-        {{> theme_learnr/navbar }}
-        
-            <div class="drawer-toggles d-flex">
+
+            {{! Begin DBN Update }}
             {{#showcourseindexnav}}
+            <div class="drawer-toggles d-flex">
                 {{#courseindex}}
                     <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
                         <button
@@ -118,8 +175,6 @@
                         </button>
                     </div>
                 {{/courseindex}}
-            {{/showcourseindexnav}}
-            {{#showblockdrawer}}
                 {{#hasblocks}}
                     <div class="drawer-toggler drawer-right-toggle ml-auto d-print-none">
                         <button
@@ -137,43 +192,40 @@
                         </button>
                     </div>
                 {{/hasblocks}}
-            {{/showblockdrawer}}
             </div>
-            {{{ output.fpicons }}}
+            {{/showcourseindexnav}}
+            {{! End DBN Update }}
+
+            {{> theme_learnr/javascriptdisabledhint }}
+            {{> theme_learnr/infobanners }}
             {{{ output.full_header }}}
             {{#secondarymoremenu}}
                 <div class="secondary-navigation d-print-none">
                     {{> core/moremenu}}
                 </div>
             {{/secondarymoremenu}}
+            {{#regions.contentupper.hasblocks}}
+                <section id="theme-block-region-content-upper" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                    {{{ regions.contentupper.addblockbutton }}}
+                    {{{ regions.contentupper.regionhtml }}}
+                </section>
+            {{/regions.contentupper.hasblocks}}
             <div id="page-content" class="pb-3 d-print-block">
                 <div id="region-main-box">
+                    {{#advtilespositionbefore}}
+                        {{> theme_learnr/advertisementtiles }}
+                    {{/advtilespositionbefore}}
                     {{#hasregionmainsettingsmenu}}
                     <div id="region-main-settings-menu" class="d-print-none">
                         <div> {{{ regionmainsettingsmenu }}} </div>
                     </div>
                     {{/hasregionmainsettingsmenu}}
-                    <section id="region-main" aria-label="content">
-                        {{#alertbox}}
-                            <div class="alertbox card-body">
-                                <div class="alertmessage card-text alert alert-warning">
-                                {{{ alertbox }}}
-                                </div>
-                            </div>
-                        {{/alertbox}}
-                        {{#fptextbox}}
-                            <div class="fptextbox card-body">
-                                <div class="card-text">
-                                    {{{ fptextbox }}}
-                                </div>
-                            </div>
-                        {{/fptextbox}}
+                    <section id="region-main" aria-label="{{#str}}content{{/str}}">
+
                         {{#hasregionmainsettingsmenu}}
                             <div class="region_main_settings_menu_proxy"></div>
                         {{/hasregionmainsettingsmenu}}
-
                         {{{ output.course_content_header }}}
-
                         {{#headercontent}}
                             {{> core/activity_header }}
                         {{/headercontent}}
@@ -184,34 +236,89 @@
                                 </div>
                             </div>
                         {{/overflow}}
-                        {{#showblockdrawer}}
-                        {{{ output.main_content }}}
-                        {{/showblockdrawer}}
-                        {{^showblockdrawer}}
+
+                        {{{courserelatedhints}}}
+
+                        {{! Begin DBN Update }}
+                        {{^showcourseindexnav}}
                         <div class="container-fluid">
                           <div class="row">
                             <div class="col">
-                            {{{ output.enrolform }}}
                               {{{ output.main_content }}}
                             </div>
                             {{#hasblocks}}
-                            <div class="col-md-3">
-                              {{{ sidepreblocks }}}
+                            <div class="col-md-3 drawer-inpage">
+                                {{{ addblockbutton }}}
+                                {{{ sidepreblocks }}}
                             </div>
                             {{/hasblocks}}
                           </div>
                         </div>
-                        {{/showblockdrawer}}
+                        {{/showcourseindexnav}}
+                        {{#showcourseindexnav}}
+                        {{{ output.main_content }}}
+                        {{/showcourseindexnav}}
+                        {{! End DBN Update }}
+                        
+                        {{{ output.activity_navigation }}}
                         {{{ output.course_content_footer }}}
+
                     </section>
-                    {{#hasmarketingtiles}}
-                        {{{ output.fp_marketingtiles }}}
-                    {{/hasmarketingtiles}}
+                    {{#advtilespositionafter}}
+                        {{> theme_learnr/advertisementtiles }}
+                    {{/advtilespositionafter}}
                 </div>
             </div>
-            {{{ output.activity_navigation }}}
+            {{#regions.contentlower.hasblocks}}
+                <section id="theme-block-region-content-lower" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                    {{{ regions.contentlower.addblockbutton }}}
+                    {{{ regions.contentlower.regionhtml }}}
+                </section>
+            {{/regions.contentlower.hasblocks}}
         </div>
-        {{> theme_boost/footer }}
+
+        {{#regions.outsideright.hasblocks}}
+            <section id="theme-block-region-outside-right" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.outsideright.addblockbutton }}}
+                {{{ regions.outsideright.regionhtml }}}
+            </section>
+        {{/regions.outsideright.hasblocks}}
+        </div>
+
+        {{#regions.outsidebottom.hasblocks}}
+            <section id="theme-block-region-outside-bottom" class="theme-block-region {{{outsidebottomwidth}}}" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.outsidebottom.addblockbutton }}}
+                {{{ regions.outsidebottom.regionhtml }}}
+            </section>
+        {{/regions.outsidebottom.hasblocks}}
+
+        {{#regions.footer.hasblocks}}
+            <div id="theme-block-region-footer">
+                <div class="row">
+                     {{#regions.footerleft.hasblocks}}
+                        <section id="theme-block-region-footer-left" class="theme-block-region {{regions.footer.class}}" aria-label="{{#str}}blocks{{/str}}">
+                            {{{ regions.footerleft.addblockbutton }}}
+                            {{{ regions.footerleft.regionhtml }}}
+                        </section>
+                    {{/regions.footerleft.hasblocks}}
+                    {{#regions.footercenter.hasblocks}}
+                        <section id="theme-block-region-footer-center" class="theme-block-region {{regions.footer.class}}" aria-label="{{#str}}blocks{{/str}}">
+                            {{{ regions.footercenter.addblockbutton }}}
+                            {{{ regions.footercenter.regionhtml }}}
+                        </section>
+                    {{/regions.footercenter.hasblocks}}
+                    {{#regions.footerright.hasblocks}}
+                        <section id="theme-block-region-footer-right" class="theme-block-region {{regions.footer.class}}" aria-label="{{#str}}blocks{{/str}}">
+                            {{{ regions.footerright.addblockbutton }}}
+                            {{{ regions.footerright.regionhtml }}}
+                        </section>
+                    {{/regions.footerright.hasblocks}}
+                </div>
+            </div>
+        {{/regions.footer.hasblocks}}
+
+        {{> theme_learnr/footer }}
+        {{> theme_learnr/footnote }}
     </div>
     {{{ output.standard_after_main_region_html }}}
 </div>
@@ -220,8 +327,9 @@
 </html>
 {{#js}}
 M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
+require(['theme_boost/loader', 'theme_boost/drawer', 'theme_learnr/offcanvas'], function(Loader, Drawer, OffCanvas) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
+    OffCanvas.init();
 });
 {{/js}}

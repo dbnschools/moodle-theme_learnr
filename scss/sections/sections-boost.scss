@@ -2,4 +2,9 @@
 
 .activity-item {
     border-radius: 0.5rem;
+    background-color: $white;
+}
+.course-content ul.topics li.section, .course-content ul.weeks li.section, .course-content ul.cards li.section {
+    padding: 1rem;
+    background-color: $white;
 }

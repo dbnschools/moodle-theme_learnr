@@ -47,7 +47,7 @@ global $PAGE;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-if ($PAGE->theme->settings->coursetilestyle < 10) {
+if ($PAGE->theme->settings->coursetilestyle < 8) {
 
 class course_renderer extends \core_course_renderer  {
     protected $countcategories = 0;
@@ -491,98 +491,6 @@ background-blend-mode: overlay;">
                             </div>
                     </div>';
                     }
-                    if ($coursetilestyle == 8) {
-
-                        if ($titletooltip) {
-                            $tooltiptext = 'data-toggle="tooltip" data-placement= "top" title="' . format_string($course->fullname) . '"';
-                        }
-                        else {
-                            $tooltiptext = '';
-                        }
-                        $rowcontent .= '
-                            <div class="col-lg-6">
-                            <div class="tilecontainer">';
-                        $rowcontent .= html_writer::start_tag('div', array(
-                            'class' => $course->visible ? 'coursevisible' : 'coursedimmed3'
-                        ));
-                        $rowcontent .= '<div class="class-box-fp-2col" style="background-image: url(' . $imgurl . ');background-repeat: no-repeat;background-size:cover; background-position:center;">
-                            <a ' . $tooltiptext . ' href="' . $courseurl . '" class="coursestyle3url">';
-                        $rowcontent .= '
-                                <div class="course-title-2col">
-                                
-                                <h4><a href="' . $courseurl . '">' . $trimtitle . '</a></h4>
-                                ' . $catcontent . '
-                                ' . $customfieldcontent . '
-                                </div>
-                                <div class="course-summary-2col">
-                                ' . $summary . '
-                                </div>
-                                </div>
-                                </a>
-                            </div>
-                           </div> 
-                    </div>';
-                    }
-                    if ($coursetilestyle == 9) {
-                        if ($titletooltip) {
-                            $tooltiptext = 'data-toggle="tooltip" data-placement= "top" title="' . format_string($course->fullname) . '"';
-                        }
-                        else {
-                            $tooltiptext = '';
-                        }
-                        
-                        $rowcontent .= html_writer::start_tag('div', array(
-                            'class' => $course->visible ? 'coursevisible col-md-12 d-flex flex-sm-row flex-column coursestyle9row' : 'coursedimmed9 col-md-12 d-flex flex-sm-row flex-column coursestyle9row'
-                        ));
-                        $rowcontent .= '
-                            <div class="col-md-6">
-                        	<h4><a href="' . $courseurl . '">' . $trimtitle . '</a></h4>';
-                        if ($systemcontext !== 'page-site-index') {
-                        	$rowcontent .= '<div class="course-summary">
-                                    ' . $summary . '
-                            </div>';
-                        }
-                        $rowcontent .= '</div>';
-	                        if ($systemcontext !== 'page-site-index') {
-	                            $rowcontent .= ' 
-	                            	<div class="col-md-6 row">
-		                            	<div class="col-md-6">
-		                                  ' . $catcontent . '
-		                                  ' . $customfieldcontent . '
-		                                </div>
-		                                <div class="col-md-6">';
-		                        if ($course->has_course_contacts()) {
-	                                $rowcontent .= html_writer::start_tag('ul', array(
-	                                    'class' => 'teacherscourseview'
-	                                ));
-	                                foreach ($course->get_course_contacts() as $userid => $coursecontact) {
-	                                    $name = $coursecontact['rolename'] . ': ' . $coursecontact['username'];
-	                                    $rowcontent .= html_writer::tag('li', $name);
-	                                }
-	                                $rowcontent .= html_writer::end_tag('ul');
-	                            }
-		                                  
-		                        $rowcontent .= '
-		                        	</div>
-	                                </div>';
-                            }
-                        if ($systemcontext == 'page-site-index' && $course->enablecompletion == 1) {
-                        	
-                            $rowcontent .= '
-                            	<div class="col-md-6 row">
-	                            	<div class="col-md-4 text-right">
-	                                  ' . $completiontext  . '
-	                                </div>
-	                                <div class="col-md-8">
-	                                  '. $progressbar . '
-	                                </div>
-                                </div>';
-                        }
-                        $rowcontent .= '
-                        
-                        </div>';
-                    }
-                    
                 }
                 $content .= $rowcontent;
                 $content .= '</div> </div>';

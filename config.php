@@ -15,17 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Theme config
+ * Theme Boost Union - Theme config
  *
  * @package    theme_learnr
- * @copyright  2022 Dearborn Public Schools, Chris Kenniburg
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
+// Require own locallib.php.
+require_once($CFG->dirroot . '/theme/learnr/locallib.php');
+
 $THEME->name = 'learnr';
-$THEME->parents = ['boost'];
 $THEME->sheets = [];
 $THEME->editor_sheets = [];
 $THEME->usefallback = true;
@@ -33,80 +35,101 @@ $THEME->scss = function($theme) {
     return theme_learnr_get_main_scss_content($theme);
 };
 
+// The $THEME->layouts setting is not duplicated here as they are properly inherited from theme_boost.
+
+$THEME->parents = ['boost'];
+$THEME->enable_dock = false;
+$THEME->extrascsscallback = 'theme_learnr_get_extra_scss';
+$THEME->prescsscallback = 'theme_learnr_get_pre_scss';
+$THEME->precompiledcsscallback = 'theme_learnr_get_precompiled_css';
+$THEME->yuicssmodules = array();
+$THEME->rendererfactory = 'theme_overridden_renderer_factory';
+$THEME->requiredblocks = '';
+$THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
+$THEME->usescourseindex = true;
+$THEME->iconsystem = \core\output\icon_system::FONTAWESOME;
+$THEME->haseditswitch = true;
+
+$THEME->removedprimarynavitems = explode(',', get_config('theme_learnr', 'hidenodesprimarynavigation'));
+// By default, all boost theme do not need their titles displayed.
+$THEME->activityheaderconfig = [
+    'notitle' => true
+];
+
 $THEME->layouts = [
     // Most backwards compatible layout without the blocks.
-    'base' => [
+    'base' => array(
         'file' => 'drawers.php',
-        'regions' => [],
-    ],
+        'regions' => array(),
+    ),
     // Standard layout with blocks.
-    'standard' => [
+    'standard' => array(
         'file' => 'drawers.php',
-        'regions' => ['side-pre'],
+        'regions' => theme_learnr_get_block_regions('standard'),
         'defaultregion' => 'side-pre',
-    ],
+    ),
     // Main course page.
-    'course' => [
-        'file' => 'course.php',
-        'regions' => ['side-pre','columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
-        'defaultregion' => 'columna',
-        'options' => ['langmenu' => true],
-    ],
-    'coursecategory' => [
+    'course' => array(
         'file' => 'drawers.php',
-        'regions' => ['side-pre'],
+        'regions' => theme_learnr_get_block_regions('course'),
         'defaultregion' => 'side-pre',
-    ],
+        'options' => array('langmenu' => true),
+    ),
+    'coursecategory' => array(
+        'file' => 'drawers.php',
+        'regions' => theme_learnr_get_block_regions('coursecategory'),
+        'defaultregion' => 'side-pre',
+    ),
     // Part of course, typical for modules - default page layout if $cm specified in require_login().
-    'incourse' => [
+    'incourse' => array(
         'file' => 'drawers.php',
-        'regions' => ['side-pre','columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
+        'regions' => theme_learnr_get_block_regions('incourse'),
         'defaultregion' => 'side-pre',
-    ],
+    ),
     // The site home page.
-    'frontpage' => [
+    'frontpage' => array(
         'file' => 'drawers.php',
-        'regions' => ['side-pre'],
+        'regions' => theme_learnr_get_block_regions('frontpage'),
         'defaultregion' => 'side-pre',
-        'options' => ['nonavbar' => true],
-    ],
+        'options' => array('nonavbar' => true),
+    ),
     // Server administration scripts.
-    'admin' => [
+    'admin' => array(
         'file' => 'drawers.php',
-        'regions' => ['side-pre'],
+        'regions' => theme_learnr_get_block_regions('admin'),
         'defaultregion' => 'side-pre',
-    ],
+    ),
     // My courses page.
-    'mycourses' => [
+    'mycourses' => array(
         'file' => 'drawers.php',
-        'regions' => ['side-pre'],
+        'regions' => array('side-pre'),
         'defaultregion' => 'side-pre',
-        'options' => ['nonavbar' => true],
-    ],
+        'options' => array('nonavbar' => true),
+    ),
     // My dashboard page.
-    'mydashboard' => [
+    'mydashboard' => array(
         'file' => 'drawers.php',
-        'regions' => ['side-pre'],
+        'regions' => theme_learnr_get_block_regions('mydashboard'),
         'defaultregion' => 'side-pre',
-        'options' => ['nonavbar' => true, 'langmenu' => true],
-    ],
+        'options' => array('nonavbar' => true, 'langmenu' => true),
+    ),
     // My public page.
-    'mypublic' => [
+    'mypublic' => array(
         'file' => 'drawers.php',
-        'regions' => ['side-pre','columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
+        'regions' => theme_learnr_get_block_regions('mypublic'),
         'defaultregion' => 'side-pre',
-    ],
-    'login' => [
+    ),
+    'login' => array(
         'file' => 'login.php',
-        'regions' => [],
-        'options' => ['langmenu' => true],
-    ],
+        'regions' => array(),
+        'options' => array('langmenu' => true),
+    ),
 
     // Pages that appear in pop-up windows - no navigation, no blocks, no header and bare activity header.
-    'popup' => [
+    'popup' => array(
         'file' => 'columns1.php',
-        'regions' => [],
-        'options' => [
+        'regions' => array(),
+        'options' => array(
             'nofooter' => true,
             'nonavbar' => true,
             'activityheader' => [
@@ -114,111 +137,62 @@ $THEME->layouts = [
                 'nocompletion' => true,
                 'nodescription' => true
             ]
-        ]
-    ],
+        )
+    ),
     // No blocks and minimal footer - used for legacy frame layouts only!
-    'frametop' => [
+    'frametop' => array(
         'file' => 'columns1.php',
-        'regions' => [],
-        'options' => [
+        'regions' => array(),
+        'options' => array(
             'nofooter' => true,
             'nocoursefooter' => true,
             'activityheader' => [
                 'nocompletion' => true
             ]
-        ],
-    ],
+        ),
+    ),
     // Embeded pages, like iframe/object embeded in moodleform - it needs as much space as possible.
-    'embedded' => [
+    'embedded' => array(
         'file' => 'embedded.php',
-        'regions' => ['side-pre'],
+        'regions' => array('side-pre'),
         'defaultregion' => 'side-pre',
-    ],
+    ),
     // Used during upgrade and install, and for the 'This site is undergoing maintenance' message.
     // This must not have any blocks, links, or API calls that would lead to database or cache interaction.
     // Please be extremely careful if you are modifying this layout.
-    'maintenance' => [
+    'maintenance' => array(
         'file' => 'maintenance.php',
-        'regions' => [],
-    ],
+        'regions' => array(),
+    ),
     // Should display the content and basic headers only.
-    'print' => [
+    'print' => array(
         'file' => 'columns1.php',
-        'regions' => [],
-        'options' => ['nofooter' => true, 'nonavbar' => false, 'noactivityheader' => true],
-    ],
+        'regions' => array(),
+        'options' => array('nofooter' => true, 'nonavbar' => false, 'noactivityheader' => true),
+    ),
     // The pagelayout used when a redirection is occuring.
-    'redirect' => [
+    'redirect' => array(
         'file' => 'embedded.php',
-        'regions' => [],
-    ],
+        'regions' => array(),
+    ),
     // The pagelayout used for reports.
-    'report' => [
+    'report' => array(
         'file' => 'drawers.php',
-        'regions' => ['side-pre'],
+        'regions' => theme_learnr_get_block_regions('report'),
         'defaultregion' => 'side-pre',
-    ],
+    ),
     // The pagelayout used for safebrowser and securewindow.
-    'secure' => [
+    'secure' => array(
         'file' => 'secure.php',
-        'regions' => ['side-pre'],
+        'regions' => array('side-pre'),
         'defaultregion' => 'side-pre'
-    ]
+    )
 ];
 
-if ($THEME->settings->showheaderblockpanel == 1 && $THEME->settings->showblockdrawer == 1) {
-    $THEME->layouts['course'] = [
-        'file' => 'course.php',
-        'regions' => ['side-pre', 'columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
-        'defaultregion' => 'side-pre',
-        'options' => ['langmenu' => true],
-    ];
-} 
-if ($THEME->settings->showheaderblockpanel == 0 && $THEME->settings->showblockdrawer == 1){
-    $THEME->layouts['course'] = [
-        'file' => 'course.php',
-        'regions' => ['side-pre','footera', 'footerb', 'footerc'],
-        'defaultregion' => 'side-pre',
-        'options' => ['langmenu' => true],
-    ];
-}
-if ($THEME->settings->showheaderblockpanel == 1 && $THEME->settings->showblockdrawer == 0){
-     $THEME->layouts['mydashboard'] = [
-        'file' => 'drawers.php',
-        'regions' => [ ],
-        'options' => ['nonavbar' => true, 'langmenu' => true],
-    ];
-    $THEME->layouts['course'] = [
-        'file' => 'course.php',
-        'regions' => ['columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
-        'defaultregion' => 'columna',
-        'options' => ['langmenu' => true],
-    ];
-    // Part of course, typical for modules - default page layout if $cm specified in require_login().
-    $THEME->layouts['incourse'] = [
-        'file' => 'drawers.php',
-        'regions' => ['side-pre','columna', 'columnb', 'columnc', 'footera', 'footerb', 'footerc'],
-        'defaultregion' => 'side-pre',
-    ];
-}
-
-$THEME->prescsscallback = 'theme_learnr_get_pre_scss';
-$THEME->extrascsscallback = 'theme_learnr_get_extra_scss';
-$THEME->rendererfactory = 'theme_overridden_renderer_factory';
-$THEME->precompiledcsscallback = 'theme_learnr_get_precompiled_css';
-$THEME->yuicssmodules = array();
-
-$THEME->haseditswitch = true;
-$THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
-$THEME->iconsystem = \core\output\icon_system::FONTAWESOME;
-$THEME->activityheaderconfig = [
-    'notitle' => true
-];
-$THEME->requiredblocks = '';
-$THEME->enable_dock = false;
-
+// Begin DBN update.
 if ($THEME->settings->showcourseindexnav == 1) {
     $THEME->usescourseindex = true;
 } else {
     $THEME->usescourseindex = false;
 }
+// End DBN update.

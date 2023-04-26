@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Privacy provider
+ * Theme Boost Union - Privacy provider
  *
  * @package    theme_learnr
- * @copyright  2022 Dearborn Public Schools, Chris Kenniburg
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,7 +28,7 @@ namespace theme_learnr\privacy;
  * Privacy Subsystem implementing null_provider.
  *
  * @package    theme_learnr
- * @copyright  2022 Dearborn Public Schools, Chris Kenniburg
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider implements \core_privacy\local\metadata\null_provider {

@@ -1,6 +1,6 @@
 /* Sections Bars */
 .course-section-header {
-    background-color: rgba($primary, 20%);
+    background-color: rgba($primary, 5%);
     padding: 0.5rem;
     border-radius: 0.25rem;
 }
@@ -11,11 +11,21 @@
     border-bottom: 0;
 }
 .activity-item:not(.activityinline) {
-    border-radius: .25rem;
+    border: 0;
+    border-bottom: 1px solid $gray-300;
 }
 @media (min-width: 768px) {
-    .course-content ul.topics li.section .content.course-content-item-content, .course-content ul.weeks li.section .content.course-content-item-content {
-        margin: 0 3rem;
+    .course-content ul.topics li.section .content.course-content-item-content, .course-content ul.weeks li.section .content.course-content-item-content, .course-content ul.cards li.section .content.course-content-item-content {
+        margin: 0 1rem;
         padding: 0;
     }
+}
+.course-content ul.topics li.section, .course-content ul.weeks li.section {
+    box-shadow: none;
+    border-radius: $border-radius;
+}
+
+.course-content ul.topics li.section, .course-content ul.weeks li.section, .course-content ul.cards li.section {
+    padding: 1rem;
+    background-color: $white;
 }

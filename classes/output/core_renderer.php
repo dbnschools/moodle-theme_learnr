@@ -15,136 +15,349 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Core renderer
+ * Theme Boost Union - Core renderer
  *
  * @package    theme_learnr
- * @copyright  2022 Dearborn Public Schools, Chris Kenniburg
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace theme_learnr\output;
-
+use context_system;
+use moodle_url;
+//Begin DBN Update
 use html_writer;
 use custom_menu;
 use stdClass;
-use moodle_url;
 use context_course;
+//End DBN Update
 
-
-require_once ($CFG->dirroot . '/completion/classes/progress.php');
-
-
+/**
+ * Extending the core_renderer interface.
+ *
+ * @package    theme_learnr
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class core_renderer extends \theme_boost\output\core_renderer {
 
-    public function courseprogressbar() {
-        global $PAGE;
-        $course = $this->page->course;
-        $context = context_course::instance($course->id);
-        $hasprogressbar = (empty($this->page->theme->settings->showprogressbar)) ? false : true;
-
-        // Student Dash
-        if (\core_completion\progress::get_course_progress_percentage($PAGE->course)) {
-            $comppc = \core_completion\progress::get_course_progress_percentage($PAGE->course);
-            $comppercent = number_format($comppc, 0);
-        }
-        else {
-            $comppercent = 0;
-        }
-
-        $progresschartcontext = ['progress' => $comppercent, 'hasprogressbar' => $hasprogressbar];
-        $progress = $this->render_from_template('theme_learnr/progress-bar', $progresschartcontext);
-
-        return $progress;
-    }
-
-    public function headerimage() {
+    /**
+     * Returns the moodle_url for the favicon.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * It checks if the favicon is overridden in a flavour and, if yes, it serves this favicon.
+     * If there isn't a favicon in any flavour set, it serves the general favicon.
+     *
+     * @since Moodle 2.5.1 2.6
+     * @return moodle_url The moodle_url for the favicon
+     * @throws \moodle_exception
+     */
+    public function favicon() {
         global $CFG;
-        // Get course overview files.
-        if (empty($CFG->courseoverviewfileslimit)) {
-            return '';
-        }
-        $fs = get_file_storage();
-        $context = context_course::instance($this->page->course->id);
-        $files = $fs->get_area_files($context->id, 'course', 'overviewfiles', false, 'filename', false);
-        if (count($files)) {
-            $overviewfilesoptions = course_overviewfiles_options($this->page->course->id);
-            $acceptedtypes = $overviewfilesoptions['accepted_types'];
-            if ($acceptedtypes !== '*') {
-                foreach ($files as $key => $file) {
-                    if (!file_extension_in_typegroup($file->get_filename() , $acceptedtypes)) {
-                        unset($files[$key]);
-                    }
+
+        // Initialize static variable for the flavour favicon as this function might be called (for whatever reason) multiple times
+        // during a page output.
+        static $hasflavourfavicon, $flavourfaviconurl;
+
+        // If the flavour favicon has already been checked.
+        if ($hasflavourfavicon != null) {
+            // If there is a flavour favicon.
+            if ($hasflavourfavicon == true) {
+                // Directly return the flavour favicon.
+                return $flavourfaviconurl;
+            }
+            // Otherwise, if there isn't a flavour favicon, this function will continue to run the logic from Moodle core later.
+
+            // Otherwise.
+        } else {
+            // Require flavours library.
+            require_once($CFG->dirroot . '/theme/learnr/flavours/flavourslib.php');
+
+            // If any flavour applies to this page.
+            $flavour = theme_learnr_get_flavour_which_applies();
+            if ($flavour != null) {
+                // If the flavour has a favicon set.
+                if ($flavour->look_favicon != null) {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasflavourfavicon = true;
+
+                    // Compose the URL to the flavour's favicon.
+                    $flavourfaviconurl = moodle_url::make_pluginfile_url(
+                            context_system::instance()->id, 'theme_learnr', 'flavours_look_favicon', $flavour->id,
+                            '/'.theme_get_revision(), '/'.$flavour->look_favicon);
+
+                    // Return the URL.
+                    return $flavourfaviconurl;
+
+                    // Otherwise.
+                } else {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasflavourfavicon = false;
                 }
             }
-            if (count($files) > $CFG->courseoverviewfileslimit) {
-                // Return no more than $CFG->courseoverviewfileslimit files.
-                $files = array_slice($files, 0, $CFG->courseoverviewfileslimit, true);
-            }
         }
-        // Get course overview files as images - set $courseimage.
-        // The loop means that the LAST stored image will be the one displayed if >1 image file.
-        $courseimage = '';
-        foreach ($files as $file) {
-            $isimage = $file->is_valid_image();
-            if ($isimage) {
-                $courseimage = file_encode_url("$CFG->wwwroot/pluginfile.php", '/' . $file->get_contextid() . '/' . $file->get_component() . '/' . $file->get_filearea() . $file->get_filepath() . $file->get_filename() , !$isimage);
-            }
-        }
-        $html = '';
-        $headerbg = $this->page->theme->setting_file_url('pagebackgroundimage', 'pagebackgroundimage');
-        $defaultimgurl = $this->image_url('headerbg', 'theme');
-        $headerbgimgurl = $this->page->theme->setting_file_url('pagebackgroundimage', 'pagebackgroundimage', true);
 
-        $showpageimage = (empty($this->page->theme->settings->showpageimage)) ? false : ($this->page->theme->settings->showpageimage);
-
-        // Create html for header.
-        if ($showpageimage){
-            $html = html_writer::start_div('headerbkg');
-            // If course image display it in separate div to allow css styling of inline style.
-            if ($courseimage && !$this->page->theme->settings->sitewideimage == 1 && $showpageimage) {
-                $html .= html_writer::start_div('courseimage', array(
-                    'style' => 'background-image: url("' . $courseimage . '"); background-size: cover; background-position:center;
-                    width: 100%; height: 100%;'
-                ));
-                $html .= html_writer::end_div(); // End withimage inline style div.
-            }
-            else if (isset($headerbg) && $showpageimage) {
-                $html .= html_writer::start_div('customimage', array(
-                    'style' => 'background-image: url("' . $headerbgimgurl . '"); background-size: cover; background-position:center;
-                    width: 100%; height: 100%;'
-                ));
-                $html .= html_writer::end_div(); // End withoutimage inline style div.
-                
-            }
-            else {
-                $html .= html_writer::start_div('defaultheaderimage', array(
-                    'style' => 'background-image: url("' . $defaultimgurl . '"); background-size: cover; background-position:center;
-                    width: 100%; height: 100%;'
-                ));
-                $html .= html_writer::end_div(); // End default inline style div.
-            }
-            $html .= html_writer::end_div();
+        // Apparently, there isn't any flavour favicon set. Let's continue with the logic to serve the general favicon.
+        $logo = null;
+        if (!during_initial_install()) {
+            $logo = get_config('theme_learnr', 'favicon');
         }
-        return $html;
+        if (empty($logo)) {
+            return $this->image_url('favicon', 'theme');
+        }
+
+        // Use $CFG->themerev to prevent browser caching when the file changes.
+        return moodle_url::make_pluginfile_url(context_system::instance()->id, 'theme_learnr', 'favicon', '64x64/',
+                theme_get_revision(), $logo);
+    }
+
+    /**
+     * Return the site's logo URL, if any.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * It checks if the logo is overridden in a flavour and, if yes, it serves this logo.
+     * If there isn't a logo in any flavour set, it serves the general logo.
+     *
+     * @param int $maxwidth The maximum width, or null when the maximum width does not matter.
+     * @param int $maxheight The maximum height, or null when the maximum height does not matter.
+     * @return moodle_url|false
+     */
+    public function get_logo_url($maxwidth = null, $maxheight = 200) {
+        global $CFG;
+
+        // Initialize static variable for the flavour logo as this function might be called (for whatever reason) multiple times
+        // during a page output.
+        static $hasflavourlogo, $flavourlogourl;
+
+        // If the flavour logo has already been checked.
+        if ($hasflavourlogo != null) {
+            // If there is a flavour logo.
+            if ($hasflavourlogo == true) {
+                // Directly return the flavour logo.
+                return $flavourlogourl;
+            }
+            // Otherwise, if there isn't a flavour logo, this function will continue to run the logic from Moodle core later.
+
+            // Otherwise.
+        } else {
+            // Require flavours library.
+            require_once($CFG->dirroot . '/theme/learnr/flavours/flavourslib.php');
+
+            // If any flavour applies to this page.
+            $flavour = theme_learnr_get_flavour_which_applies();
+            if ($flavour != null) {
+                // If the flavour has a logo set.
+                if ($flavour->look_logo != null) {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasflavourlogo = true;
+
+                    // Compose the URL to the flavour's logo.
+                    $flavourlogourl = moodle_url::make_pluginfile_url(
+                            context_system::instance()->id, 'theme_learnr', 'flavours_look_logo', $flavour->id,
+                            '/'.theme_get_revision(), '/'.$flavour->look_logo);
+
+                    // Return the URL.
+                    return $flavourlogourl;
+
+                    // Otherwise.
+                } else {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasflavourlogo = false;
+                }
+            }
+        }
+
+        // Apparently, there isn't any flavour logo set. Let's continue to serve the general logo.
+        $logo = get_config('theme_learnr', 'logo');
+        if (empty($logo)) {
+            return false;
+        }
+
+        // If the logo is a SVG image, do not add a size to the path.
+        $logoextension = pathinfo($logo, PATHINFO_EXTENSION);
+        if (in_array($logoextension, ['svg', 'svgz'])) {
+            // The theme_learnr_pluginfile() function will look for a filepath and will try to extract the size from that.
+            // Thus, we cannot drop the filepath from the URL completely.
+            // But we can add a path without an 'x' in it which will then be interpreted by theme_learnr_pluginfile()
+            // as "no resize requested".
+            $filepath = '1/';
+
+            // Otherwise, add a size to the path.
+        } else {
+            // 200px high is the default image size which should be displayed at 100px in the page to account for retina displays.
+            // It's not worth the overhead of detecting and serving 2 different images based on the device.
+
+            // Hide the requested size in the file path.
+            $filepath = ((int) $maxwidth . 'x' . (int) $maxheight) . '/';
+        }
+
+        // Use $CFG->themerev to prevent browser caching when the file changes.
+        return moodle_url::make_pluginfile_url(context_system::instance()->id, 'theme_learnr', 'logo', $filepath,
+                theme_get_revision(), $logo);
+    }
+
+    /**
+     * Return the site's compact logo URL, if any.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * It checks if the logo is overridden in a flavour and, if yes, it serves this logo.
+     * If there isn't a logo in any flavour set, it serves the general compact logo.
+     *
+     * @param int $maxwidth The maximum width, or null when the maximum width does not matter.
+     * @param int $maxheight The maximum height, or null when the maximum height does not matter.
+     * @return moodle_url|false
+     */
+    public function get_compact_logo_url($maxwidth = 300, $maxheight = 300) {
+        global $CFG;
+
+        // Initialize static variable for the flavour logo as this function is called (for whatever reason) multiple times
+        // during a page output.
+        static $hasflavourlogo, $flavourlogourl;
+
+        // If the flavour logo has already been checked.
+        if ($hasflavourlogo != null) {
+            // If there is a flavour logo.
+            if ($hasflavourlogo == true) {
+                // Directly return the flavour logo.
+                return $flavourlogourl;
+            }
+            // Otherwise, if there isn't a flavour logo, this function will continue to run the logic from Moodle core later.
+
+            // Otherwise.
+        } else {
+            // Require flavours library.
+            require_once($CFG->dirroot . '/theme/learnr/flavours/flavourslib.php');
+
+            // If any flavour applies to this page.
+            $flavour = theme_learnr_get_flavour_which_applies();
+            if ($flavour != null) {
+                // If the flavour has a compact logo set.
+                if ($flavour->look_logocompact != null) {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasflavourlogo = true;
+
+                    // Compose the URL to the flavour's compact logo.
+                    $flavourlogourl = moodle_url::make_pluginfile_url(
+                            context_system::instance()->id, 'theme_learnr', 'flavours_look_logocompact', $flavour->id,
+                            '/'.theme_get_revision(), '/'.$flavour->look_logocompact);
+
+                    // Return the URL.
+                    return $flavourlogourl;
+
+                    // Otherwise.
+                } else {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasflavourlogo = false;
+                }
+            }
+        }
+
+        // Apparently, there isn't any flavour logo set. Let's continue to service the general compact logo.
+        $logo = get_config('theme_learnr', 'logocompact');
+        if (empty($logo)) {
+            return false;
+        }
+
+        // If the logo is a SVG image, do not add a size to the path.
+        $logoextension = pathinfo($logo, PATHINFO_EXTENSION);
+        if (in_array($logoextension, ['svg', 'svgz'])) {
+            // The theme_learnr_pluginfile() function will look for a filepath and will try to extract the size from that.
+            // Thus, we cannot drop the filepath from the URL completely.
+            // But we can add a path without an 'x' in it which will then be interpreted by theme_learnr_pluginfile()
+            // as "no resize requested".
+            $filepath = '1/';
+
+            // Otherwise, add a size to the path.
+        } else {
+            // Hide the requested size in the file path.
+            $filepath = ((int)$maxwidth . 'x' . (int)$maxheight) . '/';
+        }
+
+        // Use $CFG->themerev to prevent browser caching when the file changes.
+        return moodle_url::make_pluginfile_url(context_system::instance()->id, 'theme_learnr', 'logocompact', $filepath,
+                theme_get_revision(), $logo);
+    }
+
+    /**
+     * Returns HTML attributes to use within the body tag. This includes an ID and classes.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * @since Moodle 2.5.1 2.6
+     * @param string|array $additionalclasses Any additional classes to give the body tag,
+     * @return string
+     */
+    public function body_attributes($additionalclasses = array()) {
+        global $CFG;
+
+        // Require local libraries.
+        require_once($CFG->dirroot . '/theme/learnr/locallib.php');
+        require_once($CFG->dirroot . '/theme/learnr/flavours/flavourslib.php');
+
+        if (!is_array($additionalclasses)) {
+            $additionalclasses = explode(' ', $additionalclasses);
+        }
+
+        // If this isn't the login page and the page has a background image, add a class to the body attributes.
+        if ($this->page->pagelayout != 'login') {
+            if (!empty(get_config('theme_learnr', 'backgroundimage'))) {
+                $additionalclasses[] = 'backgroundimage';
+            }
+        }
+
+        // If this is the login page and the page has a login background image, add a class to the body attributes.
+        if ($this->page->pagelayout == 'login') {
+            // Generate the background image class for displaying a random image for the login page.
+            $loginimageclass = theme_learnr_get_random_loginbackgroundimage_class();
+
+            // If the background image class was returned, we can expect that a background image was set.
+            // In this case, add both the general loginbackgroundimage class as well as the generated
+            // class to the body tag.
+            if ($loginimageclass != '') {
+                $additionalclasses[] = 'loginbackgroundimage';
+                $additionalclasses[] = $loginimageclass;
+            }
+        }
+
+        // If there is a flavour applied to this page, add the flavour ID as additional body class.
+        // Boost Union itself does not need this class for applying the flavour to the page (yet).
+        // However, theme designers might want to use it.
+        $flavour = theme_learnr_get_flavour_which_applies();
+        if ($flavour != null) {
+            $additionalclasses[] = 'flavour'.'-'.$flavour->id;
+        }
+
+        return ' id="'. $this->body_id().'" class="'.$this->body_css_classes($additionalclasses).'"';
     }
 
     /**
      * Wrapper for header elements.
      *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
      * @return string HTML to display the main header.
      */
     public function full_header() {
+        //Begin DBN Update
         global $DB, $OUTPUT, $COURSE;
-
-        $pagetype = $this->page->pagetype;
-        $homepage = get_home_page();
-        $homepagetype = null;
+        $course = $this->page->course;
+        $context = context_course::instance($course->id);
         $mycourses = get_string('latestcourses', 'theme_learnr');
         $mycoursesurl = new moodle_url('/my/');
         $mycoursesmenu = $this->learnr_mycourses();
-        $hasmycourses = $this->page->pagelayout == 'course' && (isset($this->page->theme->settings->showlatestcourses) && $this->page->theme->settings->showlatestcourses == 1);
+        $hasmycourses = isset($COURSE->id) && $COURSE->id > 1 && (isset($this->page->theme->settings->showlatestcourses) && $this->page->theme->settings->showlatestcourses == 1);
+        $hascourseactivities = isset($COURSE->id) && $COURSE->id > 1 && (isset($this->page->theme->settings->showcourseactivities) && $this->page->theme->settings->showcourseactivities == 1);
+        $courseactivitiesbtntext = get_string('courseactivitiesbtntext', 'theme_learnr');
+        $courseenrollmentcode = get_string('courseenrollmentcode', 'theme_learnr');
+        $fpicons = $this->fpicons();
+        $enrolform = $this->enrolform();
+        $courseprogressbar = $this->courseprogressbar();
+        $coursemanagementdash = $this->coursemanagementdash();
+        $showincourseonlymanagementbtn = isset($COURSE->id) && $COURSE->id > 1 && $this->page->theme->settings->showcoursemanagement == 1 && has_capability('moodle/course:viewhiddenactivities', $context) && isloggedin() && !isguestuser();
         
-        //$plugin = enrol_get_plugin('easy');
         $globalhaseasyenrollment = enrol_get_plugin('easy');
         $coursehaseasyenrollment = '';
         if ($globalhaseasyenrollment) {
@@ -171,37 +384,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
         
         $course = $this->page->course;
         $context = context_course::instance($course->id);
-        $showenrollinktoteacher = has_capability('moodle/course:viewhiddenactivities', $context) && $globalhaseasyenrollment && $coursehaseasyenrollment && $this->page->pagelayout == 'course';
-        $showblockdrawer = (empty($this->page->theme->settings->showblockdrawer)) ? false : $this->page->theme->settings->showblockdrawer;
+        $showenrollinktoteacher = has_capability('moodle/course:viewhiddenactivities', $context) && $this->page->theme->settings->showeasyenrolbtn == 1  && $globalhaseasyenrollment && $coursehaseasyenrollment && $this->page->pagelayout == 'course';
+        //End DBN Update
 
-        // Add block button in editing mode.
-        $addblockbutton = $OUTPUT->addblockbutton();
-
-        $blockscolumna = $OUTPUT->blocks('columna');
-        $blockscolumnb = $OUTPUT->blocks('columnb');
-        $blockscolumnc = $OUTPUT->blocks('columnc');
-
-        $columnabtn = $OUTPUT->addblockbutton('columna');
-        $columnaregion = $OUTPUT->custom_block_region('columna');
-
-        $columnbbtn = $OUTPUT->addblockbutton('columnb');
-        $columnbregion = $OUTPUT->custom_block_region('columnb');
-
-        $columncbtn = $OUTPUT->addblockbutton('columnc');
-        $columncregion = $OUTPUT->custom_block_region('columnc');
-
-        $checkblocka = (strpos($blockscolumna, 'data-block=') !== false || !empty($addblockbutton));
-        $checkblockb = (strpos($blockscolumnb, 'data-block=') !== false || !empty($addblockbutton));
-        $checkblockc = (strpos($blockscolumnc, 'data-block=') !== false || !empty($addblockbutton));
-
-        $displayheaderblocks = ($this->page->pagelayout == 'course' && isset($COURSE->id) && $COURSE->id > 1) &&  $this->page->theme->settings->showheaderblockpanel;
-        $showheaderblockpanel = (empty($this->page->theme->settings->showheaderblockpanel)) ? false : $this->page->theme->settings->showheaderblockpanel;
-
-        $hasheaderblocks = false;
-        if (($checkblocka || $checkblockb || $checkblockc) && $this->page->theme->settings->showheaderblockpanel == 1 && $this->page->pagelayout == 'course') {
-            $hasheaderblocks = true;
-        }
-
+        $pagetype = $this->page->pagetype;
+        $homepage = get_home_page();
+        $homepagetype = null;
         // Add a special case since /my/courses is a part of the /my subsystem.
         if ($homepage == HOMEPAGE_MY || $homepage == HOMEPAGE_MYCOURSES) {
             $homepagetype = 'my-index';
@@ -214,247 +402,158 @@ class core_renderer extends \theme_boost\output\core_renderer {
             // the settings block on it. The region main settings are included in the settings block and
             // duplicating the content causes behat failures.
             $this->page->add_header_action(html_writer::div(
-                $this->region_main_settings_menu(),
-                'd-print-none',
-                ['id' => 'region-main-settings-menu']
+                    $this->region_main_settings_menu(),
+                    'd-print-none',
+                    ['id' => 'region-main-settings-menu']
             ));
         }
 
-        $header = new stdClass();
+        $header = new \stdClass();
         $header->settingsmenu = $this->context_header_settings_menu();
         $header->contextheader = $this->context_header();
         $header->hasnavbar = empty($this->page->layout_options['nonavbar']);
         $header->navbar = $this->navbar();
-        $header->hasmycourses = $hasmycourses;
-        $header->mycourses = $mycourses;
-        $header->showenrollinktoteacher = $showenrollinktoteacher;
-        $header->showblockdrawer = $showblockdrawer;
-        $header->hasheaderblocks = $hasheaderblocks;
-        $header->displayheaderblocks = $displayheaderblocks;
-        $header->showheaderblockpanel = $showheaderblockpanel;
-        $header->columnabtn = $columnabtn;
-        $header->columnbbtn = $columnbbtn;
-        $header->columncbtn = $columncbtn;
-        $header->columnaregion = $columnaregion;
-        $header->columnbregion = $columnbregion;
-        $header->columncregion = $columncregion;
-        $header->mycoursesmenu = $mycoursesmenu;
-        $header->easycodetitle = $easycodetitle;
-        $header->easycodelink = $easycodelink;
         $header->pageheadingbutton = $this->page_heading_button();
         $header->courseheader = $this->course_header();
         $header->headeractions = $this->page->get_header_actions();
+
+        //Begin DBN Update
+        $header->hasmycourses = $hasmycourses;
+        $header->mycourses = $mycourses;
+        $header->fpicons = $fpicons;
+        $header->enrolform = $enrolform;
+        $header->courseprogressbar = $courseprogressbar;
+        $header->showenrollinktoteacher = $showenrollinktoteacher;
+        $header->mycoursesmenu = $mycoursesmenu;
+        $header->easycodetitle = $easycodetitle;
+        $header->easycodelink = $easycodelink;
+        $header->courseactivitiesmenu = $this->courseactivities_menu();
+        $header->courseactivitiesbtntext = $courseactivitiesbtntext;
+        $header->courseenrollmentcode = $courseenrollmentcode;
+        $header->hascourseactivities = $hascourseactivities;
+        $header->coursemanagementdash = $coursemanagementdash;
+        $header->showincourseonlymanagementbtn = $showincourseonlymanagementbtn;
+        //End DBN Update
+
+        // Add the course header image for rendering.
+        if ($this->page->pagelayout == 'course' && (get_config('theme_learnr', 'courseheaderimageenabled')
+                        == THEME_LEARNR_SETTING_SELECT_YES)) {
+            // If course header images are activated, we get the course header image url
+            // (which might be the fallback image depending on the course settings and theme settings).
+            $header->courseheaderimageurl = theme_learnr_get_course_header_image_url();
+            // Additionally, get the course header image height.
+            $header->courseheaderimageheight = get_config('theme_learnr', 'courseheaderimageheight');
+            // Additionally, get the course header image position.
+            $header->courseheaderimageposition = get_config('theme_learnr', 'courseheaderimageposition');
+            // Additionally, get the template context attributes for the course header image layout.
+            $courseheaderimagelayout = get_config('theme_learnr', 'courseheaderimagelayout');
+            switch($courseheaderimagelayout) {
+                case THEME_LEARNR_SETTING_COURSEIMAGELAYOUT_HEADINGABOVE:
+                    $header->courseheaderimagelayoutheadingabove = true;
+                    $header->courseheaderimagelayoutstackedclass = '';
+                    break;
+                case THEME_LEARNR_SETTING_COURSEIMAGELAYOUT_STACKEDDARK:
+                    $header->courseheaderimagelayoutheadingabove = false;
+                    $header->courseheaderimagelayoutstackedclass = 'dark';
+                    break;
+                case THEME_LEARNR_SETTING_COURSEIMAGELAYOUT_STACKEDLIGHT:
+                    $header->courseheaderimagelayoutheadingabove = false;
+                    $header->courseheaderimagelayoutstackedclass = 'light';
+                    break;
+            }
+        }
+
         if (!empty($pagetype) && !empty($homepagetype) && $pagetype == $homepagetype) {
             $header->welcomemessage = \core_user::welcome_message();
         }
-        return $this->render_from_template('theme_learnr/core/full_header', $header);
+        return $this->render_from_template('core/full_header', $header);
     }
 
     /**
-     * Returns standard navigation between activities in a course.
+     * Prints a nice side block with an optional header.
      *
-     * @return string the navigation HTML.
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * @param block_contents $bc HTML for the content
+     * @param string $region the region the block is appearing in.
+     * @return string the HTML to be output.
      */
-    public function top_activity_navigation() {
-        // First we should check if we want to add navigation.
-        $context = $this->page->context;
-        if (($this->page->pagelayout !== 'incourse' && $this->page->pagelayout !== 'frametop')
-            || $context->contextlevel != CONTEXT_MODULE) {
-            return '';
-        }
-        // If the activity is in stealth mode, show no links.
-        if ($this->page->cm->is_stealth()) {
-            return '';
-        }
-        $course = $this->page->cm->get_course();
-        $courseformat = course_get_format($course);
-        // If the theme implements course index and the current course format uses course index and the current
-        // page layout is not 'frametop' (this layout does not support course index), show no links.
-        if ($this->page->theme->settings->activitynavdisplay ==2 || $this->page->theme->settings->activitynavdisplay ==4 ) {
-                return '';
-        }
-        // Get a list of all the activities in the course.
-        $modules = get_fast_modinfo($course->id)->get_cms();
-        // Put the modules into an array in order by the position they are shown in the course.
-        $mods = [];
-        $activitylist = [];
-        foreach ($modules as $module) {
-            // Only add activities the user can access, aren't in stealth mode and have a url (eg. mod_label does not).
-            if (!$module->uservisible || $module->is_stealth() || empty($module->url)) {
-                continue;
-            }
-            $mods[$module->id] = $module;
+    public function block(\block_contents $bc, $region) {
+        global $CFG;
 
-            // No need to add the current module to the list for the activity dropdown menu.
-            if ($module->id == $this->page->cm->id) {
-                continue;
-            }
-            // Module name.
-            $modname = $module->get_formatted_name();
-            // Display the hidden text if necessary.
-            if (!$module->visible) {
-                $modname .= ' ' . get_string('hiddenwithbrackets');
-            }
-            // Module URL.
-            $linkurl = new moodle_url($module->url, array('forceview' => 1));
-            // Add module URL (as key) and name (as value) to the activity list array.
-            $activitylist[$linkurl->out(false)] = $modname;
+        // Require own locallib.php.
+        require_once($CFG->dirroot . '/theme/learnr/locallib.php');
+
+        $bc = clone($bc); // Avoid messing up the object passed in.
+        if (empty($bc->blockinstanceid) || !strip_tags($bc->title)) {
+            $bc->collapsible = \block_contents::NOT_HIDEABLE;
         }
-        $nummods = count($mods);
-        // If there is only one mod then do nothing.
-        if ($nummods == 1) {
-            return '';
+
+        $id = !empty($bc->attributes['id']) ? $bc->attributes['id'] : uniqid('block-');
+        $context = new \stdClass();
+        $context->skipid = $bc->skipid;
+        $context->blockinstanceid = $bc->blockinstanceid ?: uniqid('fakeid-');
+        $context->dockable = $bc->dockable;
+        $context->id = $id;
+        $context->hidden = $bc->collapsible == \block_contents::HIDDEN;
+        $context->skiptitle = strip_tags($bc->title);
+        $context->showskiplink = !empty($context->skiptitle);
+        $context->arialabel = $bc->arialabel;
+        $context->ariarole = !empty($bc->attributes['role']) ? $bc->attributes['role'] : 'complementary';
+        $context->class = $bc->attributes['class'];
+        $context->type = $bc->attributes['data-block'];
+        $context->title = $bc->title;
+        $context->content = $bc->content;
+        $context->annotation = $bc->annotation;
+        $context->footer = $bc->footer;
+        $context->hascontrols = !empty($bc->controls);
+
+        // Hide edit control options for the regions based on the capabilities.
+        $regions = theme_learnr_get_additional_regions();
+        $regioncapname = array_search($region, $regions);
+        if (!empty($regioncapname) && $context->hascontrols) {
+            $context->hascontrols = has_capability('theme/learnr:editregion'.$regioncapname, $this->page->context);
         }
-        // Get an array of just the course module ids used to get the cmid value based on their position in the course.
-        $modids = array_keys($mods);
-        // Get the position in the array of the course module we are viewing.
-        $position = array_search($this->page->cm->id, $modids);
-        $prevmod = null;
-        $nextmod = null;
-        // Check if we have a previous mod to show.
-        if ($position > 0) {
-            $prevmod = $mods[$modids[$position - 1]];
+
+        if ($context->hascontrols) {
+            $context->controls = $this->block_controls($bc->controls, $id);
         }
-        // Check if we have a next mod to show.
-        if ($position < ($nummods - 1)) {
-            $nextmod = $mods[$modids[$position + 1]];
+
+        return $this->render_from_template('core/block', $context);
+    }
+    //Begin DBN Update Functions
+    public function enrolform() {
+        $enrolform = '';
+        $plugin = enrol_get_plugin('easy');
+
+        if ($plugin && !isguestuser() && ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage' || $this->page->pagelayout == 'mycourses')) {
+
+            $enrolform = '<div class="easyenrolform">';
+            $enrolform .= $plugin->get_form();
+            $enrolform .= '</div>';
         }
-        $activitynav = new \core_course\output\activity_navigation($prevmod, $nextmod);
-        $renderer = $this->page->get_renderer('core', 'course');
-        return $renderer->render_from_template('theme_learnr/core_course/top_activity_navigation', $activitynav);
+        return $enrolform;
     }
 
-    /**
-     * Returns standard navigation between activities in a course.
-     *
-     * @return string the navigation HTML.
-     */
-    public function activity_navigation() {
-        // First we should check if we want to add navigation.
-        $context = $this->page->context;
-        if (($this->page->pagelayout !== 'incourse' && $this->page->pagelayout !== 'frametop')
-            || $context->contextlevel != CONTEXT_MODULE) {
-            return '';
-        }
-        // If the activity is in stealth mode, show no links.
-        if ($this->page->cm->is_stealth()) {
-            return '';
-        }
-        $course = $this->page->cm->get_course();
-        $courseformat = course_get_format($course);
-        // If the theme implements course index and the current course format uses course index and the current
-        // page layout is not 'frametop' (this layout does not support course index), show no links.
-        if ($this->page->theme->settings->activitynavdisplay ==1 || $this->page->theme->settings->activitynavdisplay ==4 ) {
-                return '';
-        }
-        // Get a list of all the activities in the course.
-        $modules = get_fast_modinfo($course->id)->get_cms();
-        // Put the modules into an array in order by the position they are shown in the course.
-        $mods = [];
-        $activitylist = [];
-        foreach ($modules as $module) {
-            // Only add activities the user can access, aren't in stealth mode and have a url (eg. mod_label does not).
-            if (!$module->uservisible || $module->is_stealth() || empty($module->url)) {
-                continue;
-            }
-            $mods[$module->id] = $module;
-            // No need to add the current module to the list for the activity dropdown menu.
-            if ($module->id == $this->page->cm->id) {
-                continue;
-            }
-            // Module name.
-            $modname = $module->get_formatted_name();
-            // Display the hidden text if necessary.
-            if (!$module->visible) {
-                $modname .= ' ' . get_string('hiddenwithbrackets');
-            }
-            // Module URL.
-            $linkurl = new moodle_url($module->url, array('forceview' => 1));
-            // Add module URL (as key) and name (as value) to the activity list array.
-            $activitylist[$linkurl->out(false)] = $modname;
-        }
-        $nummods = count($mods);
-        // If there is only one mod then do nothing.
-        if ($nummods == 1) {
-            return '';
-        }
-        // Get an array of just the course module ids used to get the cmid value based on their position in the course.
-        $modids = array_keys($mods);
-        // Get the position in the array of the course module we are viewing.
-        $position = array_search($this->page->cm->id, $modids);
-        $prevmod = null;
-        $nextmod = null;
-        // Check if we have a previous mod to show.
-        if ($position > 0) {
-            $prevmod = $mods[$modids[$position - 1]];
-        }
-        // Check if we have a next mod to show.
-        if ($position < ($nummods - 1)) {
-            $nextmod = $mods[$modids[$position + 1]];
-        }
-        $activitynav = new \core_course\output\activity_navigation($prevmod, $nextmod, $activitylist);
-        $renderer = $this->page->get_renderer('core', 'course');
-        return $renderer->render($activitynav);
-    }
+    public function courseprogressbar() {
+        global $PAGE;
+        $course = $this->page->course;
+        $context = context_course::instance($course->id);
+        $hasprogressbar = (empty($this->page->theme->settings->showprogressbar)) ? false : true;
+        $iscoursepage = $this->page->pagelayout == 'course';
 
+        // Student Dash
+        if (\core_completion\progress::get_course_progress_percentage($PAGE->course)) {
+            $comppc = \core_completion\progress::get_course_progress_percentage($PAGE->course);
+            $comppercent = number_format($comppc, 0);
+        }
+        else {
+            $comppercent = 0;
+        }
+        $progresschartcontext = ['progress' => $comppercent, 'hasprogressbar' => $hasprogressbar, 'iscoursepage' => $iscoursepage];
+        $progress = $this->render_from_template('theme_learnr/progress-bar', $progresschartcontext);
 
-    public function fp_marketingtiles() {
-
-        $hasmarketing1 = (empty($this->page->theme->settings->marketing1)) ? false : format_string($this->page->theme->settings->marketing1);
-        $marketing1content = (empty($this->page->theme->settings->marketing1content)) ? false : format_text($this->page->theme->settings->marketing1content);
-        $marketing1buttontext = (empty($this->page->theme->settings->marketing1buttontext)) ? false : format_string($this->page->theme->settings->marketing1buttontext);
-        $marketing1buttonurl = (empty($this->page->theme->settings->marketing1buttonurl)) ? false : $this->page->theme->settings->marketing1buttonurl;
-        $marketing1target = (empty($this->page->theme->settings->marketing1target)) ? false : $this->page->theme->settings->marketing1target;
-        $marketing1image = (empty($this->page->theme->settings->marketing1image)) ? false : $this->page->theme->setting_file_url('marketing1image', 'marketing1image', true);
-        $marketing1icon = (empty($this->page->theme->settings->marketing1icon)) ? false : format_string($this->page->theme->settings->marketing1icon);
-        
-        $hasmarketing2 = (empty($this->page->theme->settings->marketing2)) ? false : format_string($this->page->theme->settings->marketing2);
-        $marketing2content = (empty($this->page->theme->settings->marketing2content)) ? false : format_text($this->page->theme->settings->marketing2content);
-        $marketing2buttontext = (empty($this->page->theme->settings->marketing2buttontext)) ? false : format_string($this->page->theme->settings->marketing2buttontext);
-        $marketing2buttonurl = (empty($this->page->theme->settings->marketing2buttonurl)) ? false : $this->page->theme->settings->marketing2buttonurl;
-        $marketing2target = (empty($this->page->theme->settings->marketing2target)) ? false : $this->page->theme->settings->marketing2target;
-        $marketing2image = (empty($this->page->theme->settings->marketing2image)) ? false : $this->page->theme->setting_file_url('marketing2image', 'marketing2image', true);
-        $marketing2icon = (empty($this->page->theme->settings->marketing2icon)) ? false : format_string($this->page->theme->settings->marketing2icon);
-        
-        $hasmarketing3 = (empty($this->page->theme->settings->marketing3)) ? false : format_string($this->page->theme->settings->marketing3);
-        $marketing3content = (empty($this->page->theme->settings->marketing3content)) ? false : format_text($this->page->theme->settings->marketing3content);
-        $marketing3buttontext = (empty($this->page->theme->settings->marketing3buttontext)) ? false : format_string($this->page->theme->settings->marketing3buttontext);
-        $marketing3buttonurl = (empty($this->page->theme->settings->marketing3buttonurl)) ? false : $this->page->theme->settings->marketing3buttonurl;
-        $marketing3target = (empty($this->page->theme->settings->marketing3target)) ? false : $this->page->theme->settings->marketing3target;
-        $marketing3image = (empty($this->page->theme->settings->marketing3image)) ? false : $this->page->theme->setting_file_url('marketing3image', 'marketing3image', true);
-        $marketing3icon = (empty($this->page->theme->settings->marketing3icon)) ? false : format_string($this->page->theme->settings->marketing3icon);
-        
-        $fp_marketingtiles = ['hasmarkettiles' => ($hasmarketing1 || $hasmarketing2 || $hasmarketing3) ? true : false, 'markettiles' => array(
-            array(
-                'hastile' => $hasmarketing1,
-                'tileimage' => $marketing1image,
-                'content' => $marketing1content,
-                'title' => $hasmarketing1,
-                'hasbutton' => $marketing1buttonurl,
-                'button' => "<a href = '$marketing1buttonurl' title = '$marketing1buttontext' alt='$marketing1buttontext' class='btn btn-primary' target='$marketing1target'> $marketing1buttontext </a>",
-                'marketingicon' => $marketing1icon,
-            ) ,
-            array(
-                'hastile' => $hasmarketing2,
-                'tileimage' => $marketing2image,
-                'content' => $marketing2content,
-                'title' => $hasmarketing2,
-                'hasbutton' => $marketing2buttonurl,
-                'button' => "<a href = '$marketing2buttonurl' title = '$marketing2buttontext' alt='$marketing2buttontext' class='btn btn-primary' target='$marketing2target'> $marketing2buttontext </a>",
-                'marketingicon' => $marketing2icon,
-            ) ,
-            array(
-                'hastile' => $hasmarketing3,
-                'tileimage' => $marketing3image,
-                'content' => $marketing3content,
-                'title' => $hasmarketing3,
-                'hasbutton' => $marketing3buttonurl,
-                'button' => "<a href = '$marketing3buttonurl' title = '$marketing3buttontext' alt='$marketing3buttontext' class='btn btn-primary' target='$marketing3target'> $marketing3buttontext </a>",
-                'marketingicon' => $marketing3icon,
-            ) ,
-        ) , 
-    ];
-        return $this->render_from_template('theme_learnr/fpmarkettiles', $fp_marketingtiles);
+        return $progress;
     }
 
     // The following code is a copied work of the code from theme Essential https://moodle.org/plugins/theme_essential, @copyright Gareth J Barnard
@@ -500,7 +599,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $dashtitle = $dashlabel;
             $nomycourses = get_string('nomycourses', 'theme_learnr');
             $courses = enrol_get_my_courses(null, 'sortorder ASC');
-             
+            
                 if ($courses) {
                     // We have something to work with.  Get the last accessed information for the user and populate.
                     global $DB, $USER;
@@ -576,6 +675,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
     public function fpicons() {
         $context = $this->page->context;
+        $hascreateicon = (empty($this->page->theme->settings->createicon && isloggedin() && has_capability('moodle/course:create', $context))) ? false : $this->page->theme->settings->createicon;
+        $createbuttonurl = (empty($this->page->theme->settings->createbuttonurl)) ? false : $this->page->theme->settings->createbuttonurl;
+        $createbuttontext = (empty($this->page->theme->settings->createbuttontext)) ? false : format_string($this->page->theme->settings->createbuttontext);
         $hasslideicon = (empty($this->page->theme->settings->slideicon && isloggedin() && !isguestuser())) ? false : $this->page->theme->settings->slideicon;
         $slideiconbuttonurl = 'data-toggle="collapse" data-target="#collapseExample';
         $slideiconbuttontext = (empty($this->page->theme->settings->slideiconbuttontext)) ? false : format_string($this->page->theme->settings->slideiconbuttontext);
@@ -616,7 +718,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         ));
 
         $fp_icons = [
-            'hasslidetextbox' => (!empty($this->page->theme->settings->slidetextbox && isloggedin())) , 
+            'hasslidetextbox' => (!empty($this->page->theme->settings->slidetextbox && isloggedin())) ,
             'slidetextbox' => $slidetextbox, 'hasfptextboxlogout' => !isloggedin() ,
             'hasfpiconnav' => ($hasnav1icon || $hasnav2icon || $hasnav3icon || $hasnav4icon || $hasnav5icon || $hasnav6icon || $hasnav7icon || $hasnav8icon || $hasslideicon ? true : false) && ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage' || $this->page->pagelayout == 'mycourses'), 
             'fpiconnav' => array(
@@ -684,26 +786,284 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     'link' => $slideiconbuttonurl,
                     'linktext' => $slideiconbuttontext
                 ) ,
-            ) , 
+            ) ,
+            'fpcreateicon' => array(
+                array(
+                    'hasicon' => $hascreateicon,
+                    'linkicon' => $hascreateicon,
+                    'link' => $createbuttonurl,
+                    'linktext' => $createbuttontext
+                ) ,
+            ) ,
         ];
 
         return $this->render_from_template('theme_learnr/fpicons', $fp_icons);
 
     }
 
-    public function enrolform() {
-        $enrolform = '';
-        $plugin = enrol_get_plugin('easy');
-
-        if ($plugin && !isguestuser() && ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage' || $this->page->pagelayout == 'mycourses')) {
-
-            $enrolform = '<div class="easyenrolform">';
-            $enrolform .= $plugin->get_form();
-            $enrolform .= '</div>';
+    // Use default image on both dashboard/mycourses and in course pages.
+    public function get_generated_image_for_id($id) {
+        // See if user uploaded a custom header background to the theme.
+        $headerbg = $this->page->theme->setting_file_url('courseheaderimagefallback', 'courseheaderimagefallback');
+        $hasheaderbg = $this->page->theme->settings->courseheaderimageenabled == THEME_LEARNR_SETTING_SELECT_YES;
+        if (isset($headerbg) && $hasheaderbg)  {
+            return $headerbg;
+        } elseif ($hasheaderbg) {
+            // Usefallback image for mycourse regardless.
+            return $this->page->theme->image_url('noimg', 'theme')->out();
+        } else {
+            $color = $this->get_generated_color_for_id($id);
+            $pattern = new \core_geopattern();
+            $pattern->setColor($color);
+            $pattern->patternbyid($id);
+            return $pattern->datauri();
         }
-        return $enrolform;
     }
 
+    protected function render_courseactivities_menu(custom_menu $menu) {
+        global $CFG;
+        $content = '';
+        foreach ($menu->get_children() as $item) {
+            $context = $item->export_for_template($this);
+            $content .= $this->render_from_template('theme_learnr/activitygroups', $context);
+        }
+        return $content;
+    }
 
+    public function courseactivities_menu() {
+        global $PAGE, $COURSE, $OUTPUT, $CFG;
+        $menu = new custom_menu();
+        $context = $this->page->context;
+        if (isset($COURSE->id) && $COURSE->id > 1) {
+            $branchtitle = get_string('courseactivities', 'theme_learnr');
+            $branchlabel = $branchtitle;
+            $branchurl = new moodle_url('#');
+            $branch = $menu->add($branchlabel, $branchurl, $branchtitle, 10002);
+            $data = theme_learnr_get_course_activities();
+            foreach ($data as $modname => $modfullname) {
+                if ($modname === 'resources') {
+                    $branch->add($modfullname, new moodle_url('/course/resources.php', array(
+                        'id' => $PAGE->course->id
+                    )));
+                }
+                else {
+                    $branch->add($modfullname, new moodle_url('/mod/' . $modname . '/index.php', array(
+                        'id' => $PAGE->course->id
+                    )));
+                }
+            }
+        }
+        return $this->render_courseactivities_menu($menu);
+    }
+
+    /**
+     * Renders the login form.
+     *
+     * @param \core_auth\output\login $form The renderable.
+     * @return string
+     */
+    public function render_login(\core_auth\output\login $form) {
+        global $CFG, $SITE;
+
+        $context = $form->export_for_template($this);
+
+        $context->errorformatted = $this->error_text($context->error);
+        $url = $this->get_logo_url();
+        if ($url) {
+            $url = $url->out(false);
+        }
+        $context->hideloginform = $this->page->theme->settings->hideloginform == 1;
+        $context->logourl = $url;
+        $context->sitename = format_string($SITE->fullname, true,
+                ['context' => context_course::instance(SITEID), "escape" => false]);
+
+        return $this->render_from_template('core/loginform', $context);
+    }
+
+    public function coursemanagementdash() {
+        global $PAGE, $COURSE, $CFG, $DB, $OUTPUT, $USER;
+
+        $course = $this->page->course;
+        $context = context_course::instance($course->id);
+        $hascoursemanagement = has_capability('moodle/course:viewhiddenactivities', $context);
+        $togglebutton = get_string('coursemanagementbutton', 'theme_learnr');
+        $showincourseonly = isset($COURSE->id) && $COURSE->id > 1 && $this->page->theme->settings->showcoursemanagement == 1 && isloggedin() && !isguestuser();
+        $globalhaseasyenrollment = enrol_get_plugin('easy');
+
+
+        // Link Headers and text.
+        $coursemanagementmessage = (empty($PAGE->theme->settings->coursemanagementtextbox)) ? false : format_text($PAGE->theme->settings->coursemanagementtextbox, FORMAT_HTML, array(
+            'noclean' => true
+        ));
+
+        // Build links.
+        $dashlinks = [
+            'manageuserstitle' => get_string('manageuserstitle', 'theme_learnr'),
+            'gradebooktitle' => get_string('gradebooktitle', 'theme_learnr'),
+            'progresstitle' => get_string('progresstitle', 'theme_learnr'),
+            'coursemanagetitle' => get_string('coursemanagetitle', 'theme_learnr'),
+            'showincourseonly' => $showincourseonly,
+            'hascoursemanagement' => $hascoursemanagement,
+
+            'dashlinks' => array(
+                // User Links.
+                // Bulkenrol.
+                array(
+                    'hasuserlinks' => get_string('pluginname', 'local_bulkenrol'),
+                    'title' => get_string('pluginname', 'local_bulkenrol'),
+                    'url' => new moodle_url('/local/bulkenrol/index.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ) ,
+                // Easy Enrollment.
+                array(
+                    'hasuserlinks' => get_string('header_coursecodes', 'enrol_easy'),
+                    'title' => get_string('header_coursecodes', 'enrol_easy'),
+                    'url' => new moodle_url('/enrol/editinstance.php', array(
+                        'courseid' => $PAGE->course->id,
+                        'id' => $easyenrollinstance->id,
+                        'type' => 'easy'
+                    ))
+                ),
+                // Participants.
+                array(
+                    'hasuserlinks' => get_string('participants', 'moodle'),
+                    'title' => get_string('participants', 'moodle'),
+                    'url' => new moodle_url('/user/index.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+                // Groups.
+                array(
+                    'hasuserlinks' => get_string('groups', 'group'),
+                    'title' => get_string('groups', 'group'),
+                    'url' => new moodle_url('/group/index.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+
+                // Gradebook Links.
+                //Export to MISTAR
+                array(
+                    'hasgradebooklinks' => get_string('exporttomistar', 'theme_learnr'),
+                    'title' => get_string('exporttomistar', 'theme_learnr'),
+                    'url' => new moodle_url('/grade/export/mistar/index.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+                // Gradebook grader.
+                array(
+                    'hasgradebooklinks' => get_string('gradebook', 'grades'),
+                    'title' => get_string('gradebook', 'grades'),
+                    'url' => new moodle_url('/grade/report/grader/index.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+                // User Gradebook Report.
+                array(
+                    'hasgradebooklinks' => get_string('userreportgradebook', 'theme_learnr'),
+                    'title' => get_string('userreportgradebook', 'theme_learnr'),
+                    'url' => new moodle_url('/grade/report/user/index.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+                // Greadebook Setup.
+                array(
+                    'hasgradebooklinks' => get_string('gradebooksetup', 'grades'),
+                    'title' => get_string('gradebooksetup', 'grades'),
+                    'url' => new moodle_url('/grade/edit/tree/index.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+
+                // Progress links.
+                // Badges.
+                array(
+                    'hasprogresslinks' => get_string('managebadges', 'badges'),
+                    'title' => get_string('managebadges', 'badges'),
+                    'url' => new moodle_url('/badges/view.php?type=2', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+                // Course Completion.
+                array(
+                    'hasprogresslinks' => get_string('editcoursecompletionsettings', 'completion'),
+                    'title' => get_string('editcoursecompletionsettings', 'completion'),
+                    'url' => new moodle_url('/course/completion.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+                // Activity Completion.
+                array(
+                    'hasprogresslinks' => get_string('activitycompletion', 'completion'),
+                    'title' => get_string('activitycompletion', 'completion'),
+                    'url' => new moodle_url('/report/progress/index.php', array(
+                        'course' => $PAGE->course->id
+                    ))
+                ),
+                // Activity Report.
+                array(
+                    'hasprogresslinks' => get_string('outline:view', 'report_outline'),
+                    'title' => get_string('outline:view', 'report_outline'),
+                    'url' => new moodle_url('/report/outline/index.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+                // Live Logs.
+                array(
+                    'hasprogresslinks' => get_string('loglive:view', 'report_loglive'),
+                    'title' => get_string('loglive:view', 'report_loglive'),
+                    'url' => new moodle_url('/report/loglive/index.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+
+                // Course Management.
+                // Reset course.
+                array(
+                    'hascoursemanagelinks' => get_string('reset', 'moodle'),
+                    'title' => get_string('reset', 'moodle'),
+                    'url' => new moodle_url('/course/reset.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+                // Copy course.
+                array(
+                    'hascoursemanagelinks' => get_string('copycourse', 'moodle'),
+                    'title' => get_string('copycourse', 'moodle'),
+                    'url' => new moodle_url('/backup/copy.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+                // Backup course.
+                array(
+                    'hascoursemanagelinks' => get_string('backup', 'moodle'),
+                    'title' => get_string('backup', 'moodle'),
+                    'url' => new moodle_url('/backup/backup.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+                // Restore course.
+                array(
+                    'hascoursemanagelinks' => get_string('restore', 'moodle'),
+                    'title' => get_string('restore', 'moodle'),
+                    'url' => new moodle_url('/backup/restorefile.php', array(
+                        'contextid' => $PAGE->context->id
+                    ))
+                ),
+                // Import course.
+                array(
+                    'hascoursemanagelinks' => get_string('import', 'moodle'),
+                    'title' => get_string('import', 'moodle'),
+                    'url' => new moodle_url('/backup/import.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+                
+            ),
+        ];
+        return $this->render_from_template('theme_learnr/coursemanagement', $dashlinks);
+    }
+//End DBN Update
 
 }

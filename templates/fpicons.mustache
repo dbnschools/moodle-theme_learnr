@@ -1,46 +1,41 @@
 {{#hasfpiconnav}}
-
-    <div class="fpstartwrap text-center">
+    <div class="fpstartwrap text-left">
     <div class="fpstart">
-
         <div class="iconset">
             {{#fpiconnav}}
                 {{#hasicon}}
-                <div class="btn btn-secondary">
-                    <a role="button" href = {{{link}}} title = "{{{linktext}}}" alt="{{{linktext}}}" target="{{linktarget}}">
-                        <div class="navicon" align="center">
-                            <i class="fa fa-3x fa-{{{linkicon}}}"></i>
-                        </div>
-                        {{{linktext}}}
+                <div class="d-inline-flex fs-4 ">
+                    <a class="iconbtn mr-3 ml-2" href = {{{link}}} title = "{{{linktext}}}" alt="{{{linktext}}}" target="{{linktarget}}">
+                        <i class="fa fa-1x fa-{{{linkicon}}}"></i> {{{linktext}}}
                     </a>
                 </div>
                 {{/hasicon}}
             {{/fpiconnav}}
-
             {{#fpslideicon}}
                 {{#hasicon}}
-                    <div class="btn btn-secondary">
-                        <a role="button" data-toggle="collapse" href="#fpslider" aria-expanded="false" aria-controls="fpslider" title = "{{{linktext}}}" alt="{{{linktext}}}"> 
-                            <div class="navicon" align="center">
-                                <i class="fa fa-3x fa-{{{linkicon}}}"></i>
-                            </div>
-                            {{{linktext}}}
+                    <div class="d-inline-flex fs-4">
+                        <a role="iconbtn" class="iconbtn mr-3 ml-2" data-toggle="collapse" href="#fpslider" aria-expanded="false" aria-controls="fpslider" title = "{{{linktext}}}" alt="{{{linktext}}}">
+                            <i class="fa fa-1x fa-{{{linkicon}}}"></i> {{{linktext}}}
                         </a>
                     </div>
                 {{/hasicon}}
             {{/fpslideicon}}
+            {{#fpcreateicon}}
+                {{#hasicon}}
+                <div class="d-inline-flex fs-4">
+                    <a class="iconbtn mr-3 ml-2" href = {{{link}}} title = "{{{linktext}}}" alt="{{{linktext}}}" target="{{linktarget}}">
+                        <i class="fa fa-1x fa-{{{linkicon}}}"></i> {{{linktext}}}
+                    </a>
+                </div>
+                {{/hasicon}}
+            {{/fpcreateicon}}
         </div>
-
     </div>
         {{#hasslidetextbox}}
-            <div id="fpslider" class="collapse text-left">
+            <div id="fpslider" class="collapse text-left" style="padding:1rem;">
                 {{{slidetextbox}}}
             </div>
         {{/hasslidetextbox}}
     </div>
-
-    
-
     <div style="clear:both;"></div>
-
 {{/hasfpiconnav}}

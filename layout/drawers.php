@@ -15,10 +15,26 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * A drawer based layout for the boost theme.
+ * Theme Boost Union - Drawers page layout.
  *
- * @package   theme_boost
- * @copyright 2021 Bas Brands
+ * This layoutfile is based on theme/boost/layout/drawers.php
+ *
+ * Modifications compared to this layout file:
+ * * Render theme_learnr/drawers instead of theme_boost/drawers template
+ * * Include activity navigation
+ * * Include course related hints
+ * * Include back to top button
+ * * Include scroll spy
+ * * Include footnote
+ * * Include static pages
+ * * Include Jvascript disabled hint
+ * * Include advertisement tiles
+ * * Include info banners
+ * * Include additional block regions
+ *
+ * @package   theme_learnr
+ * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
+ * @copyright based on code from theme_boost by Bas Brands
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -27,10 +43,18 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/behat/lib.php');
 require_once($CFG->dirroot . '/course/lib.php');
 
+// Require own locallib.php.
+require_once($CFG->dirroot . '/theme/learnr/locallib.php');
+
+// Add activity navigation if the feature is enabled.
+$activitynavigation = get_config('theme_learnr', 'activitynavigation');
+if ($activitynavigation == THEME_LEARNR_SETTING_SELECT_YES) {
+    $PAGE->theme->usescourseindex = false;
+}
+
 // Add block button in editing mode.
 $addblockbutton = $OUTPUT->addblockbutton();
 
-user_preference_allow_ajax_update('drawer-open-nav', PARAM_ALPHA);
 user_preference_allow_ajax_update('drawer-open-index', PARAM_BOOL);
 user_preference_allow_ajax_update('drawer-open-block', PARAM_BOOL);
 
@@ -52,64 +76,43 @@ if ($courseindexopen) {
 }
 
 $blockshtml = $OUTPUT->blocks('side-pre');
-
 $hasblocks = (strpos($blockshtml, 'data-block=') !== false || !empty($addblockbutton));
-
-if ($this->page->theme->settings->showblockdrawer == 0) {
-$hasblocks = (strpos($blockshtml, 'data-block=') !== false);
-}
-
 if (!$hasblocks) {
     $blockdraweropen = false;
 }
-
 $courseindex = core_course_drawer();
 if (!$courseindex) {
     $courseindexopen = false;
 }
-
-$alertbox = '';
-if ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage' || $this->page->pagelayout == 'mycourses' ) {
-    $alertbox = (empty($this->page->theme->settings->alertbox)) ? false : format_text($this->page->theme->settings->alertbox);
-}
-
-$fptextbox =false;
-if ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage') {
-$fptextbox = (empty($this->page->theme->settings->fptextbox)) ? false : format_text($this->page->theme->settings->fptextbox);
-
-}
-$hasmarketingtiles = false;
-if ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage') {
-    $hasmarketingtiles = true;
-}
-
-$showcourseindexnav = (empty($this->page->theme->settings->showcourseindexnav)) ? false : $this->page->theme->settings->showcourseindexnav;
-$showblockdrawer = (empty($this->page->theme->settings->showblockdrawer)) ? false : $this->page->theme->settings->showblockdrawer;
 
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
 
 $secondarynavigation = false;
 $overflow = '';
-if ($this->page->has_secondary_navigation()) {
-    $tablistnav = $this->page->has_tablist_secondary_navigation();
-    $moremenu = new \core\navigation\output\more_menu($this->page->secondarynav, 'nav-tabs', true, $tablistnav);
+if ($PAGE->has_secondary_navigation()) {
+    $tablistnav = $PAGE->has_tablist_secondary_navigation();
+    $moremenu = new \core\navigation\output\more_menu($PAGE->secondarynav, 'nav-tabs', true, $tablistnav);
     $secondarynavigation = $moremenu->export_for_template($OUTPUT);
-    $overflowdata = $this->page->secondarynav->get_overflow_menu_data();
+    $overflowdata = $PAGE->secondarynav->get_overflow_menu_data();
     if (!is_null($overflowdata)) {
         $overflow = $overflowdata->export_for_template($OUTPUT);
     }
 }
 
 $primary = new core\navigation\output\primary($PAGE);
-$renderer = $this->page->get_renderer('core');
+$renderer = $PAGE->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
-$buildregionmainsettings = !$this->page->include_region_main_settings_in_header_actions() && !$this->page->has_secondary_navigation();
+$buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
 // If the settings menu will be included in the header then don't add it here.
 $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
 
-$header = $this->page->activityheader;
+$header = $PAGE->activityheader;
 $headercontent = $header->export_for_template($renderer);
+
+// DBN Update begin
+$showcourseindexnav = (empty($this->page->theme->settings->showcourseindexnav)) ? false : $this->page->theme->settings->showcourseindexnav;
+// DBN Update end
 
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
@@ -130,12 +133,43 @@ $templatecontext = [
     'hasregionmainsettingsmenu' => !empty($regionmainsettingsmenu),
     'overflow' => $overflow,
     'headercontent' => $headercontent,
-    'showcourseindexnav' => $showcourseindexnav,
-    'alertbox' => $alertbox,
-    'fptextbox' => $fptextbox,
-    'hasmarketingtiles' => $hasmarketingtiles,
     'addblockbutton' => $addblockbutton,
-    'showblockdrawer' => $showblockdrawer,
+    // DBN Update begin
+    'showcourseindexnav' => $showcourseindexnav
+    // DBN Update end
 ];
 
+// Include the template content for the course related hints.
+require_once(__DIR__ . '/includes/courserelatedhints.php');
+
+// Include the template content for the block regions.
+require_once(__DIR__ . '/includes/blockregions.php');
+
+// Include the content for the back to top button.
+require_once(__DIR__ . '/includes/backtotopbutton.php');
+
+// Include the content for the scrollspy.
+require_once(__DIR__ . '/includes/scrollspy.php');
+
+// Include the template content for the footnote.
+require_once(__DIR__ . '/includes/footnote.php');
+
+// Include the template content for the static pages.
+require_once(__DIR__ . '/includes/staticpages.php');
+
+// Include the template content for the JavaScript disabled hint.
+require_once(__DIR__ . '/includes/javascriptdisabledhint.php');
+
+// Include the template content for the info banners.
+require_once(__DIR__ . '/includes/infobanners.php');
+
+// Include the template content for the navbar styling.
+require_once(__DIR__ . '/includes/navbar.php');
+
+// Include the template content for the advertisement tiles, but only if we are on the frontpage.
+if ($PAGE->pagelayout == 'frontpage') {
+    require_once(__DIR__ . '/includes/advertisementtiles.php');
+}
+
+// Render drawers.mustache from learnr.
 echo $OUTPUT->render_from_template('theme_learnr/drawers', $templatecontext);

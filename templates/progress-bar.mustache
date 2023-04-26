@@ -1,4 +1,5 @@
 {{#hasprogressbar}}
+	{{#iscoursepage}}
 	{{#progress}}
 	<div class="progress courseview">
 	    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{progress}}" style= "width: {{progress}}%" aria-valuemin="0" aria-valuemax="100"> 
@@ -9,4 +10,5 @@
 	    </div>
 	</div>
 	{{/progress}}
+	{{/iscoursepage}}
 {{/hasprogressbar}}

@@ -29,13 +29,6 @@ $warning:       $orange !default;
 $danger:        $red !default;
 $secondary:     $gray-400 !default;
 
-$administration:    #5d63f6 !default;
-$assessment:        #eb66a2 !default;
-$collaboration:     #f7634d !default;
-$communication:     #11a676 !default;
-$content:           #399be2 !default;
-$interface:         #a378ff !default;
-
 $info-outline:    #1f7e9a;
 $warning-outline: #a6670e;
 
@@ -46,39 +39,20 @@ $table-accent-bg:             rgba($black, .03) !default;
 $enable-responsive-font-sizes: true !default;
 
 // Body
-$body-color:        $gray-900 !default;
-$body-bg:           #d6dbe7 !default;
-$drawer-bg-color:   $gray-100 !default;
-
-// Links
-$link-color:                              $primary !default;
-$link-hover-color:                        darken($link-color, 15%) !default;
+$body-color:    $gray-900 !default;
 
 // Fonts
 $font-size-base: 0.9375rem !default;
 $rfs-base-font-size: 0.9rem !default;
 $headings-font-weight:   700 !default;
 
-// Navbar #15558d
-$navbar-bg:                         #075395 !default;
-$navbar-dark-color:                 $white !default;
-$navbar-dark-hover-color:           $navbar-dark-color !default;
-$navbar-dark-active-color:          $navbar-dark-color !default;
-$navbar-dark-disabled-color:        rgba($white, .7) !default;
-
-$navbar-light-color:                $primary !default;
-$navbar-light-hover-color:          $navbar-light-color !default;
-$navbar-light-active-color:         $navbar-light-color !default;
-$navbar-light-disabled-color:       rgba($gray-600, 1) !default;
-
-$navbar-light-brand-color:                $navbar-light-active-color !default;
-$navbar-light-brand-hover-color:          $navbar-light-active-color !default;
-$navbar-dark-brand-color:                 $navbar-dark-active-color !default;
-$navbar-dark-brand-hover-color:           $navbar-dark-active-color !default;
-
+// Navbar
+$navbar-dark-hover-color:           rgba($white, 1) !default;
+$navbar-light-color:                rgba($black, 0.6) !default;
+$navbar-light-hover-color:          rgba($black, .9) !default;
 
 // Breadcrumbs
-$breadcrumb-padding-y:              .25rem !default;
+$breadcrumb-padding-y:              .5rem !default;
 $breadcrumb-padding-x:              0 !default;
 $breadcrumb-item-padding:           .5rem !default;
 $breadcrumb-margin-bottom:          0 !default;
@@ -88,6 +62,7 @@ $breadcrumb-divider-rtl: "/" !default;
 
 // Alerts
 $alert-border-width:                0 !default;
+
 $card-group-margin: .25rem;
 
 // Toasts
@@ -95,6 +70,14 @@ $toast-color:                       $white !default;
 $toast-background-color:            rgba($gray-900, .95) !default;
 $toast-header-color:                $gray-100 !default;
 $toast-header-background-color:     rgba($white, .1) !default;
+
+// Begin DBN Update.
+$drawer-bg:                        #f5f9fd !default;
+$pagenavbuttonsbg:                 #aabbcd !default;
+$body-bg:                          #f5f9fd !default;
+$courseboxheight:                  200px !default;
+$nav-tabs-link-active-bg:           rgba($primary, 10%) !default;
+// End DBN Update.
 
 // Custom control size
 $custom-control-indicator-size: 1.25rem;
@@ -108,21 +91,8 @@ $dropdown-link-hover-bg: $primary;
 
 $popover-max-width: 300px !default;
 
-
-$border-radius:               .25rem !default;
-$border-radius-lg:            .5rem !default;
-$border-radius-sm:            .25rem !default;
-
-$fullwidthpage: 0 !default;
-
-@if $fullwidthpage == 1 {
-    $course-content-maxwidth: 100%;
-}
-
-$courseiconsize: 30px !default;
-$fpicon-width: 100px !default;
-$courseboxheight: 250px !default;
-$activityhover: rgba($primary, 30%) !default;
+$border-radius: 0 !default;
+$border-radius-lg: 0 !default;
 
 // stylelint-disable
 $theme-colors: () !default;
@@ -135,19 +105,6 @@ $theme-colors: map-merge((
     danger: $danger,
 ), $theme-colors);
 // stylelint-enable
-
-$activity-icon-colors: () !default;
-$activity-icon-colors: map-merge(
-    (
-        "administration": $administration,
-        "assessment": $assessment,
-        "collaboration": $collaboration,
-        "communication": $communication,
-        "content": $content,
-        "interface": $interface,
-    ),
-    $activity-icon-colors
-);
 
 $spacer: 1rem !default;
 $spacers: (
@@ -175,3 +132,30 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
+}
+
+// Rounded user pictures
+.userpicture {
+    border-radius: 50%;
+}
+
+// Reset the default styling back to the bootstrap defaults for
+// the secondary outline button because gray-200 is much too light
+// for an outline button.
+.btn-outline-secondary {
+    @include button-outline-variant($gray-600);
+    border-color: $gray-600;
+}
+
+.btn-outline-info {
+    @include button-outline-variant($info-outline);
+}
+
+.btn-outline-warning {
+    @include button-outline-variant($warning-outline);
+}
+
+@include bg-variant(".bg-gray", $gray-200, true);

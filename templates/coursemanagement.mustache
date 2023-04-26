@@ -1,0 +1,68 @@
+{{#hascoursemanagement}}
+{{#showincourseonly}}
+<div class="collapse" id="blockslider" class="slidingblockpanel">
+        <div class="fp-coursemanagement w-100">
+
+            <div class="container-fluid w-100">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="dashtitle">
+                            <h3><i class="fa fa-user dashicon"></i>{{{manageuserstitle}}}</h3>
+                        </div>
+                        <div class="list-group">
+                            {{#dashlinks}}
+                            {{#hasuserlinks}}
+                                <a href="{{{url}}}" class="list-group-item">{{{title}}}</a>
+                            {{/hasuserlinks}}
+                            {{/dashlinks}}
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="dashtitle">
+                            <h3><i class="fa fa-check-square-o dashicon"></i>{{{gradebooktitle}}}</h3>
+                        </div>
+                        <div class="list-group">
+                            {{#dashlinks}}
+                            {{#hasgradebooklinks}}
+                                <a href="{{{url}}}" class="list-group-item">{{{title}}}</a>
+                            {{/hasgradebooklinks}}
+                            {{/dashlinks}}
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="dashtitle">
+                            <h3><i class="fa fa-graduation-cap dashicon"></i>{{{progresstitle}}}</h3>
+                        </div>
+                        <div class="list-group">
+                            {{#dashlinks}}
+                            {{#hasprogresslinks}}
+                                <a href="{{{url}}}" class="list-group-item">{{{title}}}</a>
+                            {{/hasprogresslinks}}
+                            {{/dashlinks}}
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="dashtitle">
+                            <h3><i class="fa fa-cogs dashicon"></i>{{{coursemanagetitle}}}</h3>
+                        </div>
+                        <div class="list-group">
+                            {{#dashlinks}}
+                            {{#hascoursemanagelinks}}
+                                <a href="{{{url}}}" class="list-group-item">{{{title}}}</a>
+                            {{/hascoursemanagelinks}}
+                            {{/dashlinks}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+</div>
+{{/showincourseonly}}
+{{/hascoursemanagement}}
