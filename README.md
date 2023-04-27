@@ -1,7 +1,7 @@
 moodle-theme_learnr
 ========================
 
-LearnR takes inspiration from LearnR and integrates some of the most popular features of Fordson, Rebel, and evolve-D into one amazing theme we call LearnR.  Building upon the features of several themes we have created something special for Moodle 4+.
+LearnR takes inspiration from Boost Union and integrates some of the most popular features of Fordson, Rebel, and evolve-D into one amazing theme we call LearnR.  Building upon the features of several themes we have created a clean and multifunctional theme with some of the most popular Moodle enhancements.
 
 
 Requirements
@@ -20,7 +20,7 @@ See http://docs.moodle.org/en/Installing_plugins for details on installing Moodl
 
 
 
-Copyright Notices LearnR
+Copyright Notices Boost Union
 ---------
 
 The copyright of this plugin is held by\
@@ -29,14 +29,14 @@ Moodle an Hochschulen e.V.
 Individual copyrights of individual developers are tracked in PHPDoc comments and Git commits.
 
 
-Credits
+Boost Union Credits
 -------
 
 This theme is based on the successor of and heavily inspired by the former theme theme_boost_campus by Kathrin Osswald and Alexander Bias from Ulm University which was maintained until Moodle 3.11 on https://github.com/moodle-an-hochschulen/moodle-theme_boost_campus.  
 LearnR was also enhanced with code from Fordson theme, Rebel theme, and evolve-D theme.
 
 
-Contributors to LearnR
+Boost Union Contributors
 ------------
 
 This theme is a collaboration result of multiple organisations.
