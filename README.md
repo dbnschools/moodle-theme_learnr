@@ -1,16 +1,18 @@
 moodle-theme_learnr
 ========================
 
-LearnR is a Boost child theme for Moodle 4+ made for learners.  The LearnR theme builds on the new layouts and user exeperiences introduced in Moodle 4 and provides a variety of enhancements to core features and styles.  The LearnR theme is focused on a student going from “login to learning” quickly and easily.
+LearnR is a Boost child theme for Moodle 4+..  Made for learners and focused on providing unique feattures to enhance management and delivery of instruction.  The LearnR theme builds on the new layouts and user exeperiences introduced in Moodle 4 and provides a variety of enhancements to core features and styles.  The LearnR theme is focused on students going from “login to learning” quickly and easily.
 
 LearnR is almost entirely based on the core foundation of the Boost Union Theme.  If you have not seen the Boost Union theme you are missing out! We like to think of LearnR as an enhanced version of Boost Union that is very focused on styling, integrations with other plugins, and we have carried over some of the most popular features from all of our previous themes like Fordson and Evolve-D.  
 
 Recommended Plugins:
-User bulk enrolment https://moodle.org/plugins/local_bulkenrol
-Easy Enrollment https://moodle.org/plugins/enrol_easy
-MISTAR Gradebook (Michigan K12 SIS Integration)
+------------
+* User bulk enrolment https://moodle.org/plugins/local_bulkenrol
+* Easy Enrollment https://moodle.org/plugins/enrol_easy
+* MISTAR Gradebook (Michigan K12 SIS Integration)
 
 LearnR adds the following features to Boost Union:
+------------
 * Removal of drawers
 * Teacher Course Management Dashboard
 * Course Tile Display Chooser
@@ -28,6 +30,7 @@ LearnR adds the following features to Boost Union:
 Custom Login Page coming soon!
 
 Features Core to Boost Union:
+------------
 * Page Width Settings
 * Logo Uploads
 * Fav Icon
