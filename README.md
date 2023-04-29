@@ -11,40 +11,40 @@ Easy Enrollment https://moodle.org/plugins/enrol_easy
 MISTAR Gradebook (Michigan K12 SIS Integration)
 
 LearnR adds the following features to Boost Union:
-Removal of drawers
-Teacher Course Management Dashboard
-Course Tile Display Chooser
-Section Style Chooser
-Course Progress Bar
-Latest Course Drop Down
-Icon Navigation Menu System for Home, MyCourses, and Dashboard pages
-Course Activity List Drop Down
-Default Image on My Courses Page
-Additional Color Choosers
-Additional Page Selectors for Advertisement Tiles
-Hide Login Form (If using SSO like Google login)
-Tweaks to default installation settings to enhance styling out of the box
+* Removal of drawers
+* Teacher Course Management Dashboard
+* Course Tile Display Chooser
+* Section Style Chooser
+* Course Progress Bar
+* Latest Course Drop Down
+* Icon Navigation Menu System for Home, MyCourses, and Dashboard pages
+* Course Activity List Drop Down
+* Default Image on My Courses Page
+* Additional Color Choosers
+* Additional Page Selectors for Advertisement Tiles
+* Hide Login Form (If using SSO like Google login)
+* Tweaks to default installation settings to enhance styling out of the box
 
 Custom Login Page coming soon!
 
 Features Core to Boost Union:
-Page Width Settings
-Logo Uploads
-Fav Icon
-Background, Course Header, and other Image Uploads
-Variety of Core Color Choosers
-Course Header Images with customizations
-Custom Fonts
-Font Awesome Updates
-Hide Primary Nav Menu Items
-Back To Top button
-Scroll Spy
-Activity Navigation
-Huge Selection of Additional Block Layouts
-Custom Pages
-Custom Alerts and Info Banners
-Custom Advertisement Tiles
-Course Related Hints for Teachers
+* Page Width Settings
+* Logo Uploads
+* Fav Icon
+* Background, Course Header, and other Image Uploads
+* Variety of Core Color Choosers
+* Course Header Images with customizations
+* Custom Fonts
+* Font Awesome Updates
+* Hide Primary Nav Menu Items
+* Back To Top button
+* Scroll Spy
+* Activity Navigation
+* Huge Selection of Additional Block Layouts
+* Custom Pages
+* Custom Alerts and Info Banners
+* Custom Advertisement Tiles
+* Course Related Hints for Teachers
 Check out the Boost Union theme: https://moodle.org/plugins/theme_boost_union 
 
 
