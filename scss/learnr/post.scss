@@ -845,6 +845,15 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 // Begin DBN Update.
 
+
+.bg-dark {
+    background-color: $bg-dark !important;
+}
+
+.bg-white {
+    background-color: $bg-white !important;
+}
+
 // Navbar customizations
 .navbar.fixed-top {
     box-shadow: 0 0 15px 0 rgba(0,0,0,.3)!important;
@@ -1492,6 +1501,7 @@ ul.teacherscourseview {
     transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
     background-color: $gray-200;
 }
+
 .hoverhighlight:hover {
     transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
     background-color: $gray-200;
@@ -1500,6 +1510,7 @@ ul.teacherscourseview {
 .drawer-inpage .block {
     background-color: $body-bg;
 }
+
 @media (max-width: 768px) {
     .col-md-3.drawer-inpage {
         flex: 0 0 100%;
@@ -1507,22 +1518,6 @@ ul.teacherscourseview {
         margin-top: 1rem;
     }
 }
-/*
-.easyenrolform {
-    display: flex;
-    justify-content: center;
-}
-.secondary-navigation {
-    clear: both;
-}
-
-@media screen and (max-width: 576px) {
-    .headerbuttons .fa-2x {
-        font: normal normal normal 14px/1 FontAwesome;
-        font-size: inherit;
-    }
-}*/
-
 
 #region-main #block-region-side-pre .maincalendar .calendarwrapper td>div {
     height: auto;

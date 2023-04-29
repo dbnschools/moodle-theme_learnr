@@ -166,10 +166,20 @@ require_once(__DIR__ . '/includes/infobanners.php');
 // Include the template content for the navbar styling.
 require_once(__DIR__ . '/includes/navbar.php');
 
+// DBN Update begin.
 // Include the template content for the advertisement tiles, but only if we are on the frontpage.
-if ($PAGE->pagelayout == 'frontpage') {
+if ((strpos($this->page->theme->settings->showadvertonpages,1) !== false) && $PAGE->pagelayout == 'frontpage') {
     require_once(__DIR__ . '/includes/advertisementtiles.php');
 }
+
+if ((strpos($this->page->theme->settings->showadvertonpages,2) !== false) && $PAGE->pagelayout == 'mydashboard') {
+    require_once(__DIR__ . '/includes/advertisementtiles.php');
+}
+
+if ((strpos($this->page->theme->settings->showadvertonpages,3) !== false) && $PAGE->pagelayout == 'mycourses') {
+    require_once(__DIR__ . '/includes/advertisementtiles.php');
+}
+// DBN Update end.
 
 // Render drawers.mustache from learnr.
 echo $OUTPUT->render_from_template('theme_learnr/drawers', $templatecontext);

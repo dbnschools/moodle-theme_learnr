@@ -707,6 +707,10 @@ $string['drawerbg'] = 'Drawer background color';
 $string['drawerbg_desc'] = 'Change the color of the drawer background.';
 $string['bodybg'] = 'Body background color';
 $string['bodybg_desc'] = 'Change the color of the body background.';
+$string['bgwhite'] = 'Navbar Light Color';
+$string['bgwhite_desc'] = 'Changes the value of the .bg-white class.';
+$string['bgdark'] = 'Navbar Dark Color';
+$string['bgdark_desc'] = 'Changes the value of the .bg-dark class.';
 $string['iconnavbartab'] = 'Icon Navigation';
 $string['iconnavheading'] = 'Icon Navigation';
 $string['iconnavinfo'] = 'Dashboard Icon Navigation';
@@ -783,4 +787,11 @@ $string['courseboxheight_desc'] = 'Control the height of the Course tile on the 
 $string['enrollcoursecard'] = 'View Course';
 $string['showcourseindexnav'] = 'Show Course Index Navigation';
 $string['showcourseindexnav_desc'] = 'Show or hide the Course Index drawer navigation.';
+
+$string['showadvertonpages'] = 'Show Course Index Navigation';
+$string['showadvertonpages_desc'] = 'Choose which pages to show the Advertisement tiles on.';
+$string['showadvertonpages-home'] = 'Home Page';
+$string['showadvertonpages-dash'] = 'Dashboard Page';
+$string['showadvertonpages-mycourses'] = 'My Courses Page';
+
 // End DBN Update.

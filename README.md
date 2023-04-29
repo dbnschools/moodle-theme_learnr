@@ -1,7 +1,51 @@
 moodle-theme_learnr
 ========================
 
-LearnR takes inspiration from Boost Union and integrates some of the most popular features of Fordson, Rebel, and evolve-D into one amazing theme we call LearnR.  Building upon the features of several themes we have created a clean and multifunctional theme with some of the most popular Moodle enhancements.
+LearnR is a Boost child theme for Moodle 4+ made for learners.  The LearnR theme builds on the new layouts and user exeperiences introduced in Moodle 4 and provides a variety of enhancements to core features and styles.  The LearnR theme is focused on a student going from “login to learning” quickly and easily.
+
+LearnR is almost entirely based on the core foundation of the Boost Union Theme.  If you have not seen the Boost Union theme you are missing out! We like to think of LearnR as an enhanced version of Boost Union that is very focused on styling, integrations with other plugins, and we have carried over some of the most popular features from all of our previous themes like Fordson and Evolve-D.  
+
+Recommended Plugins:
+User bulk enrolment https://moodle.org/plugins/local_bulkenrol
+Easy Enrollment https://moodle.org/plugins/enrol_easy
+MISTAR Gradebook (Michigan K12 SIS Integration)
+
+LearnR adds the following features to Boost Union:
+Removal of drawers
+Teacher Course Management Dashboard
+Course Tile Display Chooser
+Section Style Chooser
+Course Progress Bar
+Latest Course Drop Down
+Icon Navigation Menu System for Home, MyCourses, and Dashboard pages
+Course Activity List Drop Down
+Default Image on My Courses Page
+Additional Color Choosers
+Additional Page Selectors for Advertisement Tiles
+Hide Login Form (If using SSO like Google login)
+Tweaks to default installation settings to enhance styling out of the box
+
+Custom Login Page coming soon!
+
+Features Core to Boost Union:
+Page Width Settings
+Logo Uploads
+Fav Icon
+Background, Course Header, and other Image Uploads
+Variety of Core Color Choosers
+Course Header Images with customizations
+Custom Fonts
+Font Awesome Updates
+Hide Primary Nav Menu Items
+Back To Top button
+Scroll Spy
+Activity Navigation
+Huge Selection of Additional Block Layouts
+Custom Pages
+Custom Alerts and Info Banners
+Custom Advertisement Tiles
+Course Related Hints for Teachers
+Check out the Boost Union theme: https://moodle.org/plugins/theme_boost_union 
 
 
 Requirements

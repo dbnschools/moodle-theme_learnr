@@ -909,7 +909,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 // User Links.
                 // Bulkenrol.
                 array(
-                    'hasuserlinks' => get_string('pluginname', 'local_bulkenrol'),
+                    'hasuserlinks' => get_string_manager()->string_exists('pluginname', 'local_bulkenrol') ? true : false,
                     'title' => get_string('pluginname', 'local_bulkenrol'),
                     'url' => new moodle_url('/local/bulkenrol/index.php', array(
                         'id' => $PAGE->course->id
@@ -917,7 +917,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ) ,
                 // Easy Enrollment.
                 array(
-                    'hasuserlinks' => get_string('header_coursecodes', 'enrol_easy'),
+                    'hasuserlinks' => get_string_manager()->string_exists('header_coursecodes', 'enrol_easy') ? true : false,
                     'title' => get_string('header_coursecodes', 'enrol_easy'),
                     'url' => new moodle_url('/enrol/editinstance.php', array(
                         'courseid' => $PAGE->course->id,
@@ -927,7 +927,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ),
                 // Participants.
                 array(
-                    'hasuserlinks' => get_string('participants', 'moodle'),
+                    'hasuserlinks' => get_string_manager()->string_exists('participants', 'moodle') ? true : false,
                     'title' => get_string('participants', 'moodle'),
                     'url' => new moodle_url('/user/index.php', array(
                         'id' => $PAGE->course->id
@@ -935,9 +935,17 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ),
                 // Groups.
                 array(
-                    'hasuserlinks' => get_string('groups', 'group'),
+                    'hasuserlinks' => get_string_manager()->string_exists('groups', 'group') ? true : false,
                     'title' => get_string('groups', 'group'),
                     'url' => new moodle_url('/group/index.php', array(
+                        'id' => $PAGE->course->id
+                    ))
+                ),
+                // Enrollment Methods.
+                array(
+                    'hasuserlinks' => get_string_manager()->string_exists('enrolmentmethod', 'enrol') ? true : false,
+                    'title' => get_string('enrolmentmethod', 'enrol'),
+                    'url' => new moodle_url('/enrol/instances.php', array(
                         'id' => $PAGE->course->id
                     ))
                 ),
@@ -945,7 +953,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 // Gradebook Links.
                 //Export to MISTAR
                 array(
-                    'hasgradebooklinks' => get_string('exporttomistar', 'theme_learnr'),
+                    'hasgradebooklinks' => get_string_manager()->string_exists('exporttomistar', 'theme_learnr') ? true : false,
                     'title' => get_string('exporttomistar', 'theme_learnr'),
                     'url' => new moodle_url('/grade/export/mistar/index.php', array(
                         'id' => $PAGE->course->id
@@ -953,7 +961,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ),
                 // Gradebook grader.
                 array(
-                    'hasgradebooklinks' => get_string('gradebook', 'grades'),
+                    'hasgradebooklinks' => get_string_manager()->string_exists('gradebook', 'grades') ? true : false,
                     'title' => get_string('gradebook', 'grades'),
                     'url' => new moodle_url('/grade/report/grader/index.php', array(
                         'id' => $PAGE->course->id
@@ -961,7 +969,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ),
                 // User Gradebook Report.
                 array(
-                    'hasgradebooklinks' => get_string('userreportgradebook', 'theme_learnr'),
+                    'hasgradebooklinks' => get_string_manager()->string_exists('userreportgradebook', 'theme_learnr') ? true : false,
                     'title' => get_string('userreportgradebook', 'theme_learnr'),
                     'url' => new moodle_url('/grade/report/user/index.php', array(
                         'id' => $PAGE->course->id
@@ -969,7 +977,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ),
                 // Greadebook Setup.
                 array(
-                    'hasgradebooklinks' => get_string('gradebooksetup', 'grades'),
+                    'hasgradebooklinks' => get_string_manager()->string_exists('gradebooksetup', 'grades') ? true : false,
                     'title' => get_string('gradebooksetup', 'grades'),
                     'url' => new moodle_url('/grade/edit/tree/index.php', array(
                         'id' => $PAGE->course->id
@@ -979,15 +987,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 // Progress links.
                 // Badges.
                 array(
-                    'hasprogresslinks' => get_string('managebadges', 'badges'),
+                    'hasprogresslinks' => get_string_manager()->string_exists('managebadges', 'badges') ? true : false,
                     'title' => get_string('managebadges', 'badges'),
                     'url' => new moodle_url('/badges/view.php?type=2', array(
                         'id' => $PAGE->course->id
                     ))
                 ),
-                // Course Completion.
+                // Course Completion Settings.
                 array(
-                    'hasprogresslinks' => get_string('editcoursecompletionsettings', 'completion'),
+                    'hasprogresslinks' => get_string_manager()->string_exists('editcoursecompletionsettings', 'completion') ? true : false,
                     'title' => get_string('editcoursecompletionsettings', 'completion'),
                     'url' => new moodle_url('/course/completion.php', array(
                         'id' => $PAGE->course->id
@@ -995,7 +1003,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ),
                 // Activity Completion.
                 array(
-                    'hasprogresslinks' => get_string('activitycompletion', 'completion'),
+                    'hasprogresslinks' => get_string_manager()->string_exists('activitycompletion', 'completion') ? true : false,
                     'title' => get_string('activitycompletion', 'completion'),
                     'url' => new moodle_url('/report/progress/index.php', array(
                         'course' => $PAGE->course->id
@@ -1003,7 +1011,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ),
                 // Activity Report.
                 array(
-                    'hasprogresslinks' => get_string('outline:view', 'report_outline'),
+                    'hasprogresslinks' => get_string_manager()->string_exists('outline:view', 'report_outline') ? true : false,
                     'title' => get_string('outline:view', 'report_outline'),
                     'url' => new moodle_url('/report/outline/index.php', array(
                         'id' => $PAGE->course->id
@@ -1011,7 +1019,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ),
                 // Live Logs.
                 array(
-                    'hasprogresslinks' => get_string('loglive:view', 'report_loglive'),
+                    'hasprogresslinks' => get_string_manager()->string_exists('loglive:view', 'report_loglive') ? true : false,
                     'title' => get_string('loglive:view', 'report_loglive'),
                     'url' => new moodle_url('/report/loglive/index.php', array(
                         'id' => $PAGE->course->id
@@ -1021,7 +1029,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 // Course Management.
                 // Reset course.
                 array(
-                    'hascoursemanagelinks' => get_string('reset', 'moodle'),
+                    'hascoursemanagelinks' => get_string_manager()->string_exists('reset', 'moodle') ? true : false,
                     'title' => get_string('reset', 'moodle'),
                     'url' => new moodle_url('/course/reset.php', array(
                         'id' => $PAGE->course->id
@@ -1029,7 +1037,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ),
                 // Copy course.
                 array(
-                    'hascoursemanagelinks' => get_string('copycourse', 'moodle'),
+                    'hascoursemanagelinks' => get_string_manager()->string_exists('copycourse', 'moodle') ? true : false,
                     'title' => get_string('copycourse', 'moodle'),
                     'url' => new moodle_url('/backup/copy.php', array(
                         'id' => $PAGE->course->id
@@ -1037,7 +1045,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ),
                 // Backup course.
                 array(
-                    'hascoursemanagelinks' => get_string('backup', 'moodle'),
+                    'hascoursemanagelinks' => get_string_manager()->string_exists('backup', 'moodle') ? true : false,
                     'title' => get_string('backup', 'moodle'),
                     'url' => new moodle_url('/backup/backup.php', array(
                         'id' => $PAGE->course->id
@@ -1045,7 +1053,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ),
                 // Restore course.
                 array(
-                    'hascoursemanagelinks' => get_string('restore', 'moodle'),
+                    'hascoursemanagelinks' => get_string_manager()->string_exists('restore', 'moodle') ? true : false,
                     'title' => get_string('restore', 'moodle'),
                     'url' => new moodle_url('/backup/restorefile.php', array(
                         'contextid' => $PAGE->context->id
@@ -1053,7 +1061,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ),
                 // Import course.
                 array(
-                    'hascoursemanagelinks' => get_string('import', 'moodle'),
+                    'hascoursemanagelinks' => get_string_manager()->string_exists('import', 'moodle') ? true : false,
                     'title' => get_string('import', 'moodle'),
                     'url' => new moodle_url('/backup/import.php', array(
                         'id' => $PAGE->course->id

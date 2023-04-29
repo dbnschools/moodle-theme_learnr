@@ -429,6 +429,20 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        $name = 'theme_learnr/bgwhite';
+        $title = get_string('bgwhite', 'theme_learnr');
+        $description = get_string('bgwhite_desc', 'theme_learnr');
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        $name = 'theme_learnr/bgdark';
+        $title = get_string('bgdark', 'theme_learnr');
+        $description = get_string('bgdark_desc', 'theme_learnr');
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // End DBN Update
 
         // Create Bootstrap colors heading.
@@ -2114,6 +2128,23 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $setting = new admin_setting_configselect($name, $title, $description,
                 THEME_LEARNR_SETTING_ADVERTISEMENTTILES_FRONTPAGEPOSITION_BEFORE, $tilefrontpagepositionoptions);
         $tab->add($setting);
+
+
+        //Begin DBN Update.
+        // Setting: Show Advert Tiles on pages.
+        $name = 'theme_learnr/showadvertonpages';
+        $title = get_string('showadvertonpages', 'theme_learnr');
+        $description = get_string('showadvertonpages_desc', 'theme_learnr');
+
+        $showoption1 = get_string('showadvertonpages-home', 'theme_learnr');
+        $showoption2 = get_string('showadvertonpages-dash', 'theme_learnr');
+        $showoption3 = get_string('showadvertonpages-mycourses', 'theme_learnr');
+
+        $showadvertpagesoptions = array('1'=>$showoption1, '2'=>$showoption2, '3'=>$showoption3);
+        $setting = new admin_setting_configmulticheckbox($name, $title, $description, array(), $showadvertpagesoptions);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        // End DBN Update.
 
         // Setting: Number of advertisement tile columns per row.
         $tilecolumnsoptions = array();

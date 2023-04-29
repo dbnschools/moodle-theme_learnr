@@ -169,8 +169,11 @@ function theme_learnr_get_pre_scss($theme) {
         'navbarsitetitlecolor' => ['navbarsitetitlecolor'],
         'drawerbg' => ['drawer-bg'],
         'bodybg' => ['body-bg'],
+        'bgwhite' => ['bg-white'],
+        'bgdark' => ['bg-dark'],
         'courseheaderbg' => ['courseheaderbg'],
         'pagenavbuttonsbg' => ['pagenavbuttonsbg'],
+        'courseboxheight' => ['courseboxheight'],
         'courseboxheight' => ['courseboxheight'],
         // End DBN Update.
     ];
