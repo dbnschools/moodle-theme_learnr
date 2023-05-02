@@ -1,0 +1,82 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_learnr/footnote
+
+    LearnR footnote layout template.
+
+    Context variables required for this template:
+    * showfootnote - The fact if the footnote should be shown or not
+
+    Example context (json):
+    {
+        "showfootnote": true,
+        "footnotesetting": "This is my nice footnote",
+        "imprintlinkpositionfootnote": true,
+        "imprintlink": "https://localhost/theme/learnr/pages/imprint.php",
+        "imprinttitle": "Imprint",
+        "contactlinkpositionfootnote": true,
+        "contactlink": "https://localhost/theme/learnr/pages/contact.php",
+        "contacttitle": "Contact",
+        "helplinkpositionfootnote": true,
+        "helplink": "https://localhost/theme/learnr/pages/help.php",
+        "helplinktitle": "Help",
+        "maintenancelinkpositionfootnote": true,
+        "maintenancelink": "https://localhost/theme/learnr/pages/maintenance.php",
+        "maintenancetitle": "Maintenance"
+    }
+}}
+
+{{! Begin DBN Update }}
+<div class="headerbuttons">
+    {{#showincourseonlymanagementbtn}}
+        <div class="text-right blockpanelbtn">
+            <button id="blocksliderbutton" class="btn btn-secondary headerbutton blockpanelbutton" type="button" data-toggle="collapse" data-target="#blockslider" aria-expanded="false" aria-controls="blockslider">
+        <i class="fa fa-arrows-v" aria-hidden="true"> </i> <span class="blockbtntext d-none d-sm-inline-block">{{# str }} courseblockpanelbtn, theme_learnr {{/ str }}</span>
+            </button>
+        </div>
+    {{/showincourseonlymanagementbtn}}
+    {{#showenrollinktoteacher}}
+    <div class="enrollbtn"> 
+        <a href="{{{easycodelink}}}" title="{{{courseenrollmentcode}}}" class="btn btn-secondary headerbutton easyenrolbtn" style="float:right;"><i class="fa fa-1x fa-key" aria-hidden="true"></i><span class="sr-only">{{{courseenrollmentcode}}}</span></a>
+    </div>
+    {{/showenrollinktoteacher}}
+
+    {{#hascourseactivities}}
+    <div class="courseactivites">
+        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{courseactivitiesbtntext}}}" class="btn btn-secondary headerbutton courseactivities" style="float:right;"><i class="fa-1x fa fa-list-alt courseactivities"></i></a>
+        <div class="dropdown-menu dropdown-menu-right iconsidebar">
+            <h5>{{{courseactivitiesbtntext}}}</h5>
+            {{{courseactivitiesmenu}}}
+        </div>
+    </div>
+    {{/hascourseactivities}}
+
+    {{#hasmycourses}}
+    <div class="mycourses">
+        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip="tooltip" data-placement= "right" title="{{{mycourses}}}" class="btn btn-secondary headerbutton mycourses" style="float:right;"><i class="fa-1x fa fa-history mycourses"></i></a>
+        <div class="dropdown-menu dropdown-menu-right iconsidebar">
+            <h5>{{{mycourses}}}</h5>
+            {{{mycoursesmenu}}}
+        </div>
+    </div>
+    {{/hasmycourses}}
+</div>
+{{! End DBN Update }}
+{{! Begin DBN Update }}
+{{{coursemanagementdash}}}
+{{! End DBN Update }}

@@ -333,6 +333,74 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return ' id="'. $this->body_id().'" class="'.$this->body_css_classes($additionalclasses).'"';
     }
 
+
+
+    //Begin DBN Update
+    public function headerbuttons() {
+        global $DB, $OUTPUT, $COURSE;
+        $course = $this->page->course;
+        $context = context_course::instance($course->id);
+        $mycourses = get_string('latestcourses', 'theme_learnr');
+        $mycoursesurl = new moodle_url('/my/');
+        $mycoursesmenu = $this->learnr_mycourses();
+        $hasmycourses = isset($COURSE->id) && $COURSE->id > 1 && (isset($this->page->theme->settings->showlatestcourses) && $this->page->theme->settings->showlatestcourses == 1);
+        $hascourseactivities = isset($COURSE->id) && $COURSE->id > 1 && (isset($this->page->theme->settings->showcourseactivities) && $this->page->theme->settings->showcourseactivities == 1);
+        $courseactivitiesbtntext = get_string('courseactivitiesbtntext', 'theme_learnr');
+        $courseenrollmentcode = get_string('courseenrollmentcode', 'theme_learnr');
+        $coursemanagementdash = $this->coursemanagementdash();
+        $showincourseonlymanagementbtn = isset($COURSE->id) && $COURSE->id > 1 && $this->page->theme->settings->showcoursemanagement == 1 && has_capability('moodle/course:viewhiddenactivities', $context) && isloggedin() && !isguestuser();
+        
+        $globalhaseasyenrollment = enrol_get_plugin('easy');
+        $coursehaseasyenrollment = '';
+        if ($globalhaseasyenrollment) {
+            $coursehaseasyenrollment = $DB->record_exists('enrol', array(
+                'courseid' => $this->page->course->id,
+                'enrol' => 'easy'
+            ));
+            $easyenrollinstance = $DB->get_record('enrol', array(
+                'courseid' => $this->page->course->id,
+                'enrol' => 'easy'
+            ));
+        }
+        $easycodetitle = '';
+        $easycodelink = '';
+        if ($globalhaseasyenrollment && $this->page->pagelayout == 'course' && $coursehaseasyenrollment){
+        $easycodetitle = get_string('header_coursecodes', 'enrol_easy');
+        $easycodelink = new moodle_url('/enrol/editinstance.php', array(
+                'courseid' => $this->page->course->id,
+                'id' => $easyenrollinstance->id,
+                'type' => 'easy'
+            ));
+        }
+        //$easyenrolbtntext = get_string('easyenrollbtn', 'theme_learnr');
+        
+        $course = $this->page->course;
+        $context = context_course::instance($course->id);
+        $showenrollinktoteacher = has_capability('moodle/course:viewhiddenactivities', $context) && $this->page->theme->settings->showeasyenrolbtn == 1  && $globalhaseasyenrollment && $coursehaseasyenrollment && $this->page->pagelayout == 'course';
+
+        // Build links.
+        $headerlinks = [
+            'manageuserstitle' => get_string('manageuserstitle', 'theme_learnr'),
+            'hasmycourses' => $hasmycourses,
+            'mycourses' => $mycourses,
+            'mycoursesmenu' => $mycoursesmenu,
+            'showenrollinktoteacher' => $showenrollinktoteacher,
+            'easycodetitle' => $easycodetitle,
+            'easycodelink' => $easycodelink,
+            'courseactivitiesmenu' => $this->courseactivities_menu(),
+            'courseactivitiesbtntext' => $courseactivitiesbtntext,
+            'courseenrollmentcode' => $courseenrollmentcode,
+            'hascourseactivities' => $hascourseactivities,
+            'coursemanagementdash' => $coursemanagementdash,
+            'showincourseonlymanagementbtn' => $showincourseonlymanagementbtn
+        ];
+        return $this->render_from_template('theme_learnr/headerbuttons', $headerlinks);
+        
+
+    }
+    //End DBN Update
+
+
     /**
      * Wrapper for header elements.
      *
