@@ -23,7 +23,7 @@ LearnR adds the following features to Boost Union:
 * Course Activity List Drop Down
 * Default Image on My Courses Page
 * Additional Color Choosers
-* Additional Page Selectors for Advertisement Tiles
+* Additional Page Selectors for Advertisement Tiles: Home, Dashboard, My Courses, and Course Home
 * Hide Login Form (If using SSO like Google login)
 * Tweaks to default installation settings to enhance styling out of the box
 

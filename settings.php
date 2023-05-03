@@ -2139,8 +2139,9 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $showoption1 = get_string('showadvertonpages-home', 'theme_learnr');
         $showoption2 = get_string('showadvertonpages-dash', 'theme_learnr');
         $showoption3 = get_string('showadvertonpages-mycourses', 'theme_learnr');
+        $showoption4 = get_string('showadvertonpages-course', 'theme_learnr');
 
-        $showadvertpagesoptions = array('1'=>$showoption1, '2'=>$showoption2, '3'=>$showoption3);
+        $showadvertpagesoptions = array('1'=>$showoption1, '2'=>$showoption2, '3'=>$showoption3, '4'=>$showoption4);
         $setting = new admin_setting_configmulticheckbox($name, $title, $description, array(), $showadvertpagesoptions);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);

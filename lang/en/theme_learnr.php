@@ -785,13 +785,14 @@ $string['trimsummary_desc'] = 'Enter a number to trim the summary length.  This 
 $string['courseboxheight'] = 'Course Tile Height';
 $string['courseboxheight_desc'] = 'Control the height of the Course tile on the frontpage and course categories.';
 $string['enrollcoursecard'] = 'View Course';
-$string['showcourseindexnav'] = 'Show Course Index Navigation';
-$string['showcourseindexnav_desc'] = 'Show or hide the Course Index drawer navigation.';
+$string['showcourseindexnav'] = 'Show Page Drawers';
+$string['showcourseindexnav_desc'] = 'Uncheck this box to hide the drawer navigation panels.  Not recommended but might be useful for corporate or organizational training installations of Moodle.  Removal of the drawers simplifies the user interface and might be desired for simple complaince training.';
 
-$string['showadvertonpages'] = 'Show Course Index Navigation';
+$string['showadvertonpages'] = 'Page Chooser for Advertisements';
 $string['showadvertonpages_desc'] = 'Choose which pages to show the Advertisement tiles on.';
 $string['showadvertonpages-home'] = 'Home Page';
 $string['showadvertonpages-dash'] = 'Dashboard Page';
 $string['showadvertonpages-mycourses'] = 'My Courses Page';
+$string['showadvertonpages-course'] = 'Course Home Page';
 
 // End DBN Update.

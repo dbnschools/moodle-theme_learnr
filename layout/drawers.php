@@ -179,6 +179,10 @@ if ((strpos($this->page->theme->settings->showadvertonpages,2) !== false) && $PA
 if ((strpos($this->page->theme->settings->showadvertonpages,3) !== false) && $PAGE->pagelayout == 'mycourses') {
     require_once(__DIR__ . '/includes/advertisementtiles.php');
 }
+
+if ((strpos($this->page->theme->settings->showadvertonpages,4) !== false) && $PAGE->pagelayout == 'course') {
+    require_once(__DIR__ . '/includes/advertisementtiles.php');
+}
 // DBN Update end.
 
 // Render drawers.mustache from learnr.

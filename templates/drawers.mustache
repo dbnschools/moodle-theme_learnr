@@ -154,12 +154,12 @@
                  </section>
             {{/regions.outsideleft.hasblocks}}
 
-
         <div id="topofscroll" class="main-inner">
+        
+        {{! Begin DBN Update }}
         {{{ output.headerbuttons }}}
-<div id="learnrpage" class="contentwrapper">
+            <div id="learnrpage" class="contentwrapper">
 
-            {{! Begin DBN Update }}
             {{#showcourseindexnav}}
             <div class="drawer-toggles d-flex">
                 {{#courseindex}}
@@ -278,7 +278,10 @@
                     {{{ regions.contentlower.regionhtml }}}
                 </section>
             {{/regions.contentlower.hasblocks}}
+
+            {{! Begin DBN Update }}
             </div>
+            {{! End DBN Update }}
         </div>
 
         {{#regions.outsideright.hasblocks}}

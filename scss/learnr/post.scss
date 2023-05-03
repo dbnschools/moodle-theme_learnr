@@ -655,7 +655,7 @@
            /* Add white background color, border radius and a small bottom margin
               to make the footnote work with background images. */
            @include border-radius();
-           background-color: $white;
+           // DBN background-color: $white;
            margin-bottom: 1rem;
        }
    
@@ -715,7 +715,7 @@
        /* If there is a loginbackground image configured. */
        body.pagelayout-login.loginbackgroundimage #footnote {
            /* Add a box shadow to the footnote to match the look of the login box. */
-           box-shadow: $logincontainer-shadow;
+           // Begin DBN Update box-shadow: $logincontainer-shadow;
    
            /* Add horizontal margin as the page does not have a margin itself. */
            margin-left: 15px;
@@ -736,7 +736,7 @@
               (which are only applied to pages > 768px.
               Note that there isn't a border-radius added as the login box doesn't have a border radius as well
               on this screen size. */
-           background-color: $white;
+           // DBN Update.  background-color: $white;
            margin-bottom: 1rem;
        }
    }
@@ -748,7 +748,7 @@
               to make the footnote work with background images.
               This is necessary as this isn't covered by the normal background styles already
               (which are only applied to pages > 768px. */
-           background-color: $white;
+           // DBN Update. background-color: $white;
    
            /* Change horizontal margin and padding to
               to make the footnote work with background images.
@@ -1007,9 +1007,7 @@
    #blockslider a.list-group-item {
        background-color: $body-bg;
    }
-   .headerbutton {
-       border-radius: 0;
-   }
+   
    .easyenrolform .btn .btn-secondary, .easyenrolform .qr-button, .easyenrolform .btn, .easyenrolform #enrolform_course_code {
        border-radius: 0px !important;
    }
@@ -1041,6 +1039,9 @@
     .headerbuttons .list-group-item {
         border: 0;
         border-bottom: 2px solid $gray-300;
+    }
+    .btn.btn-secondary.headerbutton {
+        background-color: $pagenavbuttonsbg;
     }
     .fp-coursemanagement {
         background-color: $white;
