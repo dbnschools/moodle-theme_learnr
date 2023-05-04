@@ -413,21 +413,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
         global $DB, $OUTPUT, $COURSE;
         $course = $this->page->course;
         $context = context_course::instance($course->id);
-        $mycourses = get_string('latestcourses', 'theme_learnr');
-        $mycoursesurl = new moodle_url('/my/');
-        $mycoursesmenu = $this->learnr_mycourses();
-        $hasmycourses = isset($COURSE->id) && $COURSE->id > 1 && (isset($this->page->theme->settings->showlatestcourses) && $this->page->theme->settings->showlatestcourses == 1);
-        $hascourseactivities = isset($COURSE->id) && $COURSE->id > 1 && (isset($this->page->theme->settings->showcourseactivities) && $this->page->theme->settings->showcourseactivities == 1);
-        $courseactivitiesbtntext = get_string('courseactivitiesbtntext', 'theme_learnr');
         $courseenrollmentcode = get_string('courseenrollmentcode', 'theme_learnr');
         $fpicons = $this->fpicons();
         $enrolform = $this->enrolform();
         $courseprogressbar = $this->courseprogressbar();
-        $coursemanagementdash = $this->coursemanagementdash();
-        $showincourseonlymanagementbtn = isset($COURSE->id) && $COURSE->id > 1 && $this->page->theme->settings->showcoursemanagement == 1 && has_capability('moodle/course:viewhiddenactivities', $context) && isloggedin() && !isguestuser();
-        
         $globalhaseasyenrollment = enrol_get_plugin('easy');
         $coursehaseasyenrollment = '';
+        $easyenrollinstance = '';
         if ($globalhaseasyenrollment) {
             $coursehaseasyenrollment = $DB->record_exists('enrol', array(
                 'courseid' => $this->page->course->id,
@@ -449,10 +441,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
             ));
         }
         $easyenrolbtntext = get_string('easyenrollbtn', 'theme_learnr');
-        
-        $course = $this->page->course;
-        $context = context_course::instance($course->id);
-        $showenrollinktoteacher = has_capability('moodle/course:viewhiddenactivities', $context) && $this->page->theme->settings->showeasyenrolbtn == 1  && $globalhaseasyenrollment && $coursehaseasyenrollment && $this->page->pagelayout == 'course';
         //End DBN Update
 
         $pagetype = $this->page->pagetype;
@@ -486,21 +474,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $header->headeractions = $this->page->get_header_actions();
 
         //Begin DBN Update
-        $header->hasmycourses = $hasmycourses;
-        $header->mycourses = $mycourses;
         $header->fpicons = $fpicons;
         $header->enrolform = $enrolform;
         $header->courseprogressbar = $courseprogressbar;
-        $header->showenrollinktoteacher = $showenrollinktoteacher;
-        $header->mycoursesmenu = $mycoursesmenu;
-        $header->easycodetitle = $easycodetitle;
-        $header->easycodelink = $easycodelink;
-        $header->courseactivitiesmenu = $this->courseactivities_menu();
-        $header->courseactivitiesbtntext = $courseactivitiesbtntext;
         $header->courseenrollmentcode = $courseenrollmentcode;
-        $header->hascourseactivities = $hascourseactivities;
-        $header->coursemanagementdash = $coursemanagementdash;
-        $header->showincourseonlymanagementbtn = $showincourseonlymanagementbtn;
         //End DBN Update
 
         // Add the course header image for rendering.
@@ -903,7 +880,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $menu = new custom_menu();
         $context = $this->page->context;
         if (isset($COURSE->id) && $COURSE->id > 1) {
-            $branchtitle = get_string('courseactivities', 'theme_learnr');
+            $branchtitle = get_string('courseactivitiesbtntext', 'theme_learnr');
             $branchlabel = $branchtitle;
             $branchurl = new moodle_url('#');
             $branch = $menu->add($branchlabel, $branchurl, $branchtitle, 10002);
@@ -950,14 +927,35 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
     public function coursemanagementdash() {
         global $PAGE, $COURSE, $CFG, $DB, $OUTPUT, $USER;
-
         $course = $this->page->course;
         $context = context_course::instance($course->id);
         $hascoursemanagement = has_capability('moodle/course:viewhiddenactivities', $context);
         $togglebutton = get_string('coursemanagementbutton', 'theme_learnr');
         $showincourseonly = isset($COURSE->id) && $COURSE->id > 1 && $this->page->theme->settings->showcoursemanagement == 1 && isloggedin() && !isguestuser();
         $globalhaseasyenrollment = enrol_get_plugin('easy');
-
+        $globalhaseasyenrollment = enrol_get_plugin('easy');
+        $coursehaseasyenrollment = '';
+        $easyenrollinstance = '';
+        if ($globalhaseasyenrollment) {
+            $coursehaseasyenrollment = $DB->record_exists('enrol', array(
+                'courseid' => $this->page->course->id,
+                'enrol' => 'easy'
+            ));
+            $easyenrollinstance = $DB->get_record('enrol', array(
+                'courseid' => $this->page->course->id,
+                'enrol' => 'easy'
+            ));
+        }
+        $easycodetitle = '';
+        $easycodelink = '';
+        if ($globalhaseasyenrollment && $this->page->pagelayout == 'course' && $coursehaseasyenrollment){
+        $easycodetitle = get_string('header_coursecodes', 'enrol_easy');
+        $easycodelink = new moodle_url('/enrol/editinstance.php', array(
+                'courseid' => $this->page->course->id,
+                'id' => $easyenrollinstance->id,
+                'type' => 'easy'
+            ));
+        }
 
         // Link Headers and text.
         $coursemanagementmessage = (empty($PAGE->theme->settings->coursemanagementtextbox)) ? false : format_text($PAGE->theme->settings->coursemanagementtextbox, FORMAT_HTML, array(
@@ -986,12 +984,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 // Easy Enrollment.
                 array(
                     'hasuserlinks' => get_string_manager()->string_exists('header_coursecodes', 'enrol_easy') ? true : false,
-                    'title' => get_string('header_coursecodes', 'enrol_easy'),
-                    'url' => new moodle_url('/enrol/editinstance.php', array(
-                        'courseid' => $PAGE->course->id,
-                        'id' => $easyenrollinstance->id,
-                        'type' => 'easy'
-                    ))
+                    'title' => $easycodetitle,
+                    'url' => $easycodelink,
                 ),
                 // Participants.
                 array(
