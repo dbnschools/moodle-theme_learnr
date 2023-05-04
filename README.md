@@ -1,9 +1,17 @@
 moodle-theme_learnr
 ========================
+* NOTICE: PLEASE UNINSTALL ANY PREVIOUS VERSION OF LEARNR PRIOR TO INSTALLING VERSION 4.2R6+
 
 LearnR is a Boost child theme for Moodle 4+..  Made for learners and focused on providing unique feattures to enhance management and delivery of instruction.  The LearnR theme builds on the new layouts and user exeperiences introduced in Moodle 4 and provides a variety of enhancements to core features and styles.  The LearnR theme is focused on students going from “login to learning” quickly and easily.
 
 LearnR is almost entirely based on the core foundation of the Boost Union Theme.  If you have not seen the Boost Union theme you are missing out! We like to think of LearnR as an enhanced version of Boost Union that is very focused on styling, integrations with other plugins, and we have carried over some of the most popular features from all of our previous themes like Fordson and Evolve-D.  
+
+Requirements
+------------
+
+This theme requires Moodle 4.0+.
+If upgrading from LearnR v1.7 you should completely uninstall the previous version and then install LearnR cleanly.
+* PLEASE UNINSTALL ANY PREVIOUS VERSION OF LEARNR PRIOR TO INSTALLING VERSION 4.2R6+
 
 Recommended Plugins:
 ------------
@@ -54,7 +62,8 @@ Check out the Boost Union theme: https://moodle.org/plugins/theme_boost_union
 Requirements
 ------------
 
-This theme requires Moodle 4.0+
+This theme requires Moodle 4.0+.
+If upgrading from LearnR v1.7 you should completely uninstall the previous version and then install LearnR cleanly.
 
 
 Installation

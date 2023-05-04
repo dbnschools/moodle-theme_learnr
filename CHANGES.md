@@ -6,6 +6,7 @@ Changes
 ### v4.2-r6
 * 2023-04-26 - Merged LearnR Theme Fork and Fordson Theme features into LearnR theme.
 * Added the following features: Course Section Style Chooser, Course Tile Display Styling, Additional Color Choosers, Hide Login Form(for sso logins), Hide Side Drawers, Course Management Dashboard, Course Progress bar, Latest Course dropdown, Easy Enrollment integration, Course Activity drop down, Icon Navigation Menu on Dashboard, Many styling improvements for a fresh and modern LMS.  
+* PLEASE UNINSTALL ANY PREVIOUS VERSION OF LEARNR PRIOR TO INSTALLING VERSION 4.2R6+
 
 ### v4.1-r6
 
