@@ -3,6 +3,10 @@ moodle-theme_learnr
 
 Changes
 -------
+### v4.2-r7  
+* Fixed MISTAR Gradebook Export Link in course management from showing up if plugin is not installed.
+* Fixed php errors and language string missing.
+
 ### v4.2-r6
 * 2023-04-26 - Merged LearnR Theme Fork and Fordson Theme features into LearnR theme.
 * Added the following features: Course Section Style Chooser, Course Tile Display Styling, Additional Color Choosers, Hide Login Form(for sso logins), Hide Side Drawers, Course Management Dashboard, Course Progress bar, Latest Course dropdown, Easy Enrollment integration, Course Activity drop down, Icon Navigation Menu on Dashboard, Many styling improvements for a fresh and modern LMS.  

@@ -1015,7 +1015,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 // Gradebook Links.
                 //Export to MISTAR
                 array(
-                    'hasgradebooklinks' => get_string_manager()->string_exists('exporttomistar', 'theme_learnr') ? true : false,
+                    'hasgradebooklinks' => get_string_manager()->string_exists('mistar:publish', 'gradeexport_mistar') ? true : false,
                     'title' => get_string('exporttomistar', 'theme_learnr'),
                     'url' => new moodle_url('/grade/export/mistar/index.php', array(
                         'id' => $PAGE->course->id

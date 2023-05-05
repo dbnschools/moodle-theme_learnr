@@ -25,8 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'theme_learnr';
-$plugin->version = 2023042606;
-$plugin->release = 'v4.2.r6';
+$plugin->version = 2023050507;
+$plugin->release = 'v4.2.r7';
 $plugin->requires = 2022041908;
 $plugin->supported = [401, 401];
 $plugin->maturity = MATURITY_STABLE;
