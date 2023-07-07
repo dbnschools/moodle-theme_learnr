@@ -47,7 +47,7 @@ global $PAGE;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-if ($PAGE->theme->settings->coursetilestyle < 8) {
+if (isset($PAGE->theme->settings->coursetilestyle) && $PAGE->theme->settings->coursetilestyle < 8) {
 
 class course_renderer extends \core_course_renderer  {
     protected $countcategories = 0;
