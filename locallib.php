@@ -786,6 +786,12 @@ function theme_learnr_get_webfonts_extensions() {
 function theme_learnr_register_webfonts_filetypes() {
     global $CFG;
 
+    // Do not register custom filetypes when running unit tests
+    // as they may break some core tests.
+    if (defined('PHPUNIT_TEST') && PHPUNIT_TEST) {
+        return false;
+    }
+
     // If customfiletypes are set in config.php, we can't do anything.
     if (array_key_exists('customfiletypes', $CFG->config_php_settings)) {
         return false;
