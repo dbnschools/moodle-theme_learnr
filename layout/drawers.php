@@ -168,19 +168,19 @@ require_once(__DIR__ . '/includes/navbar.php');
 
 // DBN Update begin.
 // Include the template content for the advertisement tiles, but only if we are on the frontpage.
-if ((strpos($this->page->theme->settings->showadvertonpages,1) !== false) && $PAGE->pagelayout == 'frontpage') {
+if ((strpos($this->page->theme->settings->showadvertonpages, "1") !== false) && $PAGE->pagelayout == 'frontpage') {
     require_once(__DIR__ . '/includes/advertisementtiles.php');
 }
 
-if ((strpos($this->page->theme->settings->showadvertonpages,2) !== false) && $PAGE->pagelayout == 'mydashboard') {
+if ((strpos($this->page->theme->settings->showadvertonpages, "2") !== false) && $PAGE->pagelayout == 'mydashboard') {
     require_once(__DIR__ . '/includes/advertisementtiles.php');
 }
 
-if ((strpos($this->page->theme->settings->showadvertonpages,3) !== false) && $PAGE->pagelayout == 'mycourses') {
+if ((strpos($this->page->theme->settings->showadvertonpages, "3") !== false) && $PAGE->pagelayout == 'mycourses') {
     require_once(__DIR__ . '/includes/advertisementtiles.php');
 }
 
-if ((strpos($this->page->theme->settings->showadvertonpages,4) !== false) && $PAGE->pagelayout == 'course') {
+if ((strpos($this->page->theme->settings->showadvertonpages, "4") !== false) && $PAGE->pagelayout == 'course') {
     require_once(__DIR__ . '/includes/advertisementtiles.php');
 }
 // DBN Update end.
