@@ -3,6 +3,9 @@ moodle-theme_learnr
 
 Changes
 -------
+### v4.2-r8
+* Fix undefined course tile style in phpunit #34 - https://github.com/dbnschools/moodle-theme_learnr/pull/34 Thanks to Catalyst IT for providing the fix.
+
 ### v4.2-r7  
 * Fixed MISTAR Gradebook Export Link in course management from showing up if plugin is not installed.
 * Fixed php errors and language string missing.

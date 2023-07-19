@@ -933,7 +933,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $togglebutton = get_string('coursemanagementbutton', 'theme_learnr');
         $showincourseonly = isset($COURSE->id) && $COURSE->id > 1 && $this->page->theme->settings->showcoursemanagement == 1 && isloggedin() && !isguestuser();
         $globalhaseasyenrollment = enrol_get_plugin('easy');
-        $globalhaseasyenrollment = enrol_get_plugin('easy');
         $coursehaseasyenrollment = '';
         $easyenrollinstance = '';
         if ($globalhaseasyenrollment) {
@@ -948,7 +947,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
         $easycodetitle = '';
         $easycodelink = '';
-        if ($globalhaseasyenrollment && $this->page->pagelayout == 'course' && $coursehaseasyenrollment){
+        if ($globalhaseasyenrollment && $coursehaseasyenrollment){
         $easycodetitle = get_string('header_coursecodes', 'enrol_easy');
         $easycodelink = new moodle_url('/enrol/editinstance.php', array(
                 'courseid' => $this->page->course->id,
