@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Navbar layout include.
+ * Theme Boost Union - Navbar layout include.
  *
  * @package    theme_learnr
  * @copyright  2023 Alexander Bias <bias@alexanderbias.de>

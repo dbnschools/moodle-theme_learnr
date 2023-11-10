@@ -26,8 +26,12 @@ defined('MOODLE_INTERNAL') || die();
 
 // General.
 $string['pluginname'] = 'LearnR';
-$string['choosereadme'] = '<p>The LearnR theme is entirely inspired by LearnR and the Fordson themes.  LearnR starts with the outstanding features, UX improvements, and functionality of LearnR.  To take things to the next level we incorporated many of the features, styles, and most popular functionality of the Fordson theme.<p><p>LearnR is maintained by<br />Moodle an Hochschulen e.V.,</p><p>in cooperation with<br />lern.link GmbH</p><p>together with<br />bdecent GmbH</p>';
+$string['choosereadme'] = '<p>LearnR theme is entirely inspired by Boost and Boost Union themes.  LearnR starts with the outstanding features, UX improvements, and functionality of Boost Union.  To take things to the next level we incorporated many of the features, styles, and most popular functionality of the Fordson theme.  We strongly recommend the Boost Union theme for their outstanding features and functionality.  We recommend LearnR to add UX and styling features that give Moodle Admins a very professional and polished look out-of-the-box.<p>';
 $string['configtitle'] = 'LearnR';
+$string['githubissueslink'] = '<a href="https://github.com/dbnschools/moodle-theme_learnr/issues">Github issues</a>';
+
+// Settings: General strings.
+$string['dontchange'] = 'Do not change anything';
 
 // Settings: Look page.
 $string['configtitlelook'] = 'Look';
@@ -52,8 +56,8 @@ $string['coursecontentmaxwidthsetting_desc'] = 'With this setting, you can overr
 $string['mediumcontentmaxwidthsetting'] = 'Medium content max width';
 $string['mediumcontentmaxwidthsetting_desc'] = 'With this setting, you can override Moodle\'s medium content width without manual SCSS modifications. This page width is used in certain activities like the database activity. By default, Moodle uses a medium content max width of 1120px. You can enter other pixel-based values like 1200px, but you can also enter a percentage-based value like 100% or a viewport-width value like 90vw.';
 
-// Settings: Branding tab.
-$string['brandingtab'] = 'Branding';
+// Settings: Site branding tab.
+$string['sitebrandingtab'] = 'Site branding';
 // ... Section: Logos.
 $string['logosheading'] = 'Logos';
 $string['logosheading_desc'] = 'Please note: LearnR has its own logo upload and does not use the logo from <a href="{$a}">Moodle core\'s logo setting</a>.<br />LearnR especially allows you to upload more image formats that Moodle core allows and allows you to override the uploaded logos within its flavours.';
@@ -90,6 +94,18 @@ $string['bootstrapcolorwarningsetting_desc'] = 'The Bootstrap color for "Warning
 // ... ... Setting: Bootstrap color for 'Danger'.
 $string['bootstrapcolordangersetting'] = 'Bootstrap color for "Danger"';
 $string['bootstrapcolordangersetting_desc'] = 'The Bootstrap color for "Danger"';
+// ... Section: Navbar.
+$string['navbarheading'] = 'Navbar';
+// ... ... Setting: Navbar color.
+$string['navbarcolorsetting'] = 'Navbar color';
+$string['navbarcolorsetting_desc'] = 'With this setting, you can change the navbar color from the default light navbar to a dark one or a colored one.';
+$string['navbarcolorsetting_light'] = 'Light navbar with dark font color (unchanged as presented by Moodle core)';
+$string['navbarcolorsetting_dark'] = 'Dark navbar with light font color';
+$string['navbarcolorsetting_primarydark'] = 'Primary color navbar with light font color';
+$string['navbarcolorsetting_primarylight'] = 'Primary color navbar with dark font color';
+
+// Settings: Activity branding tab.
+$string['activitybrandingtab'] = 'Activity branding';
 // ... Section: Activity icon colors.
 $string['activityiconcolorsheading'] = 'Activity icon colors';
 // ... ... Setting: Activity icon color for 'Administration'.
@@ -110,15 +126,40 @@ $string['activityiconcolorcontentsetting_desc'] = 'The activity icon color for "
 // ... ... Setting: Activity icon color for 'Interface'.
 $string['activityiconcolorinterfacesetting'] = 'Activity icon color for "Interface"';
 $string['activityiconcolorinterfacesetting_desc'] = 'The activity icon color for "Interface"';
-// ... Section: Navbar.
-$string['navbarheading'] = 'Navbar';
-// ... ... Setting: Navbar color.
-$string['navbarcolorsetting'] = 'Navbar color';
-$string['navbarcolorsetting_desc'] = 'With this setting, you can change the navbar color from the default light navbar to a dark one or a colored one.';
-$string['navbarcolorsetting_light'] = 'Light navbar with dark font color (unchanged as presented by Moodle core)';
-$string['navbarcolorsetting_dark'] = 'Dark navbar with light font color';
-$string['navbarcolorsetting_primarydark'] = 'Primary color navbar with light font color';
-$string['navbarcolorsetting_primarylight'] = 'Primary color navbar with dark font color';
+// ... Section: Activity icon purposes.
+$string['activitypurposeheading'] = 'Activity icon purposes';
+$string['activitypurposeheading_desc'] = 'With these settings, you can override the activity icon background color which is defined by the activity\'s purpose (and which is a hardcoded plugin feature in each activity).';
+$string['activitypurposeheadingtechnote'] = 'Technical note: Due to the way how Moodle core implements the activity purposes and their colors, the activity purposes are only overridden with CSS by LearnR. Currently, all areas in Moodle core which show colored activity icons should be covered. If you spot any area or third party plugin which continues to show the unchanged activity purpose colors, please report it on {$a}.';
+$string['activitypurposeadministration'] = 'Administration';
+$string['activitypurposeassessment'] = 'Assessment';
+$string['activitypurposecollaboration'] = 'Collaboration';
+$string['activitypurposecommunication'] = 'Communication';
+$string['activitypurposecontent'] = 'Content';
+$string['activitypurposeinterface'] = 'Interface';
+$string['activitypurposeother'] = 'Other';
+// ... Section: Activity icons.
+$string['modiconsheading'] = 'Activity icons';
+// ... ... Setting: Enable custom icons for activities and resources.
+$string['modiconsenablesetting'] = 'Enable custom icons for activities and resources';
+$string['modiconsenablesetting_desc'] = 'With this setting, you can modify the icons for activities and resources which are used by Moodle on the course pages and in the activity chooser.';
+// ... ... Setting: Custom icon files.
+$string['modiconsfiles'] = 'Custom icons files';
+$string['modiconsfiles_desc'] = 'Here, you can upload custom icons for all or only some activity modules installed in this Moodle instance.';
+$string['modiconsfileshowto'] = 'To upload a particular custom activity icon, start by creating a folder with the internal name of the activity, e.g. <em>assign</em> for the assigment activity. In this folder, you upload the icon as SVG file called monologo.svg and, if possible, as fallback PNG file called monologo.png. If you want to customize the colored icons which have been in use up to Moodle 3 and which may still be used by older plugins, you can also upload them as icon.svg and icon.png files. However, please stick to monochromatic SVG icons if possible for best results. Then, please save the settings page. As soon as you have save the setting with at least one file, a file list will appear below which helps you to check if the custom icons have been uploaded correctly.';
+$string['modiconsfilestech'] = 'Technical note: After saving the setting, the uploaded folder structure and icon files will be copied to the pix_plugins/mod folder in your Moodledata directory. This is where Moodle core searches for custom activity icons. All icon files which may already exist in this place will be overwritten when you save this setting.';
+$string['modiconserrorcreatingpath'] = 'The pix_plugins/mod folder could not be created in your Moodledata directory.<br />The exception message was:{$a}.';
+// ... ... Information: Custom icons files list.
+$string['modiconlistsetting'] = 'Custom icons files list';
+$string['modiconlistsetting_desc'] = 'This is the list of custom icon files which you have uploaded to the custom icon files filearea above. All valid icon files are listed here. In addition to that, other files you may have uploaded as well but which are not valid icon files are also shown as broken files.';
+$string['modiconsuccess4x'] = 'This icon will be used for the <em>{$a}</em> activity as Moodle 4 icon.';
+$string['modiconsuccess3x'] = 'This icon will be used for the <em>{$a}</em> activity as Moodle 3 legacy icon.';
+$string['modiconnamefail'] = 'This file was uploaded into the correct folder for the <em>{$a}</em> activity, but the filename is not valid. Please change the filename to either <em>monologo.svg</em> / <em>monologo.png</em> (for Moodle 4 icons) or to <em>icon.svg</em> / <em>icon.png</em> (for Moodle 3 legacy icons).';
+$string['modiconnotexist'] = 'This file was upload to an unsuitable location as it’s impossible to deduce a particular activity from the file path <em>{$a}</em>.';
+$string['modiconactivity'] = 'Activity';
+$string['modiconactivityunknown'] = 'Unknown';
+$string['modiconversion'] = 'Icon version';
+$string['modicongtmoodle4'] = 'Moodle 4 icon';
+$string['modiconltmoodle311'] = 'Moodle 3 legacy icon';
 
 // Settings: Login page tab.
 $string['loginpagetab'] = 'Login page';
@@ -235,49 +276,6 @@ $string['customfontslistsetting'] = 'Custom fonts list';
 $string['customfontslistsetting_desc'] = 'This is the list of fonts which you have uploaded to the custom fonts filearea. The given CSS snippets can be used to add these fonts to your custom SCSS. Please note that you will have to take care of the font format value as well as the font-family, font-style and font-weight CSS properties yourself for now as LearnR is not able yet to parse the font files.';
 $string['customfontsfileurlpersistent'] = 'URL (persistent)';
 $string['customfontsfileurlrevisioned'] = 'URL (revisioned)';
-// ... Section: FontAwesome.
-$string['fontawesomeheading'] = 'FontAwesome';
-// ... ... Setting: FontAwesome version.
-$string['fontawesomeversionsetting'] = 'FontAwesome version';
-$string['fontawesomeversionsetting_desc'] = 'Moodle core ships with FontAwesome 4 icons which are fine, but FontAwesome has evolved since then. If you want to use more recent FontAwesome icons, you can do this with this setting. As soon as you choose another version than FontAwesome 4, additional settings will appear where you can upload more recent FontAwesome versions.';
-$string['fontawesomeversionnone'] = 'Keep FontAwesome 4 (as shipped with Moodle core)';
-$string['fontawesomeversionfa6free'] = 'Update to FontAwesome 6 Free';
-// ... ... Setting: FontAwesome files.
-$string['fontawesomefilessetting'] = 'FontAwesome files';
-$string['fontawesomefilessetting_desc'] = 'With this setting you can upload more recent FontAwesome files to Moodle. You have to upload the FontAwesome files to Moodle yourself due to licensing constraints. Just head over to <a href="https://fontawesome.com">fontawesome.com</a>, download the FontAwesome package and upload the files here.';
-$string['fontawesomefilesstructurenote'] = 'Please note that the files must be uploaded with the correct folder structure and with the correct file names. Please start by creating a <em>css</em> and a <em>webfonts</em> folder in the filepicker, upload the <em>fa-solid-900.woff2</em> file into the <em>webfonts</em> folder and save the settings page. As soon as you have done this, a file list will appear below which helps you to identify and upload the right files into these folders.';
-// ... ... Information: FontAwesome files list.
-$string['fontawesomelistsetting'] = 'FontAwesome files list';
-$string['fontawesomelistsetting_desc'] = 'This is the list of FontAwesome files which you have uploaded to the FontAwesome files filearea above. All FontAwesome files which are valid for the configured FontAwesome version are listed here, other files which you may have uploaded as well but which are not valid or needed FontAwesome files are ignored. The FontAwesome files are automatically added to the Moodle pages and have a direct effect as soon as you save this setting.';
-$string['fontawesomelistnote'] = 'Please note that, if you upload only a fraction of the mandatory files, the FontAwesome icons can appear as broken on the Moodle page. This cannot be fixed until you upload all mandatory files or remove all files again.';
-$string['fontawesomelistfileinfo-fa6free-css-fontawesome.min.css'] = 'This is the main CSS file which adds all available FontAwesome glyphs to the Moodle page.';
-$string['fontawesomelistfileinfo-fa6free-css-brands.min.css'] = 'This is an additional CSS file which adds the font for FontAwesome brand icons to the Moodle page.';
-$string['fontawesomelistfileinfo-fa6free-css-regular.min.css'] = 'This is an additional CSS file which adds the font for FontAwesome regular icons to the Moodle page.';
-$string['fontawesomelistfileinfo-fa6free-css-solid.min.css'] = 'This is an additional CSS file which adds the font for FontAwesome solid icons to the Moodle page.';
-$string['fontawesomelistfileinfo-fa6free-css-v4-font-face.min.css'] = 'This is the CSS file which makes sure that the FontAwesome 4 icons in Moodle are still displayed correctly.';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-brands-400.woff2'] = 'This is the font file for FontAwesome brand icons (in the WOFF2 format).';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-brands-400.ttf'] = 'This is the font file for FontAwesome brand icons (in the TTF format).';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-regular-400.woff2'] = 'This is the font file for FontAwesome regular icons (in the WOFF2 format).';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-regular-400.ttf'] = 'This is the font file for FontAwesome regular icons (in the TTF format).';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-solid-900.woff2'] = 'This is the font file for FontAwesome solid icons (in the WOFF2 format).';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-solid-900.ttf'] = 'This is the font file for FontAwesome solid icons (in the TTF format).';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-v4compatibility.woff2'] = 'This is the font file for the FontAwesome v4 compatibility (in the WOFF2 format).';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-v4compatibility.ttf'] = 'This is the font file for the FontAwesome v4 compatibility (in the TTF format).';
-$string['fontawesomelistmandatoryuploaded'] = 'It is a mandatory file for FontAwesome to work and it was uploaded properly.';
-$string['fontawesomelistoptionaluploaded'] = 'It is an optional file to enhance the FontAwesome iconset and it was uploaded properly.';
-$string['fontawesomelistmandatorymissing'] = 'It is a mandatory file for FontAwesome to work, but it was not uploaded properly. Please try to upload it properly.';
-$string['fontawesomelistoptionalmissing'] = 'It is an optional file to enhance the FontAwesome iconset, but it was not uploaded. This fine as long as you don\'t need it.';
-// ... ... Information: FontAwesome checks.
-$string['fontawesomecheckssetting'] = 'FontAwesome checks';
-$string['fontawesomecheckssetting_desc'] = 'Here, you can verify visually if the FontAwesome files have been uploaded and added to the Moodle page properly. If one of the checks fail, please double-check if you have uploaded all mandatory files correctly.';
-$string['fontawesomecheck-fa6free-general-title'] = 'General functionality';
-$string['fontawesomecheck-fa6free-general-description'] = 'If you see a checkmark icon on the left hand side, FontAwesome is generally working in your site.';
-$string['fontawesomecheck-fa6free-fallback-title'] = 'FontAwesome 4 fallback';
-$string['fontawesomecheck-fa6free-fallback-description'] = 'Newer FontAwesome versions use to remap older icon identifiers to newer ones or even get rid of some icons. If you see a solid map icon on the left hand side, your FontAwesome 6 version is properly showing remapped icons from FontAwesome 4.';
-$string['fontawesomecheck-fa6free-newstuff-title'] = 'FontAwesome 6 icons';
-$string['fontawesomecheck-fa6free-newstuff-description'] = 'Newer FontAwesome versions ship with additional icons compared to the FontAwesome 4 iconset. If you see a virus icon on the left hand side, your FontAwesome 6 version is properly showing new icons which are new in FontAwesome 6.';
-$string['fontawesomecheck-fa6free-filter-title'] = 'FontAwesome filter';
-$string['fontawesomecheck-fa6free-filter-description'] = 'As you have the FontAwesome filter plugin installed, you should be sure that the filter handles the new FontAwesome 6 icons correctly as well. If you see a users icon on the left hand side, the filter is working properly with the FontAwesome 6 version icons.';
 
 // Settings: H5P tab.
 $string['h5ptab'] = 'H5P';
@@ -312,7 +310,13 @@ $string['navigationtab'] = 'Navigation';
 $string['primarynavigationheading'] = 'Primary navigation';
 // ... ... Settings: Hide nodes in primary navigation.
 $string['hidenodesprimarynavigationsetting'] = 'Hide nodes in primary navigation';
-$string['hidenodesprimarynavigationsetting_desc'] = 'With this setting, you can hide one or multiple nodes from the primary navigation.';
+$string['hidenodesprimarynavigationsetting_desc'] = 'With this setting, you can hide one or multiple nodes from the primary navigation.<br /><br />
+Please note: Here, you can just remove navigation nodes. But if you want to add custom navigation nodes, please consider using <a href="{$a->url}">LearnR\'s smart menu functionality</a>.';
+// ... Section: Breadcrumbs.
+$string['breadcrumbsheading'] = 'Breadcrumbs';
+// ... ... Setting: Course category breadcrumb.
+$string['categorybreadcrumbs'] = 'Display the category breadcrumbs in the course header';
+$string['categorybreadcrumbs_desc'] = 'By default, the course category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the course category breadcrumbs in the course header above the course name.';
 // ... Section: Navigation.
 $string['navigationheading'] = 'Navigation';
 // ... ... Setting: Back to top button.
@@ -382,11 +386,33 @@ $string['outsideregionswidthherowidth'] = 'Hero width';
 // ... ... Setting: Block region width for Outside (bottom) region.
 $string['blockregionoutsidebottomwidth'] = 'Block region width for \'Outside (bottom)\' region';
 $string['blockregionoutsidebottomwidth_desc'] = 'With this setting, you can set the width of the \'Outside (bottom)\' block region which is shown below the main content. You can choose between full width, course content width and hero width.';
+// ... ... Setting: Block region width for Footer region.
+$string['blockregionfooterwidth'] = 'Block region width for \'Footer\' region';
+$string['blockregionfooterwidth_desc'] = 'With this setting, you can set the width of the \'Footer\' block region. You can choose between full width, course content width and hero width.';
 // ... ... Setting: Outside regions horizontal placement.
 $string['outsideregionsplacement'] = 'Outside regions horizontal placement';
 $string['outsideregionsplacement_desc'] = 'With this setting, you can control if, on larger screens, the \'Outside (left)\' and \'Outside (right)\' block regions should be placed near the main content area or rather near the window edges.';
 $string['outsideregionsplacementnextmaincontent'] = 'Display \'Outside (left)\' and \'Outside (right)\' regions next to the main content area';
 $string['outsideregionsplacementnearwindowedges'] = 'Display \'Outside (left)\' and \'Outside (right)\' regions near the window edges';
+// ... Section: Site home right-hand block drawer behaviour.
+$string['sitehomerighthandblockdrawerbehaviour'] = 'Site home right-hand block drawer';
+// ... ... Setting: Show right-hand block drawer of site home on visit.
+$string['showsitehomerighthandblockdraweronvisitsetting'] = 'Show right-hand block drawer of site home on visit';
+$string['showsitehomerighthandblockdraweronvisitsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who are not logged in and does not overwrite the toggle state of each individual user.';
+// ... ... Setting: Show right-hand block drawer of site home on first login.
+$string['showsitehomerighthandblockdraweronfirstloginsetting'] = 'Show right-hand block drawer of site home on first login';
+$string['showsitehomerighthandblockdraweronfirstloginsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in for the very first time and does not overwrite the toggle state of each individual user.';
+// ... ... Setting: Show right-hand block drawer of site home on guest login.
+$string['showsitehomerighthandblockdraweronguestloginsetting'] = 'Show right-hand block drawer of site home on guest login';
+$string['showsitehomerighthandblockdraweronguestloginsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in as a guest.';
+
+// Settings: Links tab.
+$string['linkstab'] = 'Links';
+// ... Section: Special links markup.
+$string['speciallinksmarkupheading'] = 'Special links markup';
+// ... ... Setting: Mark external links.
+$string['markexternallinkssetting'] = 'Mark external links';
+$string['markexternallinkssetting_desc'] = 'Adds an "external link" icon after external links (which lead the user to a target outside Moodle).';
 
 // Settings: Misc tab.
 $string['misctab'] = 'Miscellaneous';
@@ -410,6 +436,44 @@ $string['footnotesetting_desc'] = 'Whatever you add to this textarea will be dis
 
 // Settings: Static pages tab.
 $string['staticpagestab'] = 'Static pages';
+// ... Section: About us.
+$string['aboutusheading'] = 'About us';
+// ... ... Setting: Enable about us page.
+$string['enableaboutussetting'] = 'Enable about us page';
+$string['aboutusdisabled'] = 'The about us page is disabled for this site. There is nothing to see here.';
+// ... ... Setting: About us content.
+$string['aboutuscontentsetting'] = 'About us content';
+$string['aboutuscontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the about us page.';
+// ... ... Setting: About us page title.
+$string['aboutuspagetitledefault'] = 'About us';
+$string['aboutuspagetitlesetting'] = 'About us page title';
+$string['aboutuspagetitlesetting_desc'] = 'In this setting, you can define the title of the about us page. This text will be used as link text to the about us page as well if you configure \'About us link position\' accordingly.';
+// ... ... Setting: About us link position.
+$string['aboutuslinkpositionnone'] = 'Do not automatically show a link to the about us page';
+$string['aboutuslinkpositionfootnote'] = 'Add a link to the about us page to the footnote';
+$string['aboutuslinkpositionfooter'] = 'Add a link to the about us page to the footer (questionmark) icon';
+$string['aboutuslinkpositionboth'] = 'Add a link to the about us page to the footnote and to the footer (questionmark) icon';
+$string['aboutuslinkpositionsetting'] = 'About us link position';
+$string['aboutuslinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the about us page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
+// ... Section: Offers.
+$string['offersheading'] = 'Offers';
+// ... ... Setting: Enable offers page.
+$string['enableofferssetting'] = 'Enable offers page';
+$string['offersdisabled'] = 'The offers page is disabled for this site. There is nothing to see here.';
+// ... ... Setting: Offers content.
+$string['offerscontentsetting'] = 'Offers content';
+$string['offerscontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the offers page.';
+// ... ... Setting: Offers page title.
+$string['offerspagetitledefault'] = 'Offers';
+$string['offerspagetitlesetting'] = 'Offers page title';
+$string['offerspagetitlesetting_desc'] = 'In this setting, you can define the title of the offers page. This text will be used as link text to the offers page as well if you configure \'Offers link position\' accordingly.';
+// ... ... Setting: Offers link position.
+$string['offerslinkpositionnone'] = 'Do not automatically show a link to the offers page';
+$string['offerslinkpositionfootnote'] = 'Add a link to the offers page to the footnote';
+$string['offerslinkpositionfooter'] = 'Add a link to the offers page to the footer (questionmark) icon';
+$string['offerslinkpositionboth'] = 'Add a link to the offers page to the footnote and to the footer (questionmark) icon';
+$string['offerslinkpositionsetting'] = 'Offers link position';
+$string['offerslinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the offers page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
 // ... Section: Imprint.
 $string['imprintheading'] = 'Imprint';
 // ... ... Setting: Enable imprint.
@@ -486,6 +550,63 @@ $string['maintenancelinkpositionfooter'] = 'Add a link to the maintenance inform
 $string['maintenancelinkpositionboth'] = 'Add a link to the maintenance information page to the footnote and to the footer (questionmark) icon';
 $string['maintenancelinkpositionsetting'] = 'Maintenance information page link position';
 $string['maintenancelinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the maintenance information page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
+// ... Section: Generic page 1.
+$string['page1heading'] = 'Generic page 1';
+// ... ... Setting: Enable generic page 1.
+$string['enablepage1setting'] = 'Enable generic page 1';
+$string['page1disabled'] = 'The generic page 1 is disabled for this site. There is nothing to see here.';
+// ... ... Setting: Generic page 1 content.
+$string['page1contentsetting'] = 'Generic page 1 content';
+$string['page1contentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the generic page 1.';
+// ... ... Setting: Generic page 1 title.
+$string['page1pagetitledefault'] = 'Generic page 1';
+$string['page1pagetitlesetting'] = 'Generic page 1 title';
+$string['page1pagetitlesetting_desc'] = 'In this setting, you can define the title of the generic page 1. This text will be used as link text to the generic page 1 as well if you configure \'Generic page 1 link position\' accordingly.';
+// ... ... Setting: Generic page 1 link position.
+$string['page1linkpositionnone'] = 'Do not automatically show a link to the generic page 1';
+$string['page1linkpositionfootnote'] = 'Add a link to the generic page 1 to the footnote';
+$string['page1linkpositionfooter'] = 'Add a link to the generic page 1 to the footer (questionmark) icon';
+$string['page1linkpositionboth'] = 'Add a link to the generic page 1 to the footnote and to the footer (questionmark) icon';
+$string['page1linkpositionsetting'] = 'Generic page 1 link position';
+$string['page1linkpositionsetting_desc'] = 'In this setting, you can configure if a link to the generic page 1 should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
+// ... Section: Generic page 2.
+$string['page2heading'] = 'Generic page 2';
+// ... ... Setting: Enable generic page 2.
+$string['enablepage2setting'] = 'Enable generic page 2';
+$string['page2disabled'] = 'The generic page 2 is disabled for this site. There is nothing to see here.';
+// ... ... Setting: Generic page 2 content.
+$string['page2contentsetting'] = 'Generic page 2 content';
+$string['page2contentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the generic page 2.';
+// ... ... Setting: Generic page 2 title.
+$string['page2pagetitledefault'] = 'Generic page 2';
+$string['page2pagetitlesetting'] = 'Generic page 2 title';
+$string['page2pagetitlesetting_desc'] = 'In this setting, you can define the title of the generic page 2. This text will be used as link text to the generic page 2 as well if you configure \'Generic page 2 link position\' accordingly.';
+// ... ... Setting: Generic page 2 link position.
+$string['page2linkpositionnone'] = 'Do not automatically show a link to the generic page 2';
+$string['page2linkpositionfootnote'] = 'Add a link to the generic page 2 to the footnote';
+$string['page2linkpositionfooter'] = 'Add a link to the generic page 2 to the footer (questionmark) icon';
+$string['page2linkpositionboth'] = 'Add a link to the generic page 2 to the footnote and to the footer (questionmark) icon';
+$string['page2linkpositionsetting'] = 'Generic page 2 link position';
+$string['page2linkpositionsetting_desc'] = 'In this setting, you can configure if a link to the generic page 2 should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
+// ... Section: Generic page 3.
+$string['page3heading'] = 'Generic page 3';
+// ... ... Setting: Enable generic page 3.
+$string['enablepage3setting'] = 'Enable generic page 3';
+$string['page3disabled'] = 'The generic page 3 is disabled for this site. There is nothing to see here.';
+// ... ... Setting: Generic page 3 content.
+$string['page3contentsetting'] = 'Generic page 3 content';
+$string['page3contentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the generic page 3.';
+// ... ... Setting: Generic page 3 title.
+$string['page3pagetitledefault'] = 'Generic page 3';
+$string['page3pagetitlesetting'] = 'Generic page 3 title';
+$string['page3pagetitlesetting_desc'] = 'In this setting, you can define the title of the generic page 3. This text will be used as link text to the generic page 3 as well if you configure \'Generic page 3 link position\' accordingly.';
+// ... ... Setting: Generic page 3 link position.
+$string['page3linkpositionnone'] = 'Do not automatically show a link to the generic page 3';
+$string['page3linkpositionfootnote'] = 'Add a link to the generic page 3 to the footnote';
+$string['page3linkpositionfooter'] = 'Add a link to the generic page 3 to the footer (questionmark) icon';
+$string['page3linkpositionboth'] = 'Add a link to the generic page 3 to the footnote and to the footer (questionmark) icon';
+$string['page3linkpositionsetting'] = 'Generic page 3 link position';
+$string['page3linkpositionsetting_desc'] = 'In this setting, you can configure if a link to the generic page 3 should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
 // Settings: Info banners tab.
 $string['infobannertab'] = 'Info banner';
 // ... Section: Info banners.
@@ -527,6 +648,41 @@ $string['infobannerdismissiblesetting_desc'] = 'With this setting, you can make 
 $string['infobannerstartsetting'] = 'Info banner {$a->no} start time';
 $string['infobannerstartsetting_desc'] = 'With this setting, you can define from when on info banner {$a->no} should be displayed. The configured time is interpreted as server time, not as user time.';$string['infobannerendsetting'] = 'Info banner {$a->no} end time';
 $string['infobannerendsetting_desc'] = 'With this setting, you can define until when info banner {$a->no} should be displayed. The configured time is interpreted as server time, not as user time.';
+// Settings: Advertisement tiles tab.
+$string['tilestab'] = 'Advertisement tiles';
+// ... Section: Advertisement tiles general.
+$string['tilesgeneralheading'] = 'Advertisement tiles general';
+$string['tilecolumnssetting'] = 'Number of advertisement tile columns per row';
+$string['tilecolumnssetting_desc'] = 'Here, you define the number of columns per row in the presented grid of advertisement tiles. Please note that this number of columns applies to desktop / larger screens. On smaller screens and mobile screens, the advertisement tile columns are automatically wrapped.';
+$string['tilefrontpagepositionsetting'] = 'Position of the advertisement tiles on site home';
+$string['tilefrontpagepositionsetting_desc'] = 'Advertisement tiles are shown on site home only. With this setting, you control if the advertisement tiles are displayed before the site home content or after the site home content. If you want to show only the advertisement tiles on site home and nothing else, all other site home content can be removed by changing the <a href="{$a->url}">site home settings</a>.';
+$string['tilefrontpagepositionsetting_before'] = 'Before the site home content';
+$string['tilefrontpagepositionsetting_after'] = 'After the site home content';
+$string['tileheightsetting'] = 'Advertisement tiles height';
+$string['tileheightsetting_desc'] = 'With this setting, you control the height of the advertisement tiles. The configured height is the minimum height of each tile. If a tile\'s content is higher than this configured height, the whole row of tiles will be automatically made higher as needed.';
+// ... Section: Advertisement tiles.
+$string['tileheading'] = 'Advertisement tile {$a->no}';
+$string['tilebackgroundimagepositionsetting'] = 'Advertisement tile {$a->no} background image position';
+$string['tilebackgroundimagepositionsetting_desc'] = 'With this setting, you control the positioning of the background image within the advertisement tile {$a->no} container. The first value is the horizontal position, the second value is the vertical position.';
+$string['tilebackgroundimagesetting'] = 'Advertisement tile {$a->no} background image';
+$string['tilebackgroundimagesetting_desc'] = 'Here, you can upload an image file which will be shown as background image behind the content of the advertisement tile {$a->no}. Please make sure or check that the content is still readable on the background image. This is an optional setting, the advertisement tile will work even if you do not upload any background image.';
+$string['tilecontentsetting'] = 'Advertisement tile {$a->no} content';
+$string['tilecontentsetting_desc'] = 'Here, you enter the content which should be displayed in the advertisement tile {$a->no}. The content is displayed in the middle of the tile. This is an optional setting, the advertisement tile will be shown even if you do not set any content.';
+$string['tileenabledsetting'] = 'Enable advertisement tile {$a->no}';
+$string['tileenabledsetting_desc'] = 'With this setting, you can enable advertisement tile {$a->no}.';
+$string['tilelinksetting'] = 'Advertisement tile {$a->no} link URL';
+$string['tilelinksetting_desc'] = 'Here, you can set a (Moodle-internal or external) URL which will be offered as link button at the end of the advertisement tile {$a->no}. This is an optional setting, the advertisement tile will work even if you do not set any link URL.';
+$string['tilelinktitlefallback'] = 'Link';
+$string['tilelinktitlesetting'] = 'Advertisement tile {$a->no} link title';
+$string['tilelinktitlesetting_desc'] = 'Here, you can set a link title which is used as label of the link button as soon as you set a link URL in the advertisement tile {$a->no}. Please note that if you set a link URL but do not set a link title, the link button will just be labeled with \'Link\'.';
+$string['tilelinktargetsetting'] = 'Advertisement tile {$a->no} link target';
+$string['tilelinktargetsetting_desc'] = 'Here, you can set the link target which is set for the link button as soon as you set a link URL in the advertisement tile {$a->no}.';
+$string['tilelinktargetsetting_samewindow'] = 'Same window';
+$string['tilelinktargetsetting_newtab'] = 'New tab';
+$string['tileordersetting'] = 'Advertisement tile {$a->no} order position';
+$string['tileordersetting_desc'] = 'With this setting, you define the order position of the advertisement tile {$a->no}. By default, the advertisement tiles are ordered from top to bottom and left to right like you see them on this settings page here. However, you can decide to assign another order position with this setting. If you assign the same order position to two or more advertisement tiles, they will be ordered again according to the order on this settings page.';
+$string['tiletitlesetting'] = 'Advertisement tile {$a->no} title';
+$string['tiletitlesetting_desc'] = 'Here, you enter the title which should be displayed in the advertisement tile {$a->no}. This is an optional setting, the advertisement tile will be shown even if you do not set a title.';
 
 // Settings: Functionality page.
 $string['configtitlefunctionality'] = 'Functionality';
@@ -607,41 +763,172 @@ $string['flavourspreviewblindtext'] = 'Lorem ipsum dolor sit amet, consectetur a
 $string['flavourstitle'] = 'Title';
 $string['flavourstitle_help'] = 'The flavour\'s title is just used internally to allow you to document a particular flavour in the list of flavours.';
 
-// Settings: Advertisement tiles.
-$string['tilestab'] = 'Advertisement tiles';
-// ... Section: Advertisement tiles general.
-$string['tilesgeneralheading'] = 'Advertisement tiles general';
-$string['tilecolumnssetting'] = 'Number of advertisement tile columns per row';
-$string['tilecolumnssetting_desc'] = 'Here, you define the number of columns per row in the presented grid of advertisement tiles. Please note that this number of columns applies to desktop / larger screens. On smaller screens and mobile screens, the advertisement tile columns are automatically wrapped.';
-$string['tilefrontpagepositionsetting'] = 'Position of the advertisement tiles on site home';
-$string['tilefrontpagepositionsetting_desc'] = 'Advertisement tiles are shown on site home only. With this setting, you control if the advertisement tiles are displayed before the site home content or after the site home content. If you want to show only the advertisement tiles on site home and nothing else, all other site home content can be removed by changing the <a href="{$a->url}">site home settings</a>.';
-$string['tilefrontpagepositionsetting_before'] = 'Before the site home content';
-$string['tilefrontpagepositionsetting_after'] = 'After the site home content';
-$string['tileheightsetting'] = 'Advertisement tiles height';
-$string['tileheightsetting_desc'] = 'With this setting, you control the height of the advertisement tiles. The configured height is the minimum height of each tile. If a tile\'s content is higher than this configured height, the whole row of tiles will be automatically made higher as needed.';
-// ... Section: Advertisement tiles.
-$string['tileheading'] = 'Advertisement tile {$a->no}';
-$string['tilebackgroundimagepositionsetting'] = 'Advertisement tile {$a->no} background image position';
-$string['tilebackgroundimagepositionsetting_desc'] = 'With this setting, you control the positioning of the background image within the advertisement tile {$a->no} container. The first value is the horizontal position, the second value is the vertical position.';
-$string['tilebackgroundimagesetting'] = 'Advertisement tile {$a->no} background image';
-$string['tilebackgroundimagesetting_desc'] = 'Here, you can upload an image file which will be shown as background image behind the content of the advertisement tile {$a->no}. Please make sure or check that the content is still readable on the background image. This is an optional setting, the advertisement tile will work even if you do not upload any background image.';
-$string['tilecontentsetting'] = 'Advertisement tile {$a->no} content';
-$string['tilecontentsetting_desc'] = 'Here, you enter the content which should be displayed in the advertisement tile {$a->no}. The content is displayed in the middle of the tile. This is an optional setting, the advertisement tile will be shown even if you do not set any content.';
-$string['tileenabledsetting'] = 'Enable advertisement tile {$a->no}';
-$string['tileenabledsetting_desc'] = 'With this setting, you can enable advertisement tile {$a->no}.';
-$string['tilelinksetting'] = 'Advertisement tile {$a->no} link URL';
-$string['tilelinksetting_desc'] = 'Here, you can set a (Moodle-internal or external) URL which will be offered as link button at the end of the advertisement tile {$a->no}. This is an optional setting, the advertisement tile will work even if you do not set any link URL.';
-$string['tilelinktitlefallback'] = 'Link';
-$string['tilelinktitlesetting'] = 'Advertisement tile {$a->no} link title';
-$string['tilelinktitlesetting_desc'] = 'Here, you can set a link title which is used as label of the link button as soon as you set a link URL in the advertisement tile {$a->no}. Please note that if you set a link URL but do not set a link title, the link button will just be labeled with \'Link\'.';
-$string['tilelinktargetsetting'] = 'Advertisement tile {$a->no} link target';
-$string['tilelinktargetsetting_desc'] = 'Here, you can set the link target which is set for the link button as soon as you set a link URL in the advertisement tile {$a->no}.';
-$string['tilelinktargetsetting_samewindow'] = 'Same window';
-$string['tilelinktargetsetting_newtab'] = 'New tab';
-$string['tileordersetting'] = 'Advertisement tile {$a->no} order position';
-$string['tileordersetting_desc'] = 'With this setting, you define the order position of the advertisement tile {$a->no}. By default, the advertisement tiles are ordered from top to bottom and left to right like you see them on this settings page here. However, you can decide to assign another order position with this setting. If you assign the same order position to two or more advertisement tiles, they will be ordered again according to the order on this settings page.';
-$string['tiletitlesetting'] = 'Advertisement tile {$a->no} title';
-$string['tiletitlesetting_desc'] = 'Here, you enter the title which should be displayed in the advertisement tile {$a->no}. This is an optional setting, the advertisement tile will be shown even if you do not set a title.';
+// Settings: Smart menus page.
+$string['smartmenus'] = 'Smart menus';
+$string['error:smartmenusmenuitemnotfound'] = 'Smart menu item not found';
+$string['error:smartmenusmenunotfound'] = 'Smart menu not found';
+$string['smartmenus_desc'] = '<p>Smart menus allow site administrators to create customizable menus that can be placed in different locations on the site, such as the site main menu, bottom mobile menu, and user menu. The menus can be configured to display different types of content, including links to other pages or resources, category links, or user profile links.</p><p>Site administrators can create a new menu and specify the menu items, and display settings. The administrator can also choose where the menu will be displayed on the site and whether it should be visible to all users or only to certain user roles.</p>';
+$string['smartmenusbycohort'] = 'By cohort';
+$string['smartmenusbycohort_help'] = 'Restrict the visibility based on the user\'s cohorts.';
+$string['smartmenusbydate'] = 'By date';
+$string['smartmenusbydate_help'] = 'Restrict the visibility based on the date';
+$string['smartmenusbydatefrom'] = 'From';
+$string['smartmenusbydatefrom_help'] = 'Restrict the visibility before the given date is reached';
+$string['smartmenusbydateuntil'] = 'Until';
+$string['smartmenusbydateuntil_help'] = 'Restrict the visibility after the given date is reached';
+$string['smartmenusbylanguage'] = 'By language';
+$string['smartmenusbylanguage_help'] = 'Restrict the visibility based on the user\'s language';
+$string['smartmenusbyrole'] = 'By role';
+$string['smartmenusbyrole_help'] = 'Restrict the visibility based on the user\'s roles.';
+$string['smartmenusdynamiccoursescompletionstatus'] = 'Completion status';
+$string['smartmenusdynamiccoursescompletionstatus_help'] = 'The dynamic courses menu item list will contain all courses of the user which match the selected completion status. For example, if you select \'In progress\' as the completion status, the dynamic courses menu item list will only contain courses that the current user is currently working on.';
+$string['smartmenusdynamiccoursescompletionstatuscompleted'] = 'Completed';
+$string['smartmenusdynamiccoursescompletionstatusenrolled'] = 'Enrolled';
+$string['smartmenusdynamiccoursescompletionstatusinprogress'] = 'In progress';
+$string['smartmenusdynamiccoursescoursecategory'] = 'Course category';
+$string['smartmenusdynamiccoursescoursecategory_help'] = 'The dynamic courses menu item list will contain all courses from the selected course categories.';
+$string['smartmenusdynamiccoursesdaterange'] = 'Date range';
+$string['smartmenusdynamiccoursesdaterange_help'] = 'The dynamic courses menu item list will contain all courses which fall into the selected date range.';
+$string['smartmenusdynamiccoursesdaterangefuture'] = 'Future';
+$string['smartmenusdynamiccoursesdaterangepast'] = 'Past';
+$string['smartmenusdynamiccoursesdaterangepresent'] = 'Present';
+$string['smartmenusdynamiccoursesenrolmentrole'] = 'Enrolment role';
+$string['smartmenusdynamiccoursesenrolmentrole_help'] = 'The dynamic courses menu item list will contain all courses where the user is enrolled with the selected role.';
+$string['smartmenusexperimental'] = 'Please note: The smart menus functionality is fully usable in the current state of implementation, but has to be <em>considered as experimental</em> due to the large amount of setting combinations which still might trigger unexpected issues. Against this background, please test your smart menus with your individual menu settings thoroughly. If you encounter any issues with smart menus, please report them on <a href="https://github.com/moodle-an-hochschulen/moodle-theme_learnr/issues">Github</a> with clear steps to reproduce.';
+$string['smartmenusgeneralsectionheader'] = 'General settings';
+$string['smartmenusmenuaddnewitem'] = 'Add menu item';
+$string['smartmenusmenucardform'] = 'Card form';
+$string['smartmenusmenucardform_help'] = 'Select the form of the card for card-style menus, choosing between square, portrait, landscape or fullwidth.';
+$string['smartmenusmenucardformfullwidth'] = 'Full width';
+$string['smartmenusmenucardformlandscape'] = 'Landscape';
+$string['smartmenusmenucardformportrait'] = 'Portrait';
+$string['smartmenusmenucardformsquare'] = 'Square';
+$string['smartmenusmenucardoverflowbehavior'] = 'Card overflow behavior';
+$string['smartmenusmenucardoverflowbehavior_help'] = 'Select how the menu should behave when it overflows its container, choosing between showing a scrollbar or wrapping the overflowing items.';
+$string['smartmenusmenucardoverflowbehaviornowrap'] = 'No wrap';
+$string['smartmenusmenucardoverflowbehaviorwrap'] = 'Wrap';
+$string['smartmenusmenucardsize'] = 'Card size';
+$string['smartmenusmenucardsize_help'] = 'Select the size of the card for card-style menus, choosing between tiny, small, medium, or large.';
+$string['smartmenusmenucardsizelarge'] = 'Large';
+$string['smartmenusmenucardsizemedium'] = 'Medium';
+$string['smartmenusmenucardsizesmall'] = 'Small';
+$string['smartmenusmenucardsizetiny'] = 'Tiny';
+$string['smartmenusmenucreate'] = 'Create menu';
+$string['smartmenusmenucreatesuccess'] = 'Smart menu created successfully';
+$string['smartmenusmenucssclass'] = 'CSS class';
+$string['smartmenusmenucssclass_help'] = 'Enter a CSS class for the menu. This can be used to apply custom styling to the menu.';
+$string['smartmenusmenudeleteconfirm'] = 'Are you sure you want to delete this menu from the smart menus?';
+$string['smartmenusmenudeletesuccess'] = 'Smart menu deleted successfully';
+$string['smartmenusmenudescription'] = 'Description';
+$string['smartmenusmenudescription_help'] = 'The description of the menu. This will be primarily used as internal documentation, but you can also show it within the menu by using the \'Show description\' option.';
+$string['smartmenusmenuduplicate'] = 'Duplicate menu and its items';
+$string['smartmenusmenuduplicatesuccess'] = 'Menu and its menu items duplicated successfully';
+$string['smartmenusmenuedit'] = 'Edit menu';
+$string['smartmenusmenueditsuccess'] = 'Smart menu updated successfully';
+$string['smartmenusmenuitemcardappearanceheader'] = 'Card appearance';
+$string['smartmenusmenuitemcardbackgroundcolor'] = 'Card background color';
+$string['smartmenusmenuitemcardbackgroundcolor_help'] = 'Select the background color for the card of the menu item';
+$string['smartmenusmenuitemcardimage'] = 'Card image';
+$string['smartmenusmenuitemcardimage_help'] = 'Select an image to display next to the menu item title in the card.';
+$string['smartmenusmenuitemcardtextcolor'] = 'Card text color';
+$string['smartmenusmenuitemcardtextcolor_help'] = 'Select the color for the card of the menu item.';
+$string['smartmenusmenuitemcreate'] = 'Create menu item';
+$string['smartmenusmenuitemcreatesuccess'] = 'Smart menu item created successfully';
+$string['smartmenusmenuitemcssclass'] = 'CSS class';
+$string['smartmenusmenuitemcssclass_help'] = 'Enter a CSS class for the menu item. This can be used to apply custom styling to the menu item.';
+$string['smartmenusmenuitemdeleteconfirm'] = 'Are you sure you want to delete this menu item from the smart menu?';
+$string['smartmenusmenuitemdeletesuccess'] = 'Smart menu item deleted successfully';
+$string['smartmenusmenuitemdisplayfield'] = 'Course name presentation';
+$string['smartmenusmenuitemdisplayfield_help'] = 'The course name which will be used as the title of the dynamic courses menu items. Choose between course full name and course short name';
+$string['smartmenusmenuitemdisplayfieldcoursefullname'] = 'Course full name';
+$string['smartmenusmenuitemdisplayfieldcourseshortname'] = 'Course short name';
+$string['smartmenusmenuitemdisplayoptions'] = 'Title presentation';
+$string['smartmenusmenuitemdisplayoptions_help'] = 'Choose how you want the menu item title to be displayed.';
+$string['smartmenusmenuitemdisplayoptionshidetitle'] = 'Hide title text and show only icon (on all devices)';
+$string['smartmenusmenuitemdisplayoptionshidetitlemobile'] = 'Hide title text and show only icon (on mobile devices)';
+$string['smartmenusmenuitemdisplayoptionsshowtitleicon'] = 'Show text and icon as title';
+$string['smartmenusmenuitemduplicate'] = 'Duplicate menu item';
+$string['smartmenusmenuitemduplicatesuccess'] = 'Menu item duplicated successfully';
+$string['smartmenusmenuitemedit'] = 'Edit menu item';
+$string['smartmenusmenuitemeditsuccess'] = 'Smart menu item updated successfully';
+$string['smartmenusmenuitemicon'] = 'Icon';
+$string['smartmenusmenuitemicon_help'] = 'The icon to display next to the menu item title.';
+$string['smartmenusmenuitemlinktarget'] = 'Link target';
+$string['smartmenusmenuitemlinktarget_help'] = 'The target for the link of the menu item. The menu item link will open in this target when clicked (i.e. in the same window or in a new tab).';
+$string['smartmenusmenuitemlinktargetnewtab'] = 'New tab';
+$string['smartmenusmenuitemlinktargetsamewindow'] = 'Same window';
+$string['smartmenusmenuitemmode'] = 'Menu item mode';
+$string['smartmenusmenuitemmode_help'] = '<p>Select the mode how the menu item should be displayed within the menu.</p><ul><li>Inline: The menu item is displayed as a regular menu item within the menu. This is the default option.</li><li>Submenu: The menu item is displayed as a submenu item, which can be expanded or collapsed by clicking on the parent item. This mode is useful for building a third navigation level as well as for dynamic courses menu items, where course lists can be displayed as submenu items of this menu item. The title of this menu item is used as the text for the submenu item.</li></ul>';
+$string['smartmenusmenuitemnothingtodisplay'] = 'There aren\'t any items added to this smart menu yet. Please add an item to this menu.';
+$string['smartmenusmenuitemorder'] = 'Order';
+$string['smartmenusmenuitemorder_help'] = 'Rearrange the position of item if needed. All menu items in the menu will be ordered by this order value.';
+$string['smartmenusmenuitempresentationheader'] = 'Menu item presentation';
+$string['smartmenusmenuitemresponsive'] = 'Responsive hiding';
+$string['smartmenusmenuitemresponsive_help'] = 'By enabling any of these checkboxes, the menu item will be hidden on devices with the given display size.';
+$string['smartmenusmenuitemresponsivedesktop'] = 'Desktop';
+$string['smartmenusmenuitemresponsivemobile'] = 'Mobile';
+$string['smartmenusmenuitemresponsivetablet'] = 'Tablet';
+$string['smartmenusmenuitemrestriction'] = 'Access rules';
+$string['smartmenusmenuitems'] = 'Menu items';
+$string['smartmenusmenuitemstructureheader'] = 'Menu item structure';
+$string['smartmenusmenuitemtextcount'] = 'Number of words';
+$string['smartmenusmenuitemtextcount_help'] = 'Specify the maximum number of words to be displayed as title in the dynamic courses menu items. If you leave this field empty, the title will be displayed in full length.';
+$string['smartmenusmenuitemtextposition'] = 'Card text position';
+$string['smartmenusmenuitemtextposition_help'] = '<p>Select the position of the menu item text in relation to the card image, choosing from below image, top overlay and bottom overlay.</p><ul><li>Top overlay: Displays the menu item title over the overlay and at the top of the card.</li><li>Bottom overlay: Displays the menu item title over the overlay and at the bottom of the card.</li><li>Below image: Displays the menu item title below the card image.</li></ul>';
+$string['smartmenusmenuitemtextpositionbelowimage'] = 'Below image';
+$string['smartmenusmenuitemtextpositionoverlaybottom'] = 'Bottom overlay';
+$string['smartmenusmenuitemtextpositionoverlaytop'] = 'Top overlay';
+$string['smartmenusmenuitemtitle'] = 'Title';
+$string['smartmenusmenuitemtitle_help'] = 'The title of the menu. This will be used as the label of this menu item. If you want to display a separator in the menu, choose Heading as type and use hash signs (###) as title.';
+$string['smartmenusmenuitemtooltip'] = 'Tooltip';
+$string['smartmenusmenuitemtooltip_help'] = 'The tooltip which will be displayed when the user hovers over the menu item.';
+$string['smartmenusmenuitemtype'] = 'Menu item type';
+$string['smartmenusmenuitemtype_help'] = '<p>Select the type of menu item you want to create, choosing between static, heading and dynamic courses.</p><ul><li>Static: A static menu item is simply a link to a fixed URL that does not change.</li><li>Heading: A heading menu item is used to group related menu items together under a common heading. It does not have a link and is not clickable.</li><li>Dynamic courses: A dynamic courses menu item is used to display a list of courses based on certain criteria, such as course category, course enrolment role, course completion status or date range. The content displayed in a dynamic courses menu item will update automatically as the criteria changes.</li></ul>';
+$string['smartmenusmenuitemtypedynamiccourses'] = 'Dynamic courses';
+$string['smartmenusmenuitemtypeheading'] = 'Heading';
+$string['smartmenusmenuitemtypestatic'] = 'Static';
+$string['smartmenusmenuitemurl'] = 'Menu item URL';
+$string['smartmenusmenuitemurl_help'] = 'The static URL for the menu item. This is the link that will be followed when the menu item is clicked.';
+$string['smartmenusmenulocation'] = 'Menu location(s)';
+$string['smartmenusmenulocation_help'] = '<p>Select the location(s) where you want the menu to appear on the page:</p><ul><li>The main navigation is at the top of the page where Moodle core shows the Home, Dashboard, My courses and Site administration navigation items already.</li><li>The menu bar is located above the main navigation, at the top of the page.</li><li>The user menu can be accessed by clicking on the user avatar in the navigation bar.</li><li>The bottom bar is placed at the bottom of the screen and can be used to implement a thumb navigation for easy access to important areas, such as the dashboard, the my courses page or the home page.</li></ul><p>Please note that upon enabling the bottom bar, the hamburger icon will be replaced by your site\'s logo, because users can reach the main navigation then using the bottom bar.</p>';
+$string['smartmenusmenulocationbottom'] = 'Bottom bar';
+$string['smartmenusmenulocationmain'] = 'Main navigation';
+$string['smartmenusmenulocationmenu'] = 'Menu bar';
+$string['smartmenusmenulocationuser'] = 'User menu';
+$string['smartmenusmenumode'] = 'Menu mode';
+$string['smartmenusmenumode_help'] = '<p>Select the mode how the menu\'s items should be displayed.</p><ul><li>Submenu: The menu items is displayed as a submenu with the menu\'s title as parent node. This is the default option.</li><li>Inline: The menu\'s items are displayed directly in the navigation, one after another. Please note that this option is not supported for card type menus.</li></ul>';
+$string['smartmenusmenumoremenubehavior'] = 'More menu behavior';
+$string['smartmenusmenumoremenubehavior_help'] = '<p>Select what should happen if there are too many menus to fit in the menu location.</p><ul><li>Do not change anything: No particular behaviour will be enforced, excess menus will be moved into the \'More\' menu automatically.</li><li>Force into more menu: This mode moves the menu directly into the \'More\' menu even if there would still be space.</li><li>Keep outside of more menu: This mode keeps the menu outside of the \'More\' menu as long as possible.</li></ul>';
+$string['smartmenusmenumoremenubehaviorforceinto'] = 'Force into more menu';
+$string['smartmenusmenumoremenubehaviorkeepoutside'] = 'Keep outside of more menu';
+$string['smartmenusmenunothingtodisplay'] = 'There aren\'t any smart menus created yet. Please create your first smart menu to get things going.';
+$string['smartmenusmenupresentationheader'] = 'Menu presentation';
+$string['smartmenusmenushowdescription'] = 'Show description';
+$string['smartmenusmenushowdescription_help'] = '<p>Select if / how the description should be shown in the menu, choosing between Never, Above, Below and Help.</p><ul><li>Never: Do not show the description in the menu and use it only for internal purposes. This is the default option.</li><li>Above: Show the description at the top of the menu\'s list of menu items.</li><li>Below: Show the description at the end of the menu\'s list of menu items.</li><li>Help: Show the description as help icon near the menu\'s list of menu items.</li></ul>';
+$string['smartmenusmenushowdescriptionabove'] = 'Above';
+$string['smartmenusmenushowdescriptionbelow'] = 'Below';
+$string['smartmenusmenushowdescriptionhelp'] = 'Help';
+$string['smartmenusmenushowdescriptionnever'] = 'Never';
+$string['smartmenusmenustructureheader'] = 'Menu structure';
+$string['smartmenusmenutitle'] = 'Title';
+$string['smartmenusmenutitle_help'] = 'The title of the menu. This will be used as the label of the parent node of this menu.';
+$string['smartmenusmenutype'] = 'Presentation type';
+$string['smartmenusmenutype_help'] = '<p>Select the type of presentation for the menu, choosing between list and card.</p><ul><li>List: A list menu is composed of simple text links. This is the default option.</li><li>Card: A card menu is composed of cards.</li></ul>';
+$string['smartmenusmenutypecard'] = 'Card';
+$string['smartmenusmenutypelist'] = 'List';
+$string['smartmenusmodeinline'] = 'Inline';
+$string['smartmenusmodesubmenu'] = 'Submenu';
+$string['smartmenusnorestrict'] = 'Not restricted';
+$string['smartmenusoperator'] = 'Operator';
+$string['smartmenusoperator_help'] = 'Select the operator for the cohort condition (Any or All)';
+$string['smartmenusrestrictbycohortsheader'] = 'Restrict visibility by cohorts';
+$string['smartmenusrestrictbydateheader'] = 'Restrict visibility by date';
+$string['smartmenusrestrictbylanguageheader'] = 'Restrict visibility by language';
+$string['smartmenusrestrictbyrolesheader'] = 'Restrict visibility by roles';
+$string['smartmenusrolecontext'] = 'Context';
+$string['smartmenusrolecontext_help'] = 'Select the context for which the user\'s role should be checked (Any context or system context only)';
+$string['smartmenussavechangesandconfigure'] = 'Save and configure items';
+$string['smartmenussettings'] = 'Smart menu settings';
 
 // Privacy API.
 $string['privacy:metadata'] = 'The LearnR theme does not store any personal data about any user.';
@@ -678,7 +965,6 @@ $string['learnr:viewregionoffcanvascenter'] = 'To be able to see the Off-canvas 
 $string['learnr:editregionoffcanvascenter'] = 'To be able to edit the Off-canvas (center) block region';
 
 // Caches.
-$string['cachedef_fontawesome'] = 'FontAwesome files (which are uploaded in the LearnR settings)';
 $string['cachedef_flavours'] = 'Flavours which apply to a given page category ID for the current user';
 
 // Upgrade notices.

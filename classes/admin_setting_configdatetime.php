@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Settings class file
+ * Theme Boost Union - Settings class file
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -50,11 +50,11 @@ class admin_setting_configdatetime extends \admin_setting {
 
         $datearr = getdate($result);
 
-        $data = array('h' => $datearr['hours'],
+        $data = ['h' => $datearr['hours'],
                 'm' => $datearr['minutes'],
                 'y' => $datearr['year'],
                 'M' => $datearr['mon'],
-                'd' => $datearr['mday']);
+                'd' => $datearr['mday'], ];
         return $data;
     }
 

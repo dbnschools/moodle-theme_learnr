@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - JS code infobanner
+ * Theme Boost Union - JS code infobanner
  *
  * @module     theme_learnr/infobanner
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -36,7 +36,9 @@ define(['jquery'], function($) {
             var infobannerno = $(this).attr('data-infobanner-no');
 
             // And store the dismissing of the info banner as a user preference to persist this decision.
-            M.util.set_user_preference('theme_learnr_infobanner' + infobannerno + '_dismissed', true);
+            require(['core_user/repository'], function(UserRepository) {
+                UserRepository.setUserPreference('theme_learnr_infobanner' + infobannerno + '_dismissed', true);
+            });
         });
     }
 

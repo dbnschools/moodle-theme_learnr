@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Flavours preview page
+ * Theme Boost Union - Flavours preview page
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -44,9 +44,9 @@ require_capability('theme/learnr:configure', $context);
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/theme/learnr/flavours/preview.php', ['id' => $flavourid]));
 $PAGE->set_cacheable(false);
-$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', array('category' => 'themes')));
+$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', ['category' => 'themes']));
 $PAGE->navbar->add(get_string('pluginname', 'theme_learnr'), new moodle_url('/admin/category.php',
-        array('category' => 'theme_learnr')));
+        ['category' => 'theme_learnr']));
 $PAGE->navbar->add(get_string('flavoursflavours', 'theme_learnr'), new moodle_url('/theme/learnr/flavours/overview.php'));
 $PAGE->set_title(theme_learnr_get_externaladminpage_title(get_string('flavourspreviewflavour', 'theme_learnr')));
 $PAGE->set_heading(get_string('flavourspreviewflavour', 'theme_learnr'));

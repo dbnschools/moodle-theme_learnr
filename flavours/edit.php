@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - CRUD flavours page
+ * Theme Boost Union - CRUD flavours page
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -40,15 +40,16 @@ $context = context_system::instance();
 
 // Access checks.
 require_login();
+require_sesskey();
 require_capability('theme/learnr:configure', $context);
 
 // Prepare the page.
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/theme/learnr/flavours/edit.php', ['action' => $action]));
 $PAGE->set_cacheable(false);
-$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', array('category' => 'themes')));
+$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', ['category' => 'themes']));
 $PAGE->navbar->add(get_string('pluginname', 'theme_learnr'), new moodle_url('/admin/category.php',
-        array('category' => 'theme_learnr')));
+        ['category' => 'theme_learnr']));
 $PAGE->navbar->add(get_string('flavoursflavours', 'theme_learnr'), new moodle_url('/theme/learnr/flavours/overview.php'));
 switch ($action) {
     case 'create':
@@ -118,7 +119,7 @@ switch ($action) {
             $backgroundimagefilename = theme_learnr_flavours_get_filename('look_backgroundimage', $id);
 
             // Update the database record to include the file names.
-            $updaterecord = $DB->get_record('theme_learnr_flavours', array('id' => $id));
+            $updaterecord = $DB->get_record('theme_learnr_flavours', ['id' => $id]);
             $updaterecord->look_logo = $looklogofilename;
             $updaterecord->look_logocompact = $looklogocompactfilename;
             $updaterecord->look_favicon = $faviconfilename;
@@ -157,7 +158,7 @@ switch ($action) {
         $flavour = $DB->get_record('theme_learnr_flavours', ['id' => $id], '*', MUST_EXIST);
 
         // Init form and pass the $flavour object to it.
-        $form = new \theme_learnr\form\flavour_edit_form($PAGE->url, array('flavour' => $flavour));
+        $form = new \theme_learnr\form\flavour_edit_form($PAGE->url, ['flavour' => $flavour]);
 
         // If the form was submitted.
         if ($data = $form->get_data()) {
@@ -192,7 +193,7 @@ switch ($action) {
             $backgroundimagefilename = theme_learnr_flavours_get_filename('look_backgroundimage', $id);
 
             // Update the database record to include the file names.
-            $updaterecord = $DB->get_record('theme_learnr_flavours', array('id' => $id));
+            $updaterecord = $DB->get_record('theme_learnr_flavours', ['id' => $id]);
             $updaterecord->look_logo = $looklogofilename;
             $updaterecord->look_logocompact = $looklogocompactfilename;
             $updaterecord->look_favicon = $faviconfilename;
@@ -242,7 +243,7 @@ switch ($action) {
             // Gather the data for the form.
             $flavour->description = [
                     'text' => $flavour->description,
-                    'format' => $flavour->description_format
+                    'format' => $flavour->description_format,
             ];
             if (isset($flavour->applytocohorts_ids)) {
                 $flavour->applytocohorts_ids = json_decode($flavour->applytocohorts_ids, true);
@@ -266,7 +267,7 @@ switch ($action) {
         $flavour = $DB->get_record('theme_learnr_flavours', ['id' => $id], '*', MUST_EXIST);
 
         // Init form and pass the $flavour object to it.
-        $form = new \theme_learnr\form\flavour_delete_form($PAGE->url, array('flavour' => $flavour));
+        $form = new \theme_learnr\form\flavour_delete_form($PAGE->url, ['flavour' => $flavour]);
 
         // If the form was submitted.
         if ($data = $form->get_data()) {

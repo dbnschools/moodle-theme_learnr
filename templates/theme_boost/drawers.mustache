@@ -15,9 +15,9 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_learnr/drawers
+    @template theme_boost/drawers
 
-    LearnR drawer template.
+    Boost drawer template.
 
     Context variables required for this template:
     * sitename - The name of the site
@@ -50,9 +50,9 @@
     }
 }}
 {{!
-    This template is based on theme_boost/drawers
+    This template is a modified version of theme_boost/drawers
 
-    Modifications compared to this template:
+    Modifications compared to the original template:
     * Include theme_learnr/footnote template
     * Include theme_learnr/footer template instead of theme_boost/footer
     * Include theme_learnr/navbar template instead of theme_boost/navbar
@@ -60,6 +60,8 @@
     * Added the possibility to show info banners.
     * Include theme_learnr/advertisementtiles template
     * Added additional block regions (including JS for offcanvas region)
+    * Added smartmenu js to support third level submenus.
+    * Added footer-bottom-menu class to #page element as soon as the bottom menu is shown
 }}
 {{> theme_boost/head }}
 
@@ -69,12 +71,15 @@
 
     {{{ output.standard_top_of_body_html }}}
 
-    {{> theme_learnr/navbar }}
+    {{> theme_boost/navbar }}
     {{! Begin DBN Update }}
     {{#showcourseindexnav}}
     {{#courseindex}}
         {{< theme_boost/drawer }}
             {{$id}}theme_boost-drawers-courseindex{{/id}}
+            {{$drawerheadercontent}}
+                {{> theme_boost/courseindexdrawercontrols}}
+            {{/drawerheadercontent}}
             {{$drawerclasses}}drawer drawer-left {{#courseindexopen}}show{{/courseindexopen}}{{/drawerclasses}}
             {{$drawercontent}}
                 {{{courseindex}}}
@@ -123,7 +128,7 @@
         {{/regions.offcanvas.hasblocks}}
     {{/userisediting}}
 
-    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container {{#bottombar.drawer}} footer-bottom-menu {{/bottombar.drawer}}">
         {{#userisediting}}
             <div id="theme-block-region-offcanvas-editing" class="collapse">
                 <div id="theme-block-region-offcanvas-editing-inner">
@@ -155,7 +160,7 @@
             {{/regions.outsideleft.hasblocks}}
 
         <div id="topofscroll" class="main-inner">
-        
+
         {{! Begin DBN Update }}
         {{{ output.headerbuttons }}}
             <div id="learnrpage" class="contentwrapper">
@@ -202,6 +207,7 @@
             {{> theme_learnr/javascriptdisabledhint }}
             {{> theme_learnr/infobanners }}
             {{{ output.full_header }}}
+
             {{#secondarymoremenu}}
                 <div class="secondary-navigation d-print-none">
                     {{> core/moremenu}}
@@ -262,7 +268,7 @@
                         {{{ output.main_content }}}
                         {{/showcourseindexnav}}
                         {{! End DBN Update }}
-                        
+
                         {{{ output.activity_navigation }}}
                         {{{ output.course_content_footer }}}
 
@@ -278,10 +284,6 @@
                     {{{ regions.contentlower.regionhtml }}}
                 </section>
             {{/regions.contentlower.hasblocks}}
-
-            {{! Begin DBN Update }}
-            </div>
-            {{! End DBN Update }}
         </div>
 
         {{#regions.outsideright.hasblocks}}
@@ -290,6 +292,9 @@
                 {{{ regions.outsideright.regionhtml }}}
             </section>
         {{/regions.outsideright.hasblocks}}
+        {{! Begin DBN Update }}
+            </div>
+        {{! End DBN Update }}
         </div>
 
         {{#regions.outsidebottom.hasblocks}}
@@ -300,7 +305,7 @@
         {{/regions.outsidebottom.hasblocks}}
 
         {{#regions.footer.hasblocks}}
-            <div id="theme-block-region-footer">
+            <div id="theme-block-region-footer" class="{{{footerwidth}}}">
                 <div class="row">
                      {{#regions.footerleft.hasblocks}}
                         <section id="theme-block-region-footer-left" class="theme-block-region {{regions.footer.class}}" aria-label="{{#str}}blocks{{/str}}">
@@ -324,7 +329,7 @@
             </div>
         {{/regions.footer.hasblocks}}
 
-        {{> theme_learnr/footer }}
+        {{> theme_boost/footer }}
         {{> theme_learnr/footnote }}
     </div>
     {{{ output.standard_after_main_region_html }}}
@@ -334,9 +339,10 @@
 </html>
 {{#js}}
 M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader', 'theme_boost/drawer', 'theme_learnr/offcanvas'], function(Loader, Drawer, OffCanvas) {
+require(['theme_boost/loader', 'theme_boost/drawer'{{#regions.offcanvas.hasblocks}},'theme_learnr/offcanvas'{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, 'theme_learnr/smartmenu'{{/includesmartmenu}}], function(Loader, Drawer{{#regions.offcanvas.hasblocks}},OffCanvas{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, SmartMenu{{/includesmartmenu}}) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
-    OffCanvas.init();
+    {{#regions.offcanvas.hasblocks}}OffCanvas.init();{{/regions.offcanvas.hasblocks}}
+    {{#includesmartmenu}}SmartMenu.init();{{/includesmartmenu}}
 });
 {{/js}}

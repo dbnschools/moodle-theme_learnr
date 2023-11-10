@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Version file
+ * Theme Boost Union - Version file
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -25,9 +25,9 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'theme_learnr';
-$plugin->version = 2023071008;
-$plugin->release = 'v4.2.r8';
-$plugin->requires = 2022041908;
-$plugin->supported = [401, 401];
+$plugin->version = 2023102000;
+$plugin->release = 'v4.3-r1';
+$plugin->requires = 2023100900;
+$plugin->supported = [403, 403];
 $plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = array('theme_boost' => 2022112800);
+$plugin->dependencies = ['theme_boost' => 2023100900];

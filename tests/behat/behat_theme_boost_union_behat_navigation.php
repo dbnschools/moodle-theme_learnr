@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Behat navigation-related step definition overrides for the LearnR theme.
+ * Behat navigation-related step definition overrides for the Boost Union theme.
  *
  * @package    theme_learnr
  * @category   test
@@ -33,7 +33,7 @@ use Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException;
 use Behat\Mink\Exception\ExpectationException as ExpectationException;
 
 /**
- * Navigation-related step definition overrides for the LearnR theme.
+ * Navigation-related step definition overrides for the Boost Union theme.
  *
  * @package    theme_learnr
  * @category   test

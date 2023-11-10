@@ -1,8 +1,8 @@
-@theme @theme_learnr @theme_learnr_looksettings @theme_learnr_looksettings_branding
-Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look" page
+@theme @theme_learnr @theme_learnr_looksettings @theme_learnr_looksettings_sitebranding
+Feature: Configuring the theme_learnr plugin for the "Site branding" tab on the "Look" page
   In order to use the features
   As admin
-  I need to be able to configure the theme LearnR plugin
+  I need to be able to configure the theme Boost Union plugin
 
   Background:
     Given the following "users" exist:
@@ -20,8 +20,8 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
   @javascript @_file_upload
   Scenario: Setting: Logo - Upload a custom logo to the theme
     When I log in as "admin"
-    And I navigate to "Appearance > LearnR > Look" in site administration
-    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/moodlelogo.png" file to "Logo" filemanager
     And I press "Save changes"
     And I log out
@@ -48,8 +48,8 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a PNG logo to the theme and check that it is resized
     When I log in as "admin"
-    And I navigate to "Appearance > LearnR > Look" in site administration
-    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/moodlelogo.png" file to "Logo" filemanager
     And I press "Save changes"
     And I log out
@@ -59,8 +59,8 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a SVG logo to the theme and check that it is not resized
     When I log in as "admin"
-    And I navigate to "Appearance > LearnR > Look" in site administration
-    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/moodlelogo.svg" file to "Logo" filemanager
     And I press "Save changes"
     And I log out
@@ -70,8 +70,8 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a custom compact logo to the theme
     When I log in as "admin"
-    And I navigate to "Appearance > LearnR > Look" in site administration
-    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
     And I press "Save changes"
     And I am on site homepage
@@ -95,8 +95,8 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a PNG compact logo to the theme and check that it is resized
     When I log in as "admin"
-    And I navigate to "Appearance > LearnR > Look" in site administration
-    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
     And I press "Save changes"
     And I am on site homepage
@@ -105,8 +105,8 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a SVG compact logo to the theme and check that it is not resized
     When I log in as "admin"
-    And I navigate to "Appearance > LearnR > Look" in site administration
-    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/moodlelogo.svg" file to "Compact logo" filemanager
     And I press "Save changes"
     And I am on site homepage
@@ -115,8 +115,8 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
   @javascript @_file_upload
   Scenario: Setting: Favicon - Upload a custom favicon to the theme
     When I log in as "admin"
-    And I navigate to "Appearance > LearnR > Look" in site administration
-    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/favicon.ico" file to "Favicon" filemanager
     And I press "Save changes"
     # We can't check the uploaded favicon visually, but we can verify that the site's favicon is not shipped by pluginfile.php (for uploaded files) and not by theme/image.php (for image files from disk) anymore.
@@ -149,24 +149,6 @@ Feature: Configuring the theme_learnr plugin for the "Branding" tab on the "Look
 
   # Unfortunately, this can't be tested with Behat yet
   # Scenario: Setting: Bootstrap color for "Danger" - Setting the color
-
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Activity icon color for "Administration" - Setting the color
-
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Activity icon color for "Assessment" - Setting the color
-
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Activity icon color for "Collaboration" - Setting the color
-
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Activity icon color for "Communication" - Setting the color
-
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Activity icon color for "Content" - Setting the color
-
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Activity icon color for "Interface" - Setting the color
 
   Scenario Outline: Setting: Navbar color - Set the navbar color
     Given the following config values are set as admin:

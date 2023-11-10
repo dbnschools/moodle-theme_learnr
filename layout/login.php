@@ -15,12 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR Login - Login page layout.
+ * Theme Boost Union Login - Login page layout.
  *
  * This layoutfile is based on theme/boost/layout/login.php
  *
  * Modifications compared to this layout file:
- * * Render theme_learnr/login instead of theme_boost/login template
  * * Include footnote
  * * Include static pages
  * * Include info banners
@@ -45,7 +44,7 @@ $templatecontext = [
     'loginwrapperclass' => 'login-wrapper-'.get_config('theme_learnr', 'loginformposition'),
     'logincontainerclass' =>
             (get_config('theme_learnr', 'loginformtransparency') == THEME_LEARNR_SETTING_SELECT_YES) ?
-                    'login-container-80t' : ''
+                    'login-container-80t' : '',
 ];
 
 // Include the template content for the footnote.
@@ -57,5 +56,5 @@ require_once(__DIR__ . '/includes/staticpages.php');
 // Include the template content for the info banners.
 require_once(__DIR__ . '/includes/infobanners.php');
 
-// Render login.mustache from learnr.
-echo $OUTPUT->render_from_template('theme_learnr/login', $templatecontext);
+// Render login.mustache from theme_boost (which is overridden in theme_learnr).
+echo $OUTPUT->render_from_template('theme_boost/login', $templatecontext);

@@ -15,12 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Columns2 page layout.
+ * Theme Boost Union - Columns2 page layout.
  *
  * This layoutfile is based on theme/boost/layout/columns2.php
  *
  * Modifications compared to this layout file:
- * * Render theme_learnr/columns2 instead of theme_boost/columns2 template
  * * Include activity navigation
  * * Include course related hints
  * * Include back to top button
@@ -29,6 +28,7 @@
  * * Include static pages
  * * Include Jvascript disabled hint
  * * Include info banners
+ * * Include smart menus
  *
  * @package   theme_learnr
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
@@ -53,7 +53,6 @@ if ($activitynavigation == THEME_LEARNR_SETTING_SELECT_YES) {
 $addblockbutton = $OUTPUT->addblockbutton();
 
 $extraclasses = [];
-$bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $blockshtml = $OUTPUT->blocks('side-pre');
 $hasblocks = (strpos($blockshtml, 'data-block=') !== false || !empty($addblockbutton));
 
@@ -69,15 +68,26 @@ if ($PAGE->has_secondary_navigation()) {
     }
 }
 
-$primary = new core\navigation\output\primary($PAGE);
+// Load the navigation from learnr primary navigation, the extended version of core primary navigation.
+// It includes the smart menus and menu items, for multiple locations.
+$primary = new theme_learnr\output\navigation\primary($PAGE);
 $renderer = $PAGE->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
+
+// Add a special class selector to improve the Smart menus SCSS selectors.
+if (isset($primarymenu['includesmartmenu']) && $primarymenu['includesmartmenu'] == true) {
+    $extraclasses[] = 'theme-boost-union-smartmenu';
+}
+
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions()  && !$PAGE->has_secondary_navigation();
 // If the settings menu will be included in the header then don't add it here.
 $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
 
 $header = $PAGE->activityheader;
 $headercontent = $header->export_for_template($renderer);
+
+$bodyattributes = $OUTPUT->body_attributes($extraclasses); // In the original layout file, this line is place more above,
+                                                           // but we amended $extraclasses and had to move it.
 
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
@@ -121,5 +131,8 @@ require_once(__DIR__ . '/includes/infobanners.php');
 // Include the template content for the navbar styling.
 require_once(__DIR__ . '/includes/navbar.php');
 
-// Render columns2.mustache from learnr.
-echo $OUTPUT->render_from_template('theme_learnr/columns2', $templatecontext);
+// Include the template content for the smart menus.
+require_once(__DIR__ . '/includes/smartmenus.php');
+
+// Render columns2.mustache from theme_boost (which is overridden in theme_learnr).
+echo $OUTPUT->render_from_template('theme_boost/columns2', $templatecontext);

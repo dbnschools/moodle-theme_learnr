@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Static pages layout include.
+ * Theme Boost Union - Static pages layout include.
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -30,7 +30,7 @@ require_once($CFG->dirroot.'/theme/learnr/locallib.php');
 $config = get_config('theme_learnr');
 
 // The static pages to be supported.
-$staticpages = array('imprint', 'contact', 'help', 'maintenance');
+$staticpages = ['aboutus', 'offers', 'imprint', 'contact', 'help', 'maintenance', 'page1', 'page2', 'page3'];
 
 // Iterate over the static pages.
 foreach ($staticpages as $staticpage) {

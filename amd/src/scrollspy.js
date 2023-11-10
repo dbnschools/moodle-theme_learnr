@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - JS code scroll-spy
+ * Theme Boost Union - JS code scroll-spy
  *
  * @module     theme_learnr/scrollspy
  * @copyright  2022 Josha Bartsch <bartsch@itc.rwth-aachen.de>
@@ -37,11 +37,16 @@ const initScrollSpy = () => {
     // Unfortunately the editmode-switch carries no unique ID
     let editToggle = document.querySelector('form.editmode-switch-form');
 
+    if (!editToggle) {
+        // Do not continue when there is no edit toggle.
+        return;
+    }
+
     editToggle.addEventListener('click', () => {
 
         window.sessionStorage.setItem('edittoggled', true);
 
-        let viewporttop = document.getElementById('page').scrollTop;
+        let viewporttop = window.scrollY;
         let closest = null;
         let closestoffset = null;
 
@@ -71,7 +76,7 @@ const initScrollSpy = () => {
             let closest = document.getElementById(closestid);
             let y = closest.offsetTop + parseInt(closestdelta);
 
-            document.getElementById('page').scrollTo(0, y);
+            window.scrollTo(0, y);
         }
 
         window.sessionStorage.removeItem('edittoggled');

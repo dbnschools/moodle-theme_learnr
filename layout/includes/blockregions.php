@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Additional regions.
+ * Theme Boost Union - Additional regions.
  *
  * @package   theme_learnr
  * @copyright 2022 bdecent gmbh <https://bdecent.de>
@@ -38,6 +38,11 @@ require_once($CFG->dirroot . '/theme/learnr/locallib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class additionalregions {
+
+    /**
+     * @var array $regions List of page regions.
+     */
+    private $regions;
 
     /**
      * Constructor.
@@ -75,7 +80,7 @@ class additionalregions {
             $regionsdata[$name] = [
                 'hasblocks' => (strpos($regionhtml, 'data-block=') !== false || !empty($blockbutton)),
                 'regionhtml' => $regionhtml,
-                'addblockbutton' => $blockbutton
+                'addblockbutton' => $blockbutton,
             ];
         }
         return $regionsdata;
@@ -127,7 +132,7 @@ class additionalregions {
 
         return [
             'count' => $regioncount,
-            'class' => 'col-xl-'.(($regioncount > 0 ) ? round(12 / $regioncount) : '12' )
+            'class' => 'col-xl-'.(($regioncount > 0 ) ? round(12 / $regioncount) : '12' ),
         ];
     }
 
@@ -140,7 +145,7 @@ class additionalregions {
         $list = $this->countcolclass([
                 'offcanvasleft',
                 'offcanvasright',
-                'offcanvascenter'], $regionsdata);
+                'offcanvascenter', ], $regionsdata);
 
         $regionsdata['offcanvas'] = [
                 'hasblocks' => ($list['count'] > 0) ? true : false,
@@ -157,7 +162,7 @@ class additionalregions {
         $list = $this->countcolclass([
                 'footerleft',
                 'footerright',
-                'footercenter'], $regionsdata);
+                'footercenter', ], $regionsdata);
 
         $regionsdata['footer'] = [
                 'hasblocks' => ($list['count'] > 0) ? true : false,
@@ -186,6 +191,7 @@ class additionalregions {
             'outsideregionsplacement' => 'main-inner-outside-'.get_config('theme_learnr', 'outsideregionsplacement'),
             'outsidebottomwidth' => 'theme-block-region-outside-'.get_config('theme_learnr', 'blockregionoutsidebottomwidth'),
             'outsidetopwidth' => 'theme-block-region-outside-'.get_config('theme_learnr', 'blockregionoutsidetopwidth'),
+            'footerwidth' => 'theme-block-region-footer-'.get_config('theme_learnr', 'blockregionfooterwidth'),
         ];
     }
 }

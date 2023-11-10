@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin as manager
   In order to use the features
   As manager
-  I need to be able to configure the theme LearnR plugin
+  I need to be able to configure the theme Boost Union plugin
 
   Background:
     Given the following "users" exist:
@@ -12,7 +12,7 @@ Feature: Configuring the theme_learnr plugin as manager
       | user    | role    | contextlevel |
       | manager | manager | System       |
 
-  Scenario: Capabilities - Allow managers to configure LearnR
+  Scenario: Capabilities - Allow managers to configure Boost Union
     Given the following "permission overrides" exist:
       | capability                  | permission | role    | contextlevel | reference |
       | theme/learnr:configure | Allow      | manager | System       |           |
@@ -20,17 +20,17 @@ Feature: Configuring the theme_learnr plugin as manager
     And I follow "Site administration"
     Then ".secondary-navigation li[data-key='appearance']" "css_element" should exist
     # We just need to test the 'look' page as a representative of all theme admin pages.
-    And I navigate to "Appearance > Themes > LearnR > Look" in site administration
+    And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
     And "body#page-admin-setting-theme_learnr_look" "css_element" should exist
     And I should see "Look" in the "#region-main" "css_element"
     And I should see "General settings" in the "#region-main" "css_element"
     # However, we have to test the 'flavours' page as well as this is an external admin page.
-    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
+    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
     And "body#page-admin-theme-learnr-flavours-overview" "css_element" should exist
     And I should see "Flavours" in the "#region-main" "css_element"
     And I should see "Create flavour" in the "#region-main" "css_element"
 
-  Scenario: Capabilities - Do not allow managers to configure LearnR (countercheck)
+  Scenario: Capabilities - Do not allow managers to configure Boost Union (countercheck)
     Given the following "permission overrides" exist:
       | capability                  | permission | role    | contextlevel | reference |
       | theme/learnr:configure | Prevent    | manager | System       |           |

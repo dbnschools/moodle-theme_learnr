@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Flavours styles serving
+ * Theme Boost Union - Flavours styles serving
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -55,7 +55,7 @@ try {
     // again and again. However, as the result is cached in the browser and the browser should not request
     // a flavour's CSS file again and again this should be ok for now.
     $flavour = $DB->get_record('theme_learnr_flavours',
-            array('id' => $flavourid), 'look_rawscss, look_backgroundimage', MUST_EXIST);
+            ['id' => $flavourid], 'look_rawscss, look_backgroundimage', MUST_EXIST);
 
     // Catch the exception.
 } catch (\Exception $e) {

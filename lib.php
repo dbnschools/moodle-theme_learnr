@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Library
+ * Theme Boost Union - Library
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -34,7 +34,7 @@ define('THEME_LEARNR_SETTING_STATICPAGELINKPOSITION_BOTH', 'both');
 define('THEME_LEARNR_SETTING_HIDENODESPRIMARYNAVIGATION_HOME', 'home');
 define('THEME_LEARNR_SETTING_HIDENODESPRIMARYNAVIGATION_MYHOME', 'myhome');
 define('THEME_LEARNR_SETTING_HIDENODESPRIMARYNAVIGATION_MYCOURSES', 'courses');
-define('THEME_LEARNR_SETTING_HIDENODESPRIMARYNAVIGATION_SITEADMIN', 'siteadmin');
+define('THEME_LEARNR_SETTING_HIDENODESPRIMARYNAVIGATION_SITEADMIN', 'siteadminnode');
 
 define('THEME_LEARNR_SETTING_INFOBANNER_COUNT', 5);
 define('THEME_LEARNR_SETTING_INFOBANNERPAGES_MY', 'mydashboard');
@@ -141,7 +141,7 @@ function theme_learnr_get_main_scss_content($theme) {
  * Get SCSS to prepend.
  *
  * @param theme_config $theme The theme config object.
- * @return array
+ * @return string
  */
 function theme_learnr_get_pre_scss($theme) {
     global $CFG;
@@ -176,6 +176,12 @@ function theme_learnr_get_pre_scss($theme) {
         'courseboxheight' => ['courseboxheight'],
         'courseboxheight' => ['courseboxheight'],
         // End DBN Update.
+        'activityiconcoloradministration' => ['activity-icon-administration-bg'],
+        'activityiconcolorassessment' => ['activity-icon-assessment-bg'],
+        'activityiconcolorcollaboration' => ['activity-icon-collaboration-bg'],
+        'activityiconcolorcommunication' => ['activity-icon-communication-bg'],
+        'activityiconcolorcontent' => ['activity-icon-content-bg'],
+        'activityiconcolorinterface' => ['activity-icon-interface-bg'],
     ];
 
     // Prepend variables first.
@@ -203,42 +209,23 @@ function theme_learnr_get_pre_scss($theme) {
         $scss .= '$h5p-content-maxwidth: '.get_config('theme_learnr', 'h5pcontentmaxwidth').";\n";
     }
 
-    // Overwrite Boost core SCSS variables which are stored in a SCSS map and thus couldn't be added to $configurable above.
-    // Set variables for the activity icon colors.
-    $activityiconcolors = array();
-    if (get_config('theme_learnr', 'activityiconcoloradministration')) {
-        $activityiconcolors[] = '"administration": '.get_config('theme_learnr', 'activityiconcoloradministration');
+    // Set custom Boost Union SCSS variable: The block region outside left width.
+    $blockregionoutsideleftwidth = get_config('theme_learnr', 'blockregionoutsideleftwidth');
+    // If the setting is not set.
+    if (!$blockregionoutsideleftwidth) {
+        // Set the variable to the default setting to make sure that the SCSS variable does not remain uninitialized.
+        $blockregionoutsideleftwidth = '300px';
     }
-    if (get_config('theme_learnr', 'activityiconcolorassessment')) {
-        $activityiconcolors[] = '"assessment": '.get_config('theme_learnr', 'activityiconcolorassessment');
-    }
-    if (get_config('theme_learnr', 'activityiconcolorcollaboration')) {
-        $activityiconcolors[] = '"collaboration": '.get_config('theme_learnr', 'activityiconcolorcollaboration');
-    }
-    if (get_config('theme_learnr', 'activityiconcolorcollaboration')) {
-        $activityiconcolors[] = '"communication": '.get_config('theme_learnr', 'activityiconcolorcollaboration');
-    }
-    if (get_config('theme_learnr', 'activityiconcolorcontent')) {
-        $activityiconcolors[] = '"content": '.get_config('theme_learnr', 'activityiconcolorcontent');
-    }
-    if (get_config('theme_learnr', 'activityiconcolorinterface')) {
-        $activityiconcolors[] = '"interface": '.get_config('theme_learnr', 'activityiconcolorinterface');
-    }
-    if (count($activityiconcolors) > 0) {
-        $activityiconscss = '$activity-icon-colors: ('."\n";
-        $activityiconscss .= implode(",\n", $activityiconcolors);
-        $activityiconscss .= ');';
-        $scss .= $activityiconscss."\n";
-    }
+    $scss .= '$blockregionoutsideleftwidth: '.$blockregionoutsideleftwidth.";\n";
 
-    // Set custom LearnR SCSS variables.
-    if (get_config('theme_learnr', 'blockregionoutsideleftwidth')) {
-        $scss .= '$blockregionoutsideleftwidth: '.get_config('theme_learnr', 'blockregionoutsideleftwidth').";\n";
+    // Set custom Boost Union SCSS variable: The block region outside left width.
+    $blockregionoutsiderightwidth = get_config('theme_learnr', 'blockregionoutsiderightwidth');
+    // If the setting is not set.
+    if (!$blockregionoutsiderightwidth) {
+        // Set the variable to the default setting to make sure that the SCSS variable does not remain uninitialized.
+        $blockregionoutsiderightwidth = '300px';
     }
-    if (get_config('theme_learnr', 'blockregionoutsiderightwidth')) {
-        $scss .= '$blockregionoutsiderightwidth: '.get_config('theme_learnr', 'blockregionoutsiderightwidth').
-                ";\n";
-    }
+    $scss .= '$blockregionoutsiderightwidth: '.$blockregionoutsiderightwidth.";\n";
 
     // Prepend pre-scss.
     if (get_config('theme_learnr', 'scsspre')) {
@@ -255,21 +242,26 @@ function theme_learnr_get_pre_scss($theme) {
  * @return string
  */
 function theme_learnr_get_extra_scss($theme) {
+    global $CFG;
+
+    // Require the necessary libraries.
+    require_once($CFG->dirroot . '/course/lib.php');
+
     // Initialize extra SCSS.
     $content = '';
 
     // You might think that this extra SCSS function is only called for the activated theme.
     // However, due to the way how the theme_*_get_extra_scss callback functions are searched and called within Boost child theme
-    // hierarchy LearnR not only gets the extra SCSS from this function here but only from theme_boost_get_extra_scss as well.
+    // hierarchy Boost Union not only gets the extra SCSS from this function here but only from theme_boost_get_extra_scss as well.
     //
     // There, the CSS snippets for the background image and the login background images are added already to the SCSS codebase.
     // Additionally, the custom SCSS from $theme->settings->scss (which hits the SCSS settings from theme_learnr even though
     // the code is within theme_boost) is already added to the SCSS codebase as well.
     //
     // We have to accept this fact here and must not copy the code from theme_boost_get_extra_scss into this function.
-    // Instead, we must only add additionally CSS code which is based on any LearnR-only functionality.
+    // Instead, we must only add additionally CSS code which is based on any Boost Union-only functionality.
 
-    // In contrast to Boost core, LearnR should add the login page background to the body element as well.
+    // In contrast to Boost core, Boost Union should add the login page background to the body element as well.
     // Thus, check if a login background image is set.
     $loginbackgroundimagepresent = get_config('theme_learnr', 'loginbackgroundimage');
     if (!empty($loginbackgroundimagepresent)) {
@@ -306,10 +298,59 @@ function theme_learnr_get_extra_scss($theme) {
     $content .= "background-attachment: fixed;";
     $content .= '}';
 
-    // Note: LearnR is also capable of overriding the background image in its flavours.
+    // Note: Boost Union is also capable of overriding the background image in its flavours.
     // In contrast to the other flavour assets like the favicon overriding, this isn't done here in place as this function
     // is composing Moodle core CSS which has to remain flavour-independent.
     // Instead, the flavour is overriding the background image later in flavours/styles.php.
+
+    // For the rest of this function, we add SCSS snippets to the SCSS stack based on enabled admin settings.
+    // This is done here as it is quite easy to do. As an alternative, it could also been done in post.css by using
+    // SCSS variables with @if conditions and SCSS variables. However, we preferred to do it here in a single place.
+
+    // Setting: Activity icon purpose.
+
+    // Get installed activity modules.
+    $installedactivities = get_module_types_names();
+    // Iterate over all existing activities.
+    foreach ($installedactivities as $modname => $modinfo) {
+        // Get default purpose of activity module.
+        $defaultpurpose = plugin_supports('mod', $modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
+        // If the plugin does not have any default purpose.
+        if (!$defaultpurpose) {
+            // Fallback to "other" purpose.
+            $defaultpurpose = MOD_PURPOSE_OTHER;
+        }
+        // If the activity purpose setting is set and differs from the activity's default purpose.
+        $configname = 'activitypurpose'.$modname;
+        if (isset($theme->settings->{$configname}) && $theme->settings->{$configname} != $defaultpurpose) {
+            // Add CSS to modify the activity purpose color in the activity chooser and the activity icon.
+            $content .= '.activity.modtype_'.$modname.' .activityiconcontainer.courseicon,';
+            $content .= '.modchoosercontainer .modicon_'.$modname.'.activityiconcontainer,';
+            $content .= '#page-header .modicon_'.$modname.'.activityiconcontainer,';
+            $content .= '.block_recentlyaccesseditems .theme-boost-union-'.$modname.'.activityiconcontainer,';
+            $content .= '.block_timeline .theme-boost-union-mod_'.$modname.'.activityiconcontainer {';
+            // If the purpose is now different than 'other', change the background color to the new color.
+            if ($theme->settings->{$configname} != MOD_PURPOSE_OTHER) {
+                $content .= 'background-color: var(--activity' . $theme->settings->{$configname} . ') !important;';
+
+                // Otherwise, the background color is set to light grey (as there is no '--activityother' variable).
+            } else {
+                $content .= 'background-color: $light !important;';
+            }
+            // If the default purpose originally was 'other' and now is overridden, make the icon white.
+            if ($defaultpurpose == MOD_PURPOSE_OTHER) {
+                $content .= '.activityicon, .icon { filter: brightness(0) invert(1); }';
+            }
+            // If the default purpose was not 'other' and now it is, make the icon black.
+            if ($theme->settings->{$configname} == MOD_PURPOSE_OTHER) {
+                $content .= '.activityicon, .icon { filter: none; }';
+            }
+            $content .= '}';
+        }
+    }
+
+    // Setting: Mark external links.
+    $content .= theme_learnr_get_scss_to_mark_external_links($theme);
 
     return $content;
 }
@@ -321,7 +362,7 @@ function theme_learnr_get_extra_scss($theme) {
  */
 function theme_learnr_get_precompiled_css() {
     global $CFG;
-    // Get the fallback CSS file from Boost Core as long as LearnR does not use a fallback file of its own.
+    // Get the fallback CSS file from Boost Core as long as Boost Union does not use a fallback file of its own.
     return file_get_contents($CFG->dirroot . '/theme/boost/style/moodle.css');
 }
 
@@ -337,7 +378,7 @@ function theme_learnr_get_precompiled_css() {
  * @param array $options
  * @return bool
  */
-function theme_learnr_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+function theme_learnr_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     global $CFG;
 
     // Serve the (general) logo files or favicon file from the theme settings.
@@ -383,18 +424,14 @@ function theme_learnr_pluginfile($course, $cm, $context, $filearea, $args, $forc
             send_file_not_found();
         }
 
-        // No need for resizing, but if the file should be cached we save it so we can serve it fast next time.
-        if (empty($maxwidth) && empty($maxheight)) {
+        // Check whether width/height are specified, and we can resize the image (some types such as ICO cannot be resized).
+        if (($maxwidth === 0 && $maxheight === 0) ||
+                !$filedata = $file->resize_image($maxwidth, $maxheight)) {
+
             if ($lifetime) {
                 file_safe_save_content($file->get_content(), $candidate);
             }
             send_stored_file($file, $lifetime, 0, false, $options);
-        }
-
-        // Proceed with the resizing.
-        $filedata = $file->resize_image($maxwidth, $maxheight);
-        if (!$filedata) {
-            send_file_not_found();
         }
 
         // If we don't want to cached the file, serve now and quit.
@@ -410,7 +447,7 @@ function theme_learnr_pluginfile($course, $cm, $context, $filearea, $args, $forc
         // This code is copied and modified from theme_boost_pluginfile() in theme/boost/lib.php.
     } else if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'backgroundimage' ||
         $filearea === 'loginbackgroundimage' || $filearea === 'additionalresources' ||
-                $filearea === 'customfonts' || $filearea === 'fontawesome' || $filearea === 'courseheaderimagefallback' ||
+                $filearea === 'customfonts' || $filearea === 'courseheaderimagefallback' ||
                 preg_match("/tilebackgroundimage[2-9]|1[0-2]?/", $filearea))) {
         $theme = theme_config::load('learnr');
         // By default, theme files must be cache-able by both browsers and proxies.
@@ -449,6 +486,20 @@ function theme_learnr_pluginfile($course, $cm, $context, $filearea, $args, $forc
         // Send stored file (and cache it for 90 days, similar to other static assets within Moodle).
         send_stored_file($file, DAYSECS * 90, 0, $forcedownload, $options);
 
+        // Serve the files from the smart menu card images.
+    } else if ($filearea === 'smartmenus_itemimage' && $context->contextlevel === CONTEXT_SYSTEM) {
+        // Get file storage.
+        $fs = get_file_storage();
+
+        // Get the file from the filestorage.
+        $file = $fs->get_file($context->id, 'theme_learnr', $filearea, $args[0], '/', $args[1]);
+        if (!$file) {
+            send_file_not_found();
+        }
+
+        // Send stored file (and cache it for 90 days, similar to other static assets within Moodle).
+        send_stored_file($file, DAYSECS * 90, 0, $forcedownload, $options);
+
     } else {
         send_file_not_found();
     }
@@ -457,7 +508,7 @@ function theme_learnr_pluginfile($course, $cm, $context, $filearea, $args, $forc
 /**
  * Callback to add head elements.
  *
- * We use this callback to inject the FontAwesome CSS code and the flavour's CSS code to the page.
+ * We use this callback to inject the flavour's CSS code to the page.
  *
  * @return string
  */
@@ -467,7 +518,7 @@ function theme_learnr_before_standard_html_head() {
     // Initialize HTML (even though we do not add any HTML at this stage of the implementation).
     $html = '';
 
-    // If a theme other than LearnR or a child theme of it is active, return directly.
+    // If a theme other than Boost Union or a child theme of it is active, return directly.
     // This is necessary as the before_standard_html_head() callback is called regardless of the active theme.
     if ($PAGE->theme->name != 'learnr' && !in_array('learnr', $PAGE->theme->parents)) {
         return $html;
@@ -476,14 +527,84 @@ function theme_learnr_before_standard_html_head() {
     // Require local library.
     require_once($CFG->dirroot . '/theme/learnr/locallib.php');
 
-    // Add the FontAwesome icons to the page.
-    theme_learnr_add_fontawesome_to_page();
-
     // Add the flavour CSS to the page.
     theme_learnr_add_flavourcss_to_page();
 
     // Return an empty string to keep the caller happy.
     return $html;
+}
+
+/**
+ * Fetches the list of icons and creates an icon suggestion list to be sent to a fragment.
+ *
+ * @param array $args An array of arguments.
+ * @return string The rendered HTML of the icon suggestion list.
+ */
+function theme_learnr_output_fragment_icons_list($args) {
+    global $OUTPUT, $PAGE;
+
+    // Proceed only if a context was given as argument.
+    if ($args['context']) {
+        // Initialize rendered icon list.
+        $icons = [];
+
+        // Load the theme config.
+        $theme = \theme_config::load($PAGE->theme->name);
+
+        // Get the FA system.
+        $faiconsystem = \core\output\icon_system_fontawesome::instance($theme->get_icon_system());
+
+        // Get the icon list.
+        $iconlist = $faiconsystem->get_core_icon_map();
+
+        // Add an empty element to the beginning of the icon list.
+        array_unshift($iconlist, '');
+
+        // Iterate over the icons.
+        foreach ($iconlist as $iconkey => $icontxt) {
+            // Split the component from the icon key.
+            $icon = explode(':', $iconkey);
+
+            // Pick the icon key.
+            $iconstr = isset($icon[1]) ? $icon[1] : 'moodle';
+
+            // Pick the component.
+            $component = isset($icon[0]) ? $icon[0] : '';
+
+            // Render the pix icon.
+            $icon = new \pix_icon($iconstr,  "", $component);
+            $icons[] = [
+                'icon' => $faiconsystem->render_pix_icon($OUTPUT, $icon),
+                'value' => $iconkey,
+                'label' => $icontxt,
+            ];
+        }
+
+        // Return the rendered icon list.
+        return $OUTPUT->render_from_template('theme_learnr/fontawesome-iconpicker-popover', ['options' => $icons]);
+    }
+}
+
+/**
+ * Define preferences which may be set via the core_user_set_user_preferences external function.
+ *
+ * @uses core_user::is_current_user
+ *
+ * @return array[]
+ */
+function theme_learnr_user_preferences(): array {
+    // Build preferences array.
+    $preferences = [];
+    for ($i = 1; $i <= THEME_LEARNR_SETTING_INFOBANNER_COUNT; $i++) {
+        $preferences['theme_learnr_infobanner'.$i.'_dismissed'] = [
+            'type' => PARAM_INT,
+            'null' => NULL_NOT_ALLOWED,
+            'default' => 0,
+            'choices' => [0, 1],
+            'permissioncallback' => [core_user::class, 'is_current_user'],
+        ];
+    }
+    return $preferences;
 }
 
 //Begin DBN change

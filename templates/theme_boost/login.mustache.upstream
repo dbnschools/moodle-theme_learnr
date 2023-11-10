@@ -15,9 +15,9 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_learnr/login
+    @template theme_boost/login
 
-    LearnR Login page template
+    Login page template
 
     Example context (json):
     {
@@ -29,15 +29,6 @@
         }
     }
 }}
-{{!
-    This template is based on theme_boost/login
-
-    Modifications compared to this template:
-    * Include theme_learnr/footnote template
-    * Include theme_learnr/footer template instead of theme_boost/footer
-    * Added the possibility to show info banners.
-    * Added the login background image text.
-}}
 {{> theme_boost/head }}
 
 <body {{{ bodyattributes }}}>
@@ -48,12 +39,11 @@
     {{{ output.standard_top_of_body_html }}}
 
     <div id="page" class="container-fluid pt-5 mt-0">
-        {{> theme_learnr/infobanners }}
         <div id="page-content" class="row">
             <div id="region-main-box" class="col-12">
                 <section id="region-main" class="col-12 h-100" aria-label="{{#str}}content{{/str}}">
-                <div class="login-wrapper {{loginwrapperclass}}">
-                    <div class="login-container {{logincontainerclass}}">
+                <div class="login-wrapper">
+                    <div class="login-container">
                     {{{ output.main_content }}}
                     </div>
                 </div>
@@ -61,17 +51,7 @@
             </div>
         </div>
     </div>
-    {{# loginbackgroundimagetext }}
-        <div class="container-fluid">
-            <div class="row justify-content-end no-gutters mx-3 my-2" id="loginbackgroundimagetext">
-                <span class="small d-none d-md-inline text-{{loginbackgroundimagetextcolor}}">
-                    {{loginbackgroundimagetext}}
-                </span>
-            </div>
-        </div>
-    {{/ loginbackgroundimagetext }}
-    {{> theme_learnr/footer }}
-    {{> theme_learnr/footnote }}
+    {{> theme_boost/footer }}
 </div>
 
 </body>

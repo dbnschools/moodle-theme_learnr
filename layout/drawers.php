@@ -15,12 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Drawers page layout.
+ * Theme Boost Union - Drawers page layout.
  *
  * This layoutfile is based on theme/boost/layout/drawers.php
  *
  * Modifications compared to this layout file:
- * * Render theme_learnr/drawers instead of theme_boost/drawers template
  * * Include activity navigation
  * * Include course related hints
  * * Include back to top button
@@ -31,6 +30,8 @@
  * * Include advertisement tiles
  * * Include info banners
  * * Include additional block regions
+ * * Handle admin setting for right-hand block drawer of site home
+ * * Include smart menus
  *
  * @package   theme_learnr
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
@@ -55,19 +56,40 @@ if ($activitynavigation == THEME_LEARNR_SETTING_SELECT_YES) {
 // Add block button in editing mode.
 $addblockbutton = $OUTPUT->addblockbutton();
 
-user_preference_allow_ajax_update('drawer-open-index', PARAM_BOOL);
-user_preference_allow_ajax_update('drawer-open-block', PARAM_BOOL);
-
 if (isloggedin()) {
     $courseindexopen = (get_user_preferences('drawer-open-index', true) == true);
-    $blockdraweropen = (get_user_preferences('drawer-open-block') == true);
+
+    if (isguestuser()) {
+        $sitehomerighthandblockdrawerserverconfig = get_config('theme_learnr', 'showsitehomerighthandblockdraweronguestlogin');
+    } else {
+        $sitehomerighthandblockdrawerserverconfig = get_config('theme_learnr', 'showsitehomerighthandblockdraweronfirstlogin');
+    }
+
+    $isadminsettingyes = ($sitehomerighthandblockdrawerserverconfig == THEME_LEARNR_SETTING_SELECT_YES);
+    $blockdraweropen = (get_user_preferences('drawer-open-block', $isadminsettingyes)) == true;
 } else {
     $courseindexopen = false;
     $blockdraweropen = false;
+
+    if (get_config('theme_learnr', 'showsitehomerighthandblockdraweronvisit') == THEME_LEARNR_SETTING_SELECT_YES) {
+        $blockdraweropen = true;
+    }
 }
 
-if (defined('BEHAT_SITE_RUNNING')) {
-    $blockdraweropen = true;
+if (defined('BEHAT_SITE_RUNNING') && get_user_preferences('behat_keep_drawer_closed') != 1) {
+    try {
+        if (
+            get_config('theme_learnr', 'showsitehomerighthandblockdraweronvisit') === false &&
+            get_config('theme_learnr', 'showsitehomerighthandblockdraweronguestlogin') === false &&
+            get_config('theme_learnr', 'showsitehomerighthandblockdraweronfirstlogin') === false
+        ) {
+            $blockdraweropen = true;
+        }
+    } catch (Exception $e) {
+        echo $e->getMessage();
+
+        $blockdraweropen = true;
+    }
 }
 
 $extraclasses = ['uses-drawers'];
@@ -85,7 +107,6 @@ if (!$courseindex) {
     $courseindexopen = false;
 }
 
-$bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
 
 $secondarynavigation = false;
@@ -100,12 +121,23 @@ if ($PAGE->has_secondary_navigation()) {
     }
 }
 
-$primary = new core\navigation\output\primary($PAGE);
+// Load the navigation from learnr primary navigation, the extended version of core primary navigation.
+// It includes the smart menus and menu items, for multiple locations.
+$primary = new theme_learnr\output\navigation\primary($PAGE);
 $renderer = $PAGE->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
+
+// Add a special class selector to improve the Smart menus SCSS selectors.
+if (isset($primarymenu['includesmartmenu']) && $primarymenu['includesmartmenu'] == true) {
+    $extraclasses[] = 'theme-boost-union-smartmenu';
+}
+
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
 // If the settings menu will be included in the header then don't add it here.
 $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
+
+$bodyattributes = $OUTPUT->body_attributes($extraclasses); // In the original layout file, this line is place more above,
+                                                           // but we amended $extraclasses and had to move it.
 
 $header = $PAGE->activityheader;
 $headercontent = $header->export_for_template($renderer);
@@ -166,6 +198,14 @@ require_once(__DIR__ . '/includes/infobanners.php');
 // Include the template content for the navbar styling.
 require_once(__DIR__ . '/includes/navbar.php');
 
+// Include the template content for the advertisement tiles, but only if we are on the frontpage.
+if ($PAGE->pagelayout == 'frontpage') {
+    require_once(__DIR__ . '/includes/advertisementtiles.php');
+}
+
+// Include the template content for the smart menus.
+require_once(__DIR__ . '/includes/smartmenus.php');
+
 // DBN Update begin.
 // Include the template content for the advertisement tiles, but only if we are on the frontpage.
 if ((strpos($this->page->theme->settings->showadvertonpages, "1") !== false) && $PAGE->pagelayout == 'frontpage') {
@@ -185,5 +225,5 @@ if ((strpos($this->page->theme->settings->showadvertonpages, "4") !== false) && 
 }
 // DBN Update end.
 
-// Render drawers.mustache from learnr.
-echo $OUTPUT->render_from_template('theme_learnr/drawers', $templatecontext);
+// Render drawers.mustache from theme_boost (which is overridden in theme_learnr).
+echo $OUTPUT->render_from_template('theme_boost/drawers', $templatecontext);

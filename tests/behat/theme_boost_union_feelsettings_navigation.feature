@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin for the "Navigation" tab on the "Feel" page
   In order to use the features
   As admin
-  I need to be able to configure the theme LearnR plugin
+  I need to be able to configure the theme Boost Union plugin
 
   Background:
     Given the following "users" exist:
@@ -46,6 +46,57 @@ Feature: Configuring the theme_learnr plugin for the "Navigation" tab on the "Fe
       | home,myhome           | Home           | Dashboard           |
       | courses,siteadminnode | My courses     | Site administration |
 
+  Scenario Outline: Setting: Course category breadcrumbs
+    Given the following "categories" exist:
+      | name           | category | idnumber | category |
+      | Category E     | 0        | CE       | 0        |
+      | Category ED    | 1        | CED      | CE       |
+      | Category EDC   | 2        | CEDC     | CED      |
+      | Category EDCB  | 3        | CEDCB    | CEDC     |
+      | Category EDCBA | 4        | CEDCBA   | CEDCB    |
+    And the following "courses" exist:
+      | fullname  | shortname | category |
+      | Course C1 | CC1       | CE       |
+      | Course C2 | CC2       | CED      |
+      | Course C3 | CC3       | CEDC     |
+      | Course C4 | CC4       | CEDCB    |
+      | Course C5 | CC5       | CEDCBA   |
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | teacher1 | CC2    | editingteacher |
+      | teacher1 | CC3    | editingteacher |
+      | teacher1 | CC4    | editingteacher |
+      | teacher1 | CC5    | editingteacher |
+    And the following config values are set as admin:
+      | config              | value     | plugin            |
+      | categorybreadcrumbs | <setting> | theme_learnr |
+    When I log in as "teacher1"
+    And I am on "Course C1" course homepage
+    Then "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And I am on "Course C2" course homepage
+    And "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category ED" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And I am on "Course C3" course homepage
+    And "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category ED" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category EDC" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And I am on "Course C4" course homepage
+    And "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category ED" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category EDC" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category EDCB" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And I am on "Course C5" course homepage
+    And "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category ED" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category EDC" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category EDCB" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category EDCBA" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+
+    Examples:
+      | setting | shouldornot |
+      | yes     | should      |
+      | no      | should not  |
+
   @javascript
   Scenario: Setting: back to top button - Enable "Back to top button"
     Given the following config values are set as admin:
@@ -85,14 +136,17 @@ Feature: Configuring the theme_learnr plugin for the "Navigation" tab on the "Fe
     And I navigate to "Development > Purge caches" in site administration
     And I press "Purge all caches"
     And I am on "Course 1" course homepage
-    And I scroll page to x "0" y "250"
+    And I scroll page to DOM element with ID "section-4"
+    And I make the navbar fixed
     And I turn editing mode on
-    # The rest of this scenario isn't tested yet as the necessary steps still have to be implemented:
-    # Then The page will be reloaded
-    # And The page view will scroll back to x "0" y "250"
-    # And I turn editing mode off
-    # Then The page will be reloaded
-    # And The page view will scroll back to x "0" y "250"
+    And I wait "2" seconds
+    Then DOM element "section-4" is at the top of the viewport
+    And page top is not at the top of the viewport
+    And I make the navbar fixed
+    And I turn editing mode off
+    And I wait "2" seconds
+    Then DOM element "section-4" is at the top of the viewport
+    And page top is not at the top of the viewport
 
   @javascript
   Scenario: Setting: Scrollspy - Disable "Scrollspy" (countercheck)
@@ -105,13 +159,10 @@ Feature: Configuring the theme_learnr plugin for the "Navigation" tab on the "Fe
     And I am on "Course 1" course homepage
     And I scroll page to x "0" y "250"
     And I turn editing mode on
-    # The rest of this scenario isn't tested yet as the necessary steps still have to be implemented:
-    # Then The page will be reloaded
-    # And The page view will remain at x "0" y "0"
-    # And I turn editing mode off
-    # Then The page will be reloaded
-    # And The page view will scroll back to x "0" y "250"
-    # And The page view will remain at x "0" y "0"
+    Then page top is at the top of the viewport
+    And I scroll page to x "0" y "250"
+    And I turn editing mode off
+    Then page top is at the top of the viewport
 
   @javascript
   Scenario: Setting: Activity navigation - Enable "Activity navigation"

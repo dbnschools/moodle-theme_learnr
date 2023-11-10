@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - JS code off-canvas
+ * Theme Boost Union - JS code off-canvas
  *
  * @module     theme_learnr/offcanvas
  * @copyright  2022 bdecent gmbh <https://bdecent.de>
@@ -33,6 +33,7 @@ define(['jquery', 'theme_boost/drawers', 'core/modal'], function($, Drawers, Mod
      */
     const getDrawerBackdrop = function() {
         if (!modalBackdrop) {
+             // eslint-disable-next-line promise/valid-params
              modalBackdrop = Modal.prototype.getBackdrop().then(backdrop => {
                 backdrop.getAttachmentPoint().get(0).addEventListener('click', e => {
                     e.preventDefault();
@@ -61,6 +62,7 @@ define(['jquery', 'theme_boost/drawers', 'core/modal'], function($, Drawers, Mod
             }
 
             // Get the drawer's backdrop and show it.
+            // eslint-disable-next-line promise/valid-params
             getDrawerBackdrop().then(backdrop => {
                 backdrop.show();
                 return backdrop;
@@ -77,6 +79,7 @@ define(['jquery', 'theme_boost/drawers', 'core/modal'], function($, Drawers, Mod
                 return null;
             }
 
+            // eslint-disable-next-line promise/valid-params
             getDrawerBackdrop().then(backdrop => {
                 backdrop.hide();
                 return backdrop;

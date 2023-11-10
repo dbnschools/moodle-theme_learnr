@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - scrollspy include.
+ * Theme Boost Union - scrollspy include.
  *
  * @package   theme_learnr
  * @copyright 2022 Josha Bartsch <bartsch@itc.rwth-aachen.de>

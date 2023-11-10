@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Local library
+ * Theme Boost Union - Local library
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -49,7 +49,7 @@ function theme_learnr_get_course_related_hints() {
             && $COURSE->visible == false) {
 
         // Prepare template context.
-        $templatecontext = array('courseid' => $COURSE->id);
+        $templatecontext = ['courseid' => $COURSE->id];
 
         // If the user has the capability to change the course settings, an additional link to the course settings is shown.
         if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
@@ -77,8 +77,8 @@ function theme_learnr_get_course_related_hints() {
         require_once($CFG->dirroot . '/enrol/self/lib.php');
 
         // Prepare template context.
-        $templatecontext = array('courseid' => $COURSE->id,
-                'role' => role_get_name(get_guest_role()));
+        $templatecontext = ['courseid' => $COURSE->id,
+                'role' => role_get_name(get_guest_role()), ];
 
         // Search for an available self enrolment link in this course.
         $templatecontext['showselfenrollink'] = false;
@@ -190,7 +190,7 @@ function theme_learnr_get_course_related_hints() {
                 ($selfenrolmentpossiblecurrently == true || $selfenrolmentpossiblefuture == true)) {
 
             // Prepare template context.
-            $templatecontext = array();
+            $templatecontext = [];
 
             // Add the start of the hint t the template context
             // depending on the fact if enrolment is already possible currently or will be in the future.
@@ -204,37 +204,37 @@ function theme_learnr_get_course_related_hints() {
             foreach ($selfenrolinstances as $selfenrolinstanceid => $selfenrolinstanceobject) {
                 // If the user has the capability to config self enrolments, enrich the instance name with the settings link.
                 if (has_capability('enrol/self:config', \context_course::instance($COURSE->id))) {
-                    $url = new moodle_url('/enrol/editinstance.php', array('courseid' => $COURSE->id,
-                            'id' => $selfenrolinstanceid, 'type' => 'self'));
+                    $url = new moodle_url('/enrol/editinstance.php', ['courseid' => $COURSE->id,
+                            'id' => $selfenrolinstanceid, 'type' => 'self', ]);
                     $selfenrolinstanceobject->name = html_writer::link($url, $selfenrolinstanceobject->name);
                 }
 
                 // Add the enrolment instance information to the template context depending on the instance configuration.
                 if ($selfenrolinstanceobject->unrestrictedness == 'unlimited') {
                     $templatecontext['selfenrolinstances'][] = get_string('showhintcourseselfenrolunlimited', 'theme_learnr',
-                            array('name' => $selfenrolinstanceobject->name));
+                            ['name' => $selfenrolinstanceobject->name]);
                 } else if ($selfenrolinstanceobject->unrestrictedness == 'until') {
                     $templatecontext['selfenrolinstances'][] = get_string('showhintcourseselfenroluntil', 'theme_learnr',
-                            array('name' => $selfenrolinstanceobject->name,
-                                    'until' => userdate($selfenrolinstanceobject->enddate)));
+                            ['name' => $selfenrolinstanceobject->name,
+                                    'until' => userdate($selfenrolinstanceobject->enddate), ]);
                 } else if ($selfenrolinstanceobject->unrestrictedness == 'from') {
                     $templatecontext['selfenrolinstances'][] = get_string('showhintcourseselfenrolfrom', 'theme_learnr',
-                            array('name' => $selfenrolinstanceobject->name,
-                                    'from' => userdate($selfenrolinstanceobject->startdate)));
+                            ['name' => $selfenrolinstanceobject->name,
+                                    'from' => userdate($selfenrolinstanceobject->startdate), ]);
                 } else if ($selfenrolinstanceobject->unrestrictedness == 'since') {
                     $templatecontext['selfenrolinstances'][] = get_string('showhintcourseselfenrolsince', 'theme_learnr',
-                            array('name' => $selfenrolinstanceobject->name,
-                                    'since' => userdate($selfenrolinstanceobject->startdate)));
+                            ['name' => $selfenrolinstanceobject->name,
+                                    'since' => userdate($selfenrolinstanceobject->startdate), ]);
                 } else if ($selfenrolinstanceobject->unrestrictedness == 'fromuntil') {
                     $templatecontext['selfenrolinstances'][] = get_string('showhintcourseselfenrolfromuntil', 'theme_learnr',
-                            array('name' => $selfenrolinstanceobject->name,
+                            ['name' => $selfenrolinstanceobject->name,
                                     'until' => userdate($selfenrolinstanceobject->enddate),
-                                    'from' => userdate($selfenrolinstanceobject->startdate)));
+                                    'from' => userdate($selfenrolinstanceobject->startdate), ]);
                 } else if ($selfenrolinstanceobject->unrestrictedness == 'sinceuntil') {
                     $templatecontext['selfenrolinstances'][] = get_string('showhintcourseselfenrolsinceuntil', 'theme_learnr',
-                            array('name' => $selfenrolinstanceobject->name,
+                            ['name' => $selfenrolinstanceobject->name,
                                     'until' => userdate($selfenrolinstanceobject->enddate),
-                                    'since' => userdate($selfenrolinstanceobject->startdate)));
+                                    'since' => userdate($selfenrolinstanceobject->startdate), ]);
                 }
             }
 
@@ -261,14 +261,14 @@ function theme_learnr_get_course_related_hints() {
 
         // Get the URL to switch back (normal role).
         $url = new moodle_url('/course/switchrole.php',
-                array('id' => $COURSE->id,
+                ['id' => $COURSE->id,
                         'sesskey' => sesskey(),
                         'switchrole' => 0,
-                        'returnurl' => $PAGE->url->out_as_local_url(false)));
+                        'returnurl' => $PAGE->url->out_as_local_url(false), ]);
 
         // Prepare template context.
-        $templatecontext = array('role' => $role,
-                'url' => $url->out());
+        $templatecontext = ['role' => $role,
+                'url' => $url->out(), ];
 
         // Render template and add it to HTML code.
         $html .= $OUTPUT->render_from_template('theme_learnr/course-hint-switchedrole', $templatecontext);
@@ -444,7 +444,7 @@ function theme_learnr_infobanner_reset_visibility($no) {
     // Initialize variable for feedback messages.
     $somethingwentwrong = false;
     // Store coding exception.
-    $codingexception[] = array();
+    $codingexception[] = [];
 
     foreach ($users as $user) {
         try {
@@ -657,7 +657,7 @@ function theme_learnr_get_loginbackgroundimage_text() {
                 }
 
                 // Return the text + text color that belongs to the randomly selected image.
-                return array(format_string(trim($settings[1])), $settings[2]);
+                return [format_string(trim($settings[1])), $settings[2]];
             }
         }
     }
@@ -692,17 +692,17 @@ function theme_learnr_get_additionalresources_templatecontext() {
         $files = $fs->get_area_files($systemcontext->id, 'theme_learnr', 'additionalresources', false, 'itemid', false);
 
         // Iterate over the files and fill the templatecontext of the file list.
-        $filesforcontext = array();
+        $filesforcontext = [];
         foreach ($files as $af) {
             $urlpersistent = new moodle_url('/pluginfile.php/1/theme_learnr/additionalresources/0/'.$af->get_filename());
             $urlrevisioned = new moodle_url('/pluginfile.php/1/theme_learnr/additionalresources/'.theme_get_revision().
                     '/'.$af->get_filename());
-            $filesforcontext[] = array('filename' => $af->get_filename(),
+            $filesforcontext[] = ['filename' => $af->get_filename(),
                                         'filetype' => $af->get_mimetype(),
                                         'filesize' => display_size($af->get_filesize()),
-                                        'fileicon' => $OUTPUT->image_icon(file_file_icon($af, 64), get_mimetype_description($af)),
+                                        'fileicon' => $OUTPUT->image_icon(file_file_icon($af), get_mimetype_description($af)),
                                         'fileurlpersistent' => $urlpersistent->out(),
-                                        'fileurlrevisioned' => $urlrevisioned->out());
+                                        'fileurlrevisioned' => $urlrevisioned->out(), ];
         }
     }
 
@@ -739,7 +739,7 @@ function theme_learnr_get_customfonts_templatecontext() {
         $webfonts = theme_learnr_get_webfonts_extensions();
 
         // Iterate over the files.
-        $filesforcontext = array();
+        $filesforcontext = [];
         foreach ($files as $af) {
             // Get the filename.
             $filename = $af->get_filename();
@@ -754,8 +754,8 @@ function theme_learnr_get_customfonts_templatecontext() {
 
             // Otherwise, fill the templatecontext of the file list.
             $urlpersistent = new moodle_url('/pluginfile.php/1/theme_learnr/customfonts/0/'.$filename);
-            $filesforcontext[] = array('filename' => $filename,
-                    'fileurlpersistent' => $urlpersistent->out());
+            $filesforcontext[] = ['filename' => $filename,
+                    'fileurlpersistent' => $urlpersistent->out(), ];
         }
     }
 
@@ -768,7 +768,7 @@ function theme_learnr_get_customfonts_templatecontext() {
  * @return array
  */
 function theme_learnr_get_webfonts_extensions() {
-    return array('.eot', '.otf', '.svg', '.ttf', '.woff', '.woff2');
+    return ['.eot', '.otf', '.svg', '.ttf', '.woff', '.woff2'];
 }
 
 /**
@@ -786,52 +786,46 @@ function theme_learnr_get_webfonts_extensions() {
 function theme_learnr_register_webfonts_filetypes() {
     global $CFG;
 
-    // Do not register custom filetypes when running unit tests
-    // as they may break some core tests.
-    if (defined('PHPUNIT_TEST') && PHPUNIT_TEST) {
-        return false;
-    }
-
-    // If customfiletypes are set in config.php, we can't do anything.
-    if (array_key_exists('customfiletypes', $CFG->config_php_settings)) {
+    // If customfiletypes are set in config.php or PHP tests are running, we can't do anything.
+    if (array_key_exists('customfiletypes', $CFG->config_php_settings) || PHPUNIT_TEST) {
         return false;
     }
 
     // Our array of webfont file types to register.
     // As we want to keep things simple, we do not set a particular icon for these file types.
     // Likewise, we do not set any type groups or use descriptions from the language pack.
-    $webfonts = array(
-            'eot' => array(
+    $webfonts = [
+            'eot' => [
                     'extension' => 'eot',
                     'mimetype' => 'application/vnd.ms-fontobject',
-                    'coreicon' => 'unknown'
-            ),
-            'otf' => array(
+                    'coreicon' => 'unknown',
+            ],
+            'otf' => [
                     'extension' => 'otf',
                     'mimetype' => 'font/otf',
-                    'coreicon' => 'unknown'
-            ),
-            'svg' => array(
+                    'coreicon' => 'unknown',
+            ],
+            'svg' => [
                     'extension' => 'svg',
                     'mimetype' => 'image/svg+xml',
-                    'coreicon' => 'unknown'
-            ),
-            'ttf' => array(
+                    'coreicon' => 'unknown',
+            ],
+            'ttf' => [
                     'extension' => 'ttf',
                     'mimetype' => 'font/ttf',
-                    'coreicon' => 'unknown'
-            ),
-            'woff' => array(
+                    'coreicon' => 'unknown',
+            ],
+            'woff' => [
                     'extension' => 'woff',
                     'mimetype' => 'font/woff',
-                    'coreicon' => 'unknown'
-            ),
-            'woff2' => array(
+                    'coreicon' => 'unknown',
+            ],
+            'woff2' => [
                     'extension' => 'woff2',
                     'mimetype' => 'font/woff2',
-                    'coreicon' => 'unknown'
-            ),
-    );
+                    'coreicon' => 'unknown',
+            ],
+    ];
 
     // First, get the list of currently registered file types.
     $currenttypes = core_filetypes::get_types();
@@ -871,11 +865,11 @@ function theme_learnr_get_emailbrandinghtmlpreview() {
     }
 
     // Otherwise, compose mail text.
-    $mailtemplatecontext = array('body' => get_string('emailbrandinghtmldemobody', 'theme_learnr'));
+    $mailtemplatecontext = ['body' => get_string('emailbrandinghtmldemobody', 'theme_learnr')];
     $mail = $OUTPUT->render_from_template('core/email_html', $mailtemplatecontext);
 
     // And compose mail preview.
-    $previewtemplatecontext = array('mail' => $mail);
+    $previewtemplatecontext = ['mail' => $mail];
     $preview = $OUTPUT->render_from_template('theme_learnr/emailpreview', $previewtemplatecontext);
 
     return $preview;
@@ -902,243 +896,15 @@ function theme_learnr_get_emailbrandingtextpreview() {
     }
 
     // Otherwise, compose mail text.
-    $mailtemplatecontext = array('body' => get_string('emailbrandingtextdemobody', 'theme_learnr'));
+    $mailtemplatecontext = ['body' => get_string('emailbrandingtextdemobody', 'theme_learnr')];
     $mail = nl2br($OUTPUT->render_from_template('core/email_text', $mailtemplatecontext));
     $mail = '<div class="text-monospace">'.$mail.'</div>';
 
     // And compose mail preview.
-    $previewtemplatecontext = array('mail' => $mail);
+    $previewtemplatecontext = ['mail' => $mail];
     $preview = $OUTPUT->render_from_template('theme_learnr/emailpreview', $previewtemplatecontext);
 
     return $preview;
-}
-
-/**
- * Callback function which is called from settings.php if the FontAwesome files setting has changed.
- *
- * It gets all files from the files setting, picks all the expected files (and ignores all others)
- * and stores them into an application cache for quicker access.
- *
- * @return void
- */
-function theme_learnr_fontawesome_checkin() {
-    // Create cache for FontAwesome files.
-    $cache = cache::make('theme_learnr', 'fontawesome');
-
-    // Purge the existing cache values as we will refill the cache now.
-    $cache->purge();
-
-    // Get FontAwesome version config.
-    $faconfig = get_config('theme_learnr', 'fontawesomeversion');
-
-    // If a FontAwesome version is enabled.
-    if ($faconfig != THEME_LEARNR_SETTING_FAVERSION_NONE && $faconfig != null) {
-
-        // Get the system context.
-        $systemcontext = \context_system::instance();
-
-        // Get filearea.
-        $fs = get_file_storage();
-
-        // Get FontAwesome file structure.
-        $filestructure = theme_learnr_get_fontawesome_filestructure($faconfig);
-
-        // If a valid file structure could be retrieved.
-        if ($filestructure != null) {
-
-            // Iterate over the folder structure.
-            foreach ($filestructure as $folder => $files) {
-
-                // Initialize a folder list.
-                $folderlist = array();
-
-                // Iterate over the files in the folder.
-                foreach ($files as $file => $expected) {
-
-                    // Try to get the file from the filearea.
-                    $fsfile = $fs->get_file($systemcontext->id, 'theme_learnr', 'fontawesome', 0, '/'.$folder.'/', $file);
-
-                    // If the file exists.
-                    if ($fsfile != false) {
-                        // Add the file to the folder list.
-                        $folderlist[] = $file;
-                    }
-                }
-
-                // Add the folder to the cache.
-                $cache->set($folder, $folderlist);
-            }
-        }
-    }
-
-    // Add a marker value to the cache which indicates that the files have been checked into the cache completely.
-    // This will help to decide later if the cache is really empty (and should be refilled) or if there aren't just any
-    // files uploaded.
-    $cache->set('checkedin', true);
-}
-
-/**
- * Helper function which returns an array of accepted fontawesome file extensions (including the dots).
- *
- * @return array
- */
-function theme_learnr_get_fontawesome_extensions() {
-    return array('.css', '.eot', '.svg', '.ttf', '.woff', '.woff2');
-}
-
-/**
- * Helper function which returns the files which are expected to be provided for a given FontAwesome version.
- *
- * @param string $version The FontAwesome version, given as THEME_LEARNR_SETTING_FAVERSION_* constant.
- *
- * @return array|null The array of files or null if an invalid FontAwesome version was provided.
- */
-function theme_learnr_get_fontawesome_filestructure($version) {
-    // Pick the files for the selected FA version.
-    switch ($version) {
-        case THEME_LEARNR_SETTING_FAVERSION_FA6FREE:
-            $files = array('css' => array('fontawesome.min.css' => THEME_LEARNR_SETTING_FAFILES_MANDATORY,
-                            'solid.min.css' => THEME_LEARNR_SETTING_FAFILES_MANDATORY,
-                            'regular.min.css' => THEME_LEARNR_SETTING_FAFILES_OPTIONAL,
-                            'brands.min.css' => THEME_LEARNR_SETTING_FAFILES_OPTIONAL,
-                            'v4-font-face.min.css' => THEME_LEARNR_SETTING_FAFILES_MANDATORY),
-                    'webfonts' => array('fa-solid-900.woff2' => THEME_LEARNR_SETTING_FAFILES_MANDATORY,
-                            'fa-solid-900.ttf' => THEME_LEARNR_SETTING_FAFILES_MANDATORY,
-                            'fa-regular-400.woff2' => THEME_LEARNR_SETTING_FAFILES_OPTIONAL,
-                            'fa-regular-400.ttf' => THEME_LEARNR_SETTING_FAFILES_OPTIONAL,
-                            'fa-brands-400.woff2' => THEME_LEARNR_SETTING_FAFILES_OPTIONAL,
-                            'fa-brands-400.ttf' => THEME_LEARNR_SETTING_FAFILES_OPTIONAL,
-                            'fa-v4compatibility.woff2' => THEME_LEARNR_SETTING_FAFILES_MANDATORY,
-                            'fa-v4compatibility.ttf' => THEME_LEARNR_SETTING_FAFILES_MANDATORY));
-            break;
-        default:
-            // This only happens if an invalid version was provided.
-            $files = null;
-    }
-
-    // Return the file structure.
-    return $files;
-}
-
-/**
- * Helper function which return the files from the fontawesome file area as templatecontext structure.
- * It was designed to compose the files for the settings-fontawesome-filelist.mustache template.
- * This function uses the fontawesome cache definition, i.e. it does not load the files from the filearea directly.
- * This means it uses the same data source as the theme_learnr_add_fontawesome_to_page() function which adds
- * the fontawesome files to the page.
- *
- * @return array|null
- * @throws coding_exception
- * @throws dml_exception
- */
-function theme_learnr_get_fontawesome_templatecontext() {
-    // Create cache for FontAwesome files.
-    $cache = cache::make('theme_learnr', 'fontawesome');
-
-    // If the cache is completely empty, check the files in on-the-fly.
-    if ($cache->get('checkedin') != true) {
-        theme_learnr_fontawesome_checkin();
-    }
-
-    // Get FontAwesome version config.
-    $faconfig = get_config('theme_learnr', 'fontawesomeversion');
-
-    // If a FontAwesome version is enabled.
-    if ($faconfig != THEME_LEARNR_SETTING_FAVERSION_NONE && $faconfig != null) {
-
-        // Initialize context variable.
-        $filesforcontext = array();
-
-        // Get FontAwesome file structure.
-        $filestructure = theme_learnr_get_fontawesome_filestructure($faconfig);
-
-        // If a valid file structure could be retrieved.
-        if ($filestructure != null) {
-
-            // Iterate over the folder structure.
-            foreach ($filestructure as $folder => $files) {
-
-                // Get the cached data for this folder.
-                $cachedfolder = $cache->get($folder);
-
-                // Iterate over the files in the folder structure.
-                foreach ($files as $file => $expected) {
-
-                    // Deduce the mandatory value.
-                    if ($expected == THEME_LEARNR_SETTING_FAFILES_MANDATORY) {
-                        $mandatory = true;
-                    } else {
-                        $mandatory = false;
-                    }
-
-                    // Compose the file path.
-                    $filepath = $folder . '/' . $file;
-
-                    // Get the description of the file.
-                    $fileidentifier = str_replace('/', '-', $filepath);
-                    $description = get_string('fontawesomelistfileinfo-' . $faconfig . '-' . $fileidentifier, 'theme_learnr');
-
-                    // If the folder was not uploaded at all or if the folder is empty, we do not need to check if the file exists.
-                    // We can add the file as non-existent right away.
-                    if ($cachedfolder == null || ($cachedfolder == array()) && count($cachedfolder) < 1) {
-                        $exists = false;
-
-                        // Otherwise, we have to check the file it was uploaded.
-                    } else {
-                        $exists = in_array($file, $cachedfolder);
-                    }
-
-                    // Add the file to the template structure.
-                    $filesforcontext[] = array('filepath' => $filepath, 'exists' => $exists, 'mandatory' => $mandatory,
-                            'description' => $description);
-                }
-            }
-        }
-    }
-
-    return $filesforcontext;
-}
-
-/**
- * Helper function which returns the visual checks for the configured FontAwesome version.
- *
- * @return array|null The array of checks or null if an invalid FontAwesome version is configured.
- */
-function theme_learnr_get_fontawesome_checks_templatecontext() {
-    global $CFG;
-
-    // Get FontAwesome version config.
-    $version = get_config('theme_learnr', 'fontawesomeversion');
-
-    // Pick the checks for the selected FA version.
-    switch ($version) {
-        case THEME_LEARNR_SETTING_FAVERSION_FA6FREE:
-            $checks = array(
-                    array('icon' => '<i class="fa fa-check-circle-o fa-3x fa-fw"></i>',
-                            'title' => get_string('fontawesomecheck-fa6free-general-title', 'theme_learnr'),
-                            'description' => get_string('fontawesomecheck-fa6free-general-description', 'theme_learnr')),
-                    array('icon' => '<i class="fa fa-map-o fa-3x fa-fw"></i>',
-                            'title' => get_string('fontawesomecheck-fa6free-fallback-title', 'theme_learnr'),
-                            'description' => get_string('fontawesomecheck-fa6free-fallback-description', 'theme_learnr')),
-                    array('icon' => '<i class="fa-solid fa-virus-covid fa-3x fa-fw"></i>',
-                            'title' => get_string('fontawesomecheck-fa6free-newstuff-title', 'theme_learnr'),
-                            'description' => get_string('fontawesomecheck-fa6free-newstuff-description', 'theme_learnr')),
-            );
-            break;
-        default:
-            // This only happens if an invalid version was provided.
-            $checks = null;
-    }
-
-    // If the filter_fontawesome plugin is installed, add a check for filtering the icons.
-    if (file_exists($CFG->dirroot.'/filter/fontawesome/version.php')) {
-        $checks[] = array('icon' => format_text('[fa-solid fa-users-line fa-3x fa-fw]'),
-                'title' => get_string('fontawesomecheck-fa6free-filter-title', 'theme_learnr'),
-                'description' => get_string('fontawesomecheck-fa6free-filter-description', 'theme_learnr'));
-    }
-
-    // Return the checks structure.
-    return $checks;
 }
 
 /**
@@ -1177,48 +943,6 @@ function theme_learnr_get_externaladminpage_heading() {
 }
 
 /**
- * Helper function which adds the CSS files from the fontawesome file area to the Moodle page.
- * This function uses the fontawesome cache definition, i.e. it does not load the files from the filearea directly.
- * It's meant to be called by theme_learnr_before_standard_html_head() only.
- * *
- * @throws coding_exception
- * @throws dml_exception
- * @throws moodle_exception
- */
-function theme_learnr_add_fontawesome_to_page() {
-    global $PAGE;
-
-    // Create cache for FontAwesome files.
-    $cache = cache::make('theme_learnr', 'fontawesome');
-
-    // If the cache is completely empty, check the files in on-the-fly.
-    if ($cache->get('checkedin') != true) {
-        theme_learnr_fontawesome_checkin();
-    }
-
-    // Get FontAwesome version config.
-    $faconfig = get_config('theme_learnr', 'fontawesomeversion');
-
-    // If a FontAwesome version is enabled.
-    if ($faconfig != THEME_LEARNR_SETTING_FAVERSION_NONE && $faconfig != null) {
-
-        // Get the cached data for the CSS folder (we do not need to add files from any other folders in the cache).
-        $cachedfolder = $cache->get('css');
-
-        // Iterate over the files in the cached folder structure.
-        foreach ($cachedfolder as $cachedfile) {
-
-            // Build the FontAwesome CSS file URL.
-            $facssurl = new moodle_url('/pluginfile.php/1/theme_learnr/fontawesome/' .
-                    theme_get_revision().'/css/'.$cachedfile);
-
-            // Add the CSS file to the page.
-            $PAGE->requires->css($facssurl);
-        }
-    }
-}
-
-/**
  * Helper function which adds the CSS file from the flavour to the Moodle page.
  * It's meant to be called by theme_learnr_before_standard_html_head() only.
  * *
@@ -1237,7 +961,7 @@ function theme_learnr_add_flavourcss_to_page() {
     if ($flavour != null) {
         // Build the flavour CSS file URL.
         $flavourcssurl = new moodle_url('/theme/learnr/flavours/styles.php',
-                array('id' => $flavour->id, 'rev' => theme_get_revision()));
+                ['id' => $flavour->id, 'rev' => theme_get_revision()]);
 
         // Add the CSS file to the page.
         $PAGE->requires->css($flavourcssurl);
@@ -1314,7 +1038,7 @@ function theme_learnr_set_mobilecss_url() {
         // This parameter isn't the theme revision as the theme cache is not cleared when this setting is stored.
         // It is just the time when the setting is saved.
         // This is the best we can do to make the Mobile app load the new styles when needed.
-        $mobilescssurl = new moodle_url('/theme/learnr/mobile/styles.php', array('rev' => time()));
+        $mobilescssurl = new moodle_url('/theme/learnr/mobile/styles.php', ['rev' => time()]);
 
         // Set the $CFG->mobilecssurl setting.
         set_config('mobilecssurl', $mobilescssurl->out());
@@ -1346,7 +1070,7 @@ function theme_learnr_get_additional_regions($pageregions=[]) {
             'outsidebottom' => 'outside-bottom',
             'contentupper' => 'content-upper',
             'contentlower' => 'content-lower',
-            'header' => 'header'
+            'header' => 'header',
     ];
 
     return ($pageregions) ? array_intersect($regions, $pageregions) : $regions;
@@ -1372,6 +1096,259 @@ function theme_learnr_get_block_regions($layout) {
     // Return.
     return $regions;
 }
+
+/**
+ * Callback function which is called from settings.php if the enable custom activity icons setting has changed.
+ *
+ * It checks if the setting has just been disabled. If yes, it removes all custom icons from the
+ * the pix_plugins/mod folder in the Moodledata directory as they are not needed anymore.
+ */
+function theme_learnr_check_mod_icons_cleanup() {
+    global $CFG;
+
+    // Get the modiconsenable setting.
+    $modiconsenable = get_config('theme_learnr', 'modiconsenable');
+
+    // If modiconsenable was just enabled, return directly as everything is fine.
+    if ($modiconsenable != THEME_LEARNR_SETTING_SELECT_NO) {
+        return;
+    }
+
+    // Purge the content of the pix_plugins/mod folder in Moodledata.
+    $pixpluginpath = $CFG->dataroot.DIRECTORY_SEPARATOR.'pix_plugins'.DIRECTORY_SEPARATOR.'mod';
+    if (is_dir($pixpluginpath)) {
+        remove_dir($pixpluginpath, false);
+    }
+
+    // Purge the theme cache to show the old icons in the GUI.
+    theme_reset_all_caches();
+}
+
+/**
+ * Callback function which is called from settings.php if the custom activity icons files setting has changed.
+ *
+ * First, it deletes all files that are placed within the pix_plugins/mod folder in the Moodledata directory
+ * (see https://github.com/moodle/moodle/blob/15d4ea81e003439c528004a8d555a07cad0f02d3/lib/outputlib.php#L2151-L2169,
+ * this location is used as third fallback for activity icons after looking for an icon in the theme and the parent theme).
+ *
+ * Then, it gets all icons from the files setting, picks all the valid icons which are in a folder of a valid activity
+ * and stores them into the pix_plugins/mod folder in the Moodledata directory again.
+ *
+ * @throws coding_exception
+ * @throws dml_exception
+ * @throws moodle_exception
+ */
+function theme_learnr_place_mod_icons() {
+    global $CFG, $DB;
+
+    // Get the modiconsenable setting.
+    $modiconsenable = get_config('theme_learnr', 'modiconsenable');
+
+    // If modiconsenable is not enabled, return directly as we do not want to modify the placed icons.
+    if ($modiconsenable != THEME_LEARNR_SETTING_SELECT_YES) {
+        return;
+    }
+
+    // Purge the content of the pix_plugins/mod folder in Moodledata.
+    $pixpluginpath = $CFG->dataroot.DIRECTORY_SEPARATOR.'pix_plugins'.DIRECTORY_SEPARATOR.'mod';
+    if (is_dir($pixpluginpath)) {
+        remove_dir($pixpluginpath, true);
+    }
+
+    // Get the system context.
+    $systemcontext = \context_system::instance();
+
+    // Get filearea.
+    $fs = get_file_storage();
+
+    // Get all files from filearea.
+    $files = $fs->get_area_files($systemcontext->id, 'theme_learnr', 'modicons', false, 'itemid', true);
+
+    // Get installed activity plugins.
+    $modules = $DB->get_records('modules', [], '', 'name');
+
+    // Iterate over the files.
+    foreach ($files as $file) {
+        // Pick the filename and extension.
+        $trimmedfilename = pathinfo($file->get_filename(), PATHINFO_FILENAME);
+        $trimmedextension = pathinfo($file->get_filename(), PATHINFO_EXTENSION);
+
+        // If the extension is _not_ svg or png.
+        if (!($trimmedextension === 'png' || $trimmedextension === 'svg')) {
+            // Skip the file.
+            continue;
+        }
+
+        // If the filename is _not_ icon or monologo.
+        if (!($trimmedfilename === 'icon' || $trimmedfilename === 'monologo')) {
+            // Skip the file.
+            continue;
+        }
+
+        // Get the number of the path size.
+        // We expect the use files within one folder. Such paths have a path size of three.
+        // (One before the leading slash, one for the folder, one for the file).
+        $pathsize = count(explode(DIRECTORY_SEPARATOR, $file->get_filepath()));
+
+        // If the file is not placed within a single folder.
+        if (empty($file->get_filepath()) || $pathsize != 3) {
+            // Skip the file.
+            continue;
+        }
+
+        // Pick the folder name.
+        $trimmedfolder = trim($file->get_filepath(), DIRECTORY_SEPARATOR);
+
+        // If the folder does not have a valid activity name.
+        if (!array_key_exists($trimmedfolder, $modules)) {
+            // Skip the file.
+            continue;
+        }
+
+        // Compose the path for the icon's folder in Moodledata.
+        $path = $pixpluginpath.DIRECTORY_SEPARATOR.$trimmedfolder;
+
+        // Create the folder.
+        check_dir_exists($path, true, true);
+
+        // Write the file to Moodledata.
+        if (!empty($file)) {
+            $file->copy_content_to($path.DIRECTORY_SEPARATOR.$file->get_filename());
+        }
+    }
+
+    // Purge the theme cache to show the new icons in the GUI.
+    theme_reset_all_caches();
+}
+
+/**
+ * Return the custom icons from the modiconsfiles file area as templatecontext structure.
+ * It was designed to compose the files for the settings-modicon-filelist.mustache template.
+ * This function always loads the files from the filearea which is not really performant.
+ * Thus, you have to take care where and how often you use it (or add some caching).
+ *
+ * @return array
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_learnr_get_modicon_templatecontext () {
+    global $DB;
+
+    // Get the system context.
+    $systemcontext = \context_system::instance();
+
+    // Get filearea.
+    $fs = get_file_storage();
+
+    // Get all files from filearea.
+    $files = $fs->get_area_files($systemcontext->id, 'theme_learnr', 'modicons', false, 'filepath,filename', true);
+
+    // Get installed activity plugins.
+    $modules = $DB->get_records('modules', [], '', 'name');
+
+    // Initialize template data.
+    $templatedata = [];
+
+    // Iterate over the files.
+    foreach ($files as $file) {
+        // Initialize template object.
+        $templateobject = new stdClass();
+
+        // Pick the filename and extension.
+        $trimmedfilename = pathinfo($file->get_filename(), PATHINFO_FILENAME);
+        $trimmedextension = pathinfo($file->get_filename(), PATHINFO_EXTENSION);
+
+        // Check if we have a Moodle 4 icon, a Moodle 4 legacy icon or none of both.
+        if (!($trimmedfilename === 'icon' || $trimmedfilename === 'monologo') ||
+                !($trimmedextension === 'svg' || $trimmedextension === 'png')) {
+            $templateobject->invalidname = true;
+        } else if ($trimmedfilename === 'monologo') {
+            $templateobject->moodle4 = true;
+        } else if ($trimmedfilename === 'icon') {
+            $templateobject->moodle3 = true;
+        }
+
+        // Get the number of the path size.
+        // We expect the use files within one folder. Such paths have a path size of three.
+        // (One before the leading slash, one for the folder, one for the file).
+        $pathsize = count(explode(DIRECTORY_SEPARATOR, $file->get_filepath()));
+
+        // Skip the root directory and all folder dot files.
+        if ($pathsize < 2 || $file->get_filename() == '.') {
+            continue;
+        }
+
+        // Compose and add the path to the template object.
+        $templateobject->path = $file->get_filepath().$file->get_filename();
+
+        // If we have a file within one single folder.
+        if (!empty($file->get_filepath()) && $pathsize == 3) {
+            // If the folder has a valid activity name.
+            $foldername = trim($file->get_filepath(), DIRECTORY_SEPARATOR);
+            if (array_key_exists($foldername, $modules)) {
+                // Add the activity name to the template object.
+                $templateobject->mod = get_string('modulename', $foldername);
+            }
+        }
+
+        // Add the template object to the template data stack.
+        array_push($templatedata, $templateobject);
+    }
+
+    return $templatedata;
+}
+
+/**
+ * Adds an external link icon after external links to mark them visually.
+ *
+ * @param theme_config $theme The theme config object.
+ * @return string
+ */
+function theme_learnr_get_scss_to_mark_external_links($theme) {
+    global $CFG;
+
+    // Initialize SCSS snippet.
+    $scss = '';
+
+    // If the corresponding setting is set to 'yes'.
+    if ($theme->settings->markexternallinks == THEME_LEARNR_SETTING_SELECT_YES) {
+
+        // SCSS to add external link icon after the link and respect LTR and RTL while doing this.
+        $scss = 'body.dir-ltr a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::after,
+            body.dir-ltr a:not([href^="' . $CFG->wwwroot . '"])[href^="https://"]::after {
+            font-family: "#{$fa-style-family}";
+            content: "#{$fa-var-external-link}" !important;
+            font-weight: 900;
+            padding-left: 0.25rem;
+        }';
+        $scss .= 'body.dir-rtl a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::before,
+            body.dir-rtl a:not([href^="' . $CFG->wwwroot . '"])[href^="https://"]::before {
+            font-family: "#{$fa-style-family}";
+            content: "#{$fa-var-external-link}" !important;
+            font-weight: 900;
+            padding-right: 0.25rem;
+        }';
+
+        // Moodle adds a hardcoded external-link icon to several links:
+        // * The "services and support" link in the questionmark menu (which should point to moodle.com/help, but may also point to
+        // the URL in the $CFG->servicespage setting).
+        // * The "contact site support" link in the questionmark menu (as soon as the URL in the $CFG->supportpage setting is set).
+        // * The links to the Moodle docs (which are created with the get_docs_url() helper function).
+        // These icons become obsolete now. We remove them with the sledgehammer.
+        $scss .= '.footer-support-link a[href^="https://moodle.com/help/"] .fa-external-link';
+        if (!empty($CFG->servicespage)) {
+            $scss .= ', .footer-support-link a[href="'.$CFG->servicespage.'"] .fa-external-link';
+        }
+        if (!empty($CFG->supportpage)) {
+            $scss .= ', a[href="'.$CFG->supportpage.'"] .fa-external-link';
+        }
+        $scss .= ', a[href^="'.get_docs_url().'"] .fa-external-link {
+            display: none;
+        }';
+    }
+    return $scss;
+}
+
 // Begin DBN Update.
 function theme_learnr_get_course_activities() {
     GLOBAL $CFG, $PAGE, $OUTPUT;

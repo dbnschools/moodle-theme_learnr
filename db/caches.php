@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Cache definitions.
+ * Theme Boost Union - Cache definitions.
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$definitions = array(
+$definitions = [
         // This cache stores the flavours which apply to a particular user in his user session.
         // It is there to avoid that the flavour which applies has to be calculated on every page load.
         // The cache key is the page category ID (and 0 for all non-category pages).
@@ -48,24 +48,30 @@ $definitions = array(
         // 4. When a user is added to / removed from a category
         // -- (this is realized with an event observer which sets a user preference flag, followed by a check in
         // -- theme_learnr_get_flavour_which_applies() which purges the cache for the affected user).
-        'flavours' => array(
+        'flavours' => [
                 'mode' => cache_store::MODE_SESSION,
                 'simplekeys' => true,
                 'simpledata' => false,
-                'invalidationevents' => array(
+                'invalidationevents' => [
                     'theme_learnr_flavours_resorted',
                     'theme_learnr_flavours_created',
                     'theme_learnr_flavours_edited',
                     'theme_learnr_flavours_deleted',
-                    'theme_learnr_cohort_deleted'
-                )
-        ),
-        // This cache stores the FontAwesome files (which are uploaded in the LearnR settings)
-        // to avoid that the files have to be read from the filearea on every page load.
-        'fontawesome' => array(
+                    'theme_learnr_cohort_deleted',
+                ],
+        ],
+        // This cache stores the smart menus.
+        'smartmenus' => [
                 'mode' => cache_store::MODE_APPLICATION,
                 'simplekeys' => true,
-                'simpledata' => true,
-                'staticacceleration' => true,
-        )
-);
+                'simpledata' => false,
+                'overrideclass' => '\theme_learnr\cache\loader',
+        ],
+        // This cache stores the smart menus' menu items.
+        'smartmenu_items' => [
+                'mode' => cache_store::MODE_APPLICATION,
+                'simplekeys' => true,
+                'simpledata' => false,
+                'overrideclass' => '\theme_learnr\cache\loader',
+        ],
+];

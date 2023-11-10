@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Flavours overview table
+ * Theme Boost Union - Flavours overview table
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -24,7 +24,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_learnr;
+namespace theme_learnr\table;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -40,7 +40,17 @@ require_once($CFG->libdir.'/tablelib.php');
  * @copyright  based on code by bdecent gmbh <https://bdecent.de> in format_kickstart.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class flavours_overview_table extends \table_sql {
+class flavours_overview extends \table_sql {
+
+    /**
+     * @var int $count Flavours count.
+     */
+    private $count;
+
+    /**
+     * @var int $totalflavours Total flavours count.
+     */
+    private $totalflavours;
 
     /**
      * Setup table.
@@ -69,6 +79,7 @@ class flavours_overview_table extends \table_sql {
         $this->pageable(false); // Having a pageable table would be nice, but we will keep it simple for now.
         $this->define_columns($columns);
         $this->define_headers($headers);
+        $this->define_header_column('title');
 
         // Initialize values for the updown feature.
         $this->count = 0;
@@ -91,15 +102,15 @@ class flavours_overview_table extends \table_sql {
         $updown = '';
 
         // Get spacer icon.
-        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', array('class' => 'iconsmall'));
+        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', ['class' => 'iconsmall']);
 
         // If there is more than one flavour and we do not handle the first (number 0) flavour.
         if ($this->count > 0) {
             // Add the up icon.
             $updown .= \html_writer::link($actionurl->out(false,
-                            array('action' => 'up', 'id' => $data->id)),
-                            $OUTPUT->pix_icon('t/up', get_string('up'), 'moodle',
-                                    array('class' => 'iconsmall')), array('class' => 'sort-flavour-up-action'));
+                    ['action' => 'up', 'id' => $data->id, 'sesskey' => sesskey()]),
+                    $OUTPUT->pix_icon('t/up', get_string('up'), 'moodle',
+                            ['class' => 'iconsmall']), ['class' => 'sort-flavour-up-action']);
 
             // Otherwise, just add a spacer.
         } else {
@@ -111,9 +122,9 @@ class flavours_overview_table extends \table_sql {
             // Add the down icon.
             $updown .= '&nbsp;';
             $updown .= \html_writer::link($actionurl->out(false,
-                            array('action' => 'down', 'id' => $data->id)),
-                            $OUTPUT->pix_icon('t/down', get_string('down'), 'moodle',
-                                    array('class' => 'iconsmall')), array('class' => 'sort-flavour-down-action'));
+                    ['action' => 'down', 'id' => $data->id, 'sesskey' => sesskey()]),
+                    $OUTPUT->pix_icon('t/down', get_string('down'), 'moodle',
+                            ['class' => 'iconsmall']), ['class' => 'sort-flavour-down-action']);
 
             // Otherwise, just add a spacer.
         } else {
@@ -135,20 +146,20 @@ class flavours_overview_table extends \table_sql {
      */
     public function col_appliesto($data) {
         // Initialize the badges.
-        $badges = array();
+        $badges = [];
 
         // If apply-to-categories is enabled, add a badge.
         if ($data->applytocategories == true) {
             $badges[] = \html_writer::tag('span',
                     get_string('categories'),
-                    array('class' => 'badge badge-primary'));
+                    ['class' => 'badge badge-primary']);
         }
 
         // If apply-to-cohorts is enabled, add a badge.
         if ($data->applytocohorts == true) {
             $badges[] = \html_writer::tag('span',
                     get_string('cohorts', 'cohort'),
-                    array('class' => 'badge badge-primary'));
+                    ['class' => 'badge badge-primary']);
         }
 
         // Implode and return the badges.
@@ -166,17 +177,46 @@ class flavours_overview_table extends \table_sql {
     public function col_actions($data) {
         global $OUTPUT;
 
-        // Compose and return the action buttons.
-        return
-            $OUTPUT->single_button(
-                    new \moodle_url('/theme/learnr/flavours/preview.php', ['id' => $data->id]),
-                    get_string('flavourspreview', 'theme_learnr'), 'get').
-            $OUTPUT->single_button(
-                    new \moodle_url('/theme/learnr/flavours/edit.php', ['action' => 'edit', 'id' => $data->id]),
-                    get_string('flavoursedit', 'theme_learnr'), 'get').
-            $OUTPUT->single_button(
-                    new \moodle_url('/theme/learnr/flavours/edit.php', ['action' => 'delete', 'id' => $data->id]),
-                    get_string('flavoursdelete', 'theme_learnr'), 'get');
+        // Initialize actions.
+        $actions = [];
+
+        // Preview.
+        $actions[] = [
+                'url' => new \moodle_url('/theme/learnr/flavours/preview.php', ['id' => $data->id]),
+                'icon' => new \pix_icon('i/search', get_string('flavoursedit', 'theme_learnr')),
+                'attributes' => ['class' => 'action-preview'],
+        ];
+
+        // Edit.
+        $actions[] = [
+                'url' => new \moodle_url('/theme/learnr/flavours/edit.php',
+                        ['action' => 'edit', 'id' => $data->id, 'sesskey' => sesskey()]),
+                'icon' => new \pix_icon('t/edit', get_string('flavoursedit', 'theme_learnr')),
+                'attributes' => ['class' => 'action-edit'],
+        ];
+
+        // Delete.
+        $actions[] = [
+                'url' => new \moodle_url('/theme/learnr/flavours/edit.php',
+                        ['action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey()]),
+                'icon' => new \pix_icon('t/delete', get_string('flavourspreview', 'theme_learnr')),
+                'attributes' => ['class' => 'action-delete'],
+        ];
+
+        // Compose action icons for all actions.
+        $actionshtml = [];
+        foreach ($actions as $action) {
+            $action['attributes']['role'] = 'button';
+            $actionshtml[] = $OUTPUT->action_icon(
+                $action['url'],
+                $action['icon'],
+                ($action['confirm'] ?? null),
+                $action['attributes']
+            );
+        }
+
+        // Return all actions.
+        return \html_writer::span(join('', $actionshtml), 'flavours-actions');
     }
 
     /**

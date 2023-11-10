@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Event handlers.
+ * Theme Boost Union - Event handlers.
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -24,17 +24,62 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$observers = array(
-        array(
+$observers = [
+        [
                 'eventname' => '\core\event\cohort_deleted',
-                'callback' => '\theme_learnr\eventobservers::cohort_deleted'
-        ),
-        array(
+                'callback' => '\theme_learnr\eventobservers::cohort_deleted',
+        ],
+        [
                 'eventname' => '\core\event\cohort_member_added',
-                'callback' => '\theme_learnr\eventobservers::cohort_member_added'
-        ),
-        array(
+                'callback' => '\theme_learnr\eventobservers::cohort_member_added',
+        ],
+        [
                 'eventname' => '\core\event\cohort_member_removed',
-                'callback' => '\theme_learnr\eventobservers::cohort_member_removed'
-        ),
-);
+                'callback' => '\theme_learnr\eventobservers::cohort_member_removed',
+        ],
+        [
+                'eventname' => 'core\event\role_assigned',
+                'callback' => '\theme_learnr\eventobservers::role_assigned',
+        ],
+        [
+                'eventname' => 'core\event\role_deleted',
+                'callback' => '\theme_learnr\eventobservers::role_deleted',
+        ],
+        [
+                'eventname' => 'core\event\role_unassigned',
+                'callback' => '\theme_learnr\eventobservers::role_unassigned',
+        ],
+        [
+                'eventname' => 'core\event\user_updated',
+                'callback' => '\theme_learnr\eventobservers::user_updated',
+        ],
+        [
+                'eventname' => 'core\event\course_created',
+                'callback' => '\theme_learnr\eventobservers::course_updated',
+        ],
+        [
+                'eventname' => 'core\event\course_completion_updated',
+                'callback' => '\theme_learnr\eventobservers::completion_updated',
+        ],
+        [
+                'eventname' => 'core\event\course_module_completion_updated',
+                'callback' => '\theme_learnr\eventobservers::completion_updated',
+        ],
+        [
+                'eventname' => 'core\event\course_updated',
+                'callback' => '\theme_learnr\eventobservers::course_updated',
+        ],
+        [
+                'eventname' => 'core\event\course_deleted',
+                'callback' => '\theme_learnr\eventobservers::course_updated',
+        ],
+        [
+                'eventname' => 'core\event\course_category_deleted',
+                'callback' => '\theme_learnr\eventobservers::category_updated',
+        ],
+        [
+                'eventname' => 'core\event\course_category_updated',
+                'callback' => '\theme_learnr\eventobservers::category_updated',
+        ],
+
+];

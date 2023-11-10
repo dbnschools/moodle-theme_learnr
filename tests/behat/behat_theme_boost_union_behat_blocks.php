@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Behat blocks-related step definition overrides for the LearnR theme.
+ * Behat blocks-related step definition overrides for the Boost Union theme.
  *
  * @package    theme_learnr
  * @category   test
@@ -24,13 +24,14 @@
  */
 
 // NOTE: no MOODLE_INTERNAL test here, this file may be required by behat before including /config.php.
+// For that reason, we can't even rely on $CFG->admin being available here.
 
 require_once(__DIR__ . '/../../../../blocks/tests/behat/behat_blocks.php');
 
-use Behat\Mink\Exception\ExpectationException as ExpectationException;
+use Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException;
 
 /**
- * Blocks-related step definition overrides for the LearnR theme.
+ * Blocks-related step definition overrides for the Boost Union theme.
  *
  * @package    theme_learnr
  * @category   test
@@ -38,27 +39,4 @@ use Behat\Mink\Exception\ExpectationException as ExpectationException;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_learnr_behat_blocks extends behat_blocks {
-    /**
-     * Checks if the given DOM element has the given computed style.
-     *
-     * @Given DOM element :arg1 should have computed style :arg2 :arg3
-     * @throws \Behat\Mink\Exception\ElementNotFoundException Thrown by behat_base::find
-     * @throws \Behat\Mink\Exception\ExpectationException
-     * @param string $selector
-     * @param string $style
-     * @param string $value
-     * @return string The style of the image container
-     */
-    public function dom_element_should_have_computed_style($selector, $style, $value) {
-        $stylejs = "
-            return (
-                $('$selector').css('$style')
-            )
-        ";
-        $computedstyle = $this->evaluate_script($stylejs);
-        if ($computedstyle != $value) {
-            throw new ExpectationException('The \''.$selector.'\' DOM element does not have the computed style \''.
-                    $style.'\'=\''.$value.'\', it has the computed style \''.$computedstyle.'\' instead.', $this->getSession());
-        }
-    }
 }

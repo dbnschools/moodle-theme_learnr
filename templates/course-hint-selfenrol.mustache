@@ -17,7 +17,7 @@
 {{!
     @template theme_learnr/course-hint-selfenrol
 
-    LearnR template for outputting the selfenrol course hint.
+    Boost Union template for outputting the selfenrol course hint.
 
     Context variables required for this template:
     * selfenrolhintstart - The string which is displayed at the start of this hint
@@ -37,10 +37,10 @@
         <div class="media-body align-self-center">
             {{{selfenrolhintstart}}}
             {{#selfenrolinstances}}
-                <br />{{{.}}}
+                <br>{{{.}}}
             {{/selfenrolinstances}}
             {{#calltoaction}}
-                <br />{{#str}} showhintcourseselfenrolinstancecallforaction, theme_learnr {{/str}}
+                <br>{{#str}} showhintcourseselfenrolinstancecallforaction, theme_learnr {{/str}}
             {{/calltoaction}}
         </div>
     </div>

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - H5P styles serving.
+ * Theme Boost Union - H5P styles serving.
  *
  * @package    theme_learnr
  * @copyright  2023 Nina Herrmann <nina.herrmann@gmx.de>

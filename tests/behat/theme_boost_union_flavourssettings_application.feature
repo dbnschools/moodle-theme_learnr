@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying to particular contexts
   In order to use the features
   As admin
-  I need to be able to configure the theme LearnR plugin
+  I need to be able to configure the theme Boost Union plugin
 
   Background:
     Given the following "users" exist:
@@ -36,19 +36,19 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying to
 
   Scenario: Flavours: Application - Flavour ID is added as body class attribute
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
+    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
     And I click on "Save changes" "button"
-    And I click on "Preview" "button" in the "#region-main table" "css_element"
+    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
     # Unfortunately, we can't test for the particular flavour ID, we can just check that the class is there.
     Then the "class" attribute of "body" "css_element" should contain "flavour-"
 
   @javascript
   Scenario: Flavours: Application - Apply a flavour to a particular category without subcategories (and show this fact in the overview table and make sure that other categories are not affected)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
+    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -87,7 +87,7 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying to
   @javascript
   Scenario: Flavours: Application - Apply a flavour to a particular category with subcategories (and show this fact in the overview table and make sure that other categories are not affected)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
+    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -126,7 +126,7 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying to
   @javascript
   Scenario: Flavours: Application - Do not apply a flavour to categories anymore
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
+    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -145,7 +145,7 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying to
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
     And I should see "Course categories" in the "Cat 1 flavour" "table_row"
-    And I click on "Edit" "button" in the "#region-main table" "css_element"
+    And I click on ".action-edit" "css_element" in the "Cat 1 flavour" "table_row"
     And I expand all fieldsets
     And I select "No" from the "Apply to course categories" singleselect
     And I click on "Save changes" "button"
@@ -162,7 +162,7 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying to
   @javascript
   Scenario: Flavours: Application - Apply a flavour to a particular cohort (and show this fact in the overview table and make sure that other cohorts are not affected)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
+    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -192,7 +192,7 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying to
   @javascript
   Scenario: Flavours: Application - Do not apply a flavour to cohorts anymore
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
+    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -210,7 +210,7 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying to
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
     And I should see "Cohorts" in the "Cohort 1 flavour" "table_row"
-    And I click on "Edit" "button" in the "#region-main table" "css_element"
+    And I click on ".action-edit" "css_element" in the "Cohort 1 flavour" "table_row"
     And I expand all fieldsets
     And I select "No" from the "Apply to cohorts" singleselect
     And I click on "Save changes" "button"
@@ -224,7 +224,7 @@ Feature: Configuring the theme_learnr plugin on the "Flavours" page, applying to
   @javascript
   Scenario: Flavours: Application - Stop after the first matching flavour
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > LearnR > Flavours" in site administration
+    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets

@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin for the "E-Mail branding" tab on the "Look" page
   In order to use the features
   As admin
-  I need to be able to configure the theme LearnR plugin
+  I need to be able to configure the theme Boost Union plugin
 
 #  Unfortunately, this can't be tested with Behat yet
 #  See https://github.com/moodle-an-hochschulen/moodle-theme_learnr/issues/140 for details
@@ -13,7 +13,7 @@ Feature: Configuring the theme_learnr plugin for the "E-Mail branding" tab on th
 #      | theme_learnr | templateemailhtmlprefix | My HTML prefix |
 #      | theme_learnr | templateemailhtmlsuffix | My HTML suffix |
 #    When I log in as "admin"
-#    And I navigate to "Appearance > LearnR > Look" in site administration
+#    And I navigate to "Appearance > Boost Union > Look" in site administration
 #    And I click on "E-Mail branding" "link" in the "#adminsettings .nav-tabs" "css_element"
 #    Then I should not see "Up to now, the HTML E-Mails haven't been customized within this feature"
 #    And I should see "This is a preview of a HTML E-Mail"
@@ -27,7 +27,7 @@ Feature: Configuring the theme_learnr plugin for the "E-Mail branding" tab on th
   @javascript
   Scenario: Setting: HTML E-Mail branding (countercheck)
     When I log in as "admin"
-    And I navigate to "Appearance > LearnR > Look" in site administration
+    And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "E-Mail branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then I should see "Up to now, the HTML E-Mails haven't been customized within this feature"
     And I should not see "This is a preview of a HTML E-Mail"
@@ -41,7 +41,7 @@ Feature: Configuring the theme_learnr plugin for the "E-Mail branding" tab on th
 #      | theme_learnr | templateemailtextprefix | My plaintext prefix |
 #      | theme_learnr | templateemailtextsuffix | My plaintext suffix |
 #    When I log in as "admin"
-#    And I navigate to "Appearance > LearnR > Look" in site administration
+#    And I navigate to "Appearance > Boost Union > Look" in site administration
 #    And I click on "E-Mail branding" "link" in the "#adminsettings .nav-tabs" "css_element"
 #    Then I should not see "Up to now, the plaintext E-Mails haven't been customized within this feature"
 #    And I should see "This is a preview of a plaintext E-Mail"
@@ -55,7 +55,7 @@ Feature: Configuring the theme_learnr plugin for the "E-Mail branding" tab on th
   @javascript
   Scenario: Setting: Plaintext E-Mail branding (countercheck)
     When I log in as "admin"
-    And I navigate to "Appearance > LearnR > Look" in site administration
+    And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "E-Mail branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then I should see "Up to now, the plaintext E-Mails haven't been customized within this feature"
     And I should not see "This is a preview of a plaintext E-Mail"

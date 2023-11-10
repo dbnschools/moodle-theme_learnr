@@ -15,15 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Settings file
+ * Theme Boost Union - Settings file
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use \theme_learnr\admin_setting_configdatetime;
-use \theme_learnr\admin_setting_configstoredfilealwayscallback;
+use theme_learnr\admin_setting_configdatetime;
+use theme_learnr\admin_setting_configstoredfilealwayscallback;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -38,7 +38,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
     // To achieve this goal, we create a custom admin settings category and fill it with several settings pages.
     // However, there is still the $settings variable which is expected by Moodle coreto be filled with the theme
     // settings and which is automatically added to the admin settings tree in one settings page.
-    // To avoid that there appears an empty "LearnR" settings page near our own custom settings category,
+    // To avoid that there appears an empty "Boost Union" settings page near our own custom settings category,
     // we set $settings to null.
 
     // Avoid that the theme settings page is auto-created.
@@ -85,6 +85,14 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
                 new moodle_url('/theme/learnr/flavours/overview.php'),
                 'theme/learnr:configure');
         $ADMIN->add('theme_learnr', $flavourspage);
+
+        // Create Smart Menus settings page as external page.
+        // (and allow users with the theme/learnr:configure capability to access it).
+        $smartmenuspage = new admin_externalpage('theme_learnr_smartmenus',
+                get_string('smartmenus', 'theme_learnr', null, true),
+                new moodle_url('/theme/learnr/smartmenus/menus.php'),
+                'theme/learnr:configure');
+        $ADMIN->add('theme_learnr', $smartmenuspage);
     }
 
     // Create full settings page structure.
@@ -94,11 +102,12 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         // Require the necessary libraries.
         require_once($CFG->dirroot . '/theme/learnr/lib.php');
         require_once($CFG->dirroot . '/theme/learnr/locallib.php');
+        require_once($CFG->dirroot . '/course/lib.php');
 
         // Prepare options array for select settings.
         // Due to MDL-58376, we will use binary select settings instead of checkbox settings throughout this theme.
-        $yesnooption = array(THEME_LEARNR_SETTING_SELECT_YES => get_string('yes'),
-                THEME_LEARNR_SETTING_SELECT_NO => get_string('no'));
+        $yesnooption = [THEME_LEARNR_SETTING_SELECT_YES => get_string('yes'),
+                THEME_LEARNR_SETTING_SELECT_NO => get_string('no'), ];
 
         // Prepare regular expression for checking if the value is a percent number (from 0% to 100%) or a pixel number
         // (with 3 or 4 digits) or a viewport width number (from 0 to 100).
@@ -147,7 +156,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $title = get_string('presetfiles', 'theme_boost', null, true);
         $description = get_string('presetfiles_desc', 'theme_boost', null, true);
         $setting = new admin_setting_configstoredfile($name, $title, $description, 'preset', 0,
-                array('maxfiles' => 20, 'accepted_types' => array('.scss')));
+                ['maxfiles' => 20, 'accepted_types' => ['.scss']]);
         $tab->add($setting);
 
         //Begin DBN Update
@@ -306,7 +315,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $name = 'theme_learnr/coursecontentmaxwidth';
         $title = get_string('coursecontentmaxwidthsetting', 'theme_learnr', null, true);
         $description = get_string('coursecontentmaxwidthsetting_desc', 'theme_learnr', null, true);
-        $default = '95%';
+        $default = '830px';
         $setting = new admin_setting_configtext($name, $title, $description, $default, $widthregex, 6);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
@@ -315,7 +324,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $name = 'theme_learnr/mediumcontentmaxwidth';
         $title = get_string('mediumcontentmaxwidthsetting', 'theme_learnr', null, true);
         $description = get_string('mediumcontentmaxwidthsetting_desc', 'theme_learnr', null, true);
-        $default = '95%';
+        $default = '1120px';
         $setting = new admin_setting_configtext($name, $title, $description, $default, $widthregex, 6);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
@@ -324,13 +333,14 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $page->add($tab);
 
 
-        // Create branding tab.
-        $tab = new admin_settingpage('theme_learnr_look_branding', get_string('brandingtab', 'theme_learnr', null, true));
+        // Create site branding tab.
+        $tab = new admin_settingpage('theme_learnr_look_sitebranding',
+                get_string('sitebrandingtab', 'theme_learnr', null, true));
 
         // Create logos heading.
         $name = 'theme_learnr/logosheading';
         $title = get_string('logosheading', 'theme_learnr', null, true);
-        $notificationurl = new moodle_url('/admin/settings.php', array('section' => 'logos'));
+        $notificationurl = new moodle_url('/admin/settings.php', ['section' => 'logos']);
         $notification = new \core\output\notification(get_string('logosheading_desc', 'theme_learnr', $notificationurl->out()),
                 \core\output\notification::NOTIFY_INFO);
         $notification->set_show_closebutton(false);
@@ -343,7 +353,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $title = get_string('logosetting', 'theme_learnr', null, true);
         $description = get_string('logosetting_desc', 'theme_learnr', null, true);
         $setting = new admin_setting_configstoredfile($name, $title, $description, 'logo', 0,
-                array('maxfiles' => 1, 'accepted_types' => 'web_image'));
+                ['maxfiles' => 1, 'accepted_types' => 'web_image']);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
@@ -352,14 +362,14 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $title = get_string('logocompactsetting', 'theme_learnr', null, true);
         $description = get_string('logocompactsetting_desc', 'theme_learnr', null, true);
         $setting = new admin_setting_configstoredfile($name, $title, $description, 'logocompact', 0,
-                array('maxfiles' => 1, 'accepted_types' => 'web_image'));
+                ['maxfiles' => 1, 'accepted_types' => 'web_image']);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
         // Create favicon heading.
         $name = 'theme_learnr/faviconheading';
         $title = get_string('faviconheading', 'theme_learnr', null, true);
-        $notificationurl = new moodle_url('/admin/settings.php', array('section' => 'logos'));
+        $notificationurl = new moodle_url('/admin/settings.php', ['section' => 'logos']);
         $notification = new \core\output\notification(get_string('faviconheading_desc', 'theme_learnr',
                 $notificationurl->out()), \core\output\notification::NOTIFY_INFO);
         $notification->set_show_closebutton(false);
@@ -372,7 +382,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $title = get_string('faviconsetting', 'theme_learnr', null, true);
         $description = get_string('faviconsetting_desc', 'theme_learnr', null, true);
         $setting = new admin_setting_configstoredfile($name, $title, $description, 'favicon', 0,
-                array('maxfiles' => 1, 'accepted_types' => 'image'));
+                ['maxfiles' => 1, 'accepted_types' => 'image']);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
@@ -387,7 +397,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $title = get_string('backgroundimagesetting', 'theme_learnr', null, true);
         $description = get_string('backgroundimagesetting_desc', 'theme_learnr', null, true);
         $setting = new admin_setting_configstoredfile($name, $title, $description, 'backgroundimage', 0,
-                array('maxfiles' => 1, 'accepted_types' => 'web_image'));
+                ['maxfiles' => 1, 'accepted_types' => 'web_image']);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
@@ -397,7 +407,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
-        // Replicate the Variable $body-color setting from theme_boost.
+        // Replicate the brand color setting from theme_boost.
         $name = 'theme_learnr/brandcolor';
         $title = get_string('brandcolor', 'theme_boost', null, true);
         $description = get_string('brandcolor_desc', 'theme_boost', null, true);
@@ -483,6 +493,37 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Create navbar heading.
+        $name = 'theme_learnr/navbarheading';
+        $title = get_string('navbarheading', 'theme_learnr', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Navbar color.
+        $name = 'theme_learnr/navbarcolor';
+        $title = get_string('navbarcolorsetting', 'theme_learnr', null, true);
+        $description = get_string('navbarcolorsetting_desc', 'theme_learnr', null, true);
+        $navbarcoloroptions = [
+                THEME_LEARNR_SETTING_NAVBARCOLOR_LIGHT =>
+                        get_string('navbarcolorsetting_light', 'theme_learnr'),
+                THEME_LEARNR_SETTING_NAVBARCOLOR_DARK =>
+                        get_string('navbarcolorsetting_dark', 'theme_learnr'),
+                THEME_LEARNR_SETTING_NAVBARCOLOR_PRIMARYLIGHT =>
+                        get_string('navbarcolorsetting_primarylight', 'theme_learnr'),
+                THEME_LEARNR_SETTING_NAVBARCOLOR_PRIMARYDARK =>
+                        get_string('navbarcolorsetting_primarydark', 'theme_learnr'), ];
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_NAVBARCOLOR_LIGHT,
+                $navbarcoloroptions);
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
+        // Create activity branding tab.
+        $tab = new admin_settingpage('theme_learnr_look_activitybranding',
+                get_string('activitybrandingtab', 'theme_learnr', null, true));
+
         // Create activity icon colors heading.
         $name = 'theme_learnr/activityiconcolorsheading';
         $title = get_string('activityiconcolorsheading', 'theme_learnr', null, true);
@@ -537,28 +578,95 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create navbar heading.
-        $name = 'theme_learnr/navbarheading';
-        $title = get_string('navbarheading', 'theme_learnr', null, true);
+        // Create activity icons purpose heading.
+        $name = 'theme_learnr/activitypurposeheading';
+        $title = get_string('activitypurposeheading', 'theme_learnr', null, true);
+        $description = get_string('activitypurposeheading_desc', 'theme_learnr', null, true).'<br /><br />'.
+                get_string('activitypurposeheadingtechnote', 'theme_learnr',
+                        get_string('githubissueslink', 'theme_learnr', null, true),
+                true);
+        $setting = new admin_setting_heading($name, $title, $description);
+        $tab->add($setting);
+
+        // Prepare activity purposes.
+        $purposesoptions = [
+                MOD_PURPOSE_ADMINISTRATION => get_string('activitypurposeadministration', 'theme_learnr'),
+                MOD_PURPOSE_ASSESSMENT => get_string('activitypurposeassessment', 'theme_learnr'),
+                MOD_PURPOSE_COLLABORATION => get_string('activitypurposecollaboration', 'theme_learnr'),
+                MOD_PURPOSE_COMMUNICATION => get_string('activitypurposecommunication', 'theme_learnr'),
+                MOD_PURPOSE_CONTENT => get_string('activitypurposecontent', 'theme_learnr'),
+                MOD_PURPOSE_INTERFACE => get_string('activitypurposeinterface', 'theme_learnr'),
+                MOD_PURPOSE_OTHER => get_string('activitypurposeother', 'theme_learnr'),
+        ];
+        // Get installed activity modules.
+        $installedactivities = get_module_types_names();
+        // Iterate over all existing activities.
+        foreach ($installedactivities as $modname => $modinfo) {
+            // Get default purpose of activity module.
+            $defaultpurpose = plugin_supports('mod', $modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
+            // If the plugin does not have any default purpose.
+            if (!$defaultpurpose) {
+                // Fallback to "other" purpose.
+                $defaultpurpose = MOD_PURPOSE_OTHER;
+            }
+
+            // Create the setting.
+            $name = 'theme_learnr/activitypurpose'.$modname;
+            $title = get_string('modulename', $modname, null, true);
+            $description = '';
+            $setting = new admin_setting_configselect($name, $title, $description, $defaultpurpose, $purposesoptions);
+            $setting->set_updatedcallback('theme_reset_all_caches');
+            $tab->add($setting);
+        }
+
+        // Create activity icons heading.
+        $name = 'theme_learnr/modicons';
+        $title = get_string('modiconsheading', 'theme_learnr', null, true);
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
-        // Setting: Navbar color.
-        $name = 'theme_learnr/navbarcolor';
-        $title = get_string('navbarcolorsetting', 'theme_learnr', null, true);
-        $description = get_string('navbarcolorsetting_desc', 'theme_learnr', null, true);
-        $navbarcoloroptions = array(
-                THEME_LEARNR_SETTING_NAVBARCOLOR_LIGHT =>
-                        get_string('navbarcolorsetting_light', 'theme_learnr'),
-                THEME_LEARNR_SETTING_NAVBARCOLOR_DARK =>
-                        get_string('navbarcolorsetting_dark', 'theme_learnr'),
-                THEME_LEARNR_SETTING_NAVBARCOLOR_PRIMARYLIGHT =>
-                        get_string('navbarcolorsetting_primarylight', 'theme_learnr'),
-                THEME_LEARNR_SETTING_NAVBARCOLOR_PRIMARYDARK =>
-                        get_string('navbarcolorsetting_primarydark', 'theme_learnr'));
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_NAVBARCOLOR_DARK,
-                $navbarcoloroptions);
+        // Setting: Enable custom icons for activities and resources.
+        $name = 'theme_learnr/modiconsenable';
+        $title = get_string('modiconsenablesetting', 'theme_learnr', null, true);
+        $description = get_string('modiconsenablesetting_desc', 'theme_learnr', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('theme_learnr_check_mod_icons_cleanup');
         $tab->add($setting);
+
+        // Setting: Custom icon files.
+        $name = 'theme_learnr/modiconsfiles';
+        $title = get_string('modiconsfiles', 'theme_learnr', null, true);
+        $description = get_string('modiconsfiles_desc', 'theme_learnr', null, true).'<br /><br />'.
+                get_string('modiconsfileshowto', 'theme_learnr', null, true).'<br /><br />'.
+                get_string('modiconsfilestech', 'theme_learnr', null, true);
+        // Use our enhanced implementation of admin_setting_configstoredfile to circumvent MDL-59082.
+        // This can be changed back to admin_setting_configstoredfile as soon as MDL-59082 is fixed.
+        $setting = new admin_setting_configstoredfilealwayscallback($name, $title, $description, 'modicons', 0,
+                ['maxfiles' => -1, 'subdirs' => 1, 'accepted_types' => ['.png', '.svg']]);
+        $setting->set_updatedcallback('theme_learnr_place_mod_icons');
+        $tab->add($setting);
+        $page->hide_if('theme_learnr/modiconsfiles', 'theme_learnr/modiconsenable', 'neq',
+                THEME_LEARNR_SETTING_SELECT_YES);
+
+        // Information: Custom icons files list.
+        // If there is at least one file uploaded and if custom icons are enabled (unfortunately, hide_if does not
+        // work for admin_setting_description up to now, that's why we have to use this workaround).
+        $modiconsenableconfig = get_config('theme_learnr', 'modiconsenable');
+        if ($modiconsenableconfig == THEME_LEARNR_SETTING_SELECT_YES &&
+                !empty(get_config('theme_learnr', 'modiconsfiles'))) {
+            // Prepare the widget.
+            $name = 'theme_learnr/modiconlist';
+            $title = get_string('modiconlistsetting', 'theme_learnr', null, true);
+            $description = get_string('modiconlistsetting_desc', 'theme_learnr', null, true);
+
+            // Append the file list to the description.
+            $templatecontext = ['files' => theme_learnr_get_modicon_templatecontext()];
+            $description .= $OUTPUT->render_from_template('theme_learnr/settings-modicon-filelist', $templatecontext);
+
+            // Finish the widget.
+            $setting = new admin_setting_description($name, $title, $description);
+            $tab->add($setting);
+        }
 
         // Add tab to settings page.
         $page->add($tab);
@@ -579,7 +687,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $title = get_string('loginbackgroundimage', 'theme_learnr', null, true);
         $description = get_string('loginbackgroundimage_desc', 'theme_learnr', null, true);
         $setting = new admin_setting_configstoredfile($name, $title, $description, 'loginbackgroundimage', 0,
-                array('maxfiles' => 25, 'accepted_types' => 'web_image'));
+                ['maxfiles' => 25, 'accepted_types' => 'web_image']);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
@@ -611,10 +719,11 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $name = 'theme_learnr/loginformposition';
         $title = get_string('loginformpositionsetting', 'theme_learnr', null, true);
         $description = get_string('loginformpositionsetting_desc', 'theme_learnr', null, true);
-        $loginformoptions = array(
+        $loginformoptions = [
                 THEME_LEARNR_SETTING_LOGINFORMPOS_CENTER => get_string('loginformpositionsetting_center', 'theme_learnr'),
                 THEME_LEARNR_SETTING_LOGINFORMPOS_LEFT => get_string('loginformpositionsetting_left', 'theme_learnr'),
-                THEME_LEARNR_SETTING_LOGINFORMPOS_RIGHT => get_string('loginformpositionsetting_right', 'theme_learnr'));
+                THEME_LEARNR_SETTING_LOGINFORMPOS_RIGHT =>
+                        get_string('loginformpositionsetting_right', 'theme_learnr'), ];
         $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_LOGINFORMPOS_CENTER,
                 $loginformoptions);
         $tab->add($setting);
@@ -652,7 +761,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $title = get_string('courseheaderimagefallback', 'theme_learnr', null, true);
         $description = get_string('courseheaderimagefallback_desc', 'theme_learnr', null, true);
         $setting = new admin_setting_configstoredfile($name, $title, $description, 'courseheaderimagefallback', 0,
-                array('maxfiles' => 1, 'accepted_types' => 'web_image'));
+                ['maxfiles' => 1, 'accepted_types' => 'web_image']);
         $tab->add($setting);
         $page->hide_if('theme_learnr/courseheaderimagefallback', 'theme_learnr/courseheaderimageenabled', 'neq',
                 THEME_LEARNR_SETTING_SELECT_YES);
@@ -661,13 +770,13 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $name = 'theme_learnr/courseheaderimagelayout';
         $title = get_string('courseheaderimagelayout', 'theme_learnr', null, true);
         $description = get_string('courseheaderimagelayout_desc', 'theme_learnr', null, true);
-        $courseheaderimagelayoutoptions = array(
+        $courseheaderimagelayoutoptions = [
                 THEME_LEARNR_SETTING_COURSEIMAGELAYOUT_STACKEDDARK =>
                         get_string('courseheaderimagelayoutstackeddark', 'theme_learnr'),
                 THEME_LEARNR_SETTING_COURSEIMAGELAYOUT_STACKEDLIGHT =>
                         get_string('courseheaderimagelayoutstackedlight', 'theme_learnr'),
                 THEME_LEARNR_SETTING_COURSEIMAGELAYOUT_HEADINGABOVE =>
-                        get_string('courseheaderimagelayoutheadingabove', 'theme_learnr'));
+                        get_string('courseheaderimagelayoutheadingabove', 'theme_learnr'), ];
         $setting = new admin_setting_configselect($name, $title, $description,
                 THEME_LEARNR_SETTING_COURSEIMAGELAYOUT_HEADINGABOVE, $courseheaderimagelayoutoptions);
         $tab->add($setting);
@@ -678,12 +787,12 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $name = 'theme_learnr/courseheaderimageheight';
         $title = get_string('courseheaderimageheight', 'theme_learnr', null, true);
         $description = get_string('courseheaderimageheight_desc', 'theme_learnr', null, true);
-        $courseheaderimageheightoptions = array(
+        $courseheaderimageheightoptions = [
                 THEME_LEARNR_SETTING_HEIGHT_100PX => THEME_LEARNR_SETTING_HEIGHT_100PX,
                 THEME_LEARNR_SETTING_HEIGHT_150PX => THEME_LEARNR_SETTING_HEIGHT_150PX,
                 THEME_LEARNR_SETTING_HEIGHT_200PX => THEME_LEARNR_SETTING_HEIGHT_200PX,
-                THEME_LEARNR_SETTING_HEIGHT_250PX => THEME_LEARNR_SETTING_HEIGHT_250PX);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_HEIGHT_200PX,
+                THEME_LEARNR_SETTING_HEIGHT_250PX => THEME_LEARNR_SETTING_HEIGHT_250PX, ];
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_HEIGHT_150PX,
                 $courseheaderimageheightoptions);
         $tab->add($setting);
         $page->hide_if('theme_learnr/courseheaderimageheight', 'theme_learnr/courseheaderimageenabled', 'neq',
@@ -693,7 +802,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $name = 'theme_learnr/courseheaderimageposition';
         $title = get_string('courseheaderimageposition', 'theme_learnr', null, true);
         $description = get_string('courseheaderimageposition_desc', 'theme_learnr', null, true);
-        $courseheaderimagepositionoptions = array(
+        $courseheaderimagepositionoptions = [
                 THEME_LEARNR_SETTING_IMAGEPOSITION_CENTER_CENTER =>
                         THEME_LEARNR_SETTING_IMAGEPOSITION_CENTER_CENTER,
                 THEME_LEARNR_SETTING_IMAGEPOSITION_CENTER_TOP =>
@@ -711,13 +820,13 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
                 THEME_LEARNR_SETTING_IMAGEPOSITION_RIGHT_CENTER =>
                         THEME_LEARNR_SETTING_IMAGEPOSITION_RIGHT_CENTER,
                 THEME_LEARNR_SETTING_IMAGEPOSITION_RIGHT_BOTTOM =>
-                        THEME_LEARNR_SETTING_IMAGEPOSITION_RIGHT_BOTTOM);
+                        THEME_LEARNR_SETTING_IMAGEPOSITION_RIGHT_BOTTOM, ];
         $setting = new admin_setting_configselect($name, $title, $description,
                 THEME_LEARNR_SETTING_IMAGEPOSITION_CENTER_CENTER, $courseheaderimagepositionoptions);
         $tab->add($setting);
         $page->hide_if('theme_learnr/courseheaderimageposition', 'theme_learnr/courseheaderimageenabled', 'neq',
                 THEME_LEARNR_SETTING_SELECT_YES);
-
+        
          // Begin DBN Update.
         // Show/hide course index navigation.
         $name = 'theme_learnr/showcourseindexnav';
@@ -1231,9 +1340,9 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $title = '';
         $description = '<h4>'.get_string('emailbrandinginstruction', 'theme_learnr', null, true).'</h4>';
         $description .= '<p>'.get_string('emailbrandinginstruction0', 'theme_learnr', null, true).'</p>';
-        $emailbrandinginstructionli1url = new moodle_url('/admin/tool/customlang/index.php', array('lng' => $CFG->lang));
+        $emailbrandinginstructionli1url = new moodle_url('/admin/tool/customlang/index.php', ['lng' => $CFG->lang]);
         $description .= '<ul><li>'.get_string('emailbrandinginstructionli1', 'theme_learnr',
-                array('url' => $emailbrandinginstructionli1url->out(), 'lang' => $CFG->lang), true).'</li>';
+                ['url' => $emailbrandinginstructionli1url->out(), 'lang' => $CFG->lang], true).'</li>';
         $description .= '<li>'.get_string('emailbrandinginstructionli2', 'theme_learnr', null, true).'</li>';
         $description .= '<ul><li>'.get_string('emailbrandinginstructionli2li1', 'theme_learnr', null, true).'</li>';
         $description .= '<li>'.get_string('emailbrandinginstructionli2li2', 'theme_learnr', null, true).'</li>';
@@ -1345,7 +1454,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $title = get_string('additionalresourcessetting', 'theme_learnr', null, true);
         $description = get_string('additionalresourcessetting_desc', 'theme_learnr', null, true);
         $setting = new admin_setting_configstoredfile($name, $title, $description, 'additionalresources', 0,
-                array('maxfiles' => -1));
+                ['maxfiles' => -1]);
         $tab->add($setting);
 
         // Information: Additional resources list.
@@ -1358,7 +1467,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
                     get_string('resourcescachecontrolnote', 'theme_learnr', null, true);
 
             // Append the file list to the description.
-            $templatecontext = array('files' => theme_learnr_get_additionalresources_templatecontext());
+            $templatecontext = ['files' => theme_learnr_get_additionalresources_templatecontext()];
             $description .= $OUTPUT->render_from_template('theme_learnr/settings-additionalresources-filelist',
                     $templatecontext);
 
@@ -1385,10 +1494,10 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $description = get_string('customfontssetting_desc', 'theme_learnr', null, true);
         if ($registerfontsresult == true) {
             $setting = new admin_setting_configstoredfile($name, $title, $description, 'customfonts', 0,
-                    array('maxfiles' => -1, 'accepted_types' => theme_learnr_get_webfonts_extensions()));
+                    ['maxfiles' => -1, 'accepted_types' => theme_learnr_get_webfonts_extensions()]);
         } else {
             $setting = new admin_setting_configstoredfile($name, $title, $description, 'customfonts', 0,
-                    array('maxfiles' => -1));
+                    ['maxfiles' => -1]);
         }
         $tab->add($setting);
 
@@ -1401,96 +1510,13 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
             $description = get_string('customfontslistsetting_desc', 'theme_learnr', null, true);
 
             // Append the file list to the description.
-            $templatecontext = array('files' => theme_learnr_get_customfonts_templatecontext());
+            $templatecontext = ['files' => theme_learnr_get_customfonts_templatecontext()];
             $description .= $OUTPUT->render_from_template('theme_learnr/settings-customfonts-filelist', $templatecontext);
 
             // Finish the widget.
             $setting = new admin_setting_description($name, $title, $description);
             $tab->add($setting);
 
-        }
-
-        // Create FontAwesome heading.
-        $name = 'theme_learnr/fontawesomeheading';
-        $title = get_string('fontawesomeheading', 'theme_learnr', null, true);
-        $setting = new admin_setting_heading($name, $title, null);
-        $tab->add($setting);
-
-        // Setting: FontAwesome version.
-        $faversionoption =
-                // Don't use string lazy loading (= false) because the string will be directly used and would produce a
-                // PHP warning otherwise.
-                array(THEME_LEARNR_SETTING_FAVERSION_NONE =>
-                        get_string('fontawesomeversionnone', 'theme_learnr', null, false),
-                        THEME_LEARNR_SETTING_FAVERSION_FA6FREE =>
-                                get_string('fontawesomeversionfa6free', 'theme_learnr', null, false));
-        $name = 'theme_learnr/fontawesomeversion';
-        $title = get_string('fontawesomeversionsetting', 'theme_learnr', null, true);
-        $description = get_string('fontawesomeversionsetting_desc', 'theme_learnr', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_FAVERSION_NONE,
-                $faversionoption);
-        $setting->set_updatedcallback('theme_learnr_fontawesome_checkin');
-        $tab->add($setting);
-
-        // Setting: FontAwesome files.
-        $name = 'theme_learnr/fontawesomefiles';
-        $title = get_string('fontawesomefilessetting', 'theme_learnr', null, true);
-        $description = get_string('fontawesomefilessetting_desc', 'theme_learnr', null, true).'<br /><br />'.
-                get_string('fontawesomefilesstructurenote', 'theme_learnr', null, true);
-        if ($registerfontsresult == true) {
-            // Use our enhanced implementation of admin_setting_configstoredfile to circumvent MDL-59082.
-            // This can be changed back to admin_setting_configstoredfile as soon as MDL-59082 is fixed.
-            $setting = new admin_setting_configstoredfilealwayscallback($name, $title, $description, 'fontawesome', 0,
-                    array('maxfiles' => -1, 'subdirs' => 1, 'accepted_types' => theme_learnr_get_fontawesome_extensions()));
-        } else {
-            // Use our enhanced implementation of admin_setting_configstoredfile to circumvent MDL-59082.
-            // This can be changed back to admin_setting_configstoredfile as soon as MDL-59082 is fixed.
-            $setting = new admin_setting_configstoredfilealwayscallback($name, $title, $description, 'fontawesome', 0,
-                    array('maxfiles' => -1));
-        }
-        $setting->set_updatedcallback('theme_learnr_fontawesome_checkin');
-        $tab->add($setting);
-        $page->hide_if('theme_learnr/fontawesomefiles', 'theme_learnr/fontawesomeversion', 'eq',
-                THEME_LEARNR_SETTING_FAVERSION_NONE);
-
-        // Information: FontAwesome list.
-        $faconfig = get_config('theme_learnr', 'fontawesomeversion');
-        // If there is at least one file uploaded and if a FontAwesome version is enabled (unfortunately, hide_if does not
-        // work for admin_setting_description up to now, that's why we have to use this workaround).
-        if ($faconfig != THEME_LEARNR_SETTING_FAVERSION_NONE && $faconfig != null &&
-                !empty(get_config('theme_learnr', 'fontawesomefiles'))) {
-            // Prepare the widget.
-            $name = 'theme_learnr/fontawesomelist';
-            $title = get_string('fontawesomelistsetting', 'theme_learnr', null, true);
-            $description = get_string('fontawesomelistsetting_desc', 'theme_learnr', null, true).'<br /><br />'.
-                    get_string('fontawesomelistnote', 'theme_learnr', null, true);
-
-            // Append the file list to the description.
-            $templatecontext = array('files' => theme_learnr_get_fontawesome_templatecontext());
-            $description .= $OUTPUT->render_from_template('theme_learnr/settings-fontawesome-filelist', $templatecontext);
-
-            // Finish the widget.
-            $setting = new admin_setting_description($name, $title, $description);
-            $tab->add($setting);
-        }
-
-        // Information: FontAwesome checks.
-        // If there is at least one file uploaded and if a FontAwesome version is enabled (unfortunately, hide_if does not
-        // work for admin_setting_description up to now, that's why we have to use this workaround).
-        if ($faconfig != THEME_LEARNR_SETTING_FAVERSION_NONE && $faconfig != null &&
-                !empty(get_config('theme_learnr', 'fontawesomefiles'))) {
-            // Prepare the widget.
-            $name = 'theme_learnr/fontawesomechecks';
-            $title = get_string('fontawesomecheckssetting', 'theme_learnr', null, true);
-            $description = get_string('fontawesomecheckssetting_desc', 'theme_learnr', null, true);
-
-            // Append the checks to the description.
-            $templatecontext = array('checks' => theme_learnr_get_fontawesome_checks_templatecontext());
-            $description .= $OUTPUT->render_from_template('theme_learnr/settings-fontawesome-checks', $templatecontext);
-
-            // Finish the widget.
-            $setting = new admin_setting_description($name, $title, $description);
-            $tab->add($setting);
         }
 
         // Add tab to settings page.
@@ -1526,7 +1552,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $name = 'theme_learnr/h5pcontentmaxwidth';
         $title = get_string('h5pcontentmaxwidthsetting', 'theme_learnr', null, true);
         $description = get_string('h5pcontentmaxwidthsetting_desc', 'theme_learnr', null, true);
-        $default = '95%';
+        $default = '960px';
         $setting = new admin_setting_configtext($name, $title, $description, $default, $widthregex, 6);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
@@ -1549,13 +1575,13 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $name = 'theme_learnr/mobilescss';
         $title = get_string('mobilecss', 'theme_learnr', null, true);
         $description = get_string('mobilecss_desc', 'theme_learnr', null, true);
-        $mobilecssurl = new moodle_url('/admin/settings.php', array('section' => 'mobileappearance'));
+        $mobilecssurl = new moodle_url('/admin/settings.php', ['section' => 'mobileappearance']);
         // If another Mobile App CSS URL is set already (in the $CFG->mobilecssurl setting), we add a warning to the description.
         if (isset($CFG->mobilecssurl) && !empty($CFG->mobilecssurl) &&
                 strpos($CFG->mobilecssurl, '/learnr/mobile/styles.php') == false) {
             $mobilescssnotification = new \core\output\notification(
                     get_string('mobilecss_overwrite', 'theme_learnr',
-                            array('url' => $mobilecssurl->out(), 'value' => $CFG->mobilecssurl)).' '.
+                            ['url' => $mobilecssurl->out(), 'value' => $CFG->mobilecssurl]).' '.
                     get_string('mobilecss_donotchange', 'theme_learnr'),
                     \core\output\notification::NOTIFY_WARNING);
             $mobilescssnotification->set_show_closebutton(false);
@@ -1565,7 +1591,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         } else {
             $mobilescssnotification = new \core\output\notification(
                     get_string('mobilecss_set', 'theme_learnr',
-                            array('url' => $mobilecssurl->out())).' '.
+                            ['url' => $mobilecssurl->out()]).' '.
                     get_string('mobilecss_donotchange', 'theme_learnr'),
                     \core\output\notification::NOTIFY_INFO);
             $mobilescssnotification->set_show_closebutton(false);
@@ -1602,19 +1628,41 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $tab->add($setting);
 
         // Prepare hide nodes options.
-        $hidenodesoptions = array(
+        $hidenodesoptions = [
                 THEME_LEARNR_SETTING_HIDENODESPRIMARYNAVIGATION_HOME => get_string('home'),
                 THEME_LEARNR_SETTING_HIDENODESPRIMARYNAVIGATION_MYHOME => get_string('myhome'),
                 THEME_LEARNR_SETTING_HIDENODESPRIMARYNAVIGATION_MYCOURSES => get_string('mycourses'),
-                THEME_LEARNR_SETTING_HIDENODESPRIMARYNAVIGATION_SITEADMIN => get_string('administrationsite')
-        );
+                THEME_LEARNR_SETTING_HIDENODESPRIMARYNAVIGATION_SITEADMIN => get_string('administrationsite'),
+        ];
 
         // Setting: Hide nodes in primary navigation.
         $name = 'theme_learnr/hidenodesprimarynavigation';
         $title = get_string('hidenodesprimarynavigationsetting', 'theme_learnr', null, true);
-        $description = get_string('hidenodesprimarynavigationsetting_desc', 'theme_learnr', null, true);
-        $setting = new admin_setting_configmulticheckbox($name, $title, $description, array(), $hidenodesoptions);
+        $smartmenuurl = new moodle_url('/theme/learnr/smartmenus/menus.php');
+        $description = get_string('hidenodesprimarynavigationsetting_desc', 'theme_learnr',
+                ['url' => $smartmenuurl], true);
+        $setting = new admin_setting_configmulticheckbox($name, $title, $description, [], $hidenodesoptions);
         $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Create breadcrumbs heading.
+        $name = 'theme_learnr/breadcrumbsheading';
+        $title = get_string('breadcrumbsheading', 'theme_learnr', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Display the category breadcrumb in the course header.
+        $categorybreadcrumbsoptions = [
+            // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+            // PHP warning otherwise.
+            THEME_LEARNR_SETTING_SELECT_YES => get_string('yes'),
+            THEME_LEARNR_SETTING_SELECT_NO => get_string('no'),
+        ];
+        $name = 'theme_learnr/categorybreadcrumbs';
+        $title = get_string('categorybreadcrumbs', 'theme_learnr', null, true);
+        $description = get_string('categorybreadcrumbs_desc', 'theme_learnr', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_LEARNR_SETTING_SELECT_NO, $categorybreadcrumbsoptions);
         $tab->add($setting);
 
         // Create navigation heading.
@@ -1627,7 +1675,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $name = 'theme_learnr/backtotopbutton';
         $title = get_string('backtotopbuttonsetting', 'theme_learnr', null, true);
         $description = get_string('backtotopbuttonsetting_desc', 'theme_learnr', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_YES, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO, $yesnooption);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
@@ -1635,7 +1683,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $name = 'theme_learnr/scrollspy';
         $title = get_string('scrollspysetting', 'theme_learnr', null, true);
         $description = get_string('scrollspysetting_desc', 'theme_learnr', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_YES, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO, $yesnooption);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
@@ -1643,7 +1691,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $name = 'theme_learnr/activitynavigation';
         $title = get_string('activitynavigationsetting', 'theme_learnr', null, true);
         $description = get_string('activitynavigationsetting_desc', 'theme_learnr', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_YES, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO, $yesnooption);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
@@ -1699,10 +1747,10 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
             'region-footer-center',
             'region-offcanvas-left',
             'region-offcanvas-right',
-            'region-offcanvas-center'
+            'region-offcanvas-center',
         ], 'theme_learnr');
         // List of all available regions.
-        $allavailableregions = array(
+        $allavailableregions = [
             'outside-top' => $regionstr['region-outside-top'],
             'outside-left' => $regionstr['region-outside-left'],
             'outside-right' => $regionstr['region-outside-right'],
@@ -1715,8 +1763,8 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
             'offcanvas-center' => $regionstr['region-offcanvas-center'],
             'content-upper' => $regionstr['region-content-upper'],
             'content-lower' => $regionstr['region-content-lower'],
-            'header' => $regionstr['region-header']
-        );
+            'header' => $regionstr['region-header'],
+        ];
         // Partial list of regions (used on some layouts).
         $partialregions = [
             'outside-top' => $regionstr['region-outside-top'],
@@ -1726,7 +1774,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
             'footer-center' => $regionstr['region-footer-center'],
             'offcanvas-left' => $regionstr['region-offcanvas-left'],
             'offcanvas-right' => $regionstr['region-offcanvas-right'],
-            'offcanvas-center' => $regionstr['region-offcanvas-center']
+            'offcanvas-center' => $regionstr['region-offcanvas-center'],
         ];
         // Build list of page layouts and map the regions to each page layout.
         $pagelayouts = [
@@ -1737,7 +1785,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
             'mypublic' => $partialregions,
             'report' => $partialregions,
             'course' => $allavailableregions,
-            'frontpage' => $allavailableregions
+            'frontpage' => $allavailableregions,
         ];
         // For the mydashboard layout, remove the content-* layouts as there are already block regions.
         $pagelayouts['mydashboard'] = array_filter($allavailableregions, function($key) {
@@ -1748,7 +1796,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
             $name = 'theme_learnr/blockregionsfor'.$layout;
             $title = get_string('blockregionsforlayout', 'theme_learnr', $layout, true);
             $description = get_string('blockregionsforlayout_desc', 'theme_learnr', $layout, true);
-            $setting = new admin_setting_configmulticheckbox($name, $title, $description, array(), $regions);
+            $setting = new admin_setting_configmulticheckbox($name, $title, $description, [], $regions);
             $tab->add($setting);
         }
 
@@ -1778,7 +1826,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $tab->add($setting);
 
         // Setting: Block region width for Outside (top) region.
-        $outsideregionswidthoptions = array(
+        $outsideregionswidthoptions = [
             // Don't use string lazy loading (= false) because the string will be directly used and would produce a
             // PHP warning otherwise.
                 THEME_LEARNR_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH =>
@@ -1786,7 +1834,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
                 THEME_LEARNR_SETTING_OUTSIDEREGIONSWITH_COURSECONTENTWIDTH =>
                         get_string('outsideregionswidthcoursecontentwidth', 'theme_learnr', null, false),
                 THEME_LEARNR_SETTING_OUTSIDEREGIONSWITH_HEROWIDTH =>
-                        get_string('outsideregionswidthherowidth', 'theme_learnr', null, false));
+                        get_string('outsideregionswidthherowidth', 'theme_learnr', null, false), ];
         $name = 'theme_learnr/blockregionoutsidetopwidth';
         $title = get_string('blockregionoutsidetopwidth', 'theme_learnr', null, true);
         $description = get_string('blockregionoutsidetopwidth_desc', 'theme_learnr', null, true);
@@ -1802,19 +1850,75 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
                 THEME_LEARNR_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH, $outsideregionswidthoptions);
         $tab->add($setting);
 
+        // Setting: Block region width for Footer region.
+        $name = 'theme_learnr/blockregionfooterwidth';
+        $title = get_string('blockregionfooterwidth', 'theme_learnr', null, true);
+        $description = get_string('blockregionfooterwidth_desc', 'theme_learnr', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_LEARNR_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH, $outsideregionswidthoptions);
+        $tab->add($setting);
+
         // Setting: Outside regions horizontal placement.
-        $outsideregionsplacementoptions = array(
+        $outsideregionsplacementoptions = [
             // Don't use string lazy loading (= false) because the string will be directly used and would produce a
             // PHP warning otherwise.
                 THEME_LEARNR_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT =>
                         get_string('outsideregionsplacementnextmaincontent', 'theme_learnr', null, false),
                 THEME_LEARNR_SETTING_OUTSIDEREGIONSPLACEMENT_NEARWINDOW =>
-                        get_string('outsideregionsplacementnearwindowedges', 'theme_learnr', null, false));
+                        get_string('outsideregionsplacementnearwindowedges', 'theme_learnr', null, false), ];
         $name = 'theme_learnr/outsideregionsplacement';
         $title = get_string('outsideregionsplacement', 'theme_learnr', null, true);
         $description = get_string('outsideregionsplacement_desc', 'theme_learnr', null, true);
         $setting = new admin_setting_configselect($name, $title, $description,
                 THEME_LEARNR_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT, $outsideregionsplacementoptions);
+        $tab->add($setting);
+
+        // Create site home right-hand blocks drawer behaviour heading.
+        $name = 'theme_learnr/sitehomerighthandblockdrawerbehaviour';
+        $title = get_string('sitehomerighthandblockdrawerbehaviour', 'theme_learnr', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Show right-hand block drawer of site home on visit.
+        $name = 'theme_learnr/showsitehomerighthandblockdraweronvisit';
+        $title = get_string('showsitehomerighthandblockdraweronvisitsetting', 'theme_learnr', null, true);
+        $description = get_string('showsitehomerighthandblockdraweronvisitsetting_desc', 'theme_learnr', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Setting: Show right-hand block drawer of site home on first login.
+        $name = 'theme_learnr/showsitehomerighthandblockdraweronfirstlogin';
+        $title = get_string('showsitehomerighthandblockdraweronfirstloginsetting', 'theme_learnr', null, true);
+        $description = get_string('showsitehomerighthandblockdraweronfirstloginsetting_desc', 'theme_learnr', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Setting: Show right-hand block drawer of site home on guest login.
+        $name = 'theme_learnr/showsitehomerighthandblockdraweronguestlogin';
+        $title = get_string('showsitehomerighthandblockdraweronguestloginsetting', 'theme_learnr', null, true);
+        $description = get_string('showsitehomerighthandblockdraweronguestloginsetting_desc', 'theme_learnr', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
+        // Create links tab.
+        $tab = new admin_settingpage('theme_learnr_feel_links', get_string('linkstab', 'theme_learnr', null, true));
+
+        // Create Special Links Markup heading.
+        $name = 'theme_learnr/speciallinksmarkupheading';
+        $title = get_string('speciallinksmarkupheading', 'theme_learnr', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Mark external links.
+        $name = 'theme_learnr/markexternallinks';
+        $title = get_string('markexternallinkssetting', 'theme_learnr', null, true);
+        $description = get_string('markexternallinkssetting_desc', 'theme_learnr', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
         // Add tab to settings page.
@@ -1875,7 +1979,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
                 get_string('staticpagestab', 'theme_learnr', null, true));
 
         // The static pages to be supported.
-        $staticpages = array('imprint', 'contact', 'help', 'maintenance');
+        $staticpages = ['aboutus', 'offers', 'imprint', 'contact', 'help', 'maintenance', 'page1', 'page2', 'page3'];
 
         // Iterate over the pages.
         foreach ($staticpages as $staticpage) {
@@ -1917,19 +2021,19 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
             $name = 'theme_learnr/'.$staticpage.'linkposition';
             $title = get_string($staticpage.'linkpositionsetting', 'theme_learnr', null, true);
             $staticpageurl = theme_learnr_get_staticpage_link($staticpage);
-            $description = get_string($staticpage.'linkpositionsetting_desc', 'theme_learnr', array('url' => $staticpageurl),
+            $description = get_string($staticpage.'linkpositionsetting_desc', 'theme_learnr', ['url' => $staticpageurl],
                     true);
             $linkpositionoption =
                     // Don't use string lazy loading (= false) because the string will be directly used and would produce a
                     // PHP warning otherwise.
-                    array(THEME_LEARNR_SETTING_STATICPAGELINKPOSITION_NONE =>
+                    [THEME_LEARNR_SETTING_STATICPAGELINKPOSITION_NONE =>
                             get_string($staticpage.'linkpositionnone', 'theme_learnr', null, false),
                             THEME_LEARNR_SETTING_STATICPAGELINKPOSITION_FOOTNOTE =>
                                     get_string($staticpage.'linkpositionfootnote', 'theme_learnr', null, false),
                             THEME_LEARNR_SETTING_STATICPAGELINKPOSITION_FOOTER =>
                                     get_string($staticpage.'linkpositionfooter', 'theme_learnr', null, false),
                             THEME_LEARNR_SETTING_STATICPAGELINKPOSITION_BOTH =>
-                                    get_string($staticpage.'linkpositionboth', 'theme_learnr', null, false));
+                                    get_string($staticpage.'linkpositionboth', 'theme_learnr', null, false), ];
             $default = 'none';
             $setting = new admin_setting_configselect($name, $title, $description, $default, $linkpositionoption);
             $tab->add($setting);
@@ -1946,7 +2050,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
                 get_string('infobannertab', 'theme_learnr', null, true));
 
         // Prepare options for the pages settings.
-        $infobannerpages = array(
+        $infobannerpages = [
             // Don't use string lazy loading (= false) because the string will be directly used and would produce a
             // PHP warning otherwise.
                 THEME_LEARNR_SETTING_INFOBANNERPAGES_MY => get_string('myhome', 'core', null, false),
@@ -1954,11 +2058,11 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
                 THEME_LEARNR_SETTING_INFOBANNERPAGES_SITEHOME => get_string('sitehome', 'core', null, false),
                 THEME_LEARNR_SETTING_INFOBANNERPAGES_COURSE => get_string('course', 'core', null, false),
                 THEME_LEARNR_SETTING_INFOBANNERPAGES_LOGIN =>
-                        get_string('infobannerpageloginpage', 'theme_learnr', null, false)
-        );
+                        get_string('infobannerpageloginpage', 'theme_learnr', null, false),
+        ];
 
         // Prepare options for the bootstrap class settings.
-        $infobannerbsclasses = array(
+        $infobannerbsclasses = [
             // Don't use string lazy loading (= false) because the string will be directly used and would produce a
             // PHP warning otherwise.
                 'primary' => get_string('bootstrapprimarycolor', 'theme_learnr', null, false),
@@ -1969,46 +2073,46 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
                 'info' => get_string('bootstrapinfocolor', 'theme_learnr', null, false),
                 'light' => get_string('bootstraplightcolor', 'theme_learnr', null, false),
                 'dark' => get_string('bootstrapdarkcolor', 'theme_learnr', null, false),
-                'none' => get_string('bootstrapnone', 'theme_learnr', null, false)
-        );
+                'none' => get_string('bootstrapnone', 'theme_learnr', null, false),
+        ];
 
         // Prepare options for the order settings.
-        $infobannerorders = array();
+        $infobannerorders = [];
         for ($i = 1; $i <= THEME_LEARNR_SETTING_INFOBANNER_COUNT; $i++) {
             $infobannerorders[$i] = $i;
         }
 
         // Prepare options for the mode settings.
-        $infobannermodes = array(
+        $infobannermodes = [
             // Don't use string lazy loading (= false) because the string will be directly used and would produce a
             // PHP warning otherwise.
                 THEME_LEARNR_SETTING_INFOBANNERMODE_PERPETUAL =>
                         get_string('infobannermodeperpetual', 'theme_learnr', null, false),
                 THEME_LEARNR_SETTING_INFOBANNERMODE_TIMEBASED =>
-                        get_string('infobannermodetimebased', 'theme_learnr', null, false)
-        );
+                        get_string('infobannermodetimebased', 'theme_learnr', null, false),
+        ];
 
         // Create the hardcoded amount of information banners without code duplication.
         for ($i = 1; $i <= THEME_LEARNR_SETTING_INFOBANNER_COUNT; $i++) {
 
             // Create Infobanner heading.
             $name = 'theme_learnr/infobanner'.$i.'heading';
-            $title = get_string('infobannerheading', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('infobannerheading', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_heading($name, $title, null);
             $tab->add($setting);
 
             // Setting: Infobanner enabled.
             $name = 'theme_learnr/infobanner'.$i.'enabled';
-            $title = get_string('infobannerenabledsetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('infobannerenabledsetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('infobannerenabledsetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('infobannerenabledsetting_desc', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO,
                     $yesnooption);
             $tab->add($setting);
 
             // Setting: Infobanner content.
             $name = 'theme_learnr/infobanner'.$i.'content';
-            $title = get_string('infobannercontentsetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('infobannercontentsetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('infobannercontentsetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('infobannercontentsetting_desc', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_confightmleditor($name, $title, $description, '');
             $tab->add($setting);
             $page->hide_if('theme_learnr/infobanner'.$i.'content', 'theme_learnr/infobanner'.$i.'enabled', 'neq',
@@ -2016,20 +2120,20 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
 
             // Setting: Infobanner pages.
             $name = 'theme_learnr/infobanner'.$i.'pages';
-            $title = get_string('infobannerpagessetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('infobannerpagessetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('infobannerpagessetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('infobannerpagessetting_desc', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_configmultiselect($name, $title, $description,
-                    array($infobannerpages[THEME_LEARNR_SETTING_INFOBANNERPAGES_MY]), $infobannerpages);
+                    [$infobannerpages[THEME_LEARNR_SETTING_INFOBANNERPAGES_MY]], $infobannerpages);
             $tab->add($setting);
             $page->hide_if('theme_learnr/infobanner'.$i.'pages', 'theme_learnr/infobanner'.$i.'enabled', 'neq',
                     THEME_LEARNR_SETTING_SELECT_YES);
 
             // Setting: Infobanner bootstrap class.
             $name = 'theme_learnr/infobanner'.$i.'bsclass';
-            $title = get_string('infobannerbsclasssetting', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('infobannerbsclasssetting', 'theme_learnr', ['no' => $i], true);
             $description = get_string('infobannerbsclasssetting_desc',
                     'theme_learnr',
-                    array('no' => $i, 'bootstrapnone' => get_string('bootstrapnone', 'theme_learnr')),
+                    ['no' => $i, 'bootstrapnone' => get_string('bootstrapnone', 'theme_learnr')],
                     true);
             $setting = new admin_setting_configselect($name, $title, $description,
                     'primary', $infobannerbsclasses);
@@ -2039,8 +2143,8 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
 
             // Setting: Infobanner order.
             $name = 'theme_learnr/infobanner'.$i.'order';
-            $title = get_string('infobannerordersetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('infobannerordersetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('infobannerordersetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('infobannerordersetting_desc', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_configselect($name, $title, $description,
                     $i, $infobannerorders);
             $tab->add($setting);
@@ -2049,8 +2153,8 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
 
             // Setting: Infobanner mode.
             $name = 'theme_learnr/infobanner'.$i.'mode';
-            $title = get_string('infobannermodesetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('infobannermodesetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('infobannermodesetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('infobannermodesetting_desc', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_configselect($name, $title, $description,
                     THEME_LEARNR_SETTING_INFOBANNERMODE_PERPETUAL, $infobannermodes);
             $tab->add($setting);
@@ -2059,8 +2163,8 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
 
             // Setting: Infobanner start time.
             $name = 'theme_learnr/infobanner'.$i.'start';
-            $title = get_string('infobannerstartsetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('infobannerstartsetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('infobannerstartsetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('infobannerstartsetting_desc', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_configdatetime($name, $title, $description, '');
             $tab->add($setting);
             $page->hide_if('theme_learnr/infobanner'.$i.'start', 'theme_learnr/infobanner'.$i.'enabled', 'neq',
@@ -2070,8 +2174,8 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
 
             // Setting: Infobanner end time.
             $name = 'theme_learnr/infobanner'.$i.'end';
-            $title = get_string('infobannerendsetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('infobannerendsetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('infobannerendsetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('infobannerendsetting_desc', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_configdatetime($name, $title, $description, '');
             $tab->add($setting);
             $page->hide_if('theme_learnr/infobanner'.$i.'end', 'theme_learnr/infobanner'.$i.'enabled', 'neq',
@@ -2081,16 +2185,16 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
 
             // Setting: Infobanner dismissible.
             $name = 'theme_learnr/infobanner'.$i.'dismissible';
-            $title = get_string('infobannerdismissiblesetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('infobannerdismissiblesetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('infobannerdismissiblesetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('infobannerdismissiblesetting_desc', 'theme_learnr', ['no' => $i], true);
             // Add Reset button if the info banner is already configured to be dismissible.
             if (get_config('theme_learnr', 'infobanner'.$i.'dismissible') == true) {
                 $reseturl = new moodle_url('/theme/learnr/settings_infobanner_resetdismissed.php',
-                        array('sesskey' => sesskey(), 'no' => $i));
+                        ['sesskey' => sesskey(), 'no' => $i]);
                 $description .= html_writer::empty_tag('br');
                 $description .= html_writer::link($reseturl,
-                        get_string('infobannerdismissresetbutton', 'theme_learnr', array('no' => $i), true),
-                        array('class' => 'btn btn-secondary mt-3', 'role' => 'button'));
+                        get_string('infobannerdismissresetbutton', 'theme_learnr', ['no' => $i], true),
+                        ['class' => 'btn btn-secondary mt-3', 'role' => 'button']);
             }
             $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO,
                     $yesnooption);
@@ -2116,19 +2220,18 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $tab->add($setting);
 
         // Setting: Position of the advertisement tiles on the frontpage.
-        $tilefrontpagepositionoptions = array(
+        $tilefrontpagepositionoptions = [
                 THEME_LEARNR_SETTING_ADVERTISEMENTTILES_FRONTPAGEPOSITION_BEFORE =>
                         get_string('tilefrontpagepositionsetting_before', 'theme_learnr'),
                 THEME_LEARNR_SETTING_ADVERTISEMENTTILES_FRONTPAGEPOSITION_AFTER =>
-                        get_string('tilefrontpagepositionsetting_after', 'theme_learnr'));
+                        get_string('tilefrontpagepositionsetting_after', 'theme_learnr'), ];
         $name = 'theme_learnr/tilefrontpageposition';
         $title = get_string('tilefrontpagepositionsetting', 'theme_learnr', null, true);
-        $url = new moodle_url('/admin/settings.php', array('section' => 'frontpagesettings'));
-        $description = get_string('tilefrontpagepositionsetting_desc', 'theme_learnr', array('url' => $url), true);
+        $url = new moodle_url('/admin/settings.php', ['section' => 'frontpagesettings']);
+        $description = get_string('tilefrontpagepositionsetting_desc', 'theme_learnr', ['url' => $url], true);
         $setting = new admin_setting_configselect($name, $title, $description,
                 THEME_LEARNR_SETTING_ADVERTISEMENTTILES_FRONTPAGEPOSITION_BEFORE, $tilefrontpagepositionoptions);
         $tab->add($setting);
-
 
         //Begin DBN Update.
         // Setting: Show Advert Tiles on pages.
@@ -2148,7 +2251,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         // End DBN Update.
 
         // Setting: Number of advertisement tile columns per row.
-        $tilecolumnsoptions = array();
+        $tilecolumnsoptions = [];
         for ($i = 1; $i <= THEME_LEARNR_SETTING_ADVERTISEMENTTILES_COLUMN_COUNT; $i++) {
             $tilecolumnsoptions[$i] = $i;
         }
@@ -2162,17 +2265,17 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $name = 'theme_learnr/tileheight';
         $title = get_string('tileheightsetting', 'theme_learnr', null, true);
         $description = get_string('tileheightsetting_desc', 'theme_learnr', null, true);
-        $tileheightoptions = array(
+        $tileheightoptions = [
                 THEME_LEARNR_SETTING_HEIGHT_100PX => THEME_LEARNR_SETTING_HEIGHT_100PX,
                 THEME_LEARNR_SETTING_HEIGHT_150PX => THEME_LEARNR_SETTING_HEIGHT_150PX,
                 THEME_LEARNR_SETTING_HEIGHT_200PX => THEME_LEARNR_SETTING_HEIGHT_200PX,
-                THEME_LEARNR_SETTING_HEIGHT_250PX => THEME_LEARNR_SETTING_HEIGHT_250PX);
+                THEME_LEARNR_SETTING_HEIGHT_250PX => THEME_LEARNR_SETTING_HEIGHT_250PX, ];
         $setting = new admin_setting_configselect($name, $title, $description,
                 THEME_LEARNR_SETTING_HEIGHT_150PX, $tileheightoptions);
         $tab->add($setting);
 
         // Prepare options for the order settings.
-        $tilesorders = array();
+        $tilesorders = [];
         for ($i = 1; $i <= THEME_LEARNR_SETTING_ADVERTISEMENTTILES_COUNT; $i++) {
             $tilesorders[$i] = $i;
         }
@@ -2182,22 +2285,22 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
 
             // Create advertisement tile heading.
             $name = 'theme_learnr/tile'.$i.'heading';
-            $title = get_string('tileheading', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('tileheading', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_heading($name, $title, null);
             $tab->add($setting);
 
             // Setting: Advertisement tile enabled.
             $name = 'theme_learnr/tile'.$i.'enabled';
-            $title = get_string('tileenabledsetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('tileenabledsetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('tileenabledsetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('tileenabledsetting_desc', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO,
                     $yesnooption);
             $tab->add($setting);
 
             // Setting: Advertisement tile title.
             $name = 'theme_learnr/tile'.$i.'title';
-            $title = get_string('tiletitlesetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('tiletitlesetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('tiletitlesetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('tiletitlesetting_desc', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_configtext($name, $title, $description, '');
             $tab->add($setting);
             $page->hide_if('theme_learnr/tile'.$i.'title', 'theme_learnr/tile'.$i.'enabled', 'neq',
@@ -2205,8 +2308,8 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
 
             // Setting: Advertisement tile content.
             $name = 'theme_learnr/tile'.$i.'content';
-            $title = get_string('tilecontentsetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('tilecontentsetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('tilecontentsetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('tilecontentsetting_desc', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_confightmleditor($name, $title, $description, '');
             $tab->add($setting);
             $page->hide_if('theme_learnr/tile'.$i.'content', 'theme_learnr/tile'.$i.'enabled', 'neq',
@@ -2214,10 +2317,10 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
 
             // Setting: Advertisement tile background image.
             $name = 'theme_learnr/tile'.$i.'backgroundimage';
-            $title = get_string('tilebackgroundimagesetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('tilebackgroundimagesetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('tilebackgroundimagesetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('tilebackgroundimagesetting_desc', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_configstoredfile($name, $title, $description, 'tilebackgroundimage'.$i, 0,
-                array('maxfiles' => 1, 'accepted_types' => 'web_image'));
+                ['maxfiles' => 1, 'accepted_types' => 'web_image']);
             $setting->set_updatedcallback('theme_reset_all_caches');
             $tab->add($setting);
             $page->hide_if('theme_learnr/tile'.$i.'backgroundimage', 'theme_learnr/tile'.$i.'enabled', 'neq',
@@ -2225,9 +2328,9 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
 
             // Setting: Course header image position.
             $name = 'theme_learnr/tile'.$i.'backgroundimageposition';
-            $title = get_string('tilebackgroundimagepositionsetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('tilebackgroundimagepositionsetting_desc', 'theme_learnr', array('no' => $i), true);
-            $tilebackgroundimagepositionoptions = array(
+            $title = get_string('tilebackgroundimagepositionsetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('tilebackgroundimagepositionsetting_desc', 'theme_learnr', ['no' => $i], true);
+            $tilebackgroundimagepositionoptions = [
                     THEME_LEARNR_SETTING_IMAGEPOSITION_CENTER_CENTER =>
                             THEME_LEARNR_SETTING_IMAGEPOSITION_CENTER_CENTER,
                     THEME_LEARNR_SETTING_IMAGEPOSITION_CENTER_TOP =>
@@ -2245,7 +2348,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
                     THEME_LEARNR_SETTING_IMAGEPOSITION_RIGHT_CENTER =>
                             THEME_LEARNR_SETTING_IMAGEPOSITION_RIGHT_CENTER,
                     THEME_LEARNR_SETTING_IMAGEPOSITION_RIGHT_BOTTOM =>
-                            THEME_LEARNR_SETTING_IMAGEPOSITION_RIGHT_BOTTOM);
+                            THEME_LEARNR_SETTING_IMAGEPOSITION_RIGHT_BOTTOM, ];
             $setting = new admin_setting_configselect($name, $title, $description,
                     THEME_LEARNR_SETTING_IMAGEPOSITION_CENTER_CENTER, $tilebackgroundimagepositionoptions);
             $tab->add($setting);
@@ -2254,8 +2357,8 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
 
             // Setting: Advertisement tile link URL.
             $name = 'theme_learnr/tile'.$i.'link';
-            $title = get_string('tilelinksetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('tilelinksetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('tilelinksetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('tilelinksetting_desc', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
             $tab->add($setting);
             $page->hide_if('theme_learnr/tile'.$i.'link', 'theme_learnr/tile'.$i.'enabled', 'neq',
@@ -2263,8 +2366,8 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
 
             // Setting: Advertisement tile link title.
             $name = 'theme_learnr/tile'.$i.'linktitle';
-            $title = get_string('tilelinktitlesetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('tilelinktitlesetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('tilelinktitlesetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('tilelinktitlesetting_desc', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_configtext($name, $title, $description, '');
             $tab->add($setting);
             $page->hide_if('theme_learnr/tile'.$i.'linktitle', 'theme_learnr/tile'.$i.'enabled', 'neq',
@@ -2272,13 +2375,13 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
 
             // Setting: Advertisement tile link target.
             $name = 'theme_learnr/tile'.$i.'linktarget';
-            $title = get_string('tilelinktargetsetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('tilelinktargetsetting_desc', 'theme_learnr', array('no' => $i), true);
-            $tilelinktargetnoptions = array(
+            $title = get_string('tilelinktargetsetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('tilelinktargetsetting_desc', 'theme_learnr', ['no' => $i], true);
+            $tilelinktargetnoptions = [
                     THEME_LEARNR_SETTING_LINKTARGET_SAMEWINDOW =>
                             get_string('tilelinktargetsetting_samewindow', 'theme_learnr'),
                     THEME_LEARNR_SETTING_LINKTARGET_NEWTAB =>
-                            get_string('tilelinktargetsetting_newtab', 'theme_learnr'));
+                            get_string('tilelinktargetsetting_newtab', 'theme_learnr'), ];
             $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_LINKTARGET_SAMEWINDOW,
                     $tilelinktargetnoptions);
             $tab->add($setting);
@@ -2287,8 +2390,8 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
 
             // Setting: Advertisement tile order position.
             $name = 'theme_learnr/tile'.$i.'order';
-            $title = get_string('tileordersetting', 'theme_learnr', array('no' => $i), true);
-            $description = get_string('tileordersetting_desc', 'theme_learnr', array('no' => $i), true);
+            $title = get_string('tileordersetting', 'theme_learnr', ['no' => $i], true);
+            $description = get_string('tileordersetting_desc', 'theme_learnr', ['no' => $i], true);
             $setting = new admin_setting_configselect($name, $title, $description, $i, $tilesorders);
             $tab->add($setting);
             $page->hide_if('theme_learnr/tile'.$i.'order', 'theme_learnr/tile'.$i.'enabled', 'neq',
@@ -2322,7 +2425,7 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $name = 'theme_learnr/showswitchedroleincourse';
         $title = get_string('showswitchedroleincoursesetting', 'theme_learnr', null, true);
         $description = get_string('showswitchedroleincoursesetting_desc', 'theme_learnr', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_YES, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO, $yesnooption);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
@@ -2330,21 +2433,21 @@ if ($hassiteconfig || has_capability('theme/learnr:configure', context_system::i
         $name = 'theme_learnr/showhintcoursehidden';
         $title = get_string('showhintcoursehiddensetting', 'theme_learnr', null, true);
         $description = get_string('showhintcoursehiddensetting_desc', 'theme_learnr', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_YES, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
         // Setting: Show hint guest for access.
         $name = 'theme_learnr/showhintcourseguestaccess';
         $title = get_string('showhintcoursguestaccesssetting', 'theme_learnr', null, true);
         $description = get_string('showhintcourseguestaccesssetting_desc', 'theme_learnr', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_YES, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
         // Setting: Show hint for self enrolment without enrolment key.
         $name = 'theme_learnr/showhintcourseselfenrol';
         $title = get_string('showhintcourseselfenrolsetting', 'theme_learnr', null, true);
         $description = get_string('showhintcourseselfenrolsetting_desc', 'theme_learnr', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_YES, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_LEARNR_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
         // Add tab to settings page.

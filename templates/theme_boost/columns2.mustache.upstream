@@ -15,9 +15,11 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_learnr/columns2
+    @template theme_boost/columns2
 
-    LearnR 2 column layout template.
+    Admin time setting template.
+
+    Boost 2 column layout template.
 
     Context variables required for this template:
     * sitename - The name of the site
@@ -46,16 +48,6 @@
         "hasregionmainsettingsmenu": false
     }
 }}
-{{!
-    This template is based on theme_boost/columns2
-
-    Modifications compared to this template:
-    * Include theme_learnr/footnote template
-    * Include theme_learnr/footer template instead of theme_boost/footer
-    * Include theme_learnr/navbar template instead of theme_boost/navbar
-    * Added the possibility to show course related hints.
-    * Added the possibility to show info banners.
-}}
 {{> theme_boost/head }}
 
 <body {{{ bodyattributes }}}>
@@ -65,11 +57,9 @@
 
     {{{ output.standard_top_of_body_html }}}
 
-    {{> theme_learnr/navbar }}
+    {{> theme_boost/navbar }}
 
     <div id="page" class="container-fluid d-print-block">
-        {{> theme_learnr/javascriptdisabledhint }}
-        {{> theme_learnr/infobanners }}
         {{{ output.full_header }}}
             {{#secondarymoremenu}}
                 <div class="secondary-navigation">
@@ -95,7 +85,6 @@
                     {{#overflow}}
                         {{> core/url_select}}
                     {{/overflow}}
-                    {{{courserelatedhints}}}
                     {{{ output.main_content }}}
                     {{{ output.activity_navigation }}}
                     {{{ output.course_content_footer }}}
@@ -111,8 +100,7 @@
         </div>
     </div>
     {{{ output.standard_after_main_region_html }}}
-    {{> theme_learnr/footer }}
-    {{> theme_learnr/footnote }}
+    {{> theme_boost/footer }}
 </div>
 
 </body>

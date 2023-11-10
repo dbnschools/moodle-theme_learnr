@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - advertisement tiles layout include.
+ * Theme Boost Union - advertisement tiles layout include.
  *
  * @package   theme_learnr
  * @copyright 2022 Nina Herrmann <nina.herrmann@gmx.de>
@@ -32,7 +32,7 @@ require_once($CFG->dirroot.'/theme/learnr/locallib.php');
 $config = get_config('theme_learnr');
 
 // Initialize advertisement tiles data for templatecontext.
-$advertisementtiles = array();
+$advertisementtiles = [];
 
 // Getting and setting the advertisement tiles position on the frontpage.
 switch ($config->{'tilefrontpageposition'}) {
@@ -74,7 +74,7 @@ for ($i = 1; $i <= THEME_LEARNR_SETTING_ADVERTISEMENTTILES_COUNT; $i++) {
         $title = format_string(trim($config->{'tile'.$i.'title'}));
 
         // Get and set the tile's content.
-        $formatoptions = array('noclean' => true);
+        $formatoptions = ['noclean' => true];
         $content = format_text($config->{'tile'.$i.'content'}, FORMAT_HTML, $formatoptions);
 
         // Get and set the tile's link.

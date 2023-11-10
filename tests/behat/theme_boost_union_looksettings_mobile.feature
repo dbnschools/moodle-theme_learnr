@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin for the "Mobile app" tab on the "Look" page
   In order to use the features
   As admin
-  I need to be able to configure the theme LearnR plugin
+  I need to be able to configure the theme Boost Union plugin
 
   Background:
     Given the following config values are set as admin:
@@ -11,7 +11,7 @@ Feature: Configuring the theme_learnr plugin for the "Mobile app" tab on the "Lo
 
   Scenario: Setting: Additional CSS for Mobile app - Insert CSS code and test that the mobilecssurl URL is set correctly.
     When I log in as "admin"
-    And I navigate to "Appearance > LearnR > Look" in site administration
+    And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Mobile app" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Additional CSS for Mobile app" to multiline:
     """
@@ -26,7 +26,7 @@ Feature: Configuring the theme_learnr plugin for the "Mobile app" tab on the "Lo
       | config       | value                      |
       | mobilecssurl | https://mymoodle/mycss.css |
     When I log in as "admin"
-    And I navigate to "Appearance > LearnR > Look" in site administration
+    And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Mobile app" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Additional CSS for Mobile app" to multiline:
     """
@@ -45,7 +45,7 @@ Feature: Configuring the theme_learnr plugin for the "Mobile app" tab on the "Lo
       | config     | value                       | plugin            |
       | mobilescss | a.test { font-size: 16px; } | theme_learnr |
     When I log in as "admin"
-    And I navigate to "Appearance > LearnR > Look" in site administration
+    And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Mobile app" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Additional CSS for Mobile app" to multiline:
     """

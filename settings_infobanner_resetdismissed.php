@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Reset dismissed info banner visibility.
+ * Theme Boost Union - Reset dismissed info banner visibility.
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -60,20 +60,20 @@ if ($confirm == true) {
 
     // Redirect with a nice message.
     $redirecturl = new moodle_url('/admin/settings.php',
-            array('section' => 'theme_learnr_content'),
+            ['section' => 'theme_learnr_content'],
             'theme_learnr_infobanners_infobanner');
     if ($resetresult == true) {
-        redirect($redirecturl, get_string('infobannerdismisssuccess', 'theme_learnr', array('no' => $no)), null,
+        redirect($redirecturl, get_string('infobannerdismisssuccess', 'theme_learnr', ['no' => $no]), null,
                 \core\output\notification::NOTIFY_SUCCESS);
     } else {
-        redirect($redirecturl, get_string('infobannerdismissfail', 'theme_learnr', array('no' => $no)), null,
+        redirect($redirecturl, get_string('infobannerdismissfail', 'theme_learnr', ['no' => $no]), null,
                 \core\output\notification::NOTIFY_ERROR);
     }
 
     // Otherwise.
 } else {
     // Set page URL.
-    $PAGE->set_url('/theme/learnr/settings_infobanner_resetdismissed.php', array('sesskey' => sesskey(), 'no' => $no));
+    $PAGE->set_url('/theme/learnr/settings_infobanner_resetdismissed.php', ['sesskey' => sesskey(), 'no' => $no]);
 
     // Set page layout.
     $PAGE->set_pagelayout('standard');
@@ -91,25 +91,25 @@ if ($confirm == true) {
     echo $OUTPUT->heading(get_string('infobannerdismissreset', 'theme_learnr'));
 
     // Show confirmation message.
-    echo get_string('infobannerdismissconfirm', 'theme_learnr', array('no' => $no));
+    echo get_string('infobannerdismissconfirm', 'theme_learnr', ['no' => $no]);
 
     // Start buttons.
-    echo html_writer::start_tag('div', array('class' => 'mt-2'));
+    echo html_writer::start_tag('div', ['class' => 'mt-2']);
 
     // Show confirm button.
     $confirmurl = new moodle_url('/theme/learnr/settings_infobanner_resetdismissed.php',
-            array('sesskey' => sesskey(), 'no' => $no, 'confirm' => 1));
+            ['sesskey' => sesskey(), 'no' => $no, 'confirm' => 1]);
     echo html_writer::link($confirmurl,
             get_string('confirm', 'core', null, true),
-            array('class' => 'btn btn-primary mr-3', 'role' => 'button'));
+            ['class' => 'btn btn-primary mr-3', 'role' => 'button']);
 
     // Show cancel button.
     $cancelurl = new moodle_url('/admin/settings.php',
-            array('section' => 'theme_learnr_content'),
+            ['section' => 'theme_learnr_content'],
             'theme_learnr_infobanners_infobanner');
     echo html_writer::link($cancelurl,
             get_string('cancel', 'core', null, true),
-            array('class' => 'btn btn-secondary', 'role' => 'button'));
+            ['class' => 'btn btn-secondary', 'role' => 'button']);
 
     // End buttons.
     echo html_writer::end_tag('div');

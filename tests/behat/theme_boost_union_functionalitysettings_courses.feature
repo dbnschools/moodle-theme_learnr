@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin for the "Courses" tab on the "Functionality" page
   In order to use the features
   As admin
-  I need to be able to configure the theme LearnR plugin
+  I need to be able to configure the theme Boost Union plugin
 
   Background:
     Given the following "users" exist:
@@ -159,7 +159,7 @@ Feature: Configuring the theme_learnr plugin for the "Courses" tab on the "Funct
     And ".course-hint-selfenrol" "css_element" should exist
     When I click on "Self enrolment (Student)" "link" in the ".course-hint-selfenrol" "css_element"
     And I set the following fields to these values:
-      | Allow new enrolments | 0 |
+      | Allow new self enrolments | 0 |
     And I press "Save changes"
     And I am on "Course 1" course homepage
     Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"

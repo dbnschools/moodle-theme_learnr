@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Flavours overview page
+ * Theme Boost Union - Flavours overview page
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -36,73 +36,77 @@ require_once($CFG->dirroot.'/theme/learnr/flavours/flavourslib.php');
 require_once($CFG->libdir.'/adminlib.php');
 
 // Get parameters.
-$action = optional_param('action', '', PARAM_TEXT);
-$flavourid = optional_param('id', '', PARAM_INT);
+$action = optional_param('action', null, PARAM_TEXT);
+$flavourid = optional_param('id', null, PARAM_INT);
 
 // Get system context.
 $context = context_system::instance();
+
+// Access checks.
+admin_externalpage_setup('theme_learnr_flavours');
 
 // Prepare the page (to make sure that all necessary information is already set even if we just handle the actions as a start).
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/theme/learnr/flavours/overview.php'));
 $PAGE->set_cacheable(false);
 
-// Process sort action.
-if ($action && $flavourid) {
+// Process actions.
+if ($action !== null && confirm_sesskey()) {
+    // Every action is based on a flavour, thus the flavour ID param has to exist.
+    $flavourid = required_param('id', PARAM_INT);
+
+    // The actions might be done with more than one DB statements which should have a monolithic effect, so we use a transaction.
+    $transaction = $DB->start_delegated_transaction();
+
     // Sort 'up' action.
-    if ($action == 'up') {
-        $currentflavour = $DB->get_record('theme_learnr_flavours', array('id' => $flavourid));
-        $prevflavour = $DB->get_record('theme_learnr_flavours', array('sort' => $currentflavour->sort - 1));
-        if ($prevflavour) {
-            // The sorting is done with two DB statements which should have a monolithic effect,
-            // so we use a transaction.
-            $transaction = $DB->start_delegated_transaction();
-            $DB->set_field('theme_learnr_flavours', 'sort', $prevflavour->sort,
-                    array('id' => $currentflavour->id));
-            $DB->set_field('theme_learnr_flavours', 'sort', $currentflavour->sort,
-                    array('id' => $prevflavour->id));
-            $transaction->allow_commit();
+    switch ($action) {
+        case 'up':
+            // Move the flavour upwards.
+            $currentflavour = $DB->get_record('theme_learnr_flavours', ['id' => $flavourid]);
+            $prevflavour = $DB->get_record('theme_learnr_flavours', ['sort' => $currentflavour->sort - 1]);
+            if ($prevflavour) {
+                $DB->set_field('theme_learnr_flavours', 'sort', $prevflavour->sort,
+                        ['id' => $currentflavour->id]);
+                $DB->set_field('theme_learnr_flavours', 'sort', $currentflavour->sort,
+                        ['id' => $prevflavour->id]);
 
-            // Purge the flavours cache as the users might get other flavours which apply after the sorting.
-            // We would have preferred using cache_helper::purge_by_definition, but this just purges the session cache
-            // of the current user and not for all users.
-            cache_helper::purge_by_event('theme_learnr_flavours_resorted');
-        }
+                // Purge the flavours cache as the users might get other flavours which apply after the sorting.
+                // We would have preferred using cache_helper::purge_by_definition, but this just purges the session cache
+                // of the current user and not for all users.
+                cache_helper::purge_by_event('theme_learnr_flavours_resorted');
+            }
+            break;
+        case 'down':
+            // Move the flavour downwards.
+            $currentflavour = $DB->get_record('theme_learnr_flavours', ['id' => $flavourid]);
+            $nextflavour = $DB->get_record('theme_learnr_flavours', ['sort' => $currentflavour->sort + 1]);
+            if ($nextflavour) {
+                $DB->set_field('theme_learnr_flavours', 'sort', $nextflavour->sort,
+                        ['id' => $currentflavour->id]);
+                $DB->set_field('theme_learnr_flavours', 'sort', $currentflavour->sort,
+                        ['id' => $nextflavour->id]);
 
-        // Sort 'down' action.
-    } else if ($action = "down") {
-        $currentflavour = $DB->get_record('theme_learnr_flavours', array('id' => $flavourid));
-        $nextflavour = $DB->get_record('theme_learnr_flavours', array('sort' => $currentflavour->sort + 1));
-        if ($nextflavour) {
-            // The sorting is done with two DB statements which should have a monolithic effect,
-            // so we use a transaction.
-            $transaction = $DB->start_delegated_transaction();
-            $DB->set_field('theme_learnr_flavours', 'sort', $nextflavour->sort,
-                    array('id' => $currentflavour->id));
-            $DB->set_field('theme_learnr_flavours', 'sort', $currentflavour->sort,
-                    array('id' => $nextflavour->id));
-            $transaction->allow_commit();
-
-            // Purge the flavours cache as the users might get other flavours which apply after the sorting.
-            // We would have preferred using cache_helper::purge_by_definition, but this just purges the session cache
-            // of the current user and not for all users.
-            cache_helper::purge_by_event('theme_learnr_flavours_resorted');
-        }
+                // Purge the flavours cache as the users might get other flavours which apply after the sorting.
+                // We would have preferred using cache_helper::purge_by_definition, but this just purges the session cache
+                // of the current user and not for all users.
+                cache_helper::purge_by_event('theme_learnr_flavours_resorted');
+            }
+            break;
     }
+
+    // Allow to update the changes to database.
+    $transaction->allow_commit();
 
     // Redirect to the same page.
     redirect($PAGE->url);
 }
-
-// Access checks.
-admin_externalpage_setup('theme_learnr_flavours');
 
 // Further prepare the page.
 $PAGE->set_title(theme_learnr_get_externaladminpage_title(get_string('flavoursflavours', 'theme_learnr')));
 $PAGE->set_heading(theme_learnr_get_externaladminpage_heading());
 
 // Build flavours table.
-$table = new \theme_learnr\flavours_overview_table();
+$table = new \theme_learnr\table\flavours_overview();
 $table->define_baseurl($PAGE->url);
 
 // Start page output.
@@ -115,7 +119,7 @@ echo get_string('flavoursoverview_desc', 'theme_learnr');
 // Prepare 'Create flavours' button.
 $createbutton = $OUTPUT->box_start();
 $createbutton .= $OUTPUT->single_button(
-        new \moodle_url('/theme/learnr/flavours/edit.php', ['action' => 'create']),
+        new \moodle_url('/theme/learnr/flavours/edit.php', ['action' => 'create', 'sesskey' => sesskey()]),
         get_string('flavourscreateflavour', 'theme_learnr'), 'get');
 $createbutton .= $OUTPUT->box_end();
 

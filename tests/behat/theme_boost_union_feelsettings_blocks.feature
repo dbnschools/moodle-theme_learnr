@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin for the "Blocks" tab on the "Feel" page
   In order to use the features
   As admin
-  I need to be able to configure the theme LearnR plugin
+  I need to be able to configure the theme Boost Union plugin
 
   Background:
     Given the following "users" exist:
@@ -445,6 +445,23 @@ Feature: Configuring the theme_learnr plugin for the "Blocks" tab on the "Feel" 
       | outside-bottom | blockregionoutsidebottomwidth | coursecontentwidth |
       | outside-bottom | blockregionoutsidebottomwidth | herowidth          |
 
+  Scenario Outline: Setting: Block region width for 'Footer' regions
+    Given the following config values are set as admin:
+      | config                | value          | plugin            |
+      | blockregionsforcourse | footer-left    | theme_learnr |
+      | <config>              | <settingvalue> | theme_learnr |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I turn editing mode on
+    And I should see "Add a block" in the "#theme-block-region-footer-left" "css_element"
+    Then the "class" attribute of "#theme-block-region-footer" "css_element" should contain "theme-block-region-footer-<settingvalue>"
+
+    Examples:
+      | config                        | settingvalue       |
+      | blockregionfooterwidth        | fullwidth          |
+      | blockregionfooterwidth        | coursecontentwidth |
+      | blockregionfooterwidth        | herowidth          |
+
   Scenario Outline: Setting: Outside regions horizontal placement
     Given the following config values are set as admin:
       | config                  | value          | plugin            |
@@ -487,3 +504,71 @@ Feature: Configuring the theme_learnr plugin for the "Blocks" tab on the "Feel" 
     And "#page-content" "css_element" should appear before "#theme-block-region-content-lower" "css_element"
     And "#theme-block-region-footer-left" "css_element" should appear before "#theme-block-region-footer-center" "css_element"
     And "#theme-block-region-footer-center" "css_element" should appear before "#theme-block-region-footer-right" "css_element"
+
+  Scenario Outline: Setting: Show right-hand block drawer of site home on first login
+    Given the following config values are set as admin:
+      | config                                       | value     | plugin            |
+      | showsitehomerighthandblockdraweronfirstlogin | <setting> | theme_learnr |
+    And I log in as "admin"
+    And I am on site homepage
+    And I turn editing mode on
+    And I add the "Text" block
+    And I configure the "(new text block)" block
+    And I set the following fields to these values:
+      | Text block title | Text on all pages            |
+      | Content          | This is visible on all pages |
+    And I press "Save changes"
+    And I log out
+    When I log in as "student1"
+    And I am on site homepage
+    Then the "class" attribute of ".drawer-right" "css_element" <shouldcontain> "show"
+
+    Examples:
+      | setting | shouldcontain      |
+      | yes     | should contain     |
+      | no      | should not contain |
+
+  Scenario Outline: Setting: Show right-hand block drawer of site home on visit
+    Given the following config values are set as admin:
+      | config                                  | value     | plugin            |
+      | showsitehomerighthandblockdraweronvisit | <setting> | theme_learnr |
+    And I log in as "admin"
+    And I am on site homepage
+    And I turn editing mode on
+    And I add the "Text" block
+    And I configure the "(new text block)" block
+    And I set the following fields to these values:
+      | Text block title | Text on all pages            |
+      | Content          | This is visible on all pages |
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    Then the "class" attribute of ".drawer-right" "css_element" <shouldcontain> "show"
+
+    Examples:
+      | setting | shouldcontain      |
+      | yes     | should contain     |
+      | no      | should not contain |
+
+  Scenario Outline: Setting: Show right-hand block drawer of site home on guest login
+    Given the following config values are set as admin:
+      | config                                       | value     | plugin            |
+      | showsitehomerighthandblockdraweronguestlogin | <setting> | theme_learnr |
+    And I log in as "admin"
+    And I am on site homepage
+    And I turn editing mode on
+    And I add the "Text" block
+    And I configure the "(new text block)" block
+    And I set the following fields to these values:
+      | Text block title | Text on all pages            |
+      | Content          | This is visible on all pages |
+    And I press "Save changes"
+    And I log out
+    When I log in as "guest"
+    And I am on site homepage
+    Then the "class" attribute of ".drawer-right" "css_element" <shouldcontain> "show"
+
+    Examples:
+      | setting | shouldcontain      |
+      | yes     | should contain     |
+      | no      | should not contain |

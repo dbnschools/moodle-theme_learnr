@@ -17,7 +17,7 @@
 {{!
     @template theme_learnr/course-hint-hidden
 
-    LearnR template for outputting the hidden course hint.
+    Boost Union template for outputting the hidden course hint.
 
     Context variables required for this template:
     * courseid - The course ID
@@ -35,7 +35,7 @@
         <div class="media-body align-self-center">
             {{#str}} showhintcoursehiddengeneral, theme_learnr {{/str}}
             {{#showcoursesettingslink}}
-                <br />{{#str}} showhintcoursehiddensettingslink, theme_learnr, { "url": "{{config.wwwroot}}/course/edit.php?id={{courseid}}" } {{/str}}
+                <br>{{#str}} showhintcoursehiddensettingslink, theme_learnr, { "url": "{{config.wwwroot}}/course/edit.php?id={{courseid}}" } {{/str}}
             {{/showcoursesettingslink}}
         </div>
     </div>

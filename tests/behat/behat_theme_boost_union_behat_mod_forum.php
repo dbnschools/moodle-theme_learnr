@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Behat mod_forum-related step definition overrides for the LearnR theme.
+ * Behat mod_forum-related step definition overrides for the Boost Union theme.
  *
  * @package    theme_learnr
  * @category   test
@@ -24,11 +24,14 @@
  */
 
 // NOTE: no MOODLE_INTERNAL test here, this file may be required by behat before including /config.php.
+// For that reason, we can't even rely on $CFG->admin being available here.
 
 require_once(__DIR__ . '/../../../../mod/forum/tests/behat/behat_mod_forum.php');
 
+use Behat\Gherkin\Node\TableNode as TableNode;
+
 /**
- * Forum-related step definition overrides for the LearnR theme.
+ * Forum-related step definition overrides for the Boost Union theme.
  *
  * @package    theme_learnr
  * @category   test

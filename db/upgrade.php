@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Upgrade script.
+ * Theme Boost Union - Upgrade script.
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -72,7 +72,7 @@ function xmldb_theme_learnr_upgrade($oldversion) {
         // Start composing the notification to inform the admin.
         $message = html_writer::tag('p', get_string('upgradenotice_2022080922', 'theme_learnr'));
 
-        // Handle the logo and compact logo (which have got now new settings in LearnR).
+        // Handle the logo and compact logo (which have got now new settings in Boost Union).
         foreach (['logo', 'logocompact'] as $setting) {
             // Initialize the logo copying status.
             $logocopied = false;
@@ -95,12 +95,12 @@ function xmldb_theme_learnr_upgrade($oldversion) {
                     $file = reset($files);
 
                     // Create the filerecord with the modified information.
-                    $filerecord = array(
+                    $filerecord = [
                             'component' => 'theme_learnr',
                             'filearea' => $setting,
-                    );
+                    ];
 
-                    // Copy the logo file to LearnR.
+                    // Copy the logo file to Boost Union.
                     $newfile = $fs->create_file_from_storedfile($filerecord, $file);
 
                     // Set the theme config to the file name.
@@ -134,6 +134,132 @@ function xmldb_theme_learnr_upgrade($oldversion) {
 
         // Boost_union savepoint reached.
         upgrade_plugin_savepoint(true, 2022080922, 'theme', 'learnr');
+    }
+
+    if ($oldversion < 2023010517) {
+
+        // Define table theme_learnr_menus to be created.
+        $table = new xmldb_table('theme_learnr_menus');
+
+        // Adding fields to table theme_learnr_menus.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '18', XMLDB_UNSIGNED, XMLDB_NOTNULL, XMLDB_SEQUENCE);
+        $table->add_field('title', XMLDB_TYPE_CHAR, '255', null, null);
+        $table->add_field('description', XMLDB_TYPE_TEXT, null, null, null, null, null, 'title');
+        $table->add_field('description_format', XMLDB_TYPE_INTEGER, 9, null, null, null, null, 'description');
+        $table->add_field('showdesc', XMLDB_TYPE_INTEGER, '9', null, null, null, null, 'description_format');
+        $table->add_field('sortorder', XMLDB_TYPE_INTEGER, '18', XMLDB_UNSIGNED, null, null, null, 'showdesc');
+        $table->add_field('location', XMLDB_TYPE_CHAR, '50', null, XMLDB_NOTNULL, null, null, 'sortorder');
+        $table->add_field('type', XMLDB_TYPE_INTEGER, '9', null, XMLDB_NOTNULL, null, '1', 'location');
+        $table->add_field('mode', XMLDB_TYPE_INTEGER, '9', null, null, null, '1', 'type');
+        $table->add_field('cssclass', XMLDB_TYPE_CHAR, '50', null, null, null, null, 'mode');
+        $table->add_field('moremenubehavior', XMLDB_TYPE_INTEGER, '9', XMLDB_UNSIGNED, null, null, null, 'cssclass');
+        $table->add_field('cardsize', XMLDB_TYPE_INTEGER, '9', XMLDB_UNSIGNED, null, null, null, 'moremenubehavior');
+        $table->add_field('cardform', XMLDB_TYPE_INTEGER, '9', XMLDB_UNSIGNED, null, null, null, 'cardsize');
+        $table->add_field('overflowbehavior', XMLDB_TYPE_INTEGER, '9', XMLDB_UNSIGNED, null, null, null, 'cardform');
+        $table->add_field('roles', XMLDB_TYPE_TEXT, null, null, null, null, null, 'overflowbehavior');
+        $table->add_field('rolecontext', XMLDB_TYPE_INTEGER, '9', null, null, null, null, 'roles');
+        $table->add_field('cohorts', XMLDB_TYPE_TEXT, null, null, null, null, null, 'rolecontext');
+        $table->add_field('operator', XMLDB_TYPE_INTEGER, '9', null, null, null, null, 'cohorts');
+        $table->add_field('languages', XMLDB_TYPE_TEXT, null, null, null, null, null, 'operator');
+        $table->add_field('start_date', XMLDB_TYPE_INTEGER, '18', null, null, null, null, 'languages');
+        $table->add_field('end_date', XMLDB_TYPE_INTEGER, '18', null, null, null, null, 'start_date');
+        $table->add_field('visible', XMLDB_TYPE_INTEGER, '9', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '1', 'end_date');
+
+        // Adding keys to table theme_learnr_menus.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+
+        // Conditionally launch create table for theme_learnr_menus.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Define table theme_learnr_menuitems to be created.
+        $table = new xmldb_table('theme_learnr_menuitems');
+
+        // Adding fields to table theme_learnr_menuitems.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '18', XMLDB_UNSIGNED, XMLDB_NOTNULL, XMLDB_SEQUENCE);
+        $table->add_field('title', XMLDB_TYPE_CHAR, '255', null, null);
+        $table->add_field('menu', XMLDB_TYPE_INTEGER, '18', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, null, 'title');
+        $table->add_field('type', XMLDB_TYPE_INTEGER, '9', XMLDB_UNSIGNED, null, null, '1', 'menu');
+        $table->add_field('sortorder', XMLDB_TYPE_INTEGER, '18', XMLDB_UNSIGNED, null, null, null, 'type');
+        $table->add_field('url', XMLDB_TYPE_TEXT, null, null, null, null, null, 'sortorder');
+        $table->add_field('category', XMLDB_TYPE_TEXT, null, null, null, null, null, 'url');
+        $table->add_field('enrolmentrole', XMLDB_TYPE_TEXT, null, null, null, null, null, 'category');
+        $table->add_field('completionstatus', XMLDB_TYPE_CHAR, '20', null, null, null, null, 'enrolmentrole');
+        $table->add_field('daterange', XMLDB_TYPE_CHAR, '20', null, null, null, null, 'completionstatus');
+        $table->add_field('customfields', XMLDB_TYPE_TEXT, null, null, null, null, null, 'daterange');
+        $table->add_field('displayfield', XMLDB_TYPE_INTEGER, '9', null, null, null, null, 'customfields');
+        $table->add_field('textcount', XMLDB_TYPE_INTEGER, '9', null, null, null, null, 'displayfield');
+        $table->add_field('mode', XMLDB_TYPE_INTEGER, '9', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, null, 'textcount');
+        $table->add_field('menuicon', XMLDB_TYPE_CHAR, '50', null, null, null, null, 'mode');
+        $table->add_field('display', XMLDB_TYPE_INTEGER, '9', XMLDB_UNSIGNED, null, null, null, 'menuicon');
+        $table->add_field('tooltip', XMLDB_TYPE_CHAR, '255', null, null);
+        $table->add_field('target', XMLDB_TYPE_INTEGER, '9', null, null, null, null, 'tooltip');
+        $table->add_field('cssclass', XMLDB_TYPE_CHAR, '50', null, null, null, null, 'target');
+        $table->add_field('textposition', XMLDB_TYPE_INTEGER, '9', null, null, null, '0', 'cssclass');
+        $table->add_field('textcolor', XMLDB_TYPE_CHAR, '10', null, null, null, null, 'textposition');
+        $table->add_field('backgroundcolor', XMLDB_TYPE_CHAR, '10', null, null, null, null, 'textcolor');
+        $table->add_field('desktop', XMLDB_TYPE_INTEGER, '9', XMLDB_UNSIGNED, null, null, '1', 'backgroundcolor');
+        $table->add_field('tablet', XMLDB_TYPE_INTEGER, '9', XMLDB_UNSIGNED, null, null, '1', 'desktop');
+        $table->add_field('mobile', XMLDB_TYPE_INTEGER, '9', XMLDB_UNSIGNED, null, null, '1', 'tablet');
+        $table->add_field('roles', XMLDB_TYPE_TEXT, null, null, null, null, null, 'mobile');
+        $table->add_field('rolecontext', XMLDB_TYPE_INTEGER, '9', null, null, null, '1', 'roles');
+        $table->add_field('cohorts', XMLDB_TYPE_TEXT, null, null, null, null, null, 'rolecontext');
+        $table->add_field('operator', XMLDB_TYPE_INTEGER, '9', null, null, null, '1', 'cohorts');
+        $table->add_field('languages', XMLDB_TYPE_TEXT, null, null, null, null, null, 'operator');
+        $table->add_field('start_date', XMLDB_TYPE_INTEGER, '18', null, null, null, null, 'languages');
+        $table->add_field('end_date', XMLDB_TYPE_INTEGER, '18', null, null, null, null, 'start_date');
+        $table->add_field('visible', XMLDB_TYPE_INTEGER, '9', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '1', 'end_date');
+        $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '18', null, null, null, null, 'visible');
+
+        // Adding keys to table theme_learnr_menuitems.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+
+        // Conditionally launch create table for theme_learnr_menuitems.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2023010517, 'theme', 'learnr');
+    }
+
+    if ($oldversion < 2023010519) {
+
+        // Define table theme_learnr_menus to be altered.
+        $table = new xmldb_table('theme_learnr_menus');
+
+        // Define field overflowbehavior to be altered.
+        $field = new xmldb_field('overflowbehavior', XMLDB_TYPE_INTEGER, '9', null, null, null, null, 'cardform');
+
+        // Launch rename field to cardoverflowbehavior.
+        $dbman->rename_field($table, $field, 'cardoverflowbehavior');
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2023010519, 'theme', 'learnr');
+    }
+
+    if ($oldversion < 2023010521) {
+
+        // Remove the THEME_LEARNR_SETTING_COURSEBREADCRUMBS_DONTCHANGE option from the categorybreadcrumbs setting
+        // and replace it with THEME_LEARNR_SETTING_SELECT_NO if necessary.
+        $oldconfig = get_config('theme_learnr', 'categorybreadcrumbs');
+        if ($oldconfig == 'dontchange') {
+            set_config('categorybreadcrumbs', THEME_LEARNR_SETTING_SELECT_NO, 'theme_learnr');
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2023010521, 'theme', 'learnr');
+    }
+
+    if ($oldversion < 2023090100) {
+        // Remove the files from the FontAwesome filearea of Boost Union as this setting was removed.
+        $systemcontext = context_system::instance();
+        $fs = get_file_storage();
+        $fs->delete_area_files($systemcontext->id, 'theme_learnr', 'fontawesome');
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2023090100, 'theme', 'learnr');
     }
 
     return true;

@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - JS code back to top button
+ * Theme Boost Union - JS code back to top button
  *
  * @module     theme_learnr/backtotopbutton
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -46,10 +46,8 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, Notificatio
 
             // This function fades the button in when the page is scrolled down or fades it out
             // if the user is at the top of the page again.
-            // Please note that Boost in Moodle 4.0 does not scroll the window object / whole body tag anymore,
-            // it scrolls the #page element instead.
-            $('#page').on('scroll', function() {
-                if ($('#page').scrollTop() > 220) {
+            $(window).on('scroll', function() {
+                if ($(window).scrollTop() > 220) {
                     checkAndShow();
                 } else {
                     checkAndHide();
@@ -59,9 +57,17 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, Notificatio
             // This function scrolls the page to top with a duration of 500ms.
             $('#back-to-top').on('click', function(event) {
                 event.preventDefault();
-                $('#page').animate({scrollTop: 0}, 500);
+                $('html, body').animate({scrollTop: 0}, 500);
                 $('#back-to-top').blur();
             });
+
+            // This will check if there is a communication button shown on the page already.
+            // If yes, it will add a class to the body tag which will be later used to align the back-to-top button
+            // with the communications button.
+            // This is necessary as the communications button would otherwise be overlaid by the back-to-top button.
+            if ($('#page-footer .btn-footer-communication').length) {
+                $('body').addClass('theme-boost-union-commincourse');
+            }
 
             return true;
         }).fail(Notification.exception);

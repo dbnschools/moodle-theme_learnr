@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Core renderer
+ * Theme Boost Union - Core renderer
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -31,6 +31,7 @@ use custom_menu;
 use stdClass;
 use context_course;
 //End DBN Update
+
 
 /**
  * Extending the core_renderer interface.
@@ -290,7 +291,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @param string|array $additionalclasses Any additional classes to give the body tag,
      * @return string
      */
-    public function body_attributes($additionalclasses = array()) {
+    public function body_attributes($additionalclasses = []) {
         global $CFG;
 
         // Require local libraries.
@@ -323,7 +324,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         // If there is a flavour applied to this page, add the flavour ID as additional body class.
-        // LearnR itself does not need this class for applying the flavour to the page (yet).
+        // Boost Union itself does not need this class for applying the flavour to the page (yet).
         // However, theme designers might want to use it.
         $flavour = theme_learnr_get_flavour_which_applies();
         if ($flavour != null) {
@@ -332,8 +333,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         return ' id="'. $this->body_id().'" class="'.$this->body_css_classes($additionalclasses).'"';
     }
-
-
 
     //Begin DBN Update
     public function headerbuttons() {
@@ -399,7 +398,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
     }
     //End DBN Update
-
 
     /**
      * Wrapper for header elements.
@@ -515,6 +513,18 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     /**
+     * Renders the "breadcrumb" for all pages in boost union.
+     *
+     * This renderer function is copied and modified from /theme/boost/classes/output/core_renderer.php
+     *
+     * @return string the HTML for the navbar.
+     */
+    public function navbar(): string {
+        $newnav = new \theme_learnr\boostnavbar($this->page);
+        return $this->render_from_template('core/navbar', $newnav);
+    }
+
+    /**
      * Prints a nice side block with an optional header.
      *
      * This renderer function is copied and modified from /lib/outputrenderers.php
@@ -566,6 +576,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         return $this->render_from_template('core/block', $context);
     }
+
     //Begin DBN Update Functions
     public function enrolform() {
         $enrolform = '';
@@ -1056,8 +1067,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ),
                 // Course Completion Settings.
                 array(
-                    'hasprogresslinks' => get_string_manager()->string_exists('editcoursecompletionsettings', 'completion') ? true : false,
-                    'title' => get_string('editcoursecompletionsettings', 'completion'),
+                    'hasprogresslinks' => get_string_manager()->string_exists('coursecompletionsettings', 'completion') ? true : false,
+                    'title' => get_string('coursecompletionsettings', 'completion'),
                     'url' => new moodle_url('/course/completion.php', array(
                         'id' => $PAGE->course->id
                     ))
@@ -1134,5 +1145,4 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return $this->render_from_template('theme_learnr/coursemanagement', $dashlinks);
     }
 //End DBN Update
-
 }

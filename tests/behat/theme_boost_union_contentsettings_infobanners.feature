@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin for the "Information banners" tab on the "Content" page
   In order to use the features
   As admin
-  I need to be able to configure the theme LearnR plugin
+  I need to be able to configure the theme Boost Union plugin
 
   Background:
     Given the following "users" exist:
@@ -199,7 +199,7 @@ Feature: Configuring the theme_learnr plugin for the "Information banners" tab o
     And the following config values are set as admin:
       | debug          | 0 |
       | debugdisplay   | 0 |
-    And I navigate to "Appearance > LearnR > Content" in site administration
+    And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Info banner" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I click on "Reset visibility of info banner 1" "link"
     And I click on "Confirm" "link"

@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin for the "Advertisement tiles" tab on the "Content" page
   In order to use the features
   As admin
-  I need to be able to configure the theme LearnR plugin
+  I need to be able to configure the theme Boost Union plugin
 
   Background:
     Given the following "users" exist:
@@ -190,7 +190,7 @@ Feature: Configuring the theme_learnr plugin for the "Advertisement tiles" tab o
     And the following config values are set as admin:
       | debug          | 0 |
       | debugdisplay   | 0 |
-    And I navigate to "Appearance > LearnR > Content" in site administration
+    And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Advertisement tiles" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/login_bg1.jpg" file to "Advertisement tile 1 background image" filemanager
     And I press "Save changes"
@@ -233,7 +233,7 @@ Feature: Configuring the theme_learnr plugin for the "Advertisement tiles" tab o
     And the following config values are set as admin:
       | debug          | 0 |
       | debugdisplay   | 0 |
-    And I navigate to "Appearance > LearnR > Content" in site administration
+    And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Advertisement tiles" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/login_bg1.jpg" file to "Advertisement tile 1 background image" filemanager
     And I press "Save changes"
@@ -267,7 +267,7 @@ Feature: Configuring the theme_learnr plugin for the "Advertisement tiles" tab o
     And the following config values are set as admin:
       | debug          | 0 |
       | debugdisplay   | 0 |
-    And I navigate to "Appearance > LearnR > Content" in site administration
+    And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Advertisement tiles" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then "#admin-tile1title" "css_element" should be visible
     Then "#admin-tile3title" "css_element" should not be visible

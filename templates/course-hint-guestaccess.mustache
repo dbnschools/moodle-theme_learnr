@@ -17,7 +17,7 @@
 {{!
     @template theme_learnr/course-hint-guestaccess
 
-    LearnR template for outputting the guestaccess course hint.
+    Boost Union template for outputting the guestaccess course hint.
 
     Context variables required for this template:
     * courseid - The course ID
@@ -37,7 +37,7 @@
         <div class="media-body align-self-center">
             {{#str}} showhintcourseguestaccessgeneral, theme_learnr, { "role": "{{role}}" } {{/str}}
             {{#showselfenrollink}}
-                <br />{{#str}} showhintcourseguestaccesslink, theme_learnr, { "url": "{{config.wwwroot}}/enrol/index.php?id={{courseid}}" } {{/str}}
+                <br>{{#str}} showhintcourseguestaccesslink, theme_learnr, { "url": "{{config.wwwroot}}/enrol/index.php?id={{courseid}}" } {{/str}}
             {{/showselfenrollink}}
         </div>
     </div>

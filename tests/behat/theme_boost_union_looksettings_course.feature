@@ -2,7 +2,7 @@
 Feature: Configuring the theme_learnr plugin for the "Course" tab on the "Look" page
   In order to use the features
   As admin
-  I need to be able to configure the theme LearnR plugin
+  I need to be able to configure the theme Boost Union plugin
 
   Background:
     Given the following "users" exist:
@@ -87,7 +87,7 @@ Feature: Configuring the theme_learnr plugin for the "Course" tab on the "Look" 
       | config                   | value | plugin            |
       | courseheaderimageenabled | yes   | theme_learnr |
     When I log in as "admin"
-    And I navigate to "Appearance > LearnR > Look" in site administration
+    And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Course" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/login_bg2.jpg" file to "Fallback course header image" filemanager
     And I press "Save changes"
@@ -111,7 +111,7 @@ Feature: Configuring the theme_learnr plugin for the "Course" tab on the "Look" 
       | config                   | value | plugin            |
       | courseheaderimageenabled | yes   | theme_learnr |
     When I log in as "admin"
-    And I navigate to "Appearance > LearnR > Look" in site administration
+    And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Course" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/learnr/tests/fixtures/login_bg2.jpg" file to "Fallback course header image" filemanager
     And I press "Save changes"

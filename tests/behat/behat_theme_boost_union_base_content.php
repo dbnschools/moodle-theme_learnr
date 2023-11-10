@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme LearnR - Custom Behat rules
+ * Theme Boost Union - Custom Behat rules for the 'Content' settings
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -25,31 +25,29 @@
 require_once(__DIR__.'/../../../../lib/behat/behat_base.php');
 
 /**
- * Class behat_theme_learnr
+ * Class behat_theme_learnr_base_content
  *
  * @package    theme_learnr
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class behat_theme_learnr extends behat_base {
+class behat_theme_learnr_base_content extends behat_base {
     /**
-     * Scroll the page.
+     * Open the aboutus page.
      *
-     * @copyright 2016 Shweta Sharma on https://stackoverflow.com/a/39613869.
-     * @Then /^I scroll page to x "(?P<posx_number>\d+)" y "(?P<posy_number>\d+)"$/
-     *
-     * @param string $posx The x coordinate to scroll to.
-     * @param string $posy The y coordinate to scroll to.
-     *
-     * @return void
-     * @throws Exception
+     * @Given /^I am on aboutus page$/
      */
-    public function i_scroll_page_to_x_y_coordinates_of_page($posx, $posy) {
-        try {
-            $this->getSession()->executeScript("(function(){document.getElementById('page').scrollTo($posx, $posy);})();");
-        } catch (Exception $e) {
-            throw new \Exception("Scrolling the page to given coordinates failed");
-        }
+    public function i_am_on_aboutus_page() {
+        $this->execute('behat_general::i_visit', ['/theme/learnr/pages/aboutus.php']);
+    }
+
+    /**
+     * Open the offers page.
+     *
+     * @Given /^I am on offers page$/
+     */
+    public function i_am_on_offers_page() {
+        $this->execute('behat_general::i_visit', ['/theme/learnr/pages/offers.php']);
     }
 
     /**
@@ -86,5 +84,32 @@ class behat_theme_learnr extends behat_base {
      */
     public function i_am_on_maintenance_page() {
         $this->execute('behat_general::i_visit', ['/theme/learnr/pages/maintenance.php']);
+    }
+
+    /**
+     * Open the page1 page.
+     *
+     * @Given /^I am on page1 page$/
+     */
+    public function i_am_on_page1_page() {
+        $this->execute('behat_general::i_visit', ['/theme/learnr/pages/page1.php']);
+    }
+
+    /**
+     * Open the page2 page.
+     *
+     * @Given /^I am on page2 page$/
+     */
+    public function i_am_on_page2_page() {
+        $this->execute('behat_general::i_visit', ['/theme/learnr/pages/page2.php']);
+    }
+
+    /**
+     * Open the page3 page.
+     *
+     * @Given /^I am on page3 page$/
+     */
+    public function i_am_on_page3_page() {
+        $this->execute('behat_general::i_visit', ['/theme/learnr/pages/page3.php']);
     }
 }
