@@ -27,7 +27,7 @@
         "navbar": "navbar_if_available",
         "courseheader": "course_header_html",
         "welcomemessage": "welcomemessage",
-        "courseheaderimageurl": "http://localhost/boostunionmoodle/pluginfile.php/14/course/overviewfiles/ex.png"
+        "courseheaderimageurl": "http://localhost/learnrmoodle/pluginfile.php/14/course/overviewfiles/ex.png"
     }
 }}
 {{!
@@ -63,7 +63,7 @@
             </div>
         </div>
         {{#welcomemessage}}
-            <div class="d-flex ">
+            <div class="d-flex">
                 {{> core/welcome }}
                 <div class="header-actions-container ml-auto" data-region="header-actions-container">
                     {{#headeractions}}
@@ -74,7 +74,7 @@
         {{/welcomemessage}}
         {{^welcomemessage}}
             {{^courseheaderimageurl}}
-                <div class="d-flex ">
+                <div class="d-flex">
                     {{#contextheader}}
                         <div class="mr-auto">
                             {{{contextheader}}}
@@ -89,7 +89,7 @@
             {{/courseheaderimageurl}}
             {{#courseheaderimageurl}}
                 {{#courseheaderimagelayoutheadingabove}}
-                    <div class="d-flex ">
+                    <div class="d-flex">
                         {{#contextheader}}
                             <div class="mr-auto">
                                 {{{contextheader}}}
@@ -112,7 +112,7 @@
                             style="background-image: url('{{{courseheaderimageurl}}}');
                                     {{#courseheaderimageheight}}min-height: {{{.}}};{{/courseheaderimageheight}}
                                     {{#courseheaderimageposition}}background-position: {{{.}}};{{/courseheaderimageposition}}">
-                        <div class="d-flex ">
+                        <div class="d-flex">
                             {{#contextheader}}
                                 <div class="mr-auto">
                                     {{{contextheader}}}
@@ -129,7 +129,7 @@
             {{/courseheaderimageurl}}
         {{/welcomemessage}}
     </div>
-
+    
     {{! Begin DBN Update }}
     {{{ courseprogressbar }}}
     {{{ enrolform }}}

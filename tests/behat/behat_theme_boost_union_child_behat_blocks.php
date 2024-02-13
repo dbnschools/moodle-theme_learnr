@@ -15,31 +15,28 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union Child - Privacy provider
+ * Behat blocks-related step definition overrides for the Boost Union Child theme.
  *
  * @package    theme_learnr
- * @copyright  2023 Daniel Poggenpohl <daniel.poggenpohl@fernuni-hagen.de> and Alexander Bias <bias@alexanderbias.de>
+ * @category   test
+ * @copyright  2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_learnr\privacy;
+// NOTE: no MOODLE_INTERNAL test here, this file may be required by behat before including /config.php.
+// For that reason, we can't even rely on $CFG->admin being available here.
+
+require_once(__DIR__ . '/../../../boost_union/tests/behat/behat_theme_boost_union_behat_blocks.php');
+
+use Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException;
 
 /**
- * Privacy Subsystem implementing null_provider.
+ * Blocks-related step definition overrides for the Boost Union Child theme.
  *
  * @package    theme_learnr
- * @copyright  2023 Daniel Poggenpohl <daniel.poggenpohl@fernuni-hagen.de> and Alexander Bias <bias@alexanderbias.de>
+ * @category   test
+ * @copyright  2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class provider implements \core_privacy\local\metadata\null_provider {
-
-    /**
-     * Get the language string identifier with the component's language
-     * file to explain why this plugin stores no data.
-     *
-     * @return string
-     */
-    public static function get_reason() : string {
-        return 'privacy:metadata';
-    }
+class behat_theme_learnr_behat_blocks extends behat_theme_boost_union_behat_blocks {
 }

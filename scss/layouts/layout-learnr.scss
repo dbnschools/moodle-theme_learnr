@@ -1,0 +1,278 @@
+/* This file is empty by purpose.
+You can add your SCSS code here. It will be added on top of Boost Union's SCSS code. */
+
+// Navbar customizations
+.navbar.fixed-top {
+    box-shadow: 0 0 15px 0 rgba(0,0,0,.3)!important;
+}
+.custom-control-input:checked~.custom-control-label::before {
+    background-color: $teal;
+}
+
+// Page elements.
+.drawer {
+    background-color: $drawer-bg;
+}
+.drawerheader {
+    background-color: darken($drawer-bg, 5%);
+    //box-shadow: 0 0 3px 0px rgb($black,30%);
+}
+.drawer-toggles .drawer-toggler .btn {
+    background-color: darken($drawer-bg, 5%);
+}
+.message-app {
+    background-color: $drawer-bg;
+}
+#region-main {
+    overflow-y: visible;
+    background-color: transparent;
+}
+#user-notifications {
+    margin: 0 15px;
+}
+.activity-navigation.container-fluid {
+    background-color: $gray-100;
+    padding: 1rem;
+    border-radius: $border-radius;
+}
+#page.drawers .main-inner {
+    background-color: transparent;
+    padding: 0;
+}
+.fp-coursemanagement {
+    background-color: $white;
+    padding: 1rem 0;
+    border: 1px solid $gray-300;
+    border-bottom: 0;
+}
+//Make everything the maxwidth as set by course-content-maxwidth
+@media (min-width: 576px) {
+    #learnrpage {
+     padding: .75rem;
+    }
+   #page.drawers .main-inner {
+        max-width: $course-content-maxwidth;
+        width: $course-content-maxwidth;
+    }
+}
+
+@media (max-width: 576px){
+    #learnrpage {
+        padding: .5rem;
+    }
+    .dashtitle {
+        margin-top: 1rem;
+    }
+}
+#courseheaderimage.p-3 {
+    padding: 0 !important;
+}
+#courseheaderimage {
+    background-size: cover;
+    border-radius: $border-radius;
+    margin-bottom: 0!important;
+    position: relative;
+}
+.secondary-navigation {
+    border-radius: 0 0 $border-radius $border-radius;
+    margin-bottom: 0;
+}
+.path-mod .activity-header:not(:empty) {
+    background-color: #fff;
+}
+
+ // Header content.
+ .secondary-navigation {
+    max-width: $course-content-maxwidth;
+    margin-left: auto;
+    margin-right: auto;
+}
+.format-site .secondary-navigation {
+    max-width: 100%;
+}
+.secondary-navigation .navigation, .moremenu .nav-tabs {
+    background-color: $white;
+}
+.secondary-navigation {
+    padding-bottom: 10px; 
+}
+
+.breadcrumb {
+    padding: 5px 7px;
+    background-color: #dae3eb;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.secondary-navigation nav.moremenu.navigation.observed {
+    //box-shadow: 0 0 1px 0px rgb($black,45%);
+}
+@media (min-width: 768px) {
+    .secondary-navigation .navigation {
+        padding: 0;
+        margin: 0 15px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .secondary-navigation {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+@media (max-width: 768px) {
+    .secondary-navigation .navigation {
+        margin: 0;
+        padding: 0;
+    }
+}
+header#page-header .progress {
+    background-color: #a1d5e1;
+}
+.header-action.ml-2 {
+    display: inline-flex;
+    background-color: #fff;
+}
+.courseheaderimage-dark {
+    text-shadow: none!important; 
+}
+/*.iconsidebar .list-group-item, .list-group-item:last-child {
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid $gray-300;
+}
+*/
+#blockslider a.list-group-item {
+    background-color: rgba($primary, 15%);
+    color: $gray-900;
+}
+
+
+.easyenrolform .btn .btn-secondary, .easyenrolform .qr-button, .easyenrolform .btn, .easyenrolform #enrolform_course_code {
+    border-radius: $border-radius !important;
+}
+.iconset {
+    background-color: $gray-100;
+    padding: 1rem;
+}
+.progress.courseview {
+    height: 1.5rem;
+    border-radius: 0; 
+}
+.easyenrolform {
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
+.breadcrumb a {
+    color: $black;
+}
+.fp-coursemanagement {
+    background-color: $white;
+    padding: 1rem 0;
+    border: 1px solid $gray-300;
+    border-bottom: 0;
+}
+div#learnrpage {
+    background-color: $white;
+    padding-top: 1rem;
+    border: 1px solid $gray-300;
+}
+   // Fix for full width issues on activity pages to keep course navigation to fill the navigation area.
+   @if $course-content-maxwidth !== 100% {
+       .header-maxwidth {
+           max-width: 100%;
+       }
+       .pagelayout-report .secondary-navigation, .pagelayout-course .secondary-navigation, .pagelayout-incourse .secondary-navigation, .pagelayout-admin .secondary-navigation, .pagelayout-base .secondary-navigation, .secondary-navigation .navigation .nav-tabs {
+           max-width: 100%;
+       }
+   }
+   
+   // Background for header text
+   .courseheaderimage-light .page-context-header {
+       padding: .25rem 1rem;
+       background-color: rgba($white, 75%);
+       backdrop-filter: blur(7px);
+      //border-radius: $border-radius;
+   }
+   .courseheaderimage-dark .page-context-header {
+       padding: .25rem 1rem;
+       background-color: rgba($black, 65%);
+       backdrop-filter: blur(7px);
+       //border-radius: $border-radius;
+   }
+   
+   .fpstart {
+       margin-bottom: 1rem;
+   }
+   
+   .drawer-toggles .drawer-toggler .btn, .btn-footer-popover, button#back-to-top {
+       background-color: $pagenavbuttonsbg!important;
+   }
+   .drawer-toggles .drawer-toggler .btn:hover, .btn-footer-popover:hover, button#back-to-top:hover {
+       background-color: darken($pagenavbuttonsbg, 15%)!important;
+   }
+   
+   .path-mod-assign [data-region="grading-navigation-panel"] {
+       background-color: $white;
+   }
+   .path-mod-assign [data-region="grade-actions-panel"] {
+       background-color: $white;
+   }
+   #course-category-listings.columns-3 {
+       background-color: $white;
+   }
+   #course-category-listings.columns-3 #category-listing>div, #course-category-listings.columns-3 #course-listing>div, #course-category-listings.columns-3 #course-detail>div {
+       background-color: $white;
+   }
+   .dynamictabs {
+       background-color: $white;
+   }
+   // Header Image height on smaller screens.
+@media (max-width: 992px) {
+    div#courseheaderimage {
+        min-height: 100px !important;
+    }
+}
+
+.block .block-cards .course-summaryitem {
+    background-color: rgb($primary, 4%);
+}
+
+.block_myoverview.block {
+    padding: 1rem;
+}
+
+div#fpslider {
+    background-color: $white;
+    //border-radius: $border-radius;
+    border: 1px solid $gray-400;
+    margin-bottom: 2rem;
+}
+
+.pagelayout-maintenance #page {
+    background-color: $white;
+}
+
+.login-container .login-identityproviders .login-identityprovider-btn {
+    border: 2px solid $gray-300;
+    padding: 1rem;
+    background-color: $white;
+}
+
+/*.navbar-light .navbar-toggler-icon {
+    filter: brightness(0.0) saturate(0);
+}*/
+
+.courseindex .courseindex-section {
+    border-left: solid 3px transparent;
+    border: 1px solid $gray-200;
+    margin-bottom: 1rem;
+    background-color: $white;
+}
+
+#region-main #block-region-side-pre .maincalendar .calendarwrapper td>div {
+    height: auto;
+    overflow: unset;
+}
+
+// End DBN Update.

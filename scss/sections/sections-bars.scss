@@ -1,6 +1,6 @@
 /* Sections Bars */
 .course-section-header {
-    background-color: rgba($primary, 5%);
+    background-color: rgba($primary, 15%);
     padding: 0.5rem;
     border-radius: 0.25rem;
 }
@@ -13,6 +13,7 @@
 .activity-item:not(.activityinline) {
     border: 0;
     border-bottom: 1px solid $gray-300;
+    border-radius: 0;
 }
 @media (min-width: 768px) {
     .course-content ul.topics li.section .content.course-content-item-content, .course-content ul.weeks li.section .content.course-content-item-content, .course-content ul.cards li.section .content.course-content-item-content {

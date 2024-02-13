@@ -15,82 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Library
+ * Theme Boost Union Child - Library
  *
  * @package    theme_learnr
- * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @copyright  2023 Daniel Poggenpohl <daniel.poggenpohl@fernuni-hagen.de> and Alexander Bias <bias@alexanderbias.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 // Constants which are use throughout this theme.
-define('THEME_LEARNR_SETTING_SELECT_YES', 'yes');
-define('THEME_LEARNR_SETTING_SELECT_NO', 'no');
-
-define('THEME_LEARNR_SETTING_STATICPAGELINKPOSITION_NONE', 'none');
-define('THEME_LEARNR_SETTING_STATICPAGELINKPOSITION_FOOTNOTE', 'footnote');
-define('THEME_LEARNR_SETTING_STATICPAGELINKPOSITION_FOOTER', 'footer');
-define('THEME_LEARNR_SETTING_STATICPAGELINKPOSITION_BOTH', 'both');
-
-define('THEME_LEARNR_SETTING_HIDENODESPRIMARYNAVIGATION_HOME', 'home');
-define('THEME_LEARNR_SETTING_HIDENODESPRIMARYNAVIGATION_MYHOME', 'myhome');
-define('THEME_LEARNR_SETTING_HIDENODESPRIMARYNAVIGATION_MYCOURSES', 'courses');
-define('THEME_LEARNR_SETTING_HIDENODESPRIMARYNAVIGATION_SITEADMIN', 'siteadminnode');
-
-define('THEME_LEARNR_SETTING_INFOBANNER_COUNT', 5);
-define('THEME_LEARNR_SETTING_INFOBANNERPAGES_MY', 'mydashboard');
-define('THEME_LEARNR_SETTING_INFOBANNERPAGES_MYCOURSES', 'mycourses');
-define('THEME_LEARNR_SETTING_INFOBANNERPAGES_SITEHOME', 'frontpage');
-define('THEME_LEARNR_SETTING_INFOBANNERPAGES_COURSE', 'course');
-define('THEME_LEARNR_SETTING_INFOBANNERPAGES_LOGIN', 'login');
-define('THEME_LEARNR_SETTING_INFOBANNERMODE_PERPETUAL', 'perp');
-define('THEME_LEARNR_SETTING_INFOBANNERMODE_TIMEBASED', 'time');
-
-define('THEME_LEARNR_SETTING_ADVERTISEMENTTILES_COUNT', 12);
-define('THEME_LEARNR_SETTING_ADVERTISEMENTTILES_COLUMN_COUNT', 4);
-define('THEME_LEARNR_SETTING_ADVERTISEMENTTILES_FRONTPAGEPOSITION_BEFORE', 1);
-define('THEME_LEARNR_SETTING_ADVERTISEMENTTILES_FRONTPAGEPOSITION_AFTER', 2);
-
-define('THEME_LEARNR_SETTING_FAVERSION_NONE', 'none');
-define('THEME_LEARNR_SETTING_FAVERSION_FA6FREE', 'fa6free');
-define('THEME_LEARNR_SETTING_FAFILES_MANDATORY', 'm');
-define('THEME_LEARNR_SETTING_FAFILES_OPTIONAL', 'o');
-
-define('THEME_LEARNR_SETTING_HEIGHT_100PX', '100px');
-define('THEME_LEARNR_SETTING_HEIGHT_150PX', '150px');
-define('THEME_LEARNR_SETTING_HEIGHT_200PX', '200px');
-define('THEME_LEARNR_SETTING_HEIGHT_250PX', '250px');
-
-define('THEME_LEARNR_SETTING_IMAGEPOSITION_CENTER_CENTER', 'center center');
-define('THEME_LEARNR_SETTING_IMAGEPOSITION_CENTER_TOP', 'center top');
-define('THEME_LEARNR_SETTING_IMAGEPOSITION_CENTER_BOTTOM', 'center bottom');
-define('THEME_LEARNR_SETTING_IMAGEPOSITION_LEFT_TOP', 'left top');
-define('THEME_LEARNR_SETTING_IMAGEPOSITION_LEFT_CENTER', 'left center');
-define('THEME_LEARNR_SETTING_IMAGEPOSITION_LEFT_BOTTOM', 'left bottom');
-define('THEME_LEARNR_SETTING_IMAGEPOSITION_RIGHT_TOP', 'right top');
-define('THEME_LEARNR_SETTING_IMAGEPOSITION_RIGHT_CENTER', 'right center');
-define('THEME_LEARNR_SETTING_IMAGEPOSITION_RIGHT_BOTTOM', 'right bottom');
-
-define('THEME_LEARNR_SETTING_COURSEIMAGELAYOUT_STACKEDDARK', 'stackeddark');
-define('THEME_LEARNR_SETTING_COURSEIMAGELAYOUT_STACKEDLIGHT', 'stackedlight');
-define('THEME_LEARNR_SETTING_COURSEIMAGELAYOUT_HEADINGABOVE', 'headingabove');
-
-define('THEME_LEARNR_SETTING_LINKTARGET_SAMEWINDOW', 'same');
-define('THEME_LEARNR_SETTING_LINKTARGET_NEWTAB', 'new');
-
-define('THEME_LEARNR_SETTING_LOGINFORMPOS_CENTER', 'center');
-define('THEME_LEARNR_SETTING_LOGINFORMPOS_LEFT', 'left');
-define('THEME_LEARNR_SETTING_LOGINFORMPOS_RIGHT', 'right');
-
-define('THEME_LEARNR_SETTING_NAVBARCOLOR_LIGHT', 'light');
-define('THEME_LEARNR_SETTING_NAVBARCOLOR_DARK', 'dark');
-define('THEME_LEARNR_SETTING_NAVBARCOLOR_PRIMARYLIGHT', 'primarylight');
-define('THEME_LEARNR_SETTING_NAVBARCOLOR_PRIMARYDARK', 'primarydark');
-
-define('THEME_LEARNR_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT', 'nextmaincontent');
-define('THEME_LEARNR_SETTING_OUTSIDEREGIONSPLACEMENT_NEARWINDOW', 'nearwindowedges');
-define('THEME_LEARNR_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH', 'fullwidth');
-define('THEME_LEARNR_SETTING_OUTSIDEREGIONSWITH_COURSECONTENTWIDTH', 'coursecontentwidth');
-define('THEME_LEARNR_SETTING_OUTSIDEREGIONSWITH_HEROWIDTH', 'herowidth');
+define('THEME_LEARNR_SETTING_INHERITANCE_INHERIT', 0);
+define('THEME_LEARNR_SETTING_INHERITANCE_DUPLICATE', 1);
 
 /**
  * Returns the main SCSS content.
@@ -101,18 +35,15 @@ define('THEME_LEARNR_SETTING_OUTSIDEREGIONSWITH_HEROWIDTH', 'herowidth');
 function theme_learnr_get_main_scss_content($theme) {
     global $CFG;
 
-    $scss = '';
-    $filename = !empty($theme->settings->preset) ? $theme->settings->preset : null;
-    $fs = get_file_storage();
+    // Require the necessary libraries.
+    require_once($CFG->dirroot . '/theme/boost_union/lib.php');
 
-    $context = context_system::instance();
-    $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/learnr/pre.scss');
-    if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_learnr', 'preset', 0, '/', $filename))) {
-        $scss .= $presetfile->get_content();
-    } else {
-        // Safety fallback - maybe new installs etc.
-        $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/preset/default.scss');
-    }
+    // As a start, get the compiled main SCSS from Boost Union.
+    // This way, Boost Union Child will ship the same SCSS code as Boost Union itself.
+    $scss = theme_boost_union_get_main_scss_content(theme_config::load('boost_union'));
+
+    // And add Boost Union Child's main SCSS file to the stack.
+    $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/post.scss');
 
     // Begin DBN Update.
     if ($theme->settings->sectionstyle == 1) {
@@ -130,9 +61,23 @@ function theme_learnr_get_main_scss_content($theme) {
     if ($theme->settings->sectionstyle == 4) {
         $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/sections/sections-bars.scss');
     }
-    // End DBN Update.
 
-    $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/learnr/post.scss');
+    if ($theme->settings->layoutstyle == 1) {
+        $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/layouts/layout-learnr.scss');
+    }
+
+    if ($theme->settings->layoutstyle == 2) {
+        $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/layouts/layout-boxed.scss');
+    }
+
+    if ($theme->settings->layoutstyle == 3) {
+        $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/layouts/layout-boost.scss');
+    }
+
+    if ($theme->settings->layoutstyle == 4) {
+        $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/layouts/layout-bars.scss');
+    }
+    // End DBN Update.
 
     return $scss;
 }
@@ -146,22 +91,25 @@ function theme_learnr_get_main_scss_content($theme) {
 function theme_learnr_get_pre_scss($theme) {
     global $CFG;
 
-    // Require local library.
-    require_once($CFG->dirroot . '/theme/learnr/locallib.php');
+    // Require the necessary libraries.
+    require_once($CFG->dirroot . '/theme/boost_union/lib.php');
 
+    // As a start, initialize the Pre SCSS code with an empty string.
     $scss = '';
 
-    // Add SCSS constants for evaluating select setting values in SCSS code.
-    $scss .= '$boostunionsettingyes: '.THEME_LEARNR_SETTING_SELECT_YES. ";\n";
-    $scss .= '$boostunionsettingno: '.THEME_LEARNR_SETTING_SELECT_NO. ";\n";
+    // Then, if configured, get the compiled pre SCSS code from Boost Union.
+    // This should not be necessary as Moodle core calls the *_get_pre_scss() functions from all parent themes as well.
+    // However, as soon as Boost Union would use $theme->settings in this function, $theme would be this theme here and
+    // not Boost Union. The Boost Union developers are aware of this topic, but faults can always happen.
+    // If such a fault happens, the Boost Union Child administrator can switch the inheritance to 'Duplicate'.
+    // This way, we will add the pre SCSS code with the explicit use of the Boost Union configuration to the stack.
+    $inheritanceconfig = get_config('theme_learnr', 'prescssinheritance');
+    if ($inheritanceconfig == THEME_LEARNR_SETTING_INHERITANCE_DUPLICATE) {
+        $scss .= theme_boost_union_get_pre_scss(theme_config::load('boost_union'));
+    }
 
     $configurable = [
         // Config key => [variableName, ...].
-        'brandcolor' => ['primary'],
-        'bootstrapcolorsuccess' => ['success'],
-        'bootstrapcolorinfo' => ['info'],
-        'bootstrapcolorwarning' => ['warning'],
-        'bootstrapcolordanger' => ['danger'],
         // Begin DBN Update.
         'navbarbg' => ['navbar-bg'],
         'navbarlink' => ['navbar-link'],
@@ -173,15 +121,8 @@ function theme_learnr_get_pre_scss($theme) {
         'bgdark' => ['bg-dark'],
         'courseheaderbg' => ['courseheaderbg'],
         'pagenavbuttonsbg' => ['pagenavbuttonsbg'],
-        'courseboxheight' => ['courseboxheight'],
-        'courseboxheight' => ['courseboxheight'],
+        'layoutstyle' => ['layoutstyle'],
         // End DBN Update.
-        'activityiconcoloradministration' => ['activity-icon-administration-bg'],
-        'activityiconcolorassessment' => ['activity-icon-assessment-bg'],
-        'activityiconcolorcollaboration' => ['activity-icon-collaboration-bg'],
-        'activityiconcolorcommunication' => ['activity-icon-communication-bg'],
-        'activityiconcolorcontent' => ['activity-icon-content-bg'],
-        'activityiconcolorinterface' => ['activity-icon-interface-bg'],
     ];
 
     // Prepend variables first.
@@ -195,42 +136,8 @@ function theme_learnr_get_pre_scss($theme) {
         }, (array) $targets);
     }
 
-    // Overwrite Boost core SCSS variables which need units and thus couldn't be added to $configurable above.
-    // Set variables which are influenced by the coursecontentmaxwidth setting.
-    if (get_config('theme_learnr', 'coursecontentmaxwidth')) {
-        $scss .= '$course-content-maxwidth: '.get_config('theme_learnr', 'coursecontentmaxwidth').";\n";
-    }
-    // Set variables which are influenced by the mediumcontentmaxwidth setting.
-    if (get_config('theme_learnr', 'mediumcontentmaxwidth')) {
-        $scss .= '$medium-content-maxwidth: '.get_config('theme_learnr', 'mediumcontentmaxwidth').";\n";
-    }
-    // Set variables which are influenced by the h5pcontentmaxwidth setting.
-    if (get_config('theme_learnr', 'h5pcontentmaxwidth')) {
-        $scss .= '$h5p-content-maxwidth: '.get_config('theme_learnr', 'h5pcontentmaxwidth').";\n";
-    }
-
-    // Set custom Boost Union SCSS variable: The block region outside left width.
-    $blockregionoutsideleftwidth = get_config('theme_learnr', 'blockregionoutsideleftwidth');
-    // If the setting is not set.
-    if (!$blockregionoutsideleftwidth) {
-        // Set the variable to the default setting to make sure that the SCSS variable does not remain uninitialized.
-        $blockregionoutsideleftwidth = '300px';
-    }
-    $scss .= '$blockregionoutsideleftwidth: '.$blockregionoutsideleftwidth.";\n";
-
-    // Set custom Boost Union SCSS variable: The block region outside left width.
-    $blockregionoutsiderightwidth = get_config('theme_learnr', 'blockregionoutsiderightwidth');
-    // If the setting is not set.
-    if (!$blockregionoutsiderightwidth) {
-        // Set the variable to the default setting to make sure that the SCSS variable does not remain uninitialized.
-        $blockregionoutsiderightwidth = '300px';
-    }
-    $scss .= '$blockregionoutsiderightwidth: '.$blockregionoutsiderightwidth.";\n";
-
-    // Prepend pre-scss.
-    if (get_config('theme_learnr', 'scsspre')) {
-        $scss .= get_config('theme_learnr', 'scsspre');
-    }
+    // Finally, you can compose and add additional pre SCSS code here if needed.
+    $scss .= file_get_contents($CFG->dirroot . '/theme/learnr/scss/pre.scss');
 
     return $scss;
 }
@@ -245,210 +152,37 @@ function theme_learnr_get_extra_scss($theme) {
     global $CFG;
 
     // Require the necessary libraries.
-    require_once($CFG->dirroot . '/course/lib.php');
+    require_once($CFG->dirroot . '/theme/boost_union/lib.php');
 
-    // Initialize extra SCSS.
-    $content = '';
+    // As a start, initialize the Extra SCSS code with an empty string.
+    $scss = '';
 
-    // You might think that this extra SCSS function is only called for the activated theme.
-    // However, due to the way how the theme_*_get_extra_scss callback functions are searched and called within Boost child theme
-    // hierarchy Boost Union not only gets the extra SCSS from this function here but only from theme_boost_get_extra_scss as well.
-    //
-    // There, the CSS snippets for the background image and the login background images are added already to the SCSS codebase.
-    // Additionally, the custom SCSS from $theme->settings->scss (which hits the SCSS settings from theme_learnr even though
-    // the code is within theme_boost) is already added to the SCSS codebase as well.
-    //
-    // We have to accept this fact here and must not copy the code from theme_boost_get_extra_scss into this function.
-    // Instead, we must only add additionally CSS code which is based on any Boost Union-only functionality.
-
-    // In contrast to Boost core, Boost Union should add the login page background to the body element as well.
-    // Thus, check if a login background image is set.
-    $loginbackgroundimagepresent = get_config('theme_learnr', 'loginbackgroundimage');
-    if (!empty($loginbackgroundimagepresent)) {
-        // We first have to revert the background which is set to #page on the login page by Boost core already.
-        // Doing this, we also have to make the background of the #page element transparent on the login page.
-        $content .= 'body.pagelayout-login #page { ';
-        $content .= "background-image: none !important;";
-        $content .= "background-color: transparent !important;";
-        $content .= '}';
-
-        // Afterwards, we set the background-size attribute for the body element again.
-        $content .= 'body.pagelayout-login { ';
-        $content .= "background-size: cover;";
-        $content .= '}';
-
-        // Finally, we add all possible background image urls which will be picked based on the (random) loginpageimage class.
-        $content .= theme_learnr_get_loginbackgroundimage_scss();
+    // Then, if configured, get the compiled extra SCSS code from Boost Union.
+    // This should not be necessary as Moodle core calls the *_get_extra_scss() functions from all parent themes as well.
+    // However, as soon as Boost Union would use $theme->settings in this function, $theme would be this theme here and
+    // not Boost Union. The Boost Union developers are aware of this topic, but faults can always happen.
+    // If such a fault happens, the Boost Union Child administrator can switch the inheritance to 'Duplicate'.
+    // This way, we will add the extra SCSS code with the explicit use of the Boost Union configuration to the stack.
+    $inheritanceconfig = get_config('theme_learnr', 'extrascssinheritance');
+    if ($inheritanceconfig == THEME_LEARNR_SETTING_INHERITANCE_DUPLICATE) {
+        $scss .= theme_boost_union_get_extra_scss(theme_config::load('boost_union'));
     }
 
-    // Boost core has the behaviour that the normal background image is not shown on the login page, only the login background image
-    // is shown on the login page.
-    // This is fine, but it is done improperly as the normal background image is still there on the login page and just overlaid
-    // with a grey color in the #page element. This can result in flickering during the page load.
-    // We try to avoid this by removing the background image from the body tag if no login background image is set.
-    if (empty($loginbackgroundimagepresent)) {
-        $content .= 'body.pagelayout-login { ';
-        $content .= "background-image: none !important;";
-        $content .= '}';
-    }
+    // Finally, you can compose and add additional extra SCSS code here if needed.
 
-    // Lastly, we make sure that the background image is fixed and not repeated. Just to be sure.
-    $content .= 'body { ';
-    $content .= "background-repeat: no-repeat;";
-    $content .= "background-attachment: fixed;";
-    $content .= '}';
-
-    // Note: Boost Union is also capable of overriding the background image in its flavours.
-    // In contrast to the other flavour assets like the favicon overriding, this isn't done here in place as this function
-    // is composing Moodle core CSS which has to remain flavour-independent.
-    // Instead, the flavour is overriding the background image later in flavours/styles.php.
-
-    // For the rest of this function, we add SCSS snippets to the SCSS stack based on enabled admin settings.
-    // This is done here as it is quite easy to do. As an alternative, it could also been done in post.css by using
-    // SCSS variables with @if conditions and SCSS variables. However, we preferred to do it here in a single place.
-
-    // Setting: Activity icon purpose.
-
-    // Get installed activity modules.
-    $installedactivities = get_module_types_names();
-    // Iterate over all existing activities.
-    foreach ($installedactivities as $modname => $modinfo) {
-        // Get default purpose of activity module.
-        $defaultpurpose = plugin_supports('mod', $modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
-        // If the plugin does not have any default purpose.
-        if (!$defaultpurpose) {
-            // Fallback to "other" purpose.
-            $defaultpurpose = MOD_PURPOSE_OTHER;
-        }
-        // If the activity purpose setting is set and differs from the activity's default purpose.
-        $configname = 'activitypurpose'.$modname;
-        if (isset($theme->settings->{$configname}) && $theme->settings->{$configname} != $defaultpurpose) {
-            // Add CSS to modify the activity purpose color in the activity chooser and the activity icon.
-            $content .= '.activity.modtype_'.$modname.' .activityiconcontainer.courseicon,';
-            $content .= '.modchoosercontainer .modicon_'.$modname.'.activityiconcontainer,';
-            $content .= '#page-header .modicon_'.$modname.'.activityiconcontainer,';
-            $content .= '.block_recentlyaccesseditems .theme-boost-union-'.$modname.'.activityiconcontainer,';
-            $content .= '.block_timeline .theme-boost-union-mod_'.$modname.'.activityiconcontainer {';
-            // If the purpose is now different than 'other', change the background color to the new color.
-            if ($theme->settings->{$configname} != MOD_PURPOSE_OTHER) {
-                $content .= 'background-color: var(--activity' . $theme->settings->{$configname} . ') !important;';
-
-                // Otherwise, the background color is set to light grey (as there is no '--activityother' variable).
-            } else {
-                $content .= 'background-color: $light !important;';
-            }
-            // If the default purpose originally was 'other' and now is overridden, make the icon white.
-            if ($defaultpurpose == MOD_PURPOSE_OTHER) {
-                $content .= '.activityicon, .icon { filter: brightness(0) invert(1); }';
-            }
-            // If the default purpose was not 'other' and now it is, make the icon black.
-            if ($theme->settings->{$configname} == MOD_PURPOSE_OTHER) {
-                $content .= '.activityicon, .icon { filter: none; }';
-            }
-            $content .= '}';
-        }
-    }
-
-    // Setting: Mark external links.
-    $content .= theme_learnr_get_scss_to_mark_external_links($theme);
-
-    return $content;
+    return $scss;
 }
 
-/**
- * Get compiled css.
- *
- * @return string compiled css
- */
-function theme_learnr_get_precompiled_css() {
-    global $CFG;
-    // Get the fallback CSS file from Boost Core as long as Boost Union does not use a fallback file of its own.
-    return file_get_contents($CFG->dirroot . '/theme/boost/style/moodle.css');
-}
 
-/**
- * Serves any files associated with the theme settings.
- *
- * @param stdClass $course
- * @param stdClass $cm
- * @param context $context
- * @param string $filearea
- * @param array $args
- * @param bool $forcedownload
- * @param array $options
- * @return bool
- */
+/* 
+//Not needed unless we add an image in future update.
+
 function theme_learnr_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     global $CFG;
 
     // Serve the (general) logo files or favicon file from the theme settings.
     // This code is copied and modified from core_admin_pluginfile() in admin/lib.php.
-    if (in_array($filearea, ['logo', 'logocompact', 'favicon'])) {
-        $size = array_shift($args); // The path hides the size.
-        $itemid = clean_param(array_shift($args), PARAM_INT);
-        $filename = clean_param(array_shift($args), PARAM_FILE);
-        $themerev = theme_get_revision();
-        if ($themerev <= 0) {
-            // Normalise to 0 as -1 doesn't place well with paths.
-            $themerev = 0;
-        }
-
-        // Extract the requested width and height.
-        $maxwidth = 0;
-        $maxheight = 0;
-        if (preg_match('/^\d+x\d+$/', $size)) {
-            list($maxwidth, $maxheight) = explode('x', $size);
-            $maxwidth = clean_param($maxwidth, PARAM_INT);
-            $maxheight = clean_param($maxheight, PARAM_INT);
-        }
-
-        $lifetime = 0;
-        if ($itemid > 0 && $themerev == $itemid) {
-            // The itemid is $CFG->themerev, when 0 or less no caching. Also no caching when they don't match.
-            $lifetime = DAYSECS * 60;
-        }
-
-        // Anyone, including guests and non-logged in users, can view the logos.
-        $options = ['cacheability' => 'public'];
-
-        // Check if we've got a cached file to return. When lifetime is 0 then we don't want to cached one.
-        $candidate = $CFG->localcachedir . "/theme_learnr/$themerev/$filearea/{$maxwidth}x{$maxheight}/$filename";
-        if (file_exists($candidate) && $lifetime > 0) {
-            send_file($candidate, $filename, $lifetime, 0, false, false, '', false, $options);
-        }
-
-        // Find the original file.
-        $fs = get_file_storage();
-        $filepath = "/{$context->id}/theme_learnr/{$filearea}/0/{$filename}";
-        if (!$file = $fs->get_file_by_hash(sha1($filepath))) {
-            send_file_not_found();
-        }
-
-        // Check whether width/height are specified, and we can resize the image (some types such as ICO cannot be resized).
-        if (($maxwidth === 0 && $maxheight === 0) ||
-                !$filedata = $file->resize_image($maxwidth, $maxheight)) {
-
-            if ($lifetime) {
-                file_safe_save_content($file->get_content(), $candidate);
-            }
-            send_stored_file($file, $lifetime, 0, false, $options);
-        }
-
-        // If we don't want to cached the file, serve now and quit.
-        if (!$lifetime) {
-            send_content_uncached($filedata, $filename);
-        }
-
-        // Save, serve and quit.
-        file_safe_save_content($filedata, $candidate);
-        send_file($candidate, $filename, $lifetime, 0, false, false, '', false, $options);
-
-        // Serve all other (general) image and resource files from the theme settings.
-        // This code is copied and modified from theme_boost_pluginfile() in theme/boost/lib.php.
-    } else if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'backgroundimage' ||
-        $filearea === 'loginbackgroundimage' || $filearea === 'additionalresources' ||
-                $filearea === 'customfonts' || $filearea === 'courseheaderimagefallback' ||
-                preg_match("/tilebackgroundimage[2-9]|1[0-2]?/", $filearea))) {
+    if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'courseheaderimagefallback')) {
         $theme = theme_config::load('learnr');
         // By default, theme files must be cache-able by both browsers and proxies.
         if (!array_key_exists('cacheability', $options)) {
@@ -456,212 +190,9 @@ function theme_learnr_pluginfile($course, $cm, $context, $filearea, $args, $forc
         }
         return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
 
-        // Serve the files from the theme flavours.
-    } else if ($filearea === 'flavours_look_logocompact' || $filearea === 'flavours_look_logo' ||
-            $filearea === 'flavours_look_favicon' || $filearea === 'flavours_look_backgroundimage') {
-        // Flavour files should not be top secret.
-        // Even if they apply to particular contexts or cohorts, we do not do any hard checks if a user should be
-        // allowed to request a file.
-        // We just make sure that the forcelogin setting is respected. This is ok as there isn't any possibility
-        // to apply a flavour to the login page / for non-logged-in users at the moment.
-        if ($CFG->forcelogin) {
-            require_login();
-        }
-
-        // Get file storage.
-        $fs = get_file_storage();
-
-        // Get the file from the filestorage.
-        $filename = clean_param(array_pop($args), PARAM_FILE);
-        array_pop($args); // This is the themerev number in the $args array which is used for browser caching, here we ignore it.
-        $itemid = clean_param(array_pop($args), PARAM_INT);
-        if ((!$file = $fs->get_file($context->id, 'theme_learnr', $filearea, $itemid, '/', $filename)) ||
-                $file->is_directory()) {
-            send_file_not_found();
-        }
-
-        // Unlock session during file serving.
-        \core\session\manager::write_close();
-
-        // Send stored file (and cache it for 90 days, similar to other static assets within Moodle).
-        send_stored_file($file, DAYSECS * 90, 0, $forcedownload, $options);
-
-        // Serve the files from the smart menu card images.
-    } else if ($filearea === 'smartmenus_itemimage' && $context->contextlevel === CONTEXT_SYSTEM) {
-        // Get file storage.
-        $fs = get_file_storage();
-
-        // Get the file from the filestorage.
-        $file = $fs->get_file($context->id, 'theme_learnr', $filearea, $args[0], '/', $args[1]);
-        if (!$file) {
-            send_file_not_found();
-        }
-
-        // Send stored file (and cache it for 90 days, similar to other static assets within Moodle).
-        send_stored_file($file, DAYSECS * 90, 0, $forcedownload, $options);
-
     } else {
         send_file_not_found();
     }
 }
+*/
 
-/**
- * Callback to add head elements.
- *
- * We use this callback to inject the flavour's CSS code to the page.
- *
- * @return string
- */
-function theme_learnr_before_standard_html_head() {
-    global $CFG, $PAGE;
-
-    // Initialize HTML (even though we do not add any HTML at this stage of the implementation).
-    $html = '';
-
-    // If a theme other than Boost Union or a child theme of it is active, return directly.
-    // This is necessary as the before_standard_html_head() callback is called regardless of the active theme.
-    if ($PAGE->theme->name != 'learnr' && !in_array('learnr', $PAGE->theme->parents)) {
-        return $html;
-    }
-
-    // Require local library.
-    require_once($CFG->dirroot . '/theme/learnr/locallib.php');
-
-    // Add the flavour CSS to the page.
-    theme_learnr_add_flavourcss_to_page();
-
-    // Return an empty string to keep the caller happy.
-    return $html;
-}
-
-/**
- * Fetches the list of icons and creates an icon suggestion list to be sent to a fragment.
- *
- * @param array $args An array of arguments.
- * @return string The rendered HTML of the icon suggestion list.
- */
-function theme_learnr_output_fragment_icons_list($args) {
-    global $OUTPUT, $PAGE;
-
-    // Proceed only if a context was given as argument.
-    if ($args['context']) {
-        // Initialize rendered icon list.
-        $icons = [];
-
-        // Load the theme config.
-        $theme = \theme_config::load($PAGE->theme->name);
-
-        // Get the FA system.
-        $faiconsystem = \core\output\icon_system_fontawesome::instance($theme->get_icon_system());
-
-        // Get the icon list.
-        $iconlist = $faiconsystem->get_core_icon_map();
-
-        // Add an empty element to the beginning of the icon list.
-        array_unshift($iconlist, '');
-
-        // Iterate over the icons.
-        foreach ($iconlist as $iconkey => $icontxt) {
-            // Split the component from the icon key.
-            $icon = explode(':', $iconkey);
-
-            // Pick the icon key.
-            $iconstr = isset($icon[1]) ? $icon[1] : 'moodle';
-
-            // Pick the component.
-            $component = isset($icon[0]) ? $icon[0] : '';
-
-            // Render the pix icon.
-            $icon = new \pix_icon($iconstr,  "", $component);
-            $icons[] = [
-                'icon' => $faiconsystem->render_pix_icon($OUTPUT, $icon),
-                'value' => $iconkey,
-                'label' => $icontxt,
-            ];
-        }
-
-        // Return the rendered icon list.
-        return $OUTPUT->render_from_template('theme_learnr/fontawesome-iconpicker-popover', ['options' => $icons]);
-    }
-}
-
-/**
- * Define preferences which may be set via the core_user_set_user_preferences external function.
- *
- * @uses core_user::is_current_user
- *
- * @return array[]
- */
-function theme_learnr_user_preferences(): array {
-    // Build preferences array.
-    $preferences = [];
-    for ($i = 1; $i <= THEME_LEARNR_SETTING_INFOBANNER_COUNT; $i++) {
-        $preferences['theme_learnr_infobanner'.$i.'_dismissed'] = [
-            'type' => PARAM_INT,
-            'null' => NULL_NOT_ALLOWED,
-            'default' => 0,
-            'choices' => [0, 1],
-            'permissioncallback' => [core_user::class, 'is_current_user'],
-        ];
-    }
-    return $preferences;
-}
-
-//Begin DBN change
-function theme_learnr_strip_html_tags( $text ) {
-    $text = preg_replace(
-        array(
-            // Remove invisible content.
-            '@<head[^>]*?>.*?</head>@siu',
-            '@<style[^>]*?>.*?</style>@siu',
-            '@<script[^>]*?.*?</script>@siu',
-            '@<object[^>]*?.*?</object>@siu',
-            '@<embed[^>]*?.*?</embed>@siu',
-            '@<applet[^>]*?.*?</applet>@siu',
-            '@<noframes[^>]*?.*?</noframes>@siu',
-            '@<noscript[^>]*?.*?</noscript>@siu',
-            '@<noembed[^>]*?.*?</noembed>@siu',
-            // Add line breaks before and after blocks.
-            '@</?((address)|(blockquote)|(center)|(del))@iu',
-            '@</?((div)|(h[1-9])|(ins)|(isindex)|(p)|(pre))@iu',
-            '@</?((dir)|(dl)|(dt)|(dd)|(li)|(menu)|(ol)|(ul))@iu',
-            '@</?((table)|(th)|(td)|(caption))@iu',
-            '@</?((form)|(button)|(fieldset)|(legend)|(input))@iu',
-            '@</?((label)|(select)|(optgroup)|(option)|(textarea))@iu',
-            '@</?((frameset)|(frame)|(iframe))@iu',
-            ),
-        array(
-            ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-            "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0",
-            "\n\$0", "\n\$0",
-            ),
-        $text
-        );
-return strip_tags( $text );
-}
-
-/**
- * Cut the Course content.
- *
- * @param $str
- * @param $n
- * @param $end_char
- * @return string
- */
-function theme_learnr_course_trim_char($str, $n = 500, $endchar = '&#8230;') {
-    if (strlen($str) < $n) {
-        return $str;
-    }
-
-    $str = preg_replace("/\s+/", ' ', str_replace(array("\r\n", "\r", "\n"), ' ', $str));
-    if (strlen($str) <= $n) {
-        return $str;
-    }
-
-    $out = "";
-    $small = substr($str, 0, $n);
-    $out = $small.$endchar;
-    return $out;
-}
-
-//End DBN change

@@ -1,0 +1,11 @@
+/* This file is empty by purpose.
+You can add your SCSS code here if you really need to. add IF statement here to set variables based on layout.*/
+@if $layoutstyle == 1 {
+$drawer-bg: #f5f9fd !default;
+$body-bg: #f5f9fd  !default;
+$border-radius: 2px !default;
+$border-radius-lg: 4px !default;
+}
+$white: #ffffff  !default;
+$black: #000000  !default;
+$pagenavbuttonsbg: #a6b8c9 !default;

@@ -53,15 +53,15 @@
     This template is a modified version of theme_boost/drawers
 
     Modifications compared to the original template:
-    * Include theme_learnr/footnote template
-    * Include theme_learnr/footer template instead of theme_boost/footer
-    * Include theme_learnr/navbar template instead of theme_boost/navbar
+    * Include theme_boost_union/footnote template
+    * Include theme_boost_union/footer template instead of theme_boost/footer
+    * Include theme_boost_union/navbar template instead of theme_boost/navbar
     * Added the possibility to show course related hints.
     * Added the possibility to show info banners.
-    * Include theme_learnr/advertisementtiles template
+    * Include theme_boost_union/advertisementtiles template
+    * Include theme_boost_union/slider template
     * Added additional block regions (including JS for offcanvas region)
     * Added smartmenu js to support third level submenus.
-    * Added footer-bottom-menu class to #page element as soon as the bottom menu is shown
 }}
 {{> theme_boost/head }}
 
@@ -72,8 +72,6 @@
     {{{ output.standard_top_of_body_html }}}
 
     {{> theme_boost/navbar }}
-    {{! Begin DBN Update }}
-    {{#showcourseindexnav}}
     {{#courseindex}}
         {{< theme_boost/drawer }}
             {{$id}}theme_boost-drawers-courseindex{{/id}}
@@ -108,31 +106,29 @@
             {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
         {{/ theme_boost/drawer}}
     {{/hasblocks}}
-    {{/showcourseindexnav}}
-    {{! End DBN Update }}
 
     {{^userisediting}}
         {{#regions.offcanvas.hasblocks}}
             {{< theme_boost/drawer }}
-                {{$id}}theme_learnr-drawers-offcanvas{{/id}}
+                {{$id}}theme_boost_union-drawers-offcanvas{{/id}}
                 {{$drawerclasses}}drawer drawer-top{{/drawerclasses}}
                 {{$drawercontent}}
-                    {{> theme_learnr/offcanvas}}
+                    {{> theme_boost_union/offcanvas}}
                 {{/drawercontent}}
                 {{$forceopen}}0{{/forceopen}}
                 {{$drawerstate}}show-drawer-offcanvas{{/drawerstate}}
                 {{$tooltipplacement}}top{{/tooltipplacement}}
                 {{$drawercloseonresize}}1{{/drawercloseonresize}}
-                {{$closebuttontext}}{{#str}}closeoffcanvas, theme_learnr{{/str}}{{/closebuttontext}}
+                {{$closebuttontext}}{{#str}}closeoffcanvas, theme_boost_union{{/str}}{{/closebuttontext}}
             {{/ theme_boost/drawer}}
         {{/regions.offcanvas.hasblocks}}
     {{/userisediting}}
 
-    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container {{#bottombar.drawer}} footer-bottom-menu {{/bottombar.drawer}}">
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
         {{#userisediting}}
             <div id="theme-block-region-offcanvas-editing" class="collapse">
                 <div id="theme-block-region-offcanvas-editing-inner">
-                    {{> theme_learnr/offcanvas}}
+                    {{> theme_boost_union/offcanvas}}
                 </div>
             </div>
         {{/userisediting}}
@@ -164,8 +160,7 @@
         {{! Begin DBN Update }}
         {{{ output.headerbuttons }}}
             <div id="learnrpage" class="contentwrapper">
-
-            {{#showcourseindexnav}}
+        {{! End DBN Update }}
             <div class="drawer-toggles d-flex">
                 {{#courseindex}}
                     <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
@@ -201,18 +196,23 @@
                     </div>
                 {{/hasblocks}}
             </div>
-            {{/showcourseindexnav}}
-            {{! End DBN Update }}
-
-            {{> theme_learnr/javascriptdisabledhint }}
-            {{> theme_learnr/infobanners }}
+            {{> theme_boost_union/javascriptdisabledhint }}
+            {{> theme_boost_union/infobanners }}
+            {{#secondarymenuabove}}
+                {{#secondarymoremenu}}
+                    <div class="secondary-navigation d-print-none">
+                        {{> core/moremenu}}
+                    </div>
+                {{/secondarymoremenu}}
+            {{/secondarymenuabove}}
             {{{ output.full_header }}}
-
-            {{#secondarymoremenu}}
-                <div class="secondary-navigation d-print-none">
-                    {{> core/moremenu}}
-                </div>
-            {{/secondarymoremenu}}
+            {{^secondarymenuabove}}
+                {{#secondarymoremenu}}
+                    <div class="secondary-navigation d-print-none">
+                        {{> core/moremenu}}
+                    </div>
+                {{/secondarymoremenu}}
+            {{/secondarymenuabove}}
             {{#regions.contentupper.hasblocks}}
                 <section id="theme-block-region-content-upper" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
                     {{{ regions.contentupper.addblockbutton }}}
@@ -221,9 +221,15 @@
             {{/regions.contentupper.hasblocks}}
             <div id="page-content" class="pb-3 d-print-block">
                 <div id="region-main-box">
+                    {{#sliderpositionbeforebefore}}
+                        {{> theme_boost_union/slider }}
+                    {{/sliderpositionbeforebefore}}
                     {{#advtilespositionbefore}}
-                        {{> theme_learnr/advertisementtiles }}
+                        {{> theme_boost_union/advertisementtiles }}
                     {{/advtilespositionbefore}}
+                    {{#sliderpositionbeforeafter}}
+                        {{> theme_boost_union/slider }}
+                    {{/sliderpositionbeforeafter}}
                     {{#hasregionmainsettingsmenu}}
                     <div id="region-main-settings-menu" class="d-print-none">
                         <div> {{{ regionmainsettingsmenu }}} </div>
@@ -245,37 +251,21 @@
                                 </div>
                             </div>
                         {{/overflow}}
-
                         {{{courserelatedhints}}}
-
-                        {{! Begin DBN Update }}
-                        {{^showcourseindexnav}}
-                        <div class="container-fluid">
-                          <div class="row">
-                            <div class="col">
-                              {{{ output.main_content }}}
-                            </div>
-                            {{#hasblocks}}
-                            <div class="col-md-3 drawer-inpage">
-                                {{{ addblockbutton }}}
-                                {{{ sidepreblocks }}}
-                            </div>
-                            {{/hasblocks}}
-                          </div>
-                        </div>
-                        {{/showcourseindexnav}}
-                        {{#showcourseindexnav}}
                         {{{ output.main_content }}}
-                        {{/showcourseindexnav}}
-                        {{! End DBN Update }}
-
                         {{{ output.activity_navigation }}}
                         {{{ output.course_content_footer }}}
 
                     </section>
+                    {{#sliderpositionafterbefore}}
+                        {{> theme_boost_union/slider }}
+                    {{/sliderpositionafterbefore}}
                     {{#advtilespositionafter}}
-                        {{> theme_learnr/advertisementtiles }}
+                        {{> theme_boost_union/advertisementtiles }}
                     {{/advtilespositionafter}}
+                    {{#sliderpositionafterafter}}
+                        {{> theme_boost_union/slider }}
+                    {{/sliderpositionafterafter}}
                 </div>
             </div>
             {{#regions.contentlower.hasblocks}}
@@ -292,9 +282,6 @@
                 {{{ regions.outsideright.regionhtml }}}
             </section>
         {{/regions.outsideright.hasblocks}}
-        {{! Begin DBN Update }}
-            </div>
-        {{! End DBN Update }}
         </div>
 
         {{#regions.outsidebottom.hasblocks}}
@@ -303,7 +290,10 @@
                 {{{ regions.outsidebottom.regionhtml }}}
             </section>
         {{/regions.outsidebottom.hasblocks}}
-
+        {{! Begin DBN Update }}
+            </div>
+        {{! End DBN Update }}
+        
         {{#regions.footer.hasblocks}}
             <div id="theme-block-region-footer" class="{{{footerwidth}}}">
                 <div class="row">
@@ -330,7 +320,7 @@
         {{/regions.footer.hasblocks}}
 
         {{> theme_boost/footer }}
-        {{> theme_learnr/footnote }}
+        {{> theme_boost_union/footnote }}
     </div>
     {{{ output.standard_after_main_region_html }}}
 </div>
@@ -339,7 +329,7 @@
 </html>
 {{#js}}
 M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader', 'theme_boost/drawer'{{#regions.offcanvas.hasblocks}},'theme_learnr/offcanvas'{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, 'theme_learnr/smartmenu'{{/includesmartmenu}}], function(Loader, Drawer{{#regions.offcanvas.hasblocks}},OffCanvas{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, SmartMenu{{/includesmartmenu}}) {
+require(['theme_boost/loader', 'theme_boost/drawer'{{#regions.offcanvas.hasblocks}},'theme_boost_union/offcanvas'{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, 'theme_boost_union/smartmenu'{{/includesmartmenu}}], function(Loader, Drawer{{#regions.offcanvas.hasblocks}},OffCanvas{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, SmartMenu{{/includesmartmenu}}) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
     {{#regions.offcanvas.hasblocks}}OffCanvas.init();{{/regions.offcanvas.hasblocks}}
