@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'theme_learnr';
-$plugin->version = 2024010100;
-$plugin->release = 'release-1';
+$plugin->version = 2024021300;
+$plugin->release = 'CTL-version 1';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->dependencies = ['theme_boost_union' => 2023010543];
